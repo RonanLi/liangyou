@@ -1,0 +1,241 @@
+*{font-family:"Microsoft YaHei";color:#555;list-style:none;text-decoration:none;box-sizing: border-box;font-size:16px;}
+h1,h2,h3,h4,h5,h6,p,b,span{font-weight:normal;color:#555;}
+#main{width:1200px;}
+.user_left{width:210px;background:#e9ebed;}
+.user_right{width:990px;height:100%;border:none;}
+.user-right-top{margin:0 auto;padding:0;}
+.subMenu{background:#e9ebed;margin-bottom: 20px;}
+.subMenu>a{display:inline-block;width:150px;line-height:45px;text-align:center;background:#fff;border-top:2px solid #a6771f;padding-top:0;}
+
+.investment li,.dynamics li,.payment li,.user-right-top li{overflow: hidden;padding:5px 0;background:#fff;border-bottom:1px solid #f5f3f0;text-align: center;}
+.investment li:first-child,.dynamics li:first-child,.user-right-top li:first-child{background:#f9f9f9;}
+.investment li>div,.dynamics li>div,.user-right-top li>div{float:left;text-align:center;line-height:45px;font-size:14px;}
+li>div a{font-size:14px;}
+.user-right-top li>a{color:#a6771f;margin-left:20px;}
+li>div a strong{font-size:14px;}
+.recharge,.withdrawals,.avatar,.realName,.realNameActive,.resetPassword,.phoneActive{height:670px;}
+.personalCenter,.finance,.education,.spouse,.bindBank{height:585px;}
+.realName .notes,.realNameActive .notes,.recharge .notes,.finance .notes,.education .notes,.spouse .notes,.phoneActive .notes,.bindBank .notes,.avatar .notes,.resetPassword .notes{position:absolute;bottom:5%;}
+
+/*userLeftMenu START*/
+.menuTop{position: relative;padding-top:5%;}
+.menuTop>img{display:block;width:100px;height:100px;margin:auto;border: 3px solid #a6771f;border-radius:50px;cursor:pointer;}
+.menuTop>a{display:none;}
+.menuTop:hover>a{display:block;position:absolute;width:80%;height:22%;top:45%;left:10%;text-align:center;color:#a6771f;}
+.menuCenter{padding:5%;}
+.menuCenter>p{text-align:center;margin:5px 0 10px;}
+.authentication,.menuCenter>.div,.menuBottom{overflow:hidden;}
+.authentication{margin:20px 0;}
+.authentication>a{float:left;width:50%;text-align: center;}
+.authentication img{width:30px;height:30px;border-radius:15px;}
+.menuCenter>.div>span{float:left;width:50%;padding:10px 5px;text-align:center;font-size:14px;}
+.menuCenter>.div>span:first-child{border-bottom:1px solid #dedede;}
+.menuCenter>.div>span:nth-child(2){border-bottom:1px solid #dedede;}
+.menuCenter>.div>span:nth-child(odd){border-right:1px solid #dedede;}
+.menuCenter>.div a{display:block;text-align:center;font-size:0.6rem;color:#a6771f;}
+.menuBottom>a,.menuBottom>div>b,.menuBottom ul a{display: block;width:100%;line-height: 45px;padding-left:32%;margin-bottom:1px;font-size:16px;cursor: pointer;}
+.menuBottom>div>b{position:relative;}
+.menuBottom>div>b>i{position:absolute;right:26%;font-style: normal;font-size: 18px;font-weight:bold;}
+.menuBottom>div>b>i:before{content: "\+";}
+.menuBottom ul {display: none;}
+.menuBottom ul a{font-size:14px;text-indent:0.5rem;text-decoration:underline;}
+
+
+/*.menuBottom>a:hover,.menuBottom>div>b:hover{background:#fff;border-left:1px solid #a6771f;}*/
+.menuBottom>a:hover,.menuBottom>div>b:hover ,.menuBottom ul a:hover{color:#a6771f;}
+.menuBottom a.active{background:#fff;border-left:1px solid #a6771f;}
+.menuBottom .active>i:before{content: "\-";}
+.menuBottom .current{color:#a6771f;background:#fff;border-radius:0;}
+.msg>b{margin-left: 5px;color: #fff; background: red; padding: 0px 6px; border-radius: 10px;font-size: 12px;}
+
+/*userLeftMenu END*/
+
+#page{width:100%;height:50px;margin:auto;}
+#page>span,#page>b,#page>a{display:inline-block;line-height:20px;text-align: center;color:#a6771f;}
+#page>b{width:70px;}
+#page>span,#page>a{width:40px;}
+#page>span:hover,#page>a:hover{color:#e7bb70;}
+
+/*formBox START*/
+.rightDiv .reminder{line-height:30px;padding: 2% 10%; font-size: 1rem;color:#a6771f;background:#f9f9f9;}
+.rightDiv .reminder>span{color:red;}
+.fromType,.fromBox{width:55%;margin:auto;overflow:hidden;}
+.fromType .input{float:left;line-height: 45px;margin-right: 35px;font-size:16px;}
+.input input{vertical-align: middle;}
+.fromType>h1,.boxTxt{float:left;width:30%;line-height:45px;padding-right:5%;font-size:16px;text-align: right;}
+.boxIpt{float:left;width:70%;line-height:45px;font-size:16px;}
+.boxIpt input{width:200px;height: 30px;}
+.boxIpt input[type="radio"]{width:20px;vertical-align:middle;margin-right:5px;}
+.boxIpt select{width:200px;height: 30px;}
+.boxIpt img{vertical-align:middle;}
+.rightDiv .messageBtn{width:100%;}
+.rightDiv .messageBtn input{margin:0 20px;}
+.rightDiv #teach_sd{display:none;margin-left:5px;font-size:14px;color:#a06e14;}
+.rightDiv #goincharge{height:30px;}
+.rightDiv .btn-action{margin:20px 0;}
+.rightDiv .showErroR{display:none;padding-top: 5px;font-size:12px;text-align:center;}
+.rightDiv .showErroR>img{vertical-align:middle;margin:0 4px 0 8px;}
+.rightDiv .showErroR>span{font-size:12px;color:red;}
+.rightDiv .notes{line-height:30px;margin:5% auto 0;padding:0 10%;color:#a6771f;}
+.fromBox .text{color:red;text-indent: 3rem;}
+/*formBox END*/
+
+
+/*asset START*/
+.rightDiv{position:relative;padding:0 20px;}
+.rightDiv>h1{margin-top:20px;overflow: hidden;}
+.rightDiv>h1 span{font-size:16px;width:100%;border-bottom:2px solid #a6771f;}
+.rightDiv>.more{float:right;}
+.asset,.investment,.payment,.dynamics{border-top:1px solid #f3f3f3;margin-top:-1px;padding:20px 0;overflow: hidden;}
+.assetLeft,.assetRight{float:left;width:55%;}
+.assetLeft{width:45%;border-right:1px solid #f3f3f3;}
+.assetLeft>h1,.assetLeft>h1 b{font-size:2.8rem;color:#a6771f;text-align:center;}
+.assetLeft>p{text-align:center;margin: 10px 0 20px;}
+.assetBtn{text-align: center;}
+.assetBtn>a{display:inline-block;width:80px;line-height:40px;text-align:center;border:1px solid #999;border-radius:5px;}
+.assetBtn>a:hover{background:#e7bb70;color:#fff;border:none;padding:1px;}
+#progress,.assetRight>div{float:left;margin-left:35px;}
+.assetRight>div{width:50%;    padding-top: 30px;}
+.assetRight>div p{padding:15px 0;}
+.assetRight>div b{color:#a6771f;}
+.assetRight .bank{width:290px;height:150px;margin:5px 22%;background:url('../imgs/bank.png') no-repeat center;background-size:100% 100%;text-align:center;}
+.assetRight .bank>a{display:block;color:#a6771f}
+.assetRight .bank .plus{width:50px;height:50px;margin:10% auto 5%;font-size:30px;border:1px solid #a6771f;border-radius:25px;}
+
+.investment .title{width:35%;}
+.investment .title p{font-size:12px;line-height:22px;}
+.investment .title p:first-child{font-weight:bold;font-size:14px;text-align:left;text-indent:2.8rem;}
+.investment .sum{width:30%;}
+.investment .percent{width:10%;}
+.investment .state{width:25%;}
+
+.payment>ul{float:left;width:50%;}
+.payment li{padding-left:5%;border-bottom:none;text-align: left;color:#a6771f;}
+.payment li:first-child{margin:5px auto;}
+.payment li:first-child b{font-size:24px;width:auto;}
+.payment li>span{display:inline-block;font-size: 14px;}
+.payment li b{display:inline-block;width:125px;color:#a6771f;font-size: 14px;}
+
+.dynamics li>div{width:25%;}
+/*asset END */
+
+/*loanAccount START*/
+.userRightMenu{margin:20px auto;}
+.userRightMenu>div{float:left;width:100px;height:45px;line-height:50px;padding-left:10px;font-size:14px;font-weight:bold;}
+.userRightMenu .listTab li{float:left;width:120px;height:45px;margin-right:10px;padding:10px 0;background:none;border:none;}
+.userRightMenu .listTab li a{display:block;height:30px;line-height:30px;color:#555;text-align:center;font-size:14px;}
+.userRightMenu .listTab li a:hover,.userRightMenu .listTab .cur a{top:0;background:#a6771f;color:#fff;}
+.noBorrowing ul {width:100%;}
+.noBorrowing li>div{width:14%;}
+.alreadyRepaid li>div{width:12.5%;}
+.alreadyRepaid li>div:nth-child(3),.alreadyRepaid li>div:nth-child(4){width:7%;}
+.alreadyRepaid li>div:nth-child(5),.alreadyRepaid li>div:nth-child(6){width:17.5%;}
+.recallBorrowing li>div{width:16.5%;}
+.tenderBorrowing li>div{width:14%;}
+.repaymentBorrowing li>div{width:11%;}
+.repaymentBorrowD li>div{width:11%;}
+.repaymentDetail li>div{width:11%;}
+.repaymentBorrowing li>div:nth-child(1),.repaymentBorrowing li>div:nth-child(5),.repaymentBorrowing li>div:nth-child(6),.repaymentBorrowD li>div:nth-child(1),.repaymentBorrowD li>div:nth-child(3),.repaymentDetail li>div:nth-child(1),.repaymentDetail li>div:nth-child(3){width:15%;}
+.repaymentBorrowing li>div:nth-child(3),.repaymentBorrowing li>div:nth-child(4),.repaymentBorrowing li>div:nth-child(7),.repaymentBorrowD li>div:nth-child(6),.repaymentBorrowD li>div:nth-child(7),.repaymentDetail li>div:nth-child(6),.repaymentDetail li>div:nth-child(7){width:7%;}
+/*loanAccount END*/
+
+/*cashWithdrawal START*/
+.cashWithdrawal li>div{width:11%;}
+.cashWithdrawal li>div:nth-child(7){width:15%;}
+.cashWithdrawal li>div:last-child{width:19%;}
+.cashWithdrawal li>div:last-child p{line-height:20px;font-size:14px;margin-top: 12px;}
+.cashWithdrawal li>div:last-child p a{font-weight:bold;}
+.tip,.tip{display:block;color:red;font-size: 12px;line-height:25px;}
+/*cashWithdrawal END*/
+
+/*projectRecord START*/
+.tender li>div{width:16.5%;}
+.tender li>div:nth-child(3){width:29%;}
+.tender li>div:nth-child(5){width:5%;}
+.lending li>div{width:33%;}
+.unpaid li>div{width:14%}
+.unpaid li>div:nth-child(1),.unpaid li>div:nth-child(2){width:18%;}
+.unpaid li>:nth-child(7){width:8%;}
+.received li>div{width:12.5%;}
+.received li>div:nth-child(1){width:16%;}
+.received li>div:nth-child(2){width:18%;}
+.received li>div:nth-child(7){width:3%;}
+/*projectRecord END*/
+
+/*message START*/
+.inbox li>div{width:18%;}
+.inbox li>div:nth-child(1){width:5%;}
+.inbox li>div:nth-child(2){width:10%;}
+.inbox li>div:nth-child(4){width:48%;text-indent: 2rem;}
+.inbox ul li>.messageBtn{width:100%;}
+.hasSend li>div{width:20%;}
+.hasSend li>div:nth-child(1){width:5%;}
+.hasSend li>div:nth-child(1)>input{vertical-align:middle;}
+.hasSend li>div:nth-child(2){width:15%;}
+.hasSend li>div:nth-child(4){width:40%;}
+.hasSend ul li>.messageBtn{width:100%;}
+.hasSend li>div strong{font-size:14px;}
+.viewMail .messageBtn .btn-action{width:90px;margin:20px 0 20px 36px;}
+/*message END*/
+
+/*personalCenter START*/
+.userRightMenu .personal li{width:100px;}
+.personalCenter .fromBox{width:90%; padding:15px 0;border-bottom: 1px solid #aaa;}
+.personalCenter .boxTxt{width:15%;padding:0;text-align:center;}
+.personalCenter .boxIpt{width:75%;padding-left: 5%;text-align:left;color:#333;}
+.personalCenter .boxIpt>a{color:#a6771f;}
+.personalCenter .boxBtn{float:left;width:10%;line-height:45px;font-size:16px;text-align:center;}
+.personalCenter .boxBtn>a{color:#a6771f;}
+#province{width:100px;}
+#city{width:120px;}
+#area{width:120px;}
+.boxIpt input[name="companyWorktime1"],.boxIpt input[name="companyWorktime2"],.boxIpt input[name="educationTime1"],.boxIpt input[name="educationTime2"]{width:93px;}
+.finance .boxTxt{width:40%;}
+.finance .boxIpt{width:60%;}
+.phoneActive .reminder{text-align:center;}
+.phoneActive .subphone{width:80px;margin:0;}
+.myBank li>div{width:13.5%;}
+.myBank li>div:nth-child(1){width:8%;}
+.myBank li>div:nth-child(2){width:20%;}
+.myBank li>div:nth-child(3){width:8%;}
+.myBank li>div:nth-child(4){width:19%;}
+.myBank li>div:nth-child(6){width:18%;}
+#modal_dialog,#dvErrorDesc{display: none;}
+.pop-tb-con{position: absolute; top: 0; left:0;width:100%;padding:30px; background: #efefef;}
+#form1_pay, #form1_pay .fromBox{width:100%;}
+#flow_num p{line-height:40px;}
+#form1_pay .boxIpt input{width:150px;}
+#form1_pay .boxIpt #imgCode{width: 150px; height: 30px;}
+#form1_pay .boxIpt a{padding:0 5px;cursor:pointer;background:#aaa;}
+#form1_pay>p{margin-bottom:5px;font-size:12px;}
+#form1_pay .btn{display:block;width:80px;margin:auto;}
+
+
+.bindBank .boxTxt{width:35%;}
+.bindBank .boxIpt{width:65%;}
+.avatar .reminder,.avatar>form{text-align:center;}
+.avatar li>div{width:50%;height:300px;}
+.avatar #cropview{display:none;width:100%}
+.avatar #useravatar>img{display:block;margin:20px auto;border-radius:80px;}
+.avatar .jcrop-holder{margin:auto;}
+.avatar .previewBox{width:100px;height:100px;margin:75px auto;overflow: hidden;}
+
+.resetPassword .fromBox{width:60%;}
+.resetPassword .boxIpt>span{float:left;margin-left:5px;line-height:30px;}
+.resetPassword #msg24{border: 1px solid #4DBF00;background-color: #F0FFE5;}
+.resetPassword #msg24,.resetPassword #msg25{margin-bottom: 15px;}
+/*personalCenter END*/
+
+/*prize START*/
+.kindPrize .rewardTab{overflow: hidden;}
+.kindPrize .rewardTab span {float: left;width: 100px;height: 40px;line-height: 40px;background: #aaa;color: #fff;margin-right: 1%;text-align:center;border-radius: 5px;cursor: pointer;}
+.kindPrize .rewardTab span:hover { background: #a67621;}
+.kindPrize .rewardTab .cur {background: #a67621;}
+.kindPrize li>div{width:15%;}
+.kindPrize li>div:nth-child(2){width:70%;text-align:left;padding-left:5%;}
+.kindPrize li>div img {height: 80px; width: 80px;margin-top: 20px;}
+.kindPrize li>div h3 {margin-top:7px;font-size: 16px; font-weight: bold;}
+.kindPrize li>div>p {line-height:25px;}
+/*prize END*/
+.ui-timepicker-div{padding:0 10px;}
+.ui-widget .ui-widget{background:#a7854a;}
