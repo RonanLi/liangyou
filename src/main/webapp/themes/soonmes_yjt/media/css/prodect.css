@@ -1,0 +1,85 @@
+/*项目详情*/
+.pDetail_pt{ height:58px; background:#f5f7f9;}
+.pDetail_pt_c{ width:1000px; margin:0 auto;  line-height:58px; font-size:14px;}
+.pDetail_pt_c a{ color:#97999c; margin-right:13px;}
+.pDetail_pt_c a span{ margin-left:13px;}
+.pDetail_pt_dq{ color:#40ace1 !important;}
+.pordect_cc{}
+.pordect_cc_l{ width:535px; float:left;}
+
+.pordect_cc_center{ margin-top:40px; margin-bottom:45px;}
+.prodect_cc_tit{ margin-bottom:15px;}
+.prodect_tt{ color:#2ca4de; font-size:24px;}
+.prodect_tt_ts{ font-size:14px; color:#97999c; margin-left:8px;}
+.pordect_label{ height:26px; margin-bottom:25px;}
+.pordect_label1{ display:block; float:left; margin-right:8px; line-height:26px; text-align:center; width:52px; height:26px; border-radius:4px; background:#7dc642; color:#fff; font-size:12px;}
+.pordect_label2{ display:block; float:left; margin-right:8px; line-height:26px; text-align:center; width:70px; height:26px; border-radius:4px; background:#f3a93f; color:#fff; font-size:12px;}
+.pordect_label3{ display:block; float:left; margin-right:8px; line-height:26px; text-align:center; width:70px; height:26px; border-radius:4px; background:#1cbfba; color:#fff; font-size:12px;}
+.pordect_label4{ display:block; float:left; margin-right:8px; line-height:26px; text-align:center; width:52px; height:26px; border-radius:4px; background:#d4d4d4; color:#fff; font-size:12px;}
+.prodect_cc_bt{ border-bottom:1px solid #e6e8ea; height:69px; margin-bottom:20px;}
+.prodect_bt_l{ float:left; width:220px;}
+.prodect_bt_lp1{ color:#6a6b6c; font-size:14px; margin-bottom:5px;}
+.prodect_bt_lp2{ color:#6a6b6c; font-size:24px;}
+.prodect_bt_c{ float:left; width:185px;}
+.prodect_bt_cp1{ color:#6a6b6c; font-size:14px; margin-bottom:5px;}
+.prodect_bt_cp2{ color:#6a6b6c; font-size:24px;}
+.prodect_bt_r{ float:left; width:120px;}
+.prodect_bt_rp1{ color:#6a6b6c; font-size:14px; margin-bottom:5px;}
+.prodect_bt_rp2{ color:#6a6b6c; font-size:24px;}
+.prodect_ct{ font-size:14px; color:#97999c; height:20px; margin-bottom:20px;}
+.prodect_w{ float:left; height:6px; background:#e5e5e5; border-radius:4px; width:320px;}
+.prodect_n{height:6px; background:#40ace1; border-radius:4px;}
+.prodect_span{ float:left; color:#97999c; font-size:14px; margin-top:-6px; margin-left:10px;}
+.prodect_dt{ height:20px; margin-bottom:20px;}
+.prodect_et{color:#696b6d; font-size:14px;}
+.pordect_cc_r{ float:right; position:relative; width:305px; padding-left:15px; padding-top:2px; padding-right:15px; height:325px; border-radius:4px; background:#1cbaee;}
+.pordect_cc_r h4{ text-align:right; height:53px; line-height:53px; font-size:14px; color:#fff; border-bottom:1px solid #55d0f8;}
+.pordect_cc_r h4 a{color:#fff;}
+.prodect_r_at{ color:#fff; font-size:16px; height:50px; line-height:70px;}
+.prodect_r_czbtn{ float:right; color:#fff43f; font-size:14px;}
+.prodect_r_czbtn a{color:#fff43f; }
+.prodect_r_bt{color:#fff; font-size:16px; margin-bottom:10px;}
+.prodect_r_btspa{font-size:26px;}
+.prodect_list_text1{ width:215px; height:45px; margin-bottom:5px; line-height:45px; border:none; background:#fff; border-radius:4px; float:left; color:#b7b7b7; text-indent:1em; }
+.prodect_case_progressbtn{ position:absolute; width:100%; left:0; bottom:0;}
+.prodect_case_progressbtn a{ height:45px; line-height:45px; border-radius:0px 0px 4px 4px;  background:#43ace1; color:#fff; font-size:18px; text-align:center; display:block; cursor:pointer;}
+.prodect_r_dlbtn{ color:#fff43f; font-size:16px;}
+.prodect_r_dlbtn a{color:#fff43f; }
+
+.prodect_part2{ height:230px; background:#f5f7f9; border-bottom:1px solid #e0e0e0;}
+.prodect_part2_cc{ padding-top:40px; color:#97999c; font-size:15px;}
+.prodect_partl1{ float:left; position:relative; width:250px; background:url(images/pDetail_1.png) no-repeat top center; height:145px;}
+.prodect_partl1 p{ text-align:center; position:absolute; width:100%; bottom:0;}
+.prodect_partl2{ float:left; position:relative; width:250px; background:url(images/pDetail_2.png) no-repeat top center; height:145px;}
+.prodect_partl2 p{ text-align:center; position:absolute; width:100%; bottom:0;}
+.prodect_partl3{ float:left; position:relative; width:250px; background:url(images/pDetail_3.png) no-repeat top center; height:145px;}
+.prodect_partl3 p{ text-align:center; position:absolute; width:100%; bottom:0;}
+.prodect_partl4{ float:left; position:relative; width:250px; background:url(images/pDetail_4.png) no-repeat top center; height:145px;}
+.prodect_partl4 p{ text-align:center; position:absolute; width:100%; bottom:0;}
+
+.prodect_menu{ height:60px; border-bottom:1px solid #e0e0e0;}
+.prodect_tab1_cc{}
+.prodect_tab1_cc ul li{ height:57px; line-height:60px; float:left; font-size:14px; cursor:pointer; color:#6a6b6c; width:90px; text-align:center; border-top:3px solid #fff;}
+#prodect_menu1{border-top:3px solid #32b0ee; position:relative;}
+.prodect_tab1{ margin-top:30px;color:#6a6b6c; font-size:14px; line-height:24px; margin-bottom:100px;}
+.prodect_tab1 dl { margin-bottom:30px;}
+.prodect_menu1_span{ display: block; background: url(images/pDetail_menubg.png) no-repeat scroll center center transparent; width: 21px; height: 7px; position: absolute; bottom: 0px; margin-bottom: -1px; left:0; margin-left:30px;}
+#prodect_menu2{ position:relative;}
+#prodect_menuhide1{border-top:3px solid #32b0ee; position:relative;}
+#prodect_menuhide2{ position:relative;}
+.prodect_menu2_span{ display: block; background: url(images/pDetail_menubg.png) no-repeat scroll center center transparent; width: 21px; height: 7px; position: absolute; bottom: 0px; margin-bottom: -1px; left:0; margin-left:30px;}
+.prodect_tab2{ margin-top:30px; margin-bottom:180px;}
+.prodect_tab2 table{ width:100%; border-collapse:collapse; border-radius:4px; margin-bottom:20px;}
+.prodect_tab2 table tr{height:42px;}
+.prodect_tab2 table tr th{ background:#1cbaee; text-align:center; color:#fff; font-size:16px; font-weight:normal;}
+.prodect_tab2 table tr td{ text-align:center; color:#6a6b6c; font-size:14px;}
+.prodect_page{ height:28px; font-size:15px; color:#939393; width:320px; float:right;} 
+.prodect_page a{ float:left; height:28px; line-height:28px; width:28px; text-align:center; cursor:pointer;}
+.prodect_page dl dd{float:left; height:28px; line-height:28px; width:28px;  text-align:center; cursor:pointer;}
+.prodect_page dl dd input{ float:left; width:38px; height:27px; line-height:27px; border-radius:8px; border:1px solid #c4c4c4; text-align:center; color:#939393; }
+.prodect_page dl dd span{ float:left; margin-left:5px;}
+.prodect_page_dq{border-radius:20px; border:1px solid #008dde; background:#f3faff;}
+.prodect_dd_input{ width:80px !important;}
+/**/
+
+

@@ -1,0 +1,124 @@
+@CHARSET "UTF-8";
+ .boxB img { display: block; margin: auto;}
+ .giftS, .giftT{ width: 100%; height: 100%;overflow:hidden;background:#004ea0;}
+.giftF_img{width:100%;}
+.giftF_imgP{display:none;width:100%;}
+/* gift4 START*/
+.boxB {width:1200px; margin:auto;overflow:hidden;}
+.boxB > img{width:1200px;}
+.boxB > p{color:#fff;line-height:30px;font-size:1rem;}
+.boxB > p:first-child{font-weight:bold;font-size:1.2rem;margin:40px 0 10px 0 ;}
+.boxB > p:last-child{margin-bottom:60px;}
+.gift4 ~ p{font-size:1.2rem;text-align:center;line-height:2.5rem;font-weight:bold;}
+.gift4>img{margin:20px auto;}
+.gift4_table{width:65%;padding:20px 0;margin:15px auto;background:#0263c9;box-shadow: 5px 5px 5px #00346b;}
+.gift4_table table{width:95%;border:1px solid #fff; border-color:#fff;margin:auto;;}
+.gift4_table td{height:65px;color:#fff;font-size:1.2rem;text-indent:2rem;border-color:#fff;}
+.gift4_btnBox{width:60%;overflow:hidden;margin:2.5% auto;}
+.gift4_btnBox>.btnBox{float:left;width:20%;margin-right:6.5%;}
+.gift4_btnBox>.btnBox:last-child{margin-right:0;}
+.gift4_btnBox .shareBtn,.shareBtn1{display:block;width:100%;height:50px;line-height:50px;padding:0;background:url('/themes/soonmes_yjt/liangyou/imgs/gift4_btn.png') no-repeat center;background-size:100% 100%;text-align:center;color:#004ea0;font-size:1.7rem;font-weight:bold;cursor: pointer;}
+.shareBtn:hover,.bshare-custom .shareBtn:hover{text-decoration:none;padding:0;z-index:100;background:#fed827;opacity: 0.75;border-radius:10px;}
+.bshare-custom>.shareBtn1{height:50px;line-height:50px;background:url('/themes/soonmes_yjt/liangyou/imgs/gift4_btn.png') no-repeat center !important;background-size: 100% 100% !important; color: #004ea0;text-decoration: none;padding:0;}
+.shareBtn1:hover{text-decoration:none !important;}
+
+.gift4_btnBox img{width:100%;}
+.gift4_btnBox .div{width:120px;margin:15px auto 0;display:none;}
+.gift4_btnBox .div p{width:100%;word-break:break-all;font-size: 0.8rem;color:#fff;line-height: 22px;}
+.div .btnText{display:inline-block;color:#e7bb70;font-size: 0.8rem;padding-left: 0;line-height: 12px;}
+.btnText:hover{color:#ad9f7c;text-decoration:underline;}
+.gift4_flow{width:60%;margin:auto;overflow:hidden;}
+.gift4_flow:nth-child(even){background:url('/themes/soonmes_yjt/liangyou/imgs/gift4_bg4.png') no-repeat left center;}
+.gift4_flow:nth-child(odd){background:url('/themes/soonmes_yjt/liangyou/imgs/gift4_bg5.png') no-repeat right center;}
+.flow_num{width:20%;float:left;text-align:center;margin:15px 0 15px 6%;color:#fff;font-size:4rem;border-right:1px solid #f9bbba;}
+.gift4_flow:nth-child(odd) .flow_num{float:right;border-left:1px solid #f9bbba;border-right:none;margin-right:6%;margin-left:0;}
+.flow_text{width:55%;float:left;color:#fff;margin-left:5%;}
+.gift4_flow:nth-child(odd) .flow_text{float:right;margin-left:0;}
+.flow_text > h1{text-align:center;color:#fff;font-size:1.8rem;font-weight:bold;padding-top:2%;}
+.flow_text > p{color:#fff;font-size:1.2rem;padding:1% 3%;}
+.flow_text > p span{font-weight:bold; color:#fff;}
+.boxB>ul li{float:left;width:20%;margin:1% 2.5%;}
+.boxB>ul li>h1,.boxB>ul li>p{text-align:center;color:#fff;}
+.boxB>ul li>img{display:block;margin:auto;}
+.boxB>ul li>h1{font-size:1.1rem;font-weight:bold;line-height:2.5rem;}
+.boxB>ul li>p{line-height:2rem;color:rgba(255, 255, 255, 0.86);}
+/* gift4 END */
+/* share START*/
+.shareBox{width:770px;heIght:1030px;}
+.shareBox>p{background:#fff;text-indent:2rem;padding:10px 0;border-bottom:1px solid #eee;}
+.share{height:120px;background:#fff;margin-bottom:20px;}
+.share:first-child{overflow:hidden;height:90px;}
+.share>h1,.share>a{height:40px;line-height:40px;margin-top:25px;text-align:center;}
+.share>h1{float:left;width:75%;font-size:1.5rem;}
+.share>h1>span{font-size:1.5rem;color:#f7775f;}
+.share>a{float:right;width:20%;margin-right:5%;font-size:1.2rem;color:#fff;background:#e7bb70;border-radius:10px;}
+.share>a:hover{background:#d8a856;}
+.share>div{float:left;width:33.33%;}
+.share>div>p,.share>div>span{display:block;width:100%;line-heigth:30px;text-align:center;padding-top:20px;}
+/* share END */
+
+.moneyBtn{display:none; height: 25px; line-height: 25px; margin: 10px 0 0; background: url("../imgs/rewardBanner.png") no-repeat center; font-size: 1.6rem; color: #fff; text-align: center; font-weight: bold;}
+
+#btnBig #btn_prev {left: 50% !important;margin-left: -584px !important;}
+
+#btnBig #btn_next {left: 50% !important;margin-left: 230px !important;}
+
+/* 首页修改投资总额处的样式  by liruonan 20160807 */
+.investtop ul .lineLi{width:590px;border-right:1px solid #aaa;line-height:30px;margin-top:0px;font-size:16px;color:#e7bb70;margin-bottom:20PX;}
+.investtop ul .lineLi:first-child{margin-left:0;width:720px;}
+.investtop ul .lineLi:last-child{border:none;width:480px;margin-left:0;}
+.investtop ul .lineLi img{width:715px;}
+.investtop ul .lineLi P{width:235px;float:left;text-align:center;margin-top:7px;}
+.investtop ul .lineLi span{color:#e7bb70;font-size:30px;}
+.investtop ul .lineLi b{color:#e7bb70;}
+
+/*投资送礼gift5 START*/
+/*.gift5, .giftF_img{height:580px;}*/
+.gift5Tab,.gift5Div,.gift5Btn{width:1200px;margin:auto;overflow: hidden;}
+.gift5Tab>span{float:left;width:49.6%;margin:0 0.2% 5px;height:50px;line-height:50px;background:#97170e;color:#fff;text-align: center;font-size:20px;cursor: pointer;}
+.gift5Tab .cur{box-shadow: 0 2px 20px #570904;background:#b42218;}
+
+.gift5Line{width:1200px;height:275px;margin:auto;padding:0 2%;border-bottom:2px solid #fff;z-index:1;}
+.gift5Line:nth-child(even){border-left:2px solid #fff;}
+.gift5Line:nth-child(odd){border-right:2px solid #fff;}
+
+.gift5Btn{padding:0 380px;}
+.gift5Btn>span{float:left;width:220px;height:50px;line-height:50px;text-align:center;background:url("/themes/soonmes_yjt/liangyou/imgs/gift5_btnBg1.png") no-repeat center;background-size:100% 100%;color:#97170e;font-weight:bold;cursor: pointer;}
+.gift5Btn .cur{background:url("/themes/soonmes_yjt/liangyou/imgs/gift5_btnBg2.png") no-repeat center;background-size:100% 100%;}
+
+
+.gift5Prize{position:relative;float:left;width:50%;margin-top:25px;padding:50px 0;background:url("/themes/soonmes_yjt/liangyou/imgs/gift5_prizeBg.png") no-repeat center;background-size:100% 100%;}
+.gift5Prize>h1{position:absolute;width:60%;height:50px;line-height:50px;left:20%;bottom:-10px;text-align:center;z-index:10;background: url("/themes/soonmes_yjt/liangyou/imgs/gift5_h1Bg.png") no-repeat center;background-size:100% 100%;color:#fff;font-size:16px;}
+.gift5Prize>h1>span{color:#fff;font-size:16px;}
+.gift5Prize .HH{display: none;}
+.gift5Prize .HH>span{color:yellow;font-size:16px;}
+.gift5Prize .notes{position: absolute;width:30%;height:22px;line-height:22px;top:5%;left:35%;background:#d79f12;color:#78270c;font-size:12px;text-align:center;font-weight: bold;}
+.gift5Prize>a{display:inline-block;width:49%;}
+.gift5Prize>a img{display:block;width:120px;height:120px;margin:auto;}
+.gift5Prize>a p{text-align:center;color:#fff;}
+
+.gift5Line .H{display:none;}
+
+.gift5Div{padding:30px 0;display:none;}
+.gift5S{display:block;}
+.gift5Div>img{display:block;margin:0 auto 50px;}
+.gift5Div>p{width:100%;margin:10px 0;padding:0 5%;line-height: 30px;text-indent:-2rem;color:#fff;}
+.gift5Fix,.gift5Fix1{position: fixed;width:120px;height:180px;top:50%;right:10%;background:url("/themes/soonmes_yjt/liangyou/imgs/gift5_28.gif")no-repeat center;cursor: pointer;}
+.gift5Fix1{display:none;}
+/*投资送礼gift5 END*/
+
+/*留守儿童*/
+.charitable{padding-bottom:40px;}
+.charitable>img{width:100%;}
+.chariBg{padding:80px 0 40px;background:url("/themes/soonmes_yjt/liangyou/activety/imgs/charitable_bg.png") no-repeat center top;background-size: 100% 115%;}
+.chari{width:1200px;margin:auto;overflow: hidden;}
+.chariP h2>img,.chariS h3>img,.chariBtn>img,.chari h2>img{display:block;margin:auto;}
+.chari p{text-indent: 2rem;color:#000;line-height:1.8rem;}
+.chari>div{float:left;}
+.chariP{width:40%;}
+.chariI{width:60%;}
+.chariI>img{display: block;margin: auto;}
+.chariS{width:33%;}
+.chariS:nth-child(3){width:30%;margin: 0 1.5%;}
+.chariS h3>img{height:80px;margin: 20px auto;}
+/*留守儿童END*/

@@ -1,0 +1,159 @@
+/*新手指引*/
+.listcenter{ width: 790px; margin: 40px auto 100px; text-align: center;}
+
+/*债券转让*/
+.pro_banner{ background: #5c53b0 url(images/list_banner.png) no-repeat center center; height: 316px;}
+.pro_listCenter{ width: 930px; margin: 0 auto;}
+.pro_list{ background: #eff1f3; padding:70px 0px 50px 0px; overflow: auto;}
+.pro_tab{ width: 925px; margin: 0px auto 27px; height: 347px;}
+.pro_tab_1{ float: left; width: 290px; height: 347px; background:#fff; margin-right: 27px; border-radius:4px;}
+.pro_tab_2{ float: left; width: 290px; height: 347px; background:#fff; border-radius:4px;}
+.pro_tab_3{ float: right; width: 290px; height: 347px; background:#fff; border-radius:4px;}
+.pro_tab_tt{ height: 53px; line-height:53px; padding:0px 28px; overflow:auto; border-radius:4px 4px 0px 0px; color:#fff; font-size: 24px;}
+.pro_tab_tt a{color:#fff;}
+.pro_tab_ttbg1{ background: #22adb5;}
+.pro_tab_ttbg2{ background: #119bd3;}
+.pro_tab_ttbg3{ background: #1f7dd5;}
+.pro_tab_center{ width: 270px; margin: 15px auto 0px;}
+.pro_tab_center div{ font-size: 18px; color:#9b9b9b; text-align: center;height: 60px; border-bottom: 1px solid #e9e9e9; }
+.pro_tab_center div span{ color:#3e3e3e; font-size: 34px; margin-left:8px; margin-right: 8px;}
+.pro_tab_link1{ display: block; height:45px; line-height: 45px; text-align: center; width: 118px; margin: 25px auto 0px; border-radius:4px;color:#22adb5; border:1px solid #22adb5; cursor: pointer; }
+.pro_tab_link1:hover{ color:#fff; background: #22adb5; cursor: pointer;}
+.pro_tab_link2{ display: block; height:45px; line-height: 45px; text-align: center; width: 118px; margin: 25px auto 0px; border-radius:4px;color:#119bd3; border:1px solid #119bd3; cursor: pointer; }
+.pro_tab_link2:hover{ color:#fff; background: #119bd3; cursor: pointer;}
+.pro_tab_link3{ display: block; height:45px; line-height: 45px; text-align: center; width: 118px; margin: 25px auto 0px; border-radius:4px;color:#1f7dd5; border:1px solid #1f7dd5; cursor: pointer; }
+.pro_tab_link3:hover{ color:#fff; background: #1f7dd5; cursor: pointer;}
+.pro_more{ margin-left: 440px !important; margin-top: 45px !important;}
+.pro_steppart{ height: 420px; background: #fff url(images/list_step.png) no-repeat center center;}
+.pro_statistics{ height:90px; background: #1f7dd5; padding:40px 0px;}
+.pro_statistics_center{ width: 805px; margin: 15px auto 0px; font-size: 16px; color:#fff; text-align: center;}
+.pro_statistics_l{ float:left; width: 180px; margin-right: 125px;}
+.pro_statistics_l p{ height: 34px; line-height: 34px;}
+.pro_statistics_c{float:left; width: 180px; }
+.pro_statistics_c p{ height: 34px; line-height: 34px;}
+.pro_statistics_r{ float: right;}
+.pro_statistics_r p{ height: 34px; line-height: 34px;}
+.pro_statistics_center span{ font-size: 20px; margin-right: 8px;}
+.pro_problenlist{ padding:75px 0px 140px 0px; background: #f5f7f9;}
+.pro_problenlist_center{ width: 880px; margin: 0 auto;}
+.pro_problem_tt{ background: url(images/list_ico.png) no-repeat left center; height: 32px; margin-bottom: 25px;}
+.pro_problenlist_center dl { font-size: 14px; color:#494949; height: 32pxd; line-height: 32px;text-indent: 22px; margin-bottom: 45px;}
+.pro_problenlist_center dl dt{ background: url(images/list_lip.png) no-repeat left center; height: 32px; }
+
+
+
+/*股东背景*/
+.holder_banner{ background: #f1f5f8 url(images/share_bg.png) no-repeat center center; height: 278px;}
+.holder_center{ width: 925px; margin: 45px auto 0px;}
+#holder_d1{ margin-bottom: 48px;}
+#holder_d1 dt{ color:#4679b2; font-size: 30px; margin-bottom: 25px;}
+#holder_d1 dd{ line-height: 25px; font-size: 15px; color:#393939;}
+#holder_d2{margin-bottom: 48px;}
+#holder_d2 dt{ background: #27c9be; color:#fff; width: 209px; height: 37px; line-height: 37px; text-align: center; font-size: 16px; color:#fff; margin-bottom: 13px;}
+#holder_d2 dd{ line-height: 25px; font-size: 15px; color:#393939;}
+#holder_d3{ margin-bottom: 55px;}
+#holder_d3 dt{background: #27c9be; color:#fff; width: 209px; height: 37px; line-height: 37px; text-align: center; font-size: 16px; color:#fff; margin-bottom: 13px;}
+#holder_d3 dd{ line-height: 25px; font-size: 15px; color:#393939;}
+#holder_d4{ margin-bottom: 58px;}
+#holder_d4 dt{background: #27c9be; color:#fff; width: 255px; height: 37px; line-height: 37px; text-align: center; font-size: 16px; color:#fff; margin-bottom: 13px;}
+#holder_d4 dd{ line-height: 25px; font-size: 15px; color:#393939;}
+#holder_d5 dt{ color:#4679b2; font-size: 30px;}
+#holder_d5 dd{line-height: 25px; font-size: 15px; color:#393939; }
+#holder_d6 { margin-bottom: 30px;}
+#holder_d6 dt{ font-size: 15px; color:#393939; font-weight: bold;}
+#holder_d6 dd{font-size: 15px; color:#393939;line-height: 25px;}
+#holder_d7 { margin-bottom: 45px;line-height: 25px;font-size: 15px; color:#393939;}
+#holder_d7 dt{  font-weight: bold;}
+#holder_d8{margin-bottom: 145px;line-height: 25px;font-size: 15px; color:#393939;}
+#holder_d8 dt{  font-weight: bold;}
+
+/*安全保障*/
+.safe_banner{ background: #4679b2 url(images/safe_banner.png) no-repeat center center; height: 349px;}
+/*.safe_part1{ height: 680px; background: #f5f7f9;}
+.safe_part1center{ width: 925px; margin: 0 auto;}
+.safe_part1center dl dt{ font-size: 30px; color:#393939;}
+.safe_part1center dl dt span{ font-size: 30px; font-weight: bold;}
+*/
+.safe_banner{ background: #4679b2 url(images/safe_banner.png) no-repeat center center; height: 349px;}
+.safe_part1{ background: #f5f7f9 url(images/safe_part1.png) no-repeat center center; height:680px; }
+.safe_part2{ background: #ffffff url(images/safe_part2.png) no-repeat center center; height:686px; }
+.safe_part3{ background: #f5f7f9 url(images/safe_part3.png) no-repeat center center; height:605px; }
+.safe_part4{ background: #4679b2 url(images/safe_part4.png) no-repeat center center; height:708px; }
+.safe_part5{height: 254px; background: #fff;}
+.safe_center{ width: 294px; margin: 0 auto; padding-top: 83px;}
+.safe_center a{ display: block; height: 79px; background: url(images/safe_btn.png) no-repeat center center;}
+.safe_part1intro{ background: #f5f7f9;}
+.safe_part1center{ width: 925px; margin: 0 auto; padding-top:70px;}
+.safe_part1center dl{ margin-top: 70px;color:#393939; }
+.safe_part1center dl dt{ text-align: center; font-size: 30px; margin-bottom: 30px;}
+.safe_part1center dl dt span{ font-weight: bold;}
+.safe_part1center dl dd{ font-size: 14px; line-height: 24px;}
+.sage_part1_l{ float: left; width: 495px; height: 510px; background: url(images/list/safe_part1.png) no-repeat center center;}
+.sage_part1_r{ float: left; width: 430px; margin-top: 70px;}
+.sage_part1_r dl{ margin-bottom: 26px; color:#393939; margin-top: 0px !important;}
+.sage_part1_r dl dt{ font-size: 18px; font-weight: bold; margin-bottom: 20px; text-align: left !important;}
+.sage_part1_r dl dd{ font-size: 14px; line-height: 20px;}
+
+.safe_part2center{ width: 930px; margin: 0 auto; padding-top:67px;}
+.safe_part2center p{ font-size: 30px; color:#393939; text-align: center;}
+.safe_part2center p span{ font-weight: bold;}
+.safe_part3intro{ background: #f5f7f9; }
+.safe_part3center{ width: 930px; margin: 0 auto; padding-top:70px; overflow: auto; padding-bottom: 70px;}
+.safe_part3center p{ font-size: 30px; color:#393939; text-align: center;}
+.safe_part3center p span{ font-weight: bold;}
+.safe_part3_l{ width: 255px; float: left; margin-right: 50px; margin-left: 20px;}
+.safe_part3_c{ float: left; width: 255px; margin-right: 50px; margin-left: 20px;}
+.safe_part3_r{ float: left; width: 255px;}
+.safe_part4intro{ background: #4679b2;}
+.safe_part4center{width: 880px; margin: 0 auto; padding-top:70px;overflow: auto;}
+.safe_part4center p{ font-size: 30px; color:#fff; text-align: center; margin-bottom: 60px;}
+.safe_part4center p span{ font-weight: bold;}
+.safe_part4_l{ float:left; margin-right:45px; background: url(images/list/safe_part4_1.png) no-repeat center center; height: 431px; width: 263px;}
+.safe_part4_c{float:left; margin-right:45px; background: url(images/list/safe_part4_2.png) no-repeat center center; height: 431px; width: 263px;}
+.safe_part4_r{float:left; background: url(images/list/safe_part4_3.png) no-repeat center center; height: 431px; width: 263px;}
+
+
+
+/*新手指引*/
+.newuser_banner{ background: #3ed4dd url(images/user_banner.png) no-repeat center center; height: 344px;}
+.newuser_part1{ background: #f5f7f9 url(images/user_part.png) no-repeat center center; height: 2164px;}
+.newuser_part2{ background: #162e3f url(images/user_part2.png) no-repeat center center; height: 130px;}
+.newuser_part3{ background: #f5f7f9 url(images/user_part3.png) no-repeat center center; height: 260px;}
+.newuser_part4{ background: #f5f7f9; overflow: auto;}
+.newuser_part4Center{ width: 895px; margin: 0 auto;}
+.newuser_step1btn1{float:left; width: 208px; height: 66px; background: url(images/user_step1_1.png) no-repeat center center; cursor: pointer; margin-right: 12px;}
+.newuser_step2btn1{float:left; width: 223px; height: 66px; background: url(images/user_step2_1.png) no-repeat center center;cursor: pointer; margin-right: 12px;}
+.newuser_step3btn1{float:left; width: 223px; height: 66px; background: url(images/user_step3_1.png) no-repeat center center;cursor: pointer; margin-right: 12px;}
+.newuser_step4btn1{float:left; width: 200px; height: 66px; background: url(images/user_step4_1.png) no-repeat center center;cursor: pointer;}
+.newuser_step1btn{float:left; width: 208px; height: 66px; background: url(images/user_step1.png) no-repeat center center;cursor: pointer; margin-right: 12px;}
+.newuser_step2btn{float:left;width: 223px; height: 66px; background: url(images/user_step2.png) no-repeat center center;cursor: pointer; margin-right: 12px;}
+.newuser_step3btn{float:left;width: 223px; height: 66px; background: url(images/user_step3.png) no-repeat center center;cursor: pointer; margin-right: 12px;}
+.newuser_step4btn{float:left;width: 200px; height: 66px; background: url(images/user_step4.png) no-repeat center center;cursor: pointer;}
+.newuser_content1{ background: url(images/user_content1.png) no-repeat center center; height: 554px; margin-top: 50px;}
+.newuser_content2{ background: url(images/user_content2.png) no-repeat center center; height: 554px; margin-top: 50px;}
+.newuser_content3{ background: url(images/user_content3.png) no-repeat center center; height: 554px; margin-top: 50px;}
+.newuser_content4{ background: url(images/user_content4.png) no-repeat center center; height: 554px; margin-top: 50px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

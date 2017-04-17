@@ -1,0 +1,146 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{
+	font-size:12px;	
+	}
+	
+.bgbody{
+	padding:10px 0px 0px 10px;
+}
+ul,li{
+	margin:0;
+	padding:0;
+	list-style:none;
+	}
+.lb{
+	width:589px; margin: 0 auto;
+	}
+.danbaoxixitanchu{
+	background:url(../bg/danbaotan_top.gif) no-repeat;
+	height:68px;		
+	}
+.danbaoxixitanchucenter{
+	background:url(../bg/danbaotanchu_center.gif) repeat-y;
+		}
+.danbaoxixitanchucenter ul{
+	zoom:1;
+	overflow:auto;	
+	padding:40px;
+			}
+.danbaoxixitanchucenter ul li{
+	zoom:1;
+	overflow:auto;
+	line-height:28px;
+	width:500px;
+	word-wrap:break-word ;
+	word-break:break-all; 
+	display:block;
+	color:#999;
+}
+.danbaoxixitanchucenter ul li label{
+	font-weight:bold;
+	color:#000;
+	float:left;
+	
+				}
+.danbaoxixitanchucenter ul .danbaoliset2{
+	float:left;
+	width:250px;
+
+}
+			
+			
+.danbaoxixitanchubotoom{
+	background:url(../bg/danbaotanchu_bottom.gif) no-repeat;
+	height:58px;
+	}
+.anniubuton{
+	margin-top:8px;
+	}
+.xxxxx{
+	background:url(../bg/close.gif) left center no-repeat;
+	height:13px;
+	padding-left:15px;
+	float:right;
+	margin-right:20px;
+	cursor:pointer;
+	}
+.mab{
+	margin-bottom:15px;
+	}
+body{
+	 padding:0px;
+	 margin:0px;
+	/* background:url(${ctx}//kxdres/images/index/bg-01.gif) repeat-x;*/
+	 font-size:12px;
+	 *font-size:12px;
+}
+.news{
+/*background:url(${ctx}//kxdres/images/index/bg-01.gif) repeat-x;*/
+margin-top:10px;
+}
+ul {
+overflow: hidden;
+zoom: 1;
+/*background:url(${ctx}//kxdres/images/index/bg-01.gif) repeat-x;*/
+}
+ul,li {
+margin: 0;
+padding: 0;
+list-style: none;
+}
+a {
+text-decoration: none;
+color: #707070;
+font-size: 12px;
+}
+a:link, a:visited, a:hover, a:active, a, area {
+text-decoration: none;
+}
+a:hover{
+ color:blue;
+}
+a, area {
+blr: expression(this.onFocus=this.blur());
+}
+h3{
+ font-size：12px;
+ line-height:14px;
+ height:14px;
+ padding:2px;
+ margin:5px;
+}
+.detail_info{
+	cursor: pointer;
+}
+.detail_info li{
+ line-height:21px;
+ font-size:12px;
+ float:left;
+ overflow:hidden;
+ white-space:nowrap;
+ text-overflow:ellipsis; 
+ padding-left:2px;
+ margin-right:2px; 
+}
+table{
+font-size:12px;
+}
+table td{
+ overflow:hidden;
+ text-align: center;
+ height:30px;
+ line-height: 30px;
+ height:32px;
+ white-space: nowrap;
+ overflow:hidden;
+ text-overflow:ellipsis;
+}
+table tfoot a {
+ padding-left:3px;
+ color:black;
+}
+.choose{
+  color:#333;
+}	
