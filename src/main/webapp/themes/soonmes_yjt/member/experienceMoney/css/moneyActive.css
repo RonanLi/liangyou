@@ -1,0 +1,104 @@
+@CHARSET "UTF-8";
+.wrap {width: 100%;background: url("../imgs/bg.png") center;background-size: 100% 100%;}
+.wrap > img {display: block;margin: auto;}
+.contain {width: 1200px;margin: auto;background:none;padding:0;}
+.wrap .goldBnner{display:none;}
+.redTop{width:100%;margin: auto;position: relative;background:url(../imgs/topBanner.png) no-repeat center;}
+#indexgs {width: 1200px;height: 780px;position: relative;margin:auto;}
+#indexgs img,#indexg0,#indexg1,#indexg2,#indexg3{position: absolute;}
+#indexg2 {left:20px;top: 30px;}
+#indexg1 { left:285px;top: 415px;z-index: 10;}
+#indexg3 { left:285px;top:28px;}
+#indexg0 {left: 0;top: 0;}
+.fixed{top:10px;left:610px;z-index: 5;}
+.red {position: relative;padding-bottom: 50px;}
+.bag {width: 694px;height: 690px;position: relative; margin: auto;}
+.full, .empty {position: absolute;}
+.empty {display: none;}
+.phone{position:relative;}
+.phone>img{width:80%;margin-left: 10%;display:none;}
+.btn {display: block;width:16%;height: 50px;line-height: 40px;position: absolute;left: 42%;bottom: 110px; font-size: 1.5rem;font-weight: bold;text-align: center;background: #fee90f;color: #df1516;border-radius: 10px;box-shadow: 0 5px #f5a200;cursor: pointer;border:none;z-index:100;}
+.btn:hover{background: #fec90f;color: #cc2923;}
+.goldTxt {background: url("../imgs/rule.png") no-repeat center top; background-size: 95% 100%;margin-top: -200px; padding-top: 200px;padding-bottom:20px;}
+.goldTxt > h1 ,.goldSb > h1{background: url("../imgs/p4.png") no-repeat center;height: 4rem;margin:35px 0;}
+.goldTxt > p{width:76%;margin-left:13%;font-size:18px;line-height:40px;color:#cf691f;text-indent:-1rem;font-weight: bold;}
+.gold {display: none;position: absolute;top: 120px;left: 45%;width: 10%; height: 540px;}
+.gold img {position: absolute;top: auto;left: 0;bottom: 0;-webkit-transition: -webkit-transform 1.4s ease-in, background 0.3s ease-in;transition: transform 1.4s ease-in;width: 60px;}
+.shake{-webkit-animation: 1s ease;-moz-animation: 1s ease;-ms-animation: 1s ease;animation: 1s ease;}
+.shake {-webkit-animation-name: shake;-moz-animation-name: shake;-ms-animation-name: shake;animation-name: shake;}
+@-webkit-keyframes shake {0%, 100% {-webkit-transform: translateX(0);}10%, 30%, 50%, 70%, 90% {-webkit-transform: translateX(-10px);}20%, 40%, 60%, 80% {-webkit-transform: translateX(10px);}}
+
+@-moz-keyframes shake {0%, 100% {-moz-transform: translateX(0);}10%, 30%, 50%, 70%, 90% {-moz-transform: translateX(-10px);}20%, 40%, 60%, 80% {-moz-transform: translateX(10px);}}
+
+@-ms-keyframes shake {0%, 100% {-ms-transform: translateX(0);}10%, 30%, 50%, 70%, 90% {-ms-transform: translateX(-10px);}20%, 40%, 60%, 80% {-ms-transform: translateX(10px);}}
+
+@keyframes shake {0%, 100% { transform: translateX(0);}10%, 30%, 50%, 70%, 90% {transform: translateX(-10px);}20%, 40%, 60%, 80% {transform: translateX(10px);}}
+
+.goldLine{overflow:hidden;background:#ffcd34;}
+.goldSb{width:1200px;margin:auto;}
+.goldSb > h1{height:65px;background: url("../imgs/p5.png") no-repeat center;}
+.goldSb > p{padding:0 5%;color:#911e03;font-size:18px;text-indent:2rem;}
+.goldLine>ul{width:1200px;margin:auto;}
+.goldLine>ul>li{float:left;width:25%;margin: 5% 0;}
+.goldLine>ul>li>img{display:block;margin:auto;}
+.goldLine>ul>li>h1{margin: 15px 0px 10px;text-align:center;font-size:20px;font-weight: bold;color:#621700;}
+.goldLine>ul>li>p{line-height: 25px;text-align:center;font-size:16px;color:#621700;}
+.goldBom{overflow:hidden;background:#a20021;}
+.goldBom>h1{width:1200px;margin:auto;text-align:center;color:#fff;font-weight:bold;font-size:44px;}
+.goldBom>h1 a{display:inline-block;width:250px;height: 50px;margin:5%;background: #aaa;color: #df1516;font-size: 32px; font-weight: bold; text-align: center; border-radius: 10px; box-shadow: 0 5px #f5a200; cursor: pointer;}
+/* 活动页结束 */
+
+/* 弹窗 */
+.popup{position:fixed;width:100%;height:1200px;top:0;background: #02030e;opacity: 0.5;z-index:5;}
+.bank{position: fixed;width:30%;height:620px;top:180px;left:35%;z-index:10;background:url("../imgs/popImg.png") no-repeat center;}
+.popBtn{position: absolute;display:block;width:31px;height:31px;top:0;right:0;background:url("../imgs/popClose.png") no-repeat center;}
+.popup,.bank{display:none;}
+/* 弹窗结束 */
+
+/* 详情页 */
+.card > h1:before{ content: '+'; display: inline-block; position: absolute; left: 10px; }
+.card.show > h1:before{ content: '-'; left: 16px; }
+.detail-wrap ,.invest-form{width:100%;border-top:none;}
+.detail-wrap{height:220px;} 
+.detail-title>b{display:block;color:#fff;background:url('../imgs/detailTit.png')no-repeat center;font-size: 1.2rem;text-align:center;}
+.invest-detail .bid-info{border-bottom:none;padding: 20px 0;}
+.invest-detail .bid-info li{width:25%;}
+.invest-detail .bid-info li span.title{margin-bottom:16px;}
+/* .invest-form .remain-amount{width:80%;margin-left:10%;display:none;} */
+.remain-amount span {display:block;margin-bottom:5px;}
+.remain-amount span b {color: #e7bb70;font-weight: normal;}
+.invest-form{display:none;}
+.change-amount{display:inline-block;width:25px;background:#e7bb70;text-align:center;color:#fff;font: 24px/40px 'Microsoft YaHei';}
+#money{height: 40px;padding: 9px 0; border: 1px solid #e7bb70;border-radius: 0; font-size: 20px;text-align: center;}
+.btn-invest,.please-login{display:block;width: 280px;line-height:40px;margin:auto;background:#e7bb70;text-align:center;color:#fff;cursor:pointer;}
+.please-login{background:#a5a5a5;}
+.fl{width:96%;font-size:1rem;line-height:30px;}
+
+/* 借款详细说明 */
+.money-detail{position:relative;margin-top:1%;;background:url('../imgs/detail_bg.png') repeat-x ;background-size:100% 100%;}
+.money-detail>h1{position:absolute;width:30%;height:70px;left:35%;top:-5%;line-height:70px;text-align:center; color:#fff;font-size:1.5rem;background:url('../imgs/p4.png') no-repeat center;background-size:100% 100%;z-index:1;}
+.money-detail>div{padding:7% 0 3%;background:url('../imgs/redPhone.png') no-repeat 95% center;background-size:27% 80%;}
+.borrow-content .money-detail>div p{width:75%;padding:0 0 0 5%;color:#cf691f;text-indent:-1rem;}
+.borrow-content .outer{margin-top:30px;}
+.borrow-content .card>h1{padding-left:45px;font-size:18px;text-align:left;}
+.borrow-content .card p{width:100%;}
+.borrow-content .sq{cursor:pointer;}
+/* 详情页结束 */
+
+/* 体验金奖励 */
+.rewardMoney>h1{line-height:40px;color:#fff;background:url('../imgs/detailTit.png')no-repeat center;font-size: 1.4rem;text-align:center;}
+.rewardMoney ul{overflow:hidden;border:1px solid #ddd;border-top:none;background:#fff;}
+.rewardMoney li{float:left;width:20%;height:120px;}
+.rewardMoney li>img{display:block;margin:8% auto;}
+.rewardMoney li>h2{text-align:center;font-size: 1.2rem;padding:12% 0;color:#000;}
+.rewardMoney li>p{text-align:center;color:#e7bb70;font-size: 1.5rem;}
+.rewardMoney li>a{display:block;width:80%;height:30px;line-height:30px;margin:45px auto;text-align:center;color:#fff;border-radius:10px;background:#f94641;}
+.rewardMoneyRecord{overflow:hidden;padding:20px 0;border:1px solid #ddd;margin-top:10px;background:#fff;}
+.rewardMoneyRecord>div{float:left;width:50%;}
+.rewardMoneyRecord>div>p{padding-left:10%;font-size:1rem;line-height:30px;}
+.rewardMoneyRecord>div b{font-weight:normal;}
+.rewardMoneyRecord>div span{font-size:1rem;color:#e7bb70;}
+/* 体验金奖励结束 */
+
+/* 我的账户下增加手机端入口 */
+.moneyBtn{display:none;height:25px;line-height:25px;margin:10px 0 -10px;background:url('../imgs/rewardBanner.png') no-repeat center;font-size:1.6rem;color:#fff;text-align:center;font-weight:bold;}
