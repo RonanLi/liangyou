@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="wx" namespace="/wx" extends="p2p-default">
+        <!--注册-->
+        <action name="reg"  class="com.liangyou.web.action.UserAction" method="register">
+            <result name="register" type="ftl">/wechat/reg.html</result>
+            <result name="success" type="ftl">/wechat/account.html</result>
+            <result name="fail" type="ftl">/wechat/msg.html</result>
+            <result name="member" type="redirect">/wx/account.html</result>
+        </action>
+        <!--登录-->
+		<action name="login" class="com.liangyou.web.action.UserAction" method="login">
+		    <result name="login" type="ftl">/wechat/login.html</result>
+		</action>
+        <action name="doLogin" class="com.liangyou.web.action.UserAction" method="doLogin">
+       	 	<result name="member" type="redirect">/wx/account.html</result>
+       	 	<result name="success" type="ftl">/wechat/account.html</result>
+       	 	<result name="fail" type="ftl">/wechat/msg.html</result>
+       	 	<result name="msg" type="redirect">/wx/account.html</result>
+        </action>
+        <!--用户中心-->
+        <action name="account" class="com.liangyou.web.action.MemberAction" method="index">
+			<result name="success" type="ftl">/wechat/account.html</result>
+			<result name="msg" type="ftl">/wechat/msg.html</result>
+			<interceptor-ref name="mydefault" /> 
+		</action>
+         <!--充值-->
+        <action name="recharge" class="memberAccountAction" method="newrecharge">
+			<result name="success" type="ftl">/wechat/recharge.html</result>
+            <result name="fail" type="ftl">/wechat/msg.html</result>
+            <result name="msg" type="ftl">/wechat/msg.html</result>
+			<interceptor-ref name="mydefault" /> 
+		</action>
+        <action name="newrecharge" class="memberAccountAction" method="newrecharge">
+            <result name="msg" type="ftl">/wechat/msg.html</result>
+            <result name="success" type="ftl">/member/account/${jumpUrl}.html</result>
+            <interceptor-ref name="mydefault" /> 
+        </action>
+        <!--提现-->
+        <action name="withdraw"  class="memberAccountAction" method="newcash">
+            <result name="success" type="ftl">/wechat/withdraw.html</result>
+            <interceptor-ref name="mydefault" /> 
+        </action>
+
+        <!--资金记录-->
+        <action name="record"  class="memberAccountAction" method="log">
+            <result name="success" type="ftl">/wechat/record.html</result>
+            <interceptor-ref name="mydefault" /> 
+        </action>
+        <!--我要投资 ?sType=0&sAccount=0&status=1&search=union -->
+        <action name="invest" class="investAction" method="index">
+            <result name="success" type="ftl">/wechat/invest.html</result>
+            <result name="error">/error.jsp</result>
+        </action>
+        <!--我要借款-->
+        <action name="loan"  class="borrowAction" method="index">
+            <result name="index" type="ftl">/wechat/loan.html</result>
+            <interceptor-ref name="mydefault" /> 
+        </action>
+         <!-- 公告-->
+        <action name="notice" class="articleAction" method="list">
+			<result name="list" type="ftl">/wechat/notice.html</result>
+		</action>
+		 <!-- 发标预告-->
+        <action name="tender" class="articleAction" method="list">
+			<result name="list" type="ftl">/wechat/tender.html</result>
+		</action>
+		 <!-- 风控流程-->
+        <action name="process" class="articleAction" method="list">
+			<result name="list" type="ftl">/wechat/process.html</result>
+		</action>
+		 <!-- 网站资费-->
+        <action name="fee" class="articleAction" method="list">
+			<result name="list" type="ftl">/wechat/fee.html</result>
+		</action>
+        <!-- 待收、已收-->
+        <action name="infocollect" class="memberInvestAction" method="collect">
+            <result name="success" type="ftl">/wechat/infocollect.html</result>
+            <interceptor-ref name="mydefault" />
+        </action>
+        <!-- 投标-->
+        <action name="infotender" class="memberInvestAction" method="tender">
+            <result name="success" type="ftl">/wechat/infotender.html</result>
+            <interceptor-ref name="mydefault" />
+        </action>
+        <!--待还、已还-->
+        <action name="infoborrow" class="memberBorrowAction" method="borrow">
+            <result name="success" type="ftl">/wechat/infoborrow.html</result>
+            <interceptor-ref name="mydefault" />
+        </action>
+        <!--充值记录-->
+        <action name="inforecharge"  class="memberAccountAction" method="recharge">
+            <result name="success" type="ftl">/wechat/inforecharge.html</result>
+            <interceptor-ref name="mydefault" /> 
+        </action>
+        <!--提现记录-->
+        <action name="infocash"  class="memberAccountAction" method="cash">
+            <result name="success" type="ftl">/wechat/infocash.html</result>
+            <interceptor-ref name="mydefault" /> 
+        </action>
+
+	    <!--add in 20140716 end-->
+		
+        <action name="logout"  class="userAction" method="logout">
+            <result name="success" type="ftl">/wechat/login.html</result>
+            <result name="login" type="ftl">/wechat/login.html</result>
+        </action>
+      
+        
+        <action name="investdetail" class="investAction" method="detail">
+            <result name="success" type="ftl">/wechat/invest_detail.html</result>
+            <result name="error">/error.jsp</result>
+            <interceptor-ref name="mydefault" />
+        </action>
+        <action name="borrowerdetail" class="investAction" method="detail">
+            <result name="success" type="ftl">/wechat/borrower_detail.html</result>
+            <result name="error">/error.jsp</result>
+            <interceptor-ref name="mydefault" />
+        </action>
+        <action name="purchase" class="investAction" method="detail">
+            <result name="success" type="ftl">/wechat/purchase.html</result>
+            <result name="error">/error.jsp</result>
+            <interceptor-ref name="mydefault" />
+        </action>
+        
+        
+        <action name="borrowtender" class="borrowAction" method="tender">
+            <result name="success" type="ftl">/wechat/msg.html</result>
+			<result name="error" type="ftl">/wechat/msg.html</result>
+            <interceptor-ref name="mydefault" />
+        </action>
+        
+        <action name="account" class="memberAction" method="index">
+            <result name="success" type="ftl">/wechat/account.html</result>
+            <interceptor-ref name="mydefault" /> 
+        </action>
+       
+		
+		
+        <action name="extract"  class="accountCashAction" method="accountCash">
+            <result name="success" type="ftl">/wechat/msg.html</result>
+            <result name="msg" type="ftl">/wechat/msg.html</result>
+            <interceptor-ref name="mydefault" />
+        </action>
+        
+        <action name="accountlog"  class="memberAccountAction" method="log">
+            <result name="success" type="ftl">/wechat/money.html</result>
+            <interceptor-ref name="mydefault" /> 
+        </action>
+        
+        <action name="articlelist" class="articleAction" method="list">
+			<result name="list" type="ftl">/wechat/article.html</result>
+		</action>
+
+		<action name="articledetail" class="articleAction" method="detail">
+			<result name="detail" type="ftl">/wechat/article_detail.html</result>
+		</action>
+		
+
+        
+
+        <!-- 银行卡 -->
+		<action name="bank"  class="memberAccountAction" method="bank">
+            <result name="success" type="ftl">/wechat/bank.html</result>
+              <result name="error" type="ftl">/wechat/msg.html</result>
+            <interceptor-ref name="mydefault" /> 
+        </action>
+		<action name="addbank" class="memberAccountAction" method="addbank">
+			<result name="success" type="ftl">/wechat/bank.html</result>
+			<result name="error" type="ftl">/wechat/msg.html</result>
+			<result name="msg" type="ftl">/wechat/msg.html</result>
+			<interceptor-ref name="mydefault" />
+		</action>
+        <!-- 修改密码-->
+        <action name="userpwd" class="memberSecurityAction" method="userpwd">
+            <result name="success" type="ftl">/wechat/security.html</result>
+            <interceptor-ref name="mydefault" />
+        </action>
+        <!-- 修改支付密码-->
+		<action name="paypwd" class="memberSecurityAction" method="paypwd">
+            <result name="success" type="ftl">/wechat/security.html</result>
+            <interceptor-ref name="mydefault" />
+        </action>
+        <!-- 自动投标 -->
+        <action name="auto" class="borrowAutoAction" method="auto">
+            <result name="success" type="ftl">/wechat/auto.html</result>
+            <result name="query" type="ftl">/wechat/auto_query.html</result>
+            <interceptor-ref name="mydefault" />    
+        </action>
+         
+    </package>
+</struts>

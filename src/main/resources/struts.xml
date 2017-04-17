@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="p2p-default" namespace="/" extends="struts-default">
+    	<result-types>  
+            <result-type name="ftl" class="com.liangyou.freemarker.CustomFreemarkerResult" default="false"/>  
+        </result-types> 
+	    <interceptors>
+		 	
+		    <interceptor name="redirectMessageInterceptor" class="com.liangyou.web.interceptor.RedirectMessageInterceptor"></interceptor>
+		    <interceptor name="sessiontimeout" class="com.liangyou.web.interceptor.SessionInterceptor"></interceptor>
+            <interceptor name="manageAuth" class="com.liangyou.web.interceptor.ManageAuthInterceptor"></interceptor>
+            <interceptor name="userLog" class="com.liangyou.web.interceptor.UserLogInterceptor"></interceptor>
+            <interceptor name="paramFilter" class="com.liangyou.web.interceptor.ParamFilterInterceptor"></interceptor>
+            <interceptor name="actionInterceptor" class="com.liangyou.web.interceptor.ActionInterceptor"></interceptor>
+            <!-- 登录页面SQL注入修复 start -->
+			<interceptor name="login" class="com.liangyou.web.interceptor.LoginInterceptor"></interceptor>
+			<!-- 登录页面SQL注入修复 end -->
+			<!-- 微信端拦截器 -->
+            <interceptor name="weChatInterceptor" class="com.liangyou.web.interceptor.WeChatInterceptor"/>
+            
+            
+			<interceptor-stack name="mydefault">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="paramFilter"/>
+                <interceptor-ref name="sessiontimeout"/>
+                <interceptor-ref name="actionInterceptor" />
+            </interceptor-stack>
+            <interceptor-stack name="manageAuthStack">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="paramFilter"/>
+                <interceptor-ref name="manageAuth"/>
+                <interceptor-ref name="actionInterceptor" />
+            </interceptor-stack>
+            <interceptor-stack name="globalStack">
+			    <interceptor-ref name="defaultStack"></interceptor-ref>
+			    <interceptor-ref name="paramFilter"/>
+			    <interceptor-ref name="userLog"></interceptor-ref>
+			    <interceptor-ref name="redirectMessageInterceptor"/>
+			    <interceptor-ref name="actionInterceptor" />
+			</interceptor-stack>
+			<interceptor-stack name="wechatStack">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="weChatInterceptor"></interceptor-ref>
+			</interceptor-stack>  
+			<!-- 登录页面SQL注入修复 start -->
+			<interceptor-stack name="mylogin">
+			    <interceptor-ref name="defaultStack"></interceptor-ref>
+			    <interceptor-ref name="actionInterceptor" />
+			    <interceptor-ref name="paramFilter"/>
+			    <interceptor-ref name="login" />
+			</interceptor-stack>
+			<!-- 登录页面SQL注入修复 end -->    
+		</interceptors>
+		<default-interceptor-ref name="globalStack" />
+		<global-results>
+			<result name="index" type="ftl">/index.html</result>
+            <result name="login" type="ftl">/login.html</result>
+            <result name="register" type="ftl">/register.html</result>
+            <result name="notfound" type="ftl">/404.html</result>
+            <result name="msg" type="ftl">/msg.html</result>
+            <result name="adminmsg" type="ftl">/admin/msg.html</result>
+            <result name="error" type="ftl" >/404.html</result>
+            <result name="result" type="ftl" >/result.html</result>
+            <result name="adminResult" type="ftl" >/admin/adminResult.html</result>
+		</global-results>
+		
+		<!-- xcn 20140725 后台地址过滤 start --> 
+		<action name="notfound"> 
+		<result type="ftl">/404.html</result> 
+		</action> 
+		<!-- xcn 20140725 后台地址过滤 end -->
+    
+		
+	</package>
+	 <package name="p2p-json" extends="p2p-default">
+        <result-types>
+            <result-type name="json" class="org.apache.struts2.json.JSONResult"/>
+        </result-types>
+        <interceptors>
+            <interceptor name="json" class="org.apache.struts2.json.JSONInterceptor"/>
+        </interceptors>
+    </package>
+
+    <include file="activity-struts.xml"></include>
+    <include file="wx-struts.xml"></include>
+</struts>
