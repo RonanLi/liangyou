@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<#include "../include/resource.html"> 
+<body>
+<#include "../include/header.html">
+<link href="${request.getContextPath()}/themes/soonmes/media/css/modal.css" rel="stylesheet" type="text/css" /> 
+<link href="${request.getContextPath()}/themes/soonmes/media/css/about.css" rel="stylesheet" type="text/css" />
+
+<div class="container zx clearfix">
+    <img src="${webroot}${theme_dir}/images/zx-banner.jpg" alt="" class="mb15"> 
+    <div class="zx-left float_left">
+        <div class="zx-lt"></div>
+         <#include "left_menu.html">
+        <div class="zx-bt"></div>
+        <img src="${webroot}${theme_dir}/images/zx-left-kf.jpg" alt="" class="zx-kefuimg">
+    </div>
+
+    <div class="zx-righthelp float_right">
+        <div class="zx-righttitle clearfix">
+            <img src="${webroot}${theme_dir}/images/zx-rightli.jpg" alt="" class="ml10 float_left"><span class="float_left">当前位置：
+			<a id="ctl00_content_NavigationLink1_main" href="${webroot}/index.html" style=" color:#333; text-decoration:none;">义务贷（浙江得龙进出口有限公司）</a>	&gt;帮助&gt;
+			<a href="${request.getContextPath()}/help/onlinehelp.html?code=help" style="color:#333; text-decoration:none;">注册</a></span>
+		</div>
+		
+        <div class="zx-righttxt">
+			<div class="info" id="lxjs">
+         <h6>第一步：</h6><h7>用户点击注册的链接进入注册页面。</h7><br/>
+            <h3> &nbsp; </h3>
+         <div class="zx-righttitle clearfix">
+              <img src="${webroot}${theme_dir}/images/help/zhuce01.jpg" alt="" class="ml10 float_left" height=260/><br/>
+         </div><br>
+      
+         <h6>第二步：</h6><h7>用户请先认真阅读服务协议，在明确了解网站的功能后，结合用户自己的实际情况选择是否注册。当用户确定注册后，按照要求填写注册信息点击注册。</h7>
+         <h7>用户名为6—14个英文字母或数字，中文不超过6个。密码6-14个英文字母或数字，且两次输入密码一致。邮箱必须是用户的常用邮箱，真实姓名不得有假。</h7>
+            <h3> &nbsp; </h3>
+         <div class="zx-righttitle clearfix">
+             <img src="${webroot}${theme_dir}/images/help/zhuce02.jpg" alt="" class="ml10 float_left"  height=360/>
+         </div><br/>
+          <h3> &nbsp; </h3>
+         
+         <h7>此时注册成功，可进入登入页面进行登入操作。</h7>
+		
+			</div><!--info-->
+		</div><!--myTabContent-->
+	</div><!--right-->
+</div><!--cor_divtop-->
+
+<script src="${request.getContextPath()}/themes/soonmes/media/js/modal.js"></script>
+<script src="${request.getContextPath()}/themes/soonmes/media/js/tab.js"></script>
+<script src="${request.getContextPath()}/themes/soonmes/media/js/alert.js"></script>
+<#include "../include/footer.html"> 

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<#assign nid="index" >
+<#include "../include/resource.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/liangyou/activety/css/activety.css" type="text/css" />
+    <style>
+        .containW{background: #92050d;width:100%;}
+        .women{width:1200px;margin:auto;overflow:hidden;}
+        .women>img{float:left;width:100%;}
+        .gift5Fix, .gift5Fix1{ position: fixed; width: 120px; height: 180px; top: 50%; right: 10%; background: url(/themes/soonmes_yjt/liangyou/imgs/gift5_28.gif)no-repeat center; cursor: pointer; }
+        #footer-blank{height:0px !important;}
+
+    </style>
+<body>
+<#include "../include/header.html">
+    <!--<div class="banner">
+        <img src="/themes/soonmes_yjt/liangyou/activety/imgs/WomenDay_01.jpg" alt="重新加载">
+    </div>-->
+    <div class="containW">
+        <div class="women">
+            <img src="/themes/soonmes_yjt/liangyou/activety/imgs/WomenDay_01.jpg" alt="重新加载">
+            <img src="/themes/soonmes_yjt/liangyou/activety/imgs/WomenDay_02.jpg" alt="重新加载">
+            <img src="/themes/soonmes_yjt/liangyou/activety/imgs/WomenDay_03.jpg" alt="重新加载">
+            <img src="/themes/soonmes_yjt/liangyou/activety/imgs/WomenDay_04.jpg" alt="重新加载">
+            <img src="/themes/soonmes_yjt/liangyou/activety/imgs/WomenDay_05.jpg" alt="重新加载">
+            <img src="/themes/soonmes_yjt/liangyou/activety/imgs/WomenDay_06.jpg" alt="重新加载">
+            <img src="/themes/soonmes_yjt/liangyou/activety/imgs/WomenDay_07.jpg" alt="重新加载">
+        </div>
+    </div>
+    <a class="gift5Fix" href="#"></a>
+</body>
+<#include "../include/footer.html">
+    <script src="${webroot}${theme_dir}/liangyou/activety/js/activety.js"></script>
+    <script>
+        $(function () {
+            window.phone = {
+                ui:{
+                    isMobile:function(){
+                        return isMobile = {
+                            Android: function() {
+                                return navigator.userAgent.match(/Android/i);
+                            },
+                            wechat: function() {
+                                return navigator.userAgent.match(/MicroMessenger/i);
+                            },
+                            BlackBerry: function() {
+                                return navigator.userAgent.match(/BlackBerry/i);
+                            },
+                            iOS: function() {
+                                return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+                            },
+                            Opera: function() {
+                                return navigator.userAgent.match(/Opera Mini/i);
+                            },
+                            Windows: function() {
+                                return navigator.userAgent.match(/IEMobile/i);
+                            },
+                            any: function() {
+                                return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows() || isMobile.wechat());
+                            }
+                        }
+                    },
+                    gUrlp:function(ll){
+                        return decodeURIComponent((new RegExp('[?|&]' + ll + '=' + '([^&;]+?)(&|#|;|$)', "ig").exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
+                    }
+                }
+            };
+
+
+            if( phone.ui.isMobile().any() == null ){
+                //$('body').addClass('notouch');
+
+            }else if( navigator.userAgent.indexOf('WindowsWechat') >= 0 ){
+                alert('请使用手机打开，获得更好的浏览体验！');
+                return false;
+            }else{
+                $('.gift5Fix').addClass('gift5Fix1').attr('href','#')
+                $('.top,.lheader').hide()
+                $('.women').html('<img src="/themes/soonmes_yjt/liangyou/activety/imgs/WomenDay_p1.jpg" alt="重新加载">'
+                        +'<img src="/themes/soonmes_yjt/liangyou/activety/imgs/WomenDay_p2.jpg" alt="重新加载">'
+                        +'<img src="/themes/soonmes_yjt/liangyou/activety/imgs/WomenDay_p3.jpg" alt="重新加载">'
+                        +'<img src="/themes/soonmes_yjt/liangyou/activety/imgs/WomenDay_p4.jpg" alt="重新加载">'
+                        +'<img src="/themes/soonmes_yjt/liangyou/activety/imgs/WomenDay_p5.jpg" alt="重新加载">'
+                        +'<img src="/themes/soonmes_yjt/liangyou/activety/imgs/WomenDay_p6.jpg" alt="重新加载">'
+                        +'<img src="/themes/soonmes_yjt/liangyou/activety/imgs/WomenDay_p7.jpg" alt="重新加载">'
+                        +'<img src="/themes/soonmes_yjt/liangyou/activety/imgs/WomenDay_p8.jpg" alt="重新加载">'
+                        +'<img src="/themes/soonmes_yjt/liangyou/activety/imgs/WomenDay_p9.jpg" alt="重新加载">')
+            }
+        })
+    </script>
+</html>
+

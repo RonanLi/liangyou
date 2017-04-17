@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 ">
+<#assign webroot=request.getContextPath()>
+<#assign nid="member" >
+<#include "../../include/resource.html">
+<#include "../../common/function.html">
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+
+<body>
+
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="subMenu">
+                <a href="${webroot}/member/myAccount/realName.html">实名认证</a>
+            </div>
+            <div class="rightDiv">
+                <div class="realName">
+
+
+                    <form action="${webroot}/member/myAccount/realname.html" name="form1" id="reg_sub" method="post" enctype="multipart/form-data" style="padding-top: 25px;">
+                        <div class="fromBox">
+                            <div class="boxTxt">用户名：</div>
+                            <div class="boxIpt"> <#if user?exists&&user.username?exists>${user.username}</#if> </div>
+                        </div>
+                        <!--内容判断-->
+                        <#if user.userType?? && user.userType.typeId == 28>
+                            <div class="fromBox">
+                                <div class="boxTxt">*企业名：</div>
+                                <div class="boxIpt"><input name="realname" id="realname" value="<#if user?exists&&user.realname?exists>${user.realname}</#if>"/> </div>
+                            </div>
+                            <div class="fromBox">
+                                <div class="boxTxt">*证件类别：</div>
+                                <div class="boxIpt">
+                                    <#if user?exists && user.cardType?exists> <@linkage name="cardType" id="card_type" nid="card_type" default=user.cardType></@linkage>
+                                        <#else> <@linkage name="cardType" id="card_type" nid="card_type" default="1623"></@linkage>
+                                    </#if>
+                                </div>
+                            </div>
+
+                            <div class="fromBox">
+                                <div class="boxTxt">营业执照号：</div>
+                                <div class="boxIpt"><input onblur="checkCardId(this)" id="card_id" type="text" name="cardId" value="<#if user?exists&&user.cardId?exists>${user.cardId}</#if>"/> <font color="#FF0000">*【身份证号码中含X的必须为大写】</font></div>
+                            </div>
+
+                            <div class="fromBox">
+                                <div class="boxTxt">验证码：</div>
+                                <div class="boxIpt"><input id="validCode_check" type="text" size="11" maxlength="5" name="validCode" tabindex="3" style="float:left;"/>&nbsp; <img src="${request.getContextPath()}/validimg.html" alt="点击刷新" onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();" align="absmiddle" style="cursor:pointer; display:inline-block;zoom:1;*display:inline; *float:none;"/> </div>
+                                <div class="yanzhen"></div>
+                            </div>
+
+                        <#else>
+
+                            <div class="fromBox">
+                                <div class="boxTxt">*真实姓名：</div>
+                                <div class="boxIpt"><input name="realname" id="realname" value="<#if user?exists&&user.realname?exists>${user.realname}</#if>"/></div>
+                            </div>
+
+                            <div class="fromBox">
+                                <div class="boxTxt">*证件类别：</div>
+                                <div class="boxIpt">
+                                    <#if user?exists&&user.cardType?exists> <@linkage name="cardType" id="card_type" nid="card_type" default=user.cardType></@linkage>
+                                        <#else> <@linkage name="cardType" id="card_type" nid="card_type" default="1616"></@linkage>
+                                    </#if>
+                                </div>
+                            </div>
+
+                            <div class="fromBox">
+                                <div class="boxTxt">*证件号码：</div>
+                                <div class="boxIpt"><input onblur="checkCardId(this)" id="card_id" type="text" name="cardId" value="<#if user?exists&&user.cardId?exists>${user.cardId}</#if>"/><font style="color:#a6771f;font-size:10px;">身份证号码中含X的必须为大写</font> </div>
+                            </div>
+                            <div class="fromBox">
+                                <div class="boxTxt" style="font-weight:bold; float:left;">验证码：</div>
+                                <div class="boxIpt"><input id="validCode_check" type="text" size="11" maxlength="5" name="validCode" tabindex="3" style="float:left;"/>&nbsp; <img src="${request.getContextPath()}/validimg.html" alt="点击刷新" onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();" align="absmiddle" style="cursor:pointer; display:inline-block;zoom:1;*display:inline; *float:none;"/> </div>
+                                <div class="yanzhen"></div>
+                            </div>
+                    </#if>
+                    <!--按钮判断-->
+                    <#if user?exists&&user.apiStatus!=1>
+                        <div class="crrorD" style="display:none;text-align: center;"><img src="/themes/soonmes_yjt/images/tipimg-y.png" style="vertical-align: middle; margin: 0 4px; "><span></span></div>
+
+                        <div class="fromBox">
+                             <div class="boxTxt">&nbsp;</div>
+                            <div class="boxIpt">
+                                <input type="button" class="btn-action" name="name" id="name" value="开通账户" size="30"/>
+                            </div>
+                        </div>
+
+                        <#else>
+                        <div class="crrorD" style="display:none;text-align: center;"><img src="/themes/soonmes_yjt/images/tipimg-y.png" style="vertical-align: middle; margin: 0 4px; "><span></span></div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">&nbsp;</div>
+                            <div class="boxIpt">
+                                <input type="button" class="btn-action" name="name" id="name" value="确认提交" size="30"/>
+                            </div>
+                        </div>
+                    </#if>
+                </form>
+                <div class="notes"> * 温馨提示：我们将对所有的信息进行保密（跳至双乾开通账户时，请勿绑定原有账户!</div>
+
+                <!-- 身份证号码校验 -->
+                <script type="text/javascript">
+                    var nameStatus = 0;
+                    var cardStatus = 0;
+                    function check_name() {
+                        $("#realname").blur(function () {
+                            var zs = $(".zhenshi");
+                            var name = $("#realname");
+                            var str = name.val();
+                            if (str == "") {
+                                zs.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入真实姓名");
+                                userStatus = 0;
+                                return false;
+                            } else {
+                                zs.html("<img src='${webroot}${theme_dir}/images/tipimg-g.png'>");
+                                userStatus = 1;
+                                return true;
+                            }
+                        })
+                    }
+                    check_name();
+
+                    function check_card() {
+                        $("#card_id").blur(function () {
+                            var shenfen = $(".card");
+                            var card = $("#card_id");
+                            var cardTest = /(^\d{15}$)|(^\d{17}([0-9]|X)$)/;
+                            var str = card.val();
+                            if (str == "") {
+                                shenfen.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入身份证号");
+                                cardStatus = 0;
+                                return false;
+                            }
+                            if (!cardTest.test(str)) {
+                                shenfen.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>身份证号码长度不符合规则");
+                                cardStatus = 0;
+                                return false;
+                            } else {
+                                shenfen.html("<img src='${webroot}${theme_dir}/images/tipimg-g.png'>");
+                                cardStatus = 1;
+                                return true;
+                            }
+                        })
+                    }
+                    check_card();
+
+                    $("#name").click(function () {
+                        var uname = $("#realname").val().trim(),
+                                authid = $('#card_id').val().trim(),
+                                volid = $('#validCode_check').val().trim();
+
+                        if (uname.length == 0) {
+                            $('.crrorD').show().find('span').text('真实姓名不能为空');
+                            return false;
+                        } else if (authid.length == 0) {
+                            $('.crrorD').show().find('span').text('证件号码不能为空');
+                            return false;
+                        } else if (volid.length == 0) {
+                            $('.crrorD').show().find('span').text('验证码不能为空');
+                            return false;
+                        } else {  // 宋卓伦 修改
+                            //$("#reg_sub").submit();
+                            // $(this).unbind().click(function() {
+                            // 	$("#reg_msg").html("请勿重复提交！");
+                            // });
+                            $.ajax({
+                                type: "POST",
+                                url: "/member/identify/apiRealname.html",
+                                data: $('#reg_sub').serialize(),
+                                beforeSend: function () {
+                                    $('#name').val('正在开通...');
+
+                                },
+                                success: function (msg) {
+                                    var x = document.createElement('html');
+                                    x.innerHTML = msg;
+                                    var errorMSG = $(x).find('#error_zl').text();
+                                    if (errorMSG.length == 0 && $(x).find('title').text().indexOf('跳转') >= 0) {
+                                        // var p = 5;
+                                        // var _xc = window.setInterval(function(){
+                                        // 	if( p == 0 ){
+                                        // 		window.clearInterval(_xc);
+                                        // 		window.location.href='login.html?phone='+$('#phone').val().trim();
+                                        // 	}else{
+                                        // 	  $('#btnReg').css('font-size','18px').html('注册已成功,'+ p +'秒后跳转到登录页');
+                                        // 	  p--;
+                                        // 	}
+                                        // },1000);
+
+                                        // $.ajax({
+                                        //       	         type: "POST",
+                                        //       	         url:"http://test.moneymoremore.com:88/main/loan/toloanregisterbind.action",
+                                        //       	         data:$(x).find('#frm1').serialize(),
+                                        //       	         success: function(iio){
+
+                                        //       	         }});
+                                        //
+                                        $('body').append($(x).find('form'));
+                                        console.log(document.getElementById("frm1"));
+                                        document.getElementById("frm1").submit();
+                                    } else {
+                                        $('#name').val('开通账户');
+                                        $('.crrorD').show().find('span').text(errorMSG);
+                                        return false;
+                                    }
+
+                                }
+                            });
+
+
+                        }
+
+                    });
+                    var errormsg = "${errormsg!}";
+                    var msg = "${msg!}";
+                    $(function () {
+                        if (msg.length != 0) {
+                            alertContent("提示", msg, 200, 100);
+                        }
+                        if (errormsg.length != 0) {
+                            alertContent("提示", errormsg, 200, 100);
+                        }
+                    });
+                </script>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<#include "../../include/footer.html">
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"> </script>
+</html>

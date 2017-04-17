@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="收件箱">
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+                                <div class="toolbor-module search">
+                                   <!--   <a href="addTemplate.html" class="input-button" style="line-height:24px;">+新增模板</a>-->
+                                </div>
+                            </div>
+                            <!--工具栏--}-->
+
+		    <div id="main" class="clearfix">
+					<!--右边的内容 开始-->	
+					<div class="user_right">
+						<div class="user_right_menu">	
+							<#assign backUrl="box.html" >
+							<#if type?exists&&type=="sents">
+								<#assign msg_type="sents" >
+								<#assign backUrl="sent.html" >
+							<#else>
+								<#assign msg_type="box" >
+								<#assign backUrl="box.html" >
+							</#if>
+							<#include "msg_menu.html"> 
+						</div>
+						<div class="user_main_title1" style="margin:10px" >
+				            <input type="button" onclick="javascript:location.href='${backUrl}'" value="<<返回"  class="btn-action"/> 
+				            <input type="button" value="转发" onclick="javascript:location.href='send.html?sendType=forward&id=${msg.id?c}'"  class="btn-action"/>
+				            <input type="button" value="删除" onclick="javascript:location.href='set.html?type=3&ids=${msg.id?c},'"  class="btn-action"/>
+				            <#--  <input type="button" value="举报" onclick="javascript:location.href='send.html?sendType=report&id=${msg.id?c}'"  class="btn-action"/>-->
+				        </div>
+						<div class="user_right_main">
+							 <form method="post" action="send.html" >
+							 <#if type?exists&&type=="sent">
+							 	<div class="user_right_border"  style="background-color:#FCF4EA ">
+									<div class="l">标题：</div>
+									<div class="c">${msg.name!}</div>
+								</div>
+								<div class="user_right_border"  style="background-color:#FCF4EA ">
+									<div class="l">发件人：</div>
+									<div class="c">${msg.receiveUser.username!}</div>
+								</div>
+								<div class="user_right_border"  style="background-color:#FCF4EA ">
+									<div class="l">发送时间：</div>
+									<div class="c">${msg.addtime?string('yyyy-MM-dd HH:mm:ss')}</div>
+								</div>
+								<div class="user_right_border"  style="background-color:#FCF4EA ">
+									<div class="l">发送内容：</div>
+									<div class="c">${msg.content!}</div>
+								</div>
+							 <#else>
+							 	<div class="user_right_border" style="background-color:#FCF4EA ">
+									<div class="l">标题：</div>
+									<div class="c">${msg.name!}</div>
+								</div>
+								<div class="user_right_border" style="background-color:#FCF4EA ">
+									<div class="l">收件人：</div>
+									<div class="c" style=" color: red">
+										<strong>${msg.receiveUser.username!}</strong>
+									</div>
+								</div>
+								<div class="user_right_border" style="background-color:#FCF4EA">
+									<div class="l">发件人：</div>
+						            <div class="c" style="color:red">
+										<#if msg.sentUser.userId==1>优聚投<#else>${msg.sentUser.username}</#if>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<#--<a href="${request.getContextPath()}/user/show.html?user_id=${msg.sentUser.userId?c}" target="_blank">查看发件人信息</a> -->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</div>
+								</div>
+								<div class="user_right_border" style="background-color:#FCF4EA">
+									<div class="l">发送时间：</div>
+									<div class="c">${msg.addtime?string('yyyy-MM-dd HH:mm:ss')}</div>
+								</div>
+								<div class="user_right_border" style="background-color:#FCF4EA">
+									<div class="l">内容：</div>
+									<div class="c">${msg.content!}</div>
+								</div>
+								<div class="user_right_border" style="background-color:#FCF4EA ">
+									<div class="l">回复：</div>
+									<div class="c">
+										<textarea name="repContent" rows="7" cols="50"></textarea>             
+									</div>
+								</div>
+								<div class="user_right_border" style="background-color:#FCF4EA">
+									<div class="l"></div>
+									<div class="c">
+										<input type="submit"  class="btn-action"  value="提交"  />
+										<input type="hidden" name="id" value="${msg.id?c}" />
+										<input type="hidden" name="type" value="reply" />
+									</div>
+								</div>
+								</#if>
+							</form>
+						</div>
+				 	 </div>
+					<!--右边的内容 结束-->
+		
+			 </div>
+
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+<script type="text/javascript">
+function setMsg(type){
+	var str='';
+	$(":checkbox[name=ids][checked]").each(function () {		
+		str = str+$(this).val()+","
+	});
+	if(str!=""){
+		location.href='${webroot}/admin/msg/set.html?type='+type+'&ids='+str;
+	}
+	
+}
+</script>
+    </body>
+</html>
+<#include "../jsPage.html">

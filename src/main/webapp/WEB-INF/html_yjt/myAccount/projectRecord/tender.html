@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html">
+<#assign mid="m_borrow" >
+<#assign nid="member">
+<#import "../../common/function.html" as func>
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+
+<body>
+<div id="main" class="clearfix container">
+
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="userRightMenu">
+                <#include "projectRecordMenu.html">
+            </div>
+            <div class="tender">
+                <ul>
+                    <li>
+                        <div>标题</div>
+                        <div>借款者</div>
+                        <div>投标金额/有效金额</div>
+                        <div>投标时间 </div>
+                        <div>进度</div>
+                        <div>状态 </div>
+                    </li>
+                    <#if list?? && list?size gt 0>
+                        <#list list as item>
+                            <li>
+                                <div><a href="${request.getContextPath()}/invest/detail.html?borrowid=${item.borrow.id?c}" target="_blank">${item.borrow.name}</a> </div>
+                                <div>${item.borrow.user.username}</div>
+                                <div>投标金额:￥${item.money} / 有效金额:￥${item.account}</div>
+                                <div>${item.addtime?string("yyyy-MM-dd HH:mm:ss")}</div>
+                                <#assign account_process=0 >
+                                <#if item.borrow.accountYes?exists>
+                                    <#assign account_process=((item.borrow.accountYes?c)?number/(item.borrow.account?c)?number*100)?round >
+                                </#if>
+                                <div>${account_process}%</div>
+                                <div>
+                                    <!-- add by gy 2016-10-21 13:45:04 体验金提示 -->
+                                    <#if item.borrow.type == 115>
+                                        <#if item.status==0>
+                                            投标成功，体验金被冻结
+                                            <#elseif status==1> 已经还款
+                                        </#if>
+                                        <#else>
+                                            <#if item.status==0>
+                                                投标成功，资金被冻结
+                                                <#elseif status==1> 已经还款
+                                            </#if>
+                                    </#if>
+                                </div>
+                            </li>
+                        </#list>
+                        <li>
+                            <div id="page">
+                                <#import "../../common/page.html" as pager>
+                                    <@pager.pagination page=page url="/member/myAccount/tender.html" map=param style="style3"  />
+                            </div>
+                        </li>
+                        <#else><li>暂无数据</li>
+                    </#if>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"></script>
+<#include "../../include/footer.html">

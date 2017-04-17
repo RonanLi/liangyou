@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 ">
+<#assign webroot=request.getContextPath()>
+<#assign nid="member" >
+<#include "../../include/resource.html">
+<#include "../../common/function.html">
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+
+<body>
+
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="userRightMenu">
+                <#include "personalCenterMenu.html">
+            </div>
+            <div class="rightDiv">
+                <div class="spouse">
+                    <div class="reminder">请填写您的配偶资料</div>
+                    <form action="" name="form1" method="post" >
+
+                        <div class="fromBox">
+                            <div class="boxTxt">配偶姓名：</div>
+                            <div class="boxIpt"><input type="text" size="25" maxlength="20" name="mateName" value="<#if info?exists&&info.mateName?exists>${info.mateName}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">每月薪金：</div>
+                            <div class="boxIpt"><input type="text" size="25" maxlength="20" name="mateSalary" value="<#if info?exists&&info.mateSalary?exists>${info.mateSalary?c}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">移动电话：</div>
+                            <div class="boxIpt"><input type="text" size="25" maxlength="20" name="matePhone" value="<#if info?exists&&info.matePhone?exists>${info.matePhone}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">单位电话：</div>
+                            <div class="boxIpt"><input type="text" size="25" maxlength="20" name="mateTel" value="<#if info?exists&&info.mateTel?exists>${info.mateTel}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">工作单位：</div>
+                            <div class="boxIpt">
+                                <#if info?exists&&info.mate_office?exists>
+                                    <@linkage name="mateType" id="mateType" nid="user_company_industry" default=info.mateType></@linkage>
+                                <#else>
+                                    <@linkage name="mateType" id="mateType" nid="user_company_industry"></@linkage>
+                                </#if>
+                            </div>
+                        </div>
+
+
+                        <div class="fromBox">
+                            <div class="boxTxt">职位：</div>
+                            <div class="boxIpt">
+                                <#if info?exists&&info.mateOffice?exists>
+                                    <@linkage name="mateOffice" id="mateOffice" nid="user_company_office" default=info.mateOffice></@linkage>
+                                <#else>
+                                    <@linkage name="mateOffice" id="mateOffice" nid="user_company_office"></@linkage>
+                                </#if>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">单位地址：</div>
+                            <div class="boxIpt"><input type="text" size="25" maxlength="20" name="mateAddress" value="<#if info?exists&&info.mateAddress?exists>${info.mateAddress}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">年收入：</div>
+                            <div class="boxIpt"><input type="text" size="25" maxlength="20" name="mateIncome" value="<#if info?exists&&info.mateIncome?exists>${info.mateIncome?c}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">&nbsp;</div>
+                            <div class="boxIpt"><input type="submit" class="btn-action"  value="确认提交" size="30" /></div>
+                        </div>
+                        <input type="hidden" name="type" value="mate" />
+                    </form>
+                    <div class="notes"> * 温馨提示：我们将对所有的信息进行保密</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<#include "../../include/footer.html">
+    <script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"> </script>
+</html>

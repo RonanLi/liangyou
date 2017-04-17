@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>易极付激活跳转中......</title>
+    <meta http-equiv="content-Type" content="text/html; charset=utf-8" />
+  </head>
+  <body>
+    <div>易极付激活跳转中......,请您不要关闭页面</div>
+    <form action="${ya.url!}" method="post" id="frm1" style="display: none;">
+      <input type="text" name="service" value="${ya.service!}">
+	  <input type="text" name="partnerId" value="${ya.partnerId!}">
+	  <input type="text" name="signType" value="${ya.signType!}">
+	  <input type="text" name="sign" value="${ya.sign!}">
+	  <input type="text" name="notifyUrl" value="${ya.notifyUrl!}">
+	  <input type="text" name="returnUrl" value="${ya.returnUrl!}">
+	  <input type="text" name="orderNo" value="${ya.orderNo!}">
+	  <input type="text" name="userId" value="${ya.userId!}">
+    </form>
+    <script type="text/javascript">
+    	document.getElementById("frm1").submit();  
+    </script>
+   
+  </body>
+</html>

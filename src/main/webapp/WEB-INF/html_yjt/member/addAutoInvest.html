@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<#include "../include/resource.html">
+<body>
+	<#assign nid="member"> 
+	<#include "../include/header.html">
+	<!--header-end-->
+	<!--用户中心的主栏目 开始-->
+    <div class="container-bg">
+	<div id="main" class="clearfix" style="margin-top:0px;">
+		<div class="wrap950 " style="margin-top:0">
+			<!--左边的导航 开始-->
+			<div class="user_left">
+				<#include "user_menu.html"></div>
+			<!--左边的导航 结束-->
+
+			<!--右边的内容 开始-->
+			<div class="user_right">
+				<#if msg?exists>
+				<div id="msg24">
+					<p class="ok">${msg}</p>
+				</div>
+				<#else> <#if errormsg?exists>
+				<div id="msg25">
+					<p class="error">${errormsg}</p>
+				</div>
+				</#if> </#if>
+				<div class="user_right_menu">
+					<#assign auto_type="add" >
+					<#include "auto_menu.html">
+				</div>
+				<!--自动投标 开始-->
+				<div class="user_right_main">
+				<!-- Form start -->
+				<form  method="post" name="form1" onSubmit="return check_form();"  action="addAutoInvest.html" >
+				
+				<div class="user_help alert">
+				自动投标时，只有满足下面您选择的条件时系统才会为您自动投标。
+				</div>
+            <style type="text/css">
+				.auto_query	.auto_query_list{ border-bottom:1px dashed #ccc; position:relative; padding-top:8px;} 
+				.auto_query .left-txt{ width:80px; float:left; text-align:left;}
+				.auto_query .right-txt{ width:350px; padding-right:10px; float:left; text-align:left; position:relative;height:26px; overflow:hidden;}
+				.auto_query .right-txt input{ height:20px; overflow:hidden;}
+				.auto_query .right-txt label,.auto_query .b-txt{ position:relative; top:-6px; padding-left:5px;}
+				.auto_query .mes-txt{ width:290px; float:right; text-align:left;}
+			</style>
+             <div  style=" width: 750px; margin:0 auto; padding-bottom:20px;" class="auto_query"> 
+            <div class="sideT" >
+                <div class="user_right_title clearfix"> 
+                    <span class=" left-txt"><strong style="color:red">生效状态</strong></span>
+                    <span class=" mes-txt"><strong style="color:red">标的信息限制</strong></span>
+                </div> 
+                
+                    <div class="auto_query">
+                        <div class="auto_query_list clearfix">
+                            <span class=" left-txt">状态：</span>
+	                        <div class=" right-txt">
+	                        	<input id="status" type="checkbox" name="ba.status" value="1" <#if (ba.status)?? && (ba.status==1)>checked</#if> />
+	                        	<span class="b-txt">是否启用(如果不选中则当前规则不会生效)</span>
+	                        </div>
+                        </div>
+                        <div class="auto_query_list clearfix">
+                            <span class=" left-txt">金额：</span>
+                            <div class=" right-txt" style="height:94px;">
+                               	 每次投标 
+                                <input name="ba.tenderAccount" type="text" onKeyUp="check_number(this);" id="tenderAccount"  style="width:80px;" value="${((ba.tenderAccount)!0)?c}" />元
+                                <span>(整数，必须500的整数倍)</span> 
+                                <p>
+                                <b style="color:#f00; font-weight:normal">如果超过借款标的的剩余筹集金额则以借款标的的剩余筹集金额为准，如果小于借款标的的单笔最低投资限额则不投。(设置的金额不能高于账户可用余额、不能高于剩余投资额度、必须为500的整数倍</b>
+                                </p>
+                            </div>
+                            <div class="mes-txt">
+                            		【当前规则满足时系统将为您自动投标，金额为您设置的金额。】
+                            </div>
+                        </div>
+                        <div class="auto_query_list clearfix">
+                            <span class=" left-txt">还款方式： </span>
+                            <div class=" right-txt" style="width:450px;">
+                                <input id="borrow_style_status" type="checkbox" name="ba.borrowStyleStatus" value="1" <#if ba??&&ba.borrowStyleStatus??&&ba.borrowStyleStatus==1>checked</#if> />
+                                <span class="b-txt">启用　还款方式为：</span>
+                                
+                                 <#if ba??&&ba.borrowStyle??>
+									<#assign  style = ba.borrowStyle  />
+									<#assign  styles = style?split(",")     />
+								</#if>
+                               <!--  <input id="style1" <#if styles??&&styles[0]=='0'>checked="checked"</#if>  type="checkbox" name="style1" value="0"  /><label for="style1">按月分期还款</label> -->
+                                <input id="style2" <#if styles??&&styles[1]=='2'>checked="checked"</#if> type="checkbox" name="style2" value="2"  /><label for="style2">一次性还款</label><!-- 
+                                <input id="style3" <#if styles??&&styles[2]=='3'>checked="checked"</#if> type="checkbox" name="style3" value="3"  /><label for="style3">每月还息到期还本</label> -->
+                            </div> 
+                            <div class="mes-txt" style="width: 200px;">
+                                	【不启用则没有此项限制】
+                            </div>
+                        </div>
+                        <div class="auto_query_list clearfix">
+                            <span class=" left-txt">借款期限：</span>
+                            <div class=" right-txt" style="height:85px;">
+                                <div>
+                               <input id="timelimitStatus"  name="ba.timelimitStatus" type="radio" value="0" checked="checked"/><label for="">不限定期限</label> 
+                               <input id="timelimitStatus" name="ba.timelimitStatus" type="radio"value="1"   <#if ba??&&ba.timelimitStatus==1>checked</#if> /><label for="">按照下面规则</label> 
+                               </div>
+                               <div>
+                                期限：
+              <#if ba??&&ba.timelimitMonthFirst??>
+              <@linkage name="ba.timelimitMonthFirst" id="timelimit_month_first" nid="borrow_time_limit" default=ba.timelimitMonthFirst type="value"  noselect="不投月标"/>  
+              <#else>
+              <@linkage name="ba.timelimitMonthFirst" id="timelimit_month_first" nid="borrow_time_limit" />  
+              </#if>             
+               -
+                <#if ba??&&ba.timelimitMonthLast??>
+              <@linkage name="ba.timelimitMonthLast" id="timelimit_month_last" nid="borrow_time_limit" default=ba.timelimitMonthLast type="value"  noselect="不投月标"/>  
+              <#else>
+              <@linkage name="ba.timelimitMonthLast" id="timelimit_month_last" nid="borrow_time_limit"/>  
+              </#if>  
+           <#--   
+              <br/>天标：
+              <#if ba??&&ba.timelimitDayFirst??>
+              <@linkage name="ba.timelimitDayFirst" id="timelimit_day_first" nid="borrow_time_limit_day" default=ba.timelimitDayFirst type="value"  noselect="不投天标"/>  
+              <#else>
+              <@linkage name="ba.timelimitDayFirst" id="timelimit_day_first" nid="borrow_time_limit_day" noselect="不投天标"/>  
+             
+             
+              </#if>   
+                       
+            -
+            <#if ba??&&ba.timelimitDayLast??>
+              <@linkage name="ba.timelimitDayLast" id="timelimit_day_last" nid="borrow_time_limit_day" default=ba.timelimitDayLast type="value"  noselect="不投天标"/>  
+              <#else>
+              <@linkage name="ba.timelimitDayLast" id="timelimit_day_last" nid="borrow_time_limit_day" noselect="不投天标"/>  
+              </#if>  -->
+                               </div>
+                           </div>
+                        </div>
+                        
+                        <div class="auto_query_list clearfix">
+                            <span class=" left-txt">年利率：</span>
+                            <div class=" right-txt">
+                                <input id="apr_status" type="checkbox" name="ba.aprStatus" value="1"  <#if ba??&&ba.aprStatus==1>checked</#if> />
+                                <span class="b-txt">
+                                    启用 利率范围：
+		              <#if ba??&&ba.aprFirst??>
+			              <@linkage name="ba.aprFirst" id="apr_first" nid="borrow_auto_apr_first" default=ba.aprFirst type="value" />  
+			              <#else>
+			              <@linkage name="ba.aprFirst" id="apr_first" nid="borrow_auto_apr_first" type="value"  />  
+		              </#if>
+		              -
+		              <#if ba??&&ba.aprLast??>
+			              <@linkage name="ba.aprLast" id="apr_last" nid="borrow_auto_apr_last" default=ba.aprLast type="value" />  
+			              <#else>
+			              <@linkage name="ba.aprLast" id="apr_last" nid="borrow_auto_apr_last" type="value" />  
+		              </#if>
+                                </div>
+                            </span>
+                            <div class="mes-txt">
+                                【不启用则没有此项限制】
+                            </div>
+                        </div>
+                        <#-- 
+                        <div class="auto_query_list clearfix">
+                            <span class=" left-txt">投标奖励：</span>
+                            <div class=" right-txt">
+                                <input  type="checkbox" name="ba.awardStatus"  value="1" <#if ba??&&ba.awardStatus==1>checked</#if>  /> 
+                                <span class="b-txt">启用　奖励必须大于等于
+                                <#if ba??&&ba.awardFirst??>
+					              <@linkage name="ba.award" id="award_first" nid="borrow_auto_award" default=ba.awardFirst type="value" />  
+					              <#else>
+					              <@linkage name="ba.award" id="award_first" nid="borrow_auto_award" type="value"/>  
+				              </#if>
+                               </span>
+                            </div>
+                            <div class="mes-txt">
+                               	 【不启用则没有此项限制
+                            </div>
+                        </div>
+                       -->
+                       <#if ba??&&ba.borrowType??>
+							<#assign  type = ba.borrowType  />
+							<#assign  types = type?split(",")     />
+						</#if>
+                        <div class="auto_query_list clearfix">
+                            <span class=" left-txt">投资标种：</span>
+                            <div class=" right-txt" style="width: auto;">
+                               <input id="borrowType1" type="checkbox" name="borrowType1" value="105" <#if types??&&types[0]=='108'>checked</#if> /><label for="borrowType1">担保标</label>
+                               <!--  <input id="borrowType2" type="checkbox" name="borrowType2" value="109" <#if types??&&types[1]=='109'>checked</#if> /><label for="borrowType2">网商信用标</label>  
+                               <input id="borrowType3" type="checkbox" name="borrowType3" value="112" <#if types??&&types[2]=='112'>checked</#if> /><label for="borrowType3">经营信用标</label>
+                               <input id="borrowType4" type="checkbox" name="borrowType4" value="111" <#if types??&&types[3]=='111'>checked</#if> /><label for="borrowType4">学业信用标</label> 
+                               <input id="borrowType5" type="checkbox" name="borrowType5" value="104" <#if types??&&types[4]=='104'>checked</#if> /><label for="borrowType5">净值标</label>
+                               <input id="borrowType6" type="checkbox" name="borrowType6" value="101" <#if types??&&types[5]=='101'>checked</#if> /><label for="borrowType6">秒还标</label> -->
+                            </div>
+                            <div class="mes-txt">
+                                【选择您的投资标种,可多选,不选择不能投标】
+                            </div>
+                        </div>
+                        
+                         <div class="auto_query_list clearfix">
+                            <span class=" left-txt">验证码：</span>
+                             <div class=" right-txt">
+                            <input name="validCode" id="validCode" type="text" size="11" maxlength="5"  tabindex="3"  style="float:left;"/>&nbsp;<img src="${request.getContextPath()}/validimg.html" alt="点击刷新" onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();" align="absmiddle" style="cursor:pointer; display:inline-block;zoom:1;*display:inline; *float:none;height:25px;" />
+                            </div>
+                            <div class="mes-txt">
+                                	看不清请点击刷新
+                            </div>
+                        </div>
+                        
+                        <div style="text-align:center; clear:both; padding-top:15px;"> 
+                            <input type="hidden" name="ba.id" value="<#if ba??>${ba.id!}</#if>" />
+                            <input type="submit" class="btn-action" name="" value="提交" id=""  /> 
+                            <input type="reset" class="btn-action" name="" value="重置" id=""  /> 
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+         
+			</form>
+				<!-- Form end -->
+				</div>
+			<!--右边的内容 结束-->
+		</div>
+	</div>
+    </div>
+    </div>
+	<!--用户中心的主栏目 结束-->
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/modal.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/tab.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/alert.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/transition.js"></script>
+	<script type="text/javascript">
+		function check_form(){
+			var tenderCheck = /^[0-9]*[1-9][0-9]*$/;
+			var tenderAccount = document.getElementById("tenderAccount").value;
+			var validCode = document.getElementById("validCode").value;
+			if(!tenderCheck.test(tenderAccount)||tenderAccount%500){
+				alert("投标金额需为500的整数倍，请核对您的投标金额。");
+				return false;
+			}
+			if(/^\s*$/.test(validCode)){
+				alert("验证码必须填写！！");
+				return false;
+			}
+		}
+		
+		function check_number(obj){
+			var num = obj.value;
+			var errMsg = "";
+			if(/^[1-9][0-9]*$/.test(num)||num.length==0||num.length==1){
+			}else{
+				alert("请输入整形数字");
+				obj.value="";
+				return;
+			}
+			if(parseInt(num)>50000){
+				alert("最大投标金额不能大于5万");
+				obj.value="";
+				return;
+			}
+			
+		}
+	</script>
+	<#include "../include/footer.html">
+</body>
+</html>

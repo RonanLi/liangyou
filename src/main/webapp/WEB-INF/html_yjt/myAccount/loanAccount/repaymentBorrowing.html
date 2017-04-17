@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html">
+<#assign mid="m_borrow" >
+<#assign nid="member">
+<#import "../../common/function.html" as func>
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+
+<body>
+    <div id="main" class="clearfix container">
+
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="userRightMenu">
+                <#include "loanAccountMenu.html">
+            </div>
+            <div class="repaymentBorrowing">
+                <#if param?exists>
+                    <#if param.get("dotime1")?exists><#assign dotime1=param.get("dotime1")></#if>
+                    <#if param.get("dotime2")?exists><#assign dotime2=param.get("dotime2")></#if>
+                    <#if param.get("searchkeywords")?exists><#assign searchkeywords=param.get("searchkeywords")></#if>
+                </#if>
+                <ul>
+                    <li>
+                        <div>标题</div>
+                        <div>金额(元)</div>
+                        <div>年利率</div>
+                        <div>期限</div>
+                        <div>放款时间</div>
+                        <#if borrow_type=='repaying'>
+                            <div>应还款日期</div>
+                            <#elseif borrow_type=='repaid'><div>已还款日期</div>
+                            <#else><div>进度</div>
+                        </#if>
+                        <div>状态</div>
+                        <div>还款明细</div>
+                        <div>操作</div>
+                    </li>
+                    <#if list?? && list?size gt 0>
+                        <#list list as item>
+                            <li>
+                                <div><a href="${webroot}/invest/detail.html?borrowid=${item.id?c}" title="${item.name!}" target="_blank"><#if item.name?length lt 9>${item.name}<#else>${item.name[0..8]}..</#if></a></div>
+                                <div>${item.account}元</div>
+                                <div>${item.apr} %</div>
+                                <div>
+                                    <#if item.isday??&&item.isday==1>${item.timeLimitDay!1}天
+                                    <#else>${(item.timeLimit)!}个月</#if>
+                                </div>
+                                <div>${item.verifyTime!}</div>
+                                <#if item.type == 115>
+                                    <div>--</div>
+                                    <#else>
+                                        <#if borrow_type=='repaying'>
+                                            <div>${item.borrowRepayments.get(0).repaymentTime}</div>
+                                            <#elseif borrow_type=='repaid'><div>${item.borrowRepayments.get(0).repaymentYestime}</div>
+                                            <#else>
+                                        </#if>
+                                    <div>${item.accountYes/item.account*100}%</div>
+                                </#if>
+                                <div><#if item.status==0>发布审批中<#elseif item.status==1><#if item.accountYes?exists&&item.accountYes==item.account><#if item.type==110 >满标审核中<#else>认购已满标</#if><#else>正在募集</#if><#elseif item.status==2>审核失败<#elseif item.status==3>已满标<#elseif item.status==4>满标审核失败<#elseif item.status==5>撤回<#elseif item.status==6||item.status==7>还款中<#elseif item.status==8>已经还款</#if></div>
+                                <div><a href="${webroot}/member/myAccount/repaymentBorrowD.html?id=${item.id?c}&borrow_type=${borrow_type}">还款明细</a> </div>
+                            </li>
+                        </#list>
+                        <li>
+                            <div id="page">
+                                <#import "../../common/page.html" as pager>
+                                    <@pager.pagination page=page url="/member/myAccount/repaymentBorrowing.html" map=param style="style3"  />
+                            </div>
+                        </li>
+                        <#else><li> 无数据</li>
+                    </#if>
+                </ul>
+            </div>
+        </div>
+        <!--正在招标 结束-->
+    </div>
+
+</div>
+</body>
+</html>
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"></script>
+<#include "../../include/footer.html">

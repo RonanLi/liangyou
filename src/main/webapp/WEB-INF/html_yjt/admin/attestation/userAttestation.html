@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="认证管理">
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+						<div id="toolbar" class="clearfix">
+                                <div class="toolbor-module search">
+                                    <form action="vip.html" method="post">
+                                    <div style="height:22px;line-height:22px;float:left;margin-left: 10px;">数字账户：</div>
+                                      <input type="text" name="apiUsercustId" id="apiUsercustId" value="请输入数字账户" class="search-value">
+                                     <div style="height:22px;line-height:22px;float:left;margin-left: 10px;">用户名：</div>
+                                      <input type="text" name="username" id="username" value="请输入用户名" class="search-value">
+                                      <div style="height:22px;line-height:22px;float:left;margin-left: 10px;">真实姓名：</div>
+                                     <input type="text" name="realname" id="realname" value="请输入姓名" class="search-value">
+                                       <div style="height:22px;line-height:22px;float:left;margin-left: 10px;">VIP：</div>
+                                        <select id="vipStatus" name="vipStatus" style="width: 80px;height:22px;line-height:22px;" >
+                                        	<option value=""  >全部</option>
+                                        	<option value="1" >是</option>
+                                        	<option  value="0" >否</option>   
+                                                                    	
+                                        </select>
+                                        <input type="button" value="搜索"  class="input-button" onclick="sousuo();" style="float:none;">
+                                    </form>
+                                </div>
+                            </div>                                   
+                                        
+                            <!--工具栏--}-->
+							<!-- modify by lxm 后台认证管理可以由数字账户查到用户手机号码  2017-3-17 11:25:14 -->
+                            <div id="main" class="clearfix">
+                                <#if detailuserlist??>
+                                    <table class="data-list">
+                                        <tr class="header">
+                                            <td>ID</td>
+                                            <td>用户名</td>
+                                            <td>真实姓名</td>
+                                            <td>手机号码</td>
+                                            <td>${api_name!}账户</td>
+                                            <td>数字账户</td>
+                                            <td>实名认证</td>
+                                            <td>手机认证</td>
+                                            <td>注册时间</td>
+                                            <td>操作</td>
+                                        </tr>
+                                        <#list detailuserlist as obj>
+                                            <tr class="s">
+                                                <td>${obj.userId?c}</td>
+                                                <td>${obj.username!"-"}</td>
+                                                <td>${obj.realname!"-"}</td>
+                                                <td>${obj.phone!"-"}</td>
+                                                <td>${obj.apiId!"未开通"}</td>
+                                                <td>${obj.apiUsercustId!"-"}</td> 
+                                                <td><#if obj.realStatus??><#if obj.realStatus==1 || obj.realStatus==3>认证<#elseif obj.realStatus==2>等待审核<#else><font
+                                                        color="#FF0000">未认证</font></#if><#else><font color="#FF0000">未认证</font></#if>
+                                                </td>
+                                                <!-- <td><#if obj.emailStatus??><#if obj.emailStatus==1>认证<#else><font
+                                                        color="#FF0000">未认证</font></#if><#else><font color="#FF0000">未认证</font></#if>
+                                                </td>-->
+                                                
+                                                 <td><#if obj.phoneStatus??><#if obj.phoneStatus==1>认证<#else><font
+                                                        color="#FF0000">未认证</font></#if><#else><font color="#FF0000">未认证</font></#if>
+                                                </td>
+                                                <!--<td><#if obj.userCache??&&obj.userCache.vipStatus==1>Vip会员<#else>普通会员</#if></td>-->
+                                                <td><#if obj.addtime??>${obj.addtime?string('yyyy-MM-dd HH:mm:ss')!"-"}</#if></td>
+                                                <td><a href="${request.getContextPath()}/admin/attestation/viewUserAttestation.html?userId=${obj.userId?c}" class="viewuserallinfo">查看全部资料</a></td>
+                                            </tr>
+                                        </#list>
+                                    </table>
+                                    <#else> 暂无信息 </#if>
+
+                                <!--底部工具栏--{-->
+                                <div id="bottomToolbar" class="clearfix">
+                                    <div class="other-tool">
+                                        <dl class="refresh-data">
+                                            <dt class="refresh-data-icon"></dt>
+                                            <dd><a href="javascript:void(0);" class="refresh-page">刷新数据</a></dd>
+                                        </dl>
+                                    </div>
+
+                                    <!--翻页系统--{-->
+                                    <div class="container">
+                                        <#import "../../common/page.html" as pager> <@pager.pagination page=page
+                                            url="/admin/attestation/userAttestation.html" map=params style="style1" />
+
+                                    </div>
+                                    <!--翻页系统--}-->
+                                </div>
+                                <!--底部工具栏--}-->
+
+                                <script>
+                                    var urls = '?search=true';
+                                    function sousuo(){
+                                        var sou = "";
+                                        var apiUsercustId = $("#apiUsercustId").val();
+                                        if (apiUsercustId!=null&&apiUsercustId!=""&&apiUsercustId!="undefine"&&apiUsercustId!="请输入数字账户"){
+                                            sou += "&apiUsercustId="+apiUsercustId;
+                                        }
+                                        var username = $("#username").val();
+                                        if (username!=null&&username!=""&&username!="undefine"&&username!="请输入用户名"){
+                                            sou += "&username="+username;
+                                        }
+                                        var realname = $("#realname").val();
+                                        if (realname!=null&&realname!=""&&realname!="undefine"&&realname!="请输入姓名"){
+                                            sou += "&realname="+realname;
+                                        }
+                                        var status = $("#status").val();
+                                        if (status!=null&&status!=""&&status!="undefine"){
+                                            sou += "&status="+status;
+                                        }
+                                        var vipStatus = $("#vipStatus").val();
+                                        if (vipStatus!=""){
+                                            sou += "&vipStatus="+vipStatus;
+                                        }
+                                        var url=urls+sou
+                                        location.href=url;
+                                    }
+                                </script>
+                            </div>
+
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+
+    </body>
+</html>
+<#include "../jsPage.html">

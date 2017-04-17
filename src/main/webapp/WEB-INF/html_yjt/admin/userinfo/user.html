@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="用户管理">
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+                           <form action="" method="post">
+                            <!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+                                <div class="toolbor-module export">
+                                    <input type="button" onclick="exportxls()" value="导出列表" class="input-button export-btn"/>
+                                </div>
+                                <#if param?exists>
+                                    <#assign username=param.username!'请输入用户名' />
+                                    <#assign email=param.email!'请输入邮箱' />
+                                    <#assign realname=param.realname!'请输入真实姓名' />
+                                    <#assign kefuUsername=param.kefuUsername!'' />
+                                    <#assign userType=(param.userType!'')?string />
+                                    <#assign cstart=(param.rank!'')?string />   <!-- 星级 -->
+                                    <#assign cname=(param.name!'') />   <!-- 信用级别 -->
+                                    <#assign companyAddress=param.companyAddress!'公司地址' />
+                                    <#assign companyType=param.companyType!'' />
+                                    <#assign address=param.address!'现居住地址' />
+                                    <#assign total1=param.total1!'总金额' />
+                                    <#assign total2=param.total2!'总金额' />
+                                    <#assign useMoney1=param.useMoney1!'可用金额' />
+                                    <#assign useMoney2=param.useMoney2!'可用金额' />
+                                    <#assign noUseMoney1=param.noUseMoney1!'冻结金额' />
+                                    <#assign noUseMoney2=param.noUseMoney2!'冻结金额' />
+                                    <#assign collection1=param.collection1!'待收金额' />
+                                    <#assign collection2=param.collection2!'待收金额' />
+                                </#if>
+                                <div class="toolbor-module search" style="float: left;width:100%;">
+                                <table class="data-list">
+                                        <tr>
+                                            <td>
+                                            	<div style="height:22px;line-height:22px;float:left;margin-left: 10px;">用户名：</div>
+			                                    <input type="hidden" name="types" value="user" />
+			                                    <input type="text" name="username" id="username" value="${username}" class="search-value"  >
+                                            </td>
+                                            <td>
+                                            	 <div style="height:22px;line-height:22px;float:left;margin-left: 10px;">邮箱：</div>
+                                   				 <input type="text" name="email" id="email" value="${email}" class="search-value">
+                                            </td>
+                                            <td>
+                                            	<div style="height:22px;line-height:22px;float:left;margin-left: 10px;">真实姓名：</div>
+                                    			<input type="text" name="realname" id="realname" value="${realname}" class="search-value">
+                                            </td>
+                                            
+                                            <td>
+                                            	<div style="height:22px;line-height:22px;float:left;margin-left: 10px;">可用金额：</div>
+			                                       <input type="text" id="useMoney1" name="useMoney1" value="${useMoney1}" />- <input type="text" id="useMoney2" name="useMoney2" value="${useMoney2}" onKeyUp="value=value.replace(/[^0-9]/g,'')"/>
+                                            </td>
+                                            
+                                            <td>
+                                            	<div style="height:22px;line-height:22px;float:left;margin-left: 10px;">总金额：</div>
+			                                       <input type="text" id="total1" name="total1" value="${total1}"  onKeyUp="value=value.replace(/[^0-9]/g,'')"/>- <input type="text" id="total2" name="total2" value="${total2}" onKeyUp="value=value.replace(/[^0-9]/g,'')"/>
+                                            </td>
+                                         
+                                        </tr>
+                                        <tr>
+                                           <#-- <td>
+                                            	<div style="height:22px;line-height:22px;float:left;margin-left: 10px;">公司地址：</div>
+                                    			<input type="text" name="companyAddress" id="companyAddress" value="${companyAddress}" class="search-value">
+                                            </td>
+                                            <td>
+                                            	<div style="height:22px;line-height:22px;float:left;margin-left: 10px;">单位性质：
+								                        <#if companyType == ''>
+														<@linkage name="companyType" id="company_type" nid="user_company_type"></@linkage>
+													<#else>
+														<@linkage name="companyType" id="company_type" nid="user_company_type" default=companyType></@linkage>
+													</#if>
+			                                    </div>
+                                            </td>
+                                        	
+                                            <td>
+	                                            <div style="height:22px;line-height:22px;float:left;margin-left: 10px;">现居住地址：</div>
+	                                    		<input type="text" name="address" id="address" value="${address}" class="search-value">
+                                            </td> -->
+                                            <td>
+                                            	<div style="height:22px;line-height:22px;float:left;margin-left: 10px;">冻结金额：</div>
+			                                       <input type="text" id="noUseMoney1" name="noUseMoney1" value="${noUseMoney1}" onKeyUp="value=value.replace(/[^0-9]/g,'')"/> - <input type="text" id="noUseMoney2" name="noUseMoney2" value="${noUseMoney2}" onKeyUp="value=value.replace(/[^0-9]/g,'')"/>
+                                            </td>
+                                            <td>
+                                            	<div style="height:22px;line-height:22px;float:left;margin-left: 10px;">待收金额：</div>
+			                                       <input  type="text" name="collection1" id="collection1" value="${collection1}" onKeyUp="value=value.replace(/[^0-9]/g,'')"/> - <input  type="text" name="collection2" id="collection2" value="${collection2}" onKeyUp="value=value.replace(/[^0-9]/g,'')"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <!-- <td>
+                                            	<div style="height:22px;line-height:22px;float:left;margin-left: 10px;">客户星级：</div>
+			                                    <div class="select-box" id="rank">
+			                                        <div class="tag-select" >客户星级</div>
+			                                        <ul class="tag-options">
+			                                        <li data-value="" <#if cstart=="0" >class="open-selected"</#if>>客户星级</li>
+			                                            <#list startRankList as item>
+			                                            <#assign krank=(item.rank)?string/>
+			                                                <li data-value="${item.rank}" <#if krank==cstart >class="open-selected"</#if>>${item.rank}</li>
+			                                            </#list>
+			                                        </ul>
+			                                    </div>
+                                            </td> -->
+                                           
+                                            <td>
+                                            	<div style="height:22px;line-height:22px;float:left;margin-left: 10px;">所属客服：</div>
+			                                    <div class="select-box" id="status">
+			                                        <div class="tag-select" >所属客服</div>
+			                                        <ul class="tag-options">
+			                                        <li data-value="" <#if kefuUsername=="" >class="open-selected"</#if>>所属客服</li>
+			                                            <#list kflist as item>
+			                                            <#assign kname=item.username/>
+			                                                <li data-value="${item.username}" id="${item.userId}" <#if kname==kefuUsername >class="open-selected"</#if>>${item.username}</li>
+			                                            </#list>
+			                                        </ul>
+			                                    </div>
+                                            </td>
+                                            <td>
+                                            	<div style="height:22px;line-height:22px;float:left;margin-left: 10px;">用户类型：</div>
+			                                    <div class="select-box" id="status_type">
+			                                 	<div class="tag-select" >用户类型</div>
+			                                     	<ul class="tag-options">
+			                                        <li data-value=""  <#if userType=="" >class="open-selected"</#if>>用户类型</li>
+			                                            <#list  userTypeList as tyitem>
+			                                            <#assign  utype=(tyitem.typeId)?string />
+			                                                <li data-value="${tyitem.typeId!}" <#if utype==userType >class="open-selected"</#if>>${tyitem.name}</li>
+			                                            </#list>
+			                                      </ul>
+			                                   </div>
+                                            </td>
+                                            <td><input type="button" value="搜索"  class="input-button" onclick="sousuo();"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                </div>
+                                </form>
+                            <!--工具栏--}-->
+
+                            <div id="main" class="clearfix">
+                                <form action="" method="post">
+                                    <table class="data-list">
+                                        <tr class="header">
+                                            <td>ID</td>
+                                            <td>用户名</td>
+                                            <td>真实姓名</td>
+                                            <td>性别</td>
+                                            <td>邮箱</td>
+                                            <td>QQ</td>
+                                            <td>手机</td>
+                                            <td>所在地</td>
+                                            <td>身份证</td>
+                                            <td>添加时间</td>
+                                            <td>状态</td>
+                                            <td>用户类型</td>
+                                            <td>所属客服</td>
+                                            <td>总金额</td>
+                                            <td>可用金额</td>
+                                            <td>冻结金额</td>
+                                            <td>待收金额</td>
+                                            <td>待还金额</td>
+											<td>等级</td>
+                                           <td>最后登录IP</td>
+                                            <td>最后登录时间</td> 
+                                            
+                                            
+                                            <td>操作</td>
+                                        </tr>
+                                        <#if list??> <#list list as obj>
+                                            <tr class="s">
+                                                <td>${(obj.userId?c)!"-"}</td>
+                                                <td>${obj.username!"-"}</td>
+                                                <td>${obj.realname!"-"}</td>
+                                                <td><#if obj.sex??><#if
+                                                        obj.sex=="1">男<#else>女</#if><#else>-</#if></td>
+                                                <td>${obj.email!"-"}</td>
+                                                <td>${obj.qq!"-"}</td>
+                                                <td >${obj.phone!"-"}</td>
+                                                <td ><#if obj.province??>
+                                                    ${obj.province.name} - <#else> - </#if> <#if obj.city??>
+                                                    ${obj.city.name} - <#else> - </#if> <#if obj.area??>
+                                                    ${obj.area.name} <#else> - </#if></td>
+                                                <td>${obj.cardId!"-"}</td>
+                                                <td><#if obj.addtime??>${obj.addtime?string('yyyy-MM-dd HH:mm:ss')}</#if></td>
+                                                <td><#if obj.status??><#if
+                                                        obj.status==0>关闭<#else>开通</#if><#else>-</#if></td>
+                                                <td><#if obj.userType??>
+                                                    ${obj.userType.name} <#else> - </#if></td>
+                                                <td><#if obj.kefu_username??>${obj.kefu_username}</#if></td>
+                                                <td>${obj.account.total!"-"}</td>
+                                                <td>${obj.account.useMoney!"-"}</td>
+                                                <td>${obj.account.noUseMoney!"-"}</td>
+                                                <td>${obj.account.collection!"-"}</td>
+                                                <td>${obj.account.repay!"-"}</td>
+                                                <#assign starRank=obj.credit.findStarRank()>
+                                                 <#assign creditRank=obj.credit.findCreditRank()> 
+                                               <#--  <td><img  src="${request.getContextPath()}/data/images/credit/${starRank.pic}" title="${obj.credit.starScore!}"  /></td>-->
+                                                <td><img src="${request.getContextPath()}/data/images/credit/${creditRank.pic}" title="${obj.credit.value!}"  /></td>
+												<td>${obj.lastip!"-"}</td>
+												<td>${obj.lasttime!"-"}</td>
+                                                <td><a class="un" href="${request.getContextPath()}/admin/userinfo/edituser.html?userId=${obj.userId?c}">修改</a>
+                                                 <#-- <a class="un" href="${request.getContextPath()}/admin/userinfo/editTenderValue.html?userId=${obj.userId?c}">等级操作</a> -->
+                                                </td>
+                                            </tr>
+                                        </#list> <#else> 暂无 </#if>
+                                    </table>
+
+                                <!--底部工具栏--{-->
+                                <div id="bottomToolbar" class="clearfix">
+                                    <div class="other-tool">
+                                        <dl class="refresh-data">
+                                            <dt class="refresh-data-icon"></dt>
+                                            <dd><a href="javascript:void(0);" class="refresh-page">刷新数据</a></dd>
+                                        </dl>
+                                    </div>
+
+                                    <!--翻页系统--{-->
+                                    <div class="container">
+                                        <#import "../../common/page.html" as pager>
+                                            <@pager.pagination page=page url="/admin/userinfo/user.html" map=param style="style1" />
+                                    </div>
+                                    <!--翻页系统--}-->
+                                </div>
+                                <!--底部工具栏--}-->
+
+                                <script type="text/javascript">
+                                    var xlsurl = 'user.html?type=export';
+                                    var url='user.html?search=true';
+                                    function sousuo(){
+                    					var sou = "";
+                    					var username = $("#username").val();
+                    					if (username!=""&&username!="请输入用户名"){
+                    						sou += "&username="+username;
+                    					}
+                    					var email = $("#email").val();
+                    					if(email!=""&&email!="请输入邮箱"){
+                    						sou += "&email="+email;
+                    					}
+                    					var realname = $("#realname").val();
+                    					if(realname!=""&&realname!="请输入真实姓名"){
+                    						sou += "&realname="+realname;
+                    					}
+                    					var companyAddress = $("#companyAddress").val();
+                    					if(companyAddress !="" && companyAddress!="公司地址"){
+                    						sou += "&companyAddress="+companyAddress;
+                    					}
+                    					var companyType = $("#company_type").val();
+                    					if(companyAddress !=""){
+                    						sou += "&companyType="+companyType;
+                    					}
+                    					var address = $("#address").val();
+                    					if(address !="" && address!="现居住地址"){
+                    						sou += "&address="+address;
+                    					}
+                    					var typeId = $("#status_type").find(".open-selected").attr("data-value");
+                    					if(typeId!=""){
+                    						sou += "&userType="+typeId;
+                    					}
+                    					
+                    					var kefu_username = $("#status").find(".open-selected").attr("data-value");
+                    					if(kefu_username!=""){
+                    						sou += "&kefuUsername="+kefu_username;
+                    					}
+                    					var total1 = $("#total1").val();
+                    					if(total1!="" && total1 !="总金额"){
+                    						sou += "&total1="+total1;
+                    					}
+                    					var total2 = $("#total2").val();
+                    					if(total2!="" && total2 !="总金额"){
+                    						sou += "&total2="+total2;
+                    					}
+                    					var useMoney1 = $("#useMoney1").val();
+                    					if(useMoney1!="" && useMoney1!="可用金额"){
+                    						sou += "&useMoney1="+useMoney1;
+                    					}
+                    					var useMoney2 = $("#useMoney2").val();
+                    					if(useMoney2!="" && useMoney2!="可用金额"){
+                    						sou += "&useMoney2="+useMoney2;
+                    					}
+                    					var noUseMoney1 = $("#noUseMoney1").val();
+                    					if(noUseMoney1!="" && noUseMoney1 !="冻结金额"){
+                    						sou += "&noUseMoney1="+noUseMoney1;
+                    					}
+                    					var noUseMoney2 = $("#noUseMoney2").val();
+                    					if(noUseMoney2!="" && noUseMoney2 !="冻结金额"){
+                    						sou += "&noUseMoney2="+noUseMoney2;
+                    					}
+                    					var collection1 = $("#collection1").val();
+                    					
+                    					if(collection1!="" && collection1!="待收金额"){
+                    						sou += "&collection1="+collection1;
+                    					}
+                    					var collection2 = $("#collection2").val();
+                    					
+                    					if(collection2!="" && collection2!="待收金额"){
+                    						sou += "&collection2="+collection2;
+                    					}
+                    					
+                    					
+                    					
+                    					if (sou!=""){
+                    							location.href=url+sou;
+                    						}
+                    					}
+                                    
+                                    function exportxls(){
+                                        var sou = "";
+                                        var username = $("#username").val();
+                                        if (username!=""&&username!="请输入用户名"){
+                                            sou += "&username="+username;
+                                        }
+                                       
+                                        var email = $("#email").val();
+                    					if(email!=""&&email!="请输入邮箱"){
+                    						sou += "&email="+email;
+                    					}
+                    					var realname = $("#realname").val();
+                    					if(realname!=""&&realname!="请输入真实姓名"){
+                    						sou += "&realname="+realname;
+                    					}
+                    					var companyAddress = $("#companyAddress").val();
+                    					if(companyAddress !="" && companyAddress!="公司地址"){
+                    						sou += "&companyAddress="+companyAddress;
+                    					}
+                    					var address = $("#address").val();
+                    					if(address !="" && address!="现居住地址"){
+                    						sou += "&address="+address;
+                    					}
+                    					var kefu_username = $("#status").find(".open-selected").attr("data-value");
+                    					if(kefu_username!=""){
+                    						sou += "&kefuUsername="+kefu_username;
+                    					}
+                    					var typeId = $("#status_type").find(".open-selected").attr("data-value");
+                    					if(typeId!=""){
+                    						sou += "&userType="+typeId;
+                    					}
+                    					
+                    					var kefu_username = $("#status").find(".open-selected").attr("data-value");
+                    					if(kefu_username!=""){
+                    						sou += "&kefuUsername="+kefu_username;
+                    					}
+                    					var total1 = $("#total1").val();
+                    					if(total1!="" && total1 !="总金额"){
+                    						sou += "&total1="+total1;
+                    					}
+                    					var total2 = $("#total2").val();
+                    					if(total2!="" && total2 !="总金额"){
+                    						sou += "&total2="+total2;
+                    					}
+                    					var useMoney1 = $("#useMoney1").val();
+                    					if(useMoney1!="" && useMoney1!="可用金额"){
+                    						sou += "&useMoney1="+useMoney1;
+                    					}
+                    					var useMoney2 = $("#useMoney2").val();
+                    					if(useMoney2!="" && useMoney2!="可用金额"){
+                    						sou += "&useMoney2="+useMoney2;
+                    					}
+                    					var noUseMoney1 = $("#noUseMoney1").val();
+                    					if(noUseMoney1!="" && noUseMoney1 !="冻结金额"){
+                    						sou += "&noUseMoney1="+noUseMoney1;
+                    					}
+                    					var noUseMoney2 = $("#noUseMoney2").val();
+                    					if(noUseMoney2!="" && noUseMoney2 !="冻结金额"){
+                    						sou += "&noUseMoney2="+noUseMoney2;
+                    					}
+                    					var collection1 = $("#collection1").val();
+                    					if(collection1 !="" && collection1 !="待收金额"){
+                    						sou += "&collection1="+collection1;
+                    					}
+                    					var collection2 = $("#collection2").val();
+                    					if(collection2 !="" && collection2 !="待收金额"){
+                    						sou += "&collection2="+collection2;
+                    					}
+                    					
+                    					
+                    					
+                                        if (sou!=""){
+                                            location.href=xlsurl+sou;
+                                        }else{
+                                            location.href=xlsurl;
+                                        }
+                                    }
+                                    
+                                    $(function(){
+           	                		 $("#status").find(".tag-select").html( $("#status").find(".open-selected").html());
+           	                		$("#status_type").find(".tag-select").html( $("#status_type ").find(".open-selected").html());
+           	                	$("#rank").find(".tag-select").html( $("#rank").find(".open-selected").html());
+           	                	$("#creditRank").find(".tag-select").html( $("#creditRank").find(".open-selected").html());
+           	                	 
+                                  	});
+                                </script>
+                            </div>
+
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+
+    </body>
+</html>
+<#include "../jsPage.html">

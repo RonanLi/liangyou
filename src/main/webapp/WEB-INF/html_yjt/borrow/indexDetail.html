@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<#include "../include/resource.html">
+<body>
+<#assign nid="borrow" >
+<#include "../include/header.html">
+<div class="wrp-bor">
+  <#if isAssignment?? && isAssignment==1>
+    <div class="alert alert-error in"> <font color="#FF0000">您正在发布的是债权转让标，可将部分债权转让给其他投资人 </font> </div>
+    <#else> 
+    <#if borrowType==104>
+    <div class="index-h3">我要借款 - 净值标</div>
+    <div class="bor-de-wrp bor-color-jin">
+      <h3><b class="icon"></b>净值标</h3>
+      <div class="bor-de ">
+        <h4>申请条件</h4>
+        <p>18周岁以上的中国公民</p>
+        <p>有固定自有住房、有稳定工作</p>
+        <p>信用良好，无严重逾期、无个人信用卡逾期不良记录</p>
+        <p>在现单位工作满6个月</p>
+
+        <h4>借款方式</h4>
+        <p>借款额度：200000 -10,000,000</p>
+        <p>借款年利率：12%-20% </p>
+        <p>借款期限： 1-12个月</p>
+        <p>审核时间： 1-3个工作日</p>
+        <p>还款方式： 等额本息、每月还息到期还本</p>
+
+        <h4>费用说明</h4>
+        <p>借款审批服务费：用户成功借款后按照评定的信用等级会一次性的从所得借款中扣除一定的比例（1-5%）作为借款审批费，该审批服务费将进入新e贷平台的账户安全保障金账户，专项用于新e贷的本息保障计划。</p>
+        <p>信用等级:<img src="${webroot}${theme_dir}/images/xydj-img.png" alt="" style="vertical-align: middle;margin-left:5px;"></p>
+        <p>费率:       1%   2%    3%    5%</p>
+
+        <h4>必要申请材料</h4>
+        <p>身份证</p>
+        <p>个人征信报告（可去当地人民银行打印）</p>
+        <p>带公司公章的劳动合同或工作证明 </p>
+        <p>近3个月工资卡银行流水</p>
+
+        <a href="${webroot}/borrow/loan.html?t=${t}" class="fb-action">立即申请</a>
+      </div>
+    </div>
+    </#if> 
+    <#if borrowType==101>
+    <div class="index-h3">我要借款 - 秒还标</div>
+    <div class="bor-de-wrp bor-color-miao">
+      <h3><b class="icon"></b>秒还标</h3>
+      <div class="bor-de">
+        <h4>申请条件</h4>
+        <p>18周岁以上的中国公民</p>
+        <p>有固定自有住房、有稳定工作</p>
+        <p>信用良好，无严重逾期、无个人信用卡逾期不良记录</p>
+        <p>在现单位工作满6个月</p>
+
+        <h4>借款方式</h4>
+        <p>借款额度：200000 -10,000,000</p>
+        <p>借款年利率：12%-20% </p>
+        <p>借款期限： 1-12个月</p>
+        <p>审核时间： 1-3个工作日</p>
+        <p>还款方式： 一次性还本付息</p>
+
+        <h4>费用说明</h4>
+        <p>借款审批服务费：用户成功借款后按照评定的信用等级会一次性的从所得借款中扣除一定的比例（1-5%）作为借款审批费，该审批服务费将进入新e贷平台的账户安全保障金账户，专项用于新e贷的本息保障计划。</p>
+        <p>信用等级:<img src="${webroot}${theme_dir}/images/xydj-img.png" alt="" style="vertical-align: middle;margin-left:5px;"></p>
+        <p>费率:       1%   2%    3%    5%</p>
+
+
+        <h4>必要申请材料</h4>
+        <p>身份证</p>
+        <p>个人征信报告（可去当地人民银行打印）</p>
+        <p>带公司公章的劳动合同或工作证明 </p>
+        <p>近3个月工资卡银行流水</p>
+
+        <a href="${webroot}/borrow/loan.html?t=${t}" class="fb-action">立即申请</a>
+      </div>
+    </div>
+    </#if> 
+    <#if borrowType==103>
+    <div class="index-h3">我要借款 - <#if t=="fast_personal">个人消费标<#elseif t="fast_company">企业经营标</#if></div>
+    <div class="bor-de-wrp bor-color-di">
+      <h3><b class="icon"></b><#if t=="fast_personal">个人消费标<#elseif t="fast_company">企业经营标</#if></h3>
+      <div class="bor-de ">
+        <#if t=="fast_personal">
+	        <h4>申请条件</h4>
+	        <p>18周岁以上的中国公民</p>
+	        <p>有固定自有住房、有稳定工作</p>
+	        <p>信用良好，无严重逾期、无个人信用卡逾期不良记录</p>
+	        <p>在现单位工作满6个月</p>
+		<#elseif t="fast_company">
+			<h4>申请条件</h4>
+			<p>身份证、结婚证明或户口本</p>
+			<p>营业执照、组织机构代码证、公司章程（或工商登记信息查询结果）</p>
+			<p>资产或其他财力证明</p>
+			<p>经营场所证明</p>
+			<p>用途证明【任选其一】：购销合同、采购订单、发票等</p>
+		</#if>
+        <h4>借款方式</h4>
+        <p>借款额度：200000 -10,000,000</p>
+        <p>借款年利率：12%-20% </p>
+        <p>借款期限： 1-12个月</p>
+        <p>审核时间： 1-3个工作日</p>
+        <p>还款方式： 等额本息、每月还息到期还本</p>
+
+        <h4>费用说明</h4>
+        <p>借款审批服务费：用户成功借款后按照评定的信用等级会一次性的从所得借款中扣除 1%-5% 的金额作为借款审批费，该审批服务费将进入新e贷平台的账户安全保障金账户，专项用于新e贷的本息保障计划。</p>
+        <p>信用等级:<img src="${webroot}${theme_dir}/images/xydj-img.png" alt="" style="vertical-align: middle;margin-left:5px;"></p>
+        <#--<p>费率:       1%   2%    3%    5%</p>-->
+
+
+        <h4>必要申请材料</h4>
+        <p>身份证</p>
+        <p>个人征信报告（可去当地人民银行打印）</p>
+        <p>带公司公章的劳动合同或工作证明 </p>
+        <p>近3个月工资卡银行流水</p>
+
+        <a href="${webroot}/borrow/loan.html?t=${t}" class="fb-action">立即申请</a>
+      </div>
+    </div>
+    </#if> 
+    <#if borrowType==105>
+    <div class="index-h3">我要借款 - 担保标</div>
+    <div class="bor-de-wrp bor-color-dan">
+      <h3><b class="icon"></b>担保标</h3>
+      <div class="bor-de">
+        <h4>申请条件</h4>
+        <p>18周岁以上的中国公民</p>
+        <p>有固定自有住房、有稳定工作</p>
+        <p>信用良好，无严重逾期、无个人信用卡逾期不良记录</p>
+        <p>在现单位工作满6个月</p>
+
+        <h4>借款方式</h4>
+        <p>借款额度：200000 -10,000,000</p>
+        <p>借款年利率：12%-20% </p>
+        <p>借款期限： 1-12个月</p>
+        <p>审核时间： 1-3个工作日</p>
+        <p>还款方式： 等额本息、每月还息到期还本</p>
+
+        <h4>费用说明</h4>
+        <p>借款审批服务费：用户成功借款后按照评定的信用等级会一次性的从所得借款中扣除一定的比例（1-5%）作为借款审批费，该审批服务费将进入新e贷平台的账户安全保障金账户，专项用于新e贷的本息保障计划。</p>
+        <p>信用等级:<img src="${webroot}${theme_dir}/images/xydj-img.png" alt="" style="vertical-align: middle;margin-left:5px;"></p>
+        <p>费率:       1%   2%    3%    5%</p>
+
+        <h4>必要申请材料</h4>
+        <p>身份证</p>
+        <p>个人征信报告（可去当地人民银行打印）</p>
+        <p>带公司公章的劳动合同或工作证明 </p>
+        <p>近3个月工资卡银行流水</p>
+
+        <a href="${webroot}/borrow/loan.html?t=${t}" class="fb-action">立即申请</a>
+      </div>
+    </div>
+    </#if>
+     <#if borrowType==102>
+    <div class="index-h3">我要借款 - 信用标</div>
+    <div class="bor-de-wrp bor-color-xin">
+      <h3><b class="icon"></b>信用标</h3>
+      <div class="bor-de ">
+        <h4>申请条件</h4>
+        <p>18周岁以上的中国公民</p>
+        <p>有固定自有住房、有稳定工作</p>
+        <p>信用良好，无严重逾期、无个人信用卡逾期不良记录</p>
+        <p>在现单位工作满6个月</p>
+
+        <h4>借款方式</h4>
+        <p>借款额度：200000 -10,000,000</p>
+        <p>借款年利率：12%-20% </p>
+        <p>借款期限： 1-12个月</p>
+        <p>审核时间： 1-3个工作日</p>
+        <p>还款方式： 等额本息、每月还息到期还本</p>
+
+        <h4>费用说明</h4>
+        <p>借款审批服务费：用户成功借款后按照评定的信用等级会一次性的从所得借款中扣除一定的比例（1-5%）作为借款审批费，该审批服务费将进入新e贷平台的账户安全保障金账户，专项用于新e贷的本息保障计划。</p>
+        <p>信用等级:<img src="${webroot}${theme_dir}/images/xydj-img.png" alt="" style="vertical-align: middle;margin-left:5px;" ></p>
+        <p>费率:       1%   2%    3%    5%</p>
+
+        <h4>必要申请材料</h4>
+        <p>身份证</p>
+        <p>个人征信报告（可去当地人民银行打印）</p>
+        <p>带公司公章的劳动合同或工作证明 </p>
+        <p>近3个月工资卡银行流水</p>
+
+        <a href="${webroot}/borrow/loan.html?t=${t}" class="fb-action">立即申请</a>
+      </div>
+    </div>
+    </#if> 
+    <#if borrowType==108>
+    <div class="alert alert-error in"> <font color="#FF0000">您正在借的是工薪信用标，网站给予的信用评级内发布借款 </font> </div>
+    </#if> 
+    <#if borrowType==109>
+    <div class="alert alert-error in"> <font color="#FF0000">您正在借的是网商信用标，网站给予的信用评级内发布借款 </font> </div>
+    </#if> 
+    <#if borrowType==111>
+    <div class="alert alert-error in"> <font color="#FF0000">您正在借的是学业信用标，网站给予的信用评级内发布借款 </font> </div>
+    </#if> 
+    <#if borrowType==112>
+    <div class="alert alert-error in"> <font color="#FF0000">您正在借的是经营信用标，网站给予的信用评级内发布借款 </font> </div>
+    </#if>
+     <#if borrowType==110>
+    <div class="index-h3">我要借款 - 债权流转标</div>
+    <div class="bor-de-wrp bor-color-liu">
+      <h3><b class="icon"></b>债权流转标</h3>
+      <div class="bor-de ">
+        <h4>申请条件</h4>
+        <p>18周岁以上的中国公民</p>
+        <p>有固定自有住房、有稳定工作</p>
+        <p>信用良好，无严重逾期、无个人信用卡逾期不良记录</p>
+        <p>在现单位工作满6个月</p>
+		<p>需要有合法明确的债权转让关系</p>
+		
+        <h4>借款方式</h4>
+        <p>借款额度：200000 -10,000,000</p>
+        <p>借款年利率：12%-20% </p>
+        <p>借款期限： 1-12个月</p>
+        <p>审核时间： 1-3个工作日</p>
+        <p>还款方式： 一次性还本付息</p>
+
+        <h4>费用说明</h4>
+        <p>借款审批服务费：用户成功借款后按照评定的信用等级会一次性的从所得借款中扣除一定的比例（1-5%）作为借款审批费，该审批服务费将进入新e贷平台的账户安全保障金账户，专项用于新e贷的本息保障计划。</p>
+        <p>信用等级:<img src="${webroot}${theme_dir}/images/xydj-img.png" alt="" style="vertical-align: middle;margin-left:5px;"></p>
+        <#--<p>费率:       1%   2%    3%    5%</p>-->
+
+        <h4>必要申请材料</h4>
+        <p>身份证</p>
+        <p>个人征信报告（可去当地人民银行打印）</p>
+        <p>带公司公章的劳动合同或工作证明 </p>
+        <p>近3个月工资卡银行流水</p>
+
+        <a href="${webroot}/borrow/loan.html?t=${t}" class="fb-action">立即申请</a>
+      </div>
+    </div>
+    </#if> 
+  </#if>
+</div>
+
+  
+<#include "../include/footer.html"> 
+</body>
+</html>

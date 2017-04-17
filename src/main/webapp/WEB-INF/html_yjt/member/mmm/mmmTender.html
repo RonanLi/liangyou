@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>双乾投标跳转中...</title>
+    <meta http-equiv="content-Type" content="text/html; charset=utf-8" />
+  </head>
+  <body>
+    <div>双乾页面跳转中...,请您不要关闭页面</div>
+    <form action="${mmm.submitUrl}" method="post" id="frm1" style="display: none">
+    <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value="${mmm.platformMoneymoremore}"  />
+		<input type="hidden" id="TransferAction" name="TransferAction" value="${mmm.transferAction}"  />
+		<input type="hidden" id="LoanJsonList" name="LoanJsonList" value='${mmm.loanJsonList}'  />
+		<input type="hidden" id="Action" name="Action" value="${mmm.action}"  />
+		<input type="hidden" id="transferType" name="transferType" value="${mmm.transferType}"  />
+		<input type="hidden" id="NeedAudit" name="NeedAudit" value="${mmm.needAudit!''}"  />
+        <!-- add by gy 2016-10-26 17:20:06 增加reamrk1请求参数，用以存体验金使用标识-->
+        <input type="hidden" id="Remark1" name="Remark1" value="${mmm.remark1!''}"  />
+        <!-- add by gy 2016-10-26 17:20:06 end-->
+		<input type="hidden" id="ReturnURL" name="ReturnURL" value="${mmm.returnURL}"  />
+		<input type="hidden" id="NotifyURL" name="NotifyURL" value="${mmm.notifyURL}"  />
+		<input type="hidden" id="SignInfo" name="SignInfo" value="${mmm.signInfo}"  />
+		<input type="hidden" type="submit" value="提交" />
+    </form>
+    <script type="text/javascript">
+    	document.getElementById("frm1").submit();  
+    </script>
+   
+  </body>
+</html>

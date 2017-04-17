@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="批量充值审核">
+                    <#include "banner.html">
+                        <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+		                         <div class="toolbor-module">
+							        <input type="button" class="input-button return" value="返回" onclick="history.go(-1)">
+							    </div>
+                            </div>
+                            <!--工具栏--}-->
+
+                        <div id="main" class="clearfix">
+
+ 									<div class="valBox" style="margin-bottom:20px;">
+                                        <div class="top">
+                                            <strong>待审核列表</strong>
+                                        </div>
+                             
+
+                              <table class="data-list">
+                                        <tr class="header">
+                                            <td>ID</td>
+                                            <td>流水号</td>
+                                            <td>用户名称</td>
+                                            <td>真实姓名</td>
+                                            <td>类型</td>
+                                            <td>充值金额</td>
+                                            <td>费用</td>
+                                            <td>充值时间</td>
+                                            <td>批量充值编号</td>
+                                            <td>状态</td>
+                                            <td>操作</td>
+                                        </tr>
+                                        <#list list as item>
+                                            <tr class="s">
+                                                <td>${(item.id!0)?c}</td>
+                                                <td >${item.tradeNo!"ERROR!"}</td>
+                                                <td>
+                                               <a href="javascript:void(0)" onclick='alertPop("用户详细信息查看","url:get?${request.getContextPath()}/admin/attestation/viewUserInfo.html?userId=${item.user.userId?c}",500,230,"true","","true","text")'>
+			                                  ${item.user.username!}
+			                                  </td>
+                                                <td>${item.user.realname!}</td>
+                                                <td><#if item.type=="1">网上充值<#elseif item.type =='2'>线下充值<#elseif item.type =='3'>无卡代扣充值<#elseif item.type =='8'>汇款充值<#else>类型不明确</#if></td>
+                                                <td>${item.money!}元</td>
+                                                <td>${item.fee!}元</td>
+                                                <td>${item.addtime?string("yyyy-MM-dd HH:mm:ss")}</td>
+                                                <td>${item.batch_no!}</td>
+                                                <td><font color="#6699CC"><#if item.status==1>充值成功<#elseif item.status==0>未审核<#elseif item.status==2>提交失败<#else>已审核</#if></font></td>
+                                         		<td ><#if item.type??&&item.type=="2"&&item.status==0><a href=viewRecharge.html?id=${item.id?c}>线下充值审核</a><#else>---</#if></td>
+                                            </tr>
+                                            </#list>
+                                    </table>
+							 		<!--翻页系统-->
+                                    <div class="container">
+                                        <#import "../../common/page.html" as pager>
+                                        <@pager.pagination page=page url="${pageUrl}" map=param style="style1"  />
+                                    </div>
+                            <!--底部工具栏--{-->
+                            <div id="bottomToolbar" class="clearfix">
+                                <div class="other-tool">
+                                    <dl class="refresh-data">
+                                        <dt class="refresh-data-icon"></dt>
+                                        <dd><a href="javascript:void(0);" class="refresh-page">刷新数据</a></dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <!--底部工具栏--}-->
+						 <form action="verifyBatchRecharge.html" method="post">
+                   <div id="audit"  style="margin-bottom:20px;">
+                   <div class="top">
+                       <strong>审核批量充值</strong>
+                   </div>
+                   <#assign batchno='请输入批量充值编号' />
+          						<div class="toolbor-module search">
+           				 	<div style="height:22px;line-height:22px;float:left;margin-left:10px;">批量充值编号：
+                			<input type="text" name="batchno" style="color:gray" id="batchno" value="${batchno}"></div>
+                   <div class="v">
+                       <div class="c">
+                           <div class="choose"> 
+                               <label class="mr15"><input name="status" type="radio" value="1" class="radio">审核通过</label>
+                               <label><input name="status" type="radio" class="radio" value="2" checked="checked">审核不通过</label>
+                           </div>
+                       </div>
+                    <div class="other clearfix">
+	                        	<label for="">验证码：</label><input type="text" name="validCode" id="" class="yzm"> <img src="${request.getContextPath()}/validimg.html" alt="点击刷新" 
+							 onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();" style="position:relative;top:13px;"   />
+	                        </div>
+                       <div class="other clearfix">
+						<input type="submit"  value="确定审核" class="input-button confirm"/>
+                       </div>
+
+                   </div>
+               </div>
+		</form>
+        </div>
+
+        </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+
+    </body>
+</html>
+<#include "../jsPage.html">

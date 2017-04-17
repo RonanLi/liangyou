@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+<#assign nid="member" >
+<#include "include/resource.html">
+<body class="login-body">
+<style type="text/css">
+	#btnReg{  font-weight: normal;   font-size: 26px;  line-height: 48px; }
+	#btnReg:hover{ background-color:#e6ab46; }
+	.errorshow span{ color:#ff0000; }
+</style>
+<#include "include/header.html"> 
+<div class="banner">
+    <div class="bannerBg" style="height:550px;">
+        <div class="bannerBox">
+            <div class="login">
+                <div class="reg_box reg_boxL" style="position:relative;">
+                	<div class="errorshow" style="display:none; color: #ff0000; padding: 0 12px;background: #efefef;  width: 80%;  position: absolute;  top: 0;  left: 50%;
+    margin-left: -40%;  border-radius: 0 0 6px 6px; height:40px; line-height:40px;font-size:16px;"><i style="display: inline-block;
+    vertical-align: middle; background: url(/themes/soonmes_yjt/liangyou/imgs/error_ico.png) no-repeat;  width: 13px;  height: 15px;  margin-right: 5px;"></i><span></</span></div>
+                    <div class="regL_txt">
+                        <h1>欢迎登录
+                        <span>没有账号？<a href="/user/register.html">免费注册</a></span>
+                        </h1>
+                    </div>
+					<div id="log_in" >
+                    <div style="height:10px; margin:5px 0;" id="div_errorbox">
+                        <div class="reg_error" id="dvErrorDesc" style="display:none;"><i></i></div>
+                    </div>
+
+                    <div class="reg_user"><input name="username" id="phone" type="text" maxlength="11" placeholder=请输入手机号码></div>
+
+                    <div class="reg_user"><input name="password" id="passWord" type="password" maxlength="18"
+                                                 placeholder=密码由6-18个字符(字母+数字组成)></div>
+
+                    <input type="button" class="reg_but regL_but logining" id="btnReg" value="登录"/>
+					</div>
+                    <p class="denglu"><a href="getpwdNew.html" target="_blank" style="color:#666;">忘记密码</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<#include "include/footer.html"> 
+<script type="text/javascript">
+	$(function(){
+
+        if( window.location.search.indexOf('phone') >= 0 ){
+            var url  = window.location.search.substr(7,11);
+            if( url.length > 0 ){
+                $('#phone').val(url);
+                $('#passWord').focus();
+            }
+        }
+      
+		
+		/* $('a[title="贷款计算器"],a[title="返回顶部"]').hide(); */
+		$(document).keydown(function(event){
+			if(  event.which == 13 ){
+			    $('.logining').trigger('click');
+			}
+		});
+		
+		$('.logining').click(function(){ 
+			var phone = $('#phone').val().trim(),
+				  password = $('#passWord').val().trim();
+			if( phone.length < 1  ){
+				$('.errorshow').show().find('span').text('请输入手机号');
+				return false;
+			}else if( password.length < 1 ){
+				$('.errorshow').show().find('span').text('请输入密码');
+				return false;
+			}else{
+				var st ="username="+phone+"&password="+password+"&flag=${flag!}";
+				$.ajax({
+         	         type: "POST",
+         	         url:"/user/doLogin.html",
+         	         data:st,
+         	         beforeSend:function(){
+         	        	 $('.logining').css({"letter-spacing":"0px","text-indent":"0px"}).val('正在登录...');
+         	         },
+         	         success: function(msg) {
+         	        	 	var x = document.createElement('html');
+         	        	 	x.innerHTML = msg;
+         	        	 	var errorMSG = $(x).find('#error_zl').text();
+         	        	 	
+         	        	 	if ($(x).find('.btn-recharge').length > 0 ){
+         	        	 		window.location.href='/member/index.html';
+         	        	 	} else {
+         	        	 		if (errorMSG != "") {
+         	        	 			$('.logining').css({"letter-spacing":"14px","text-indent":"14px","font-size":"24px"}).val('登录');
+             	        	 		$('.errorshow').show().find('span').text(errorMSG);
+             	        	 		return false;
+         	        	 		} else {
+         	        	 			var json = $.parseJSON(msg);
+                 	        	 	console.log(json);
+                 	        	 	if (json.returnCode == 2) { // 返回码为2， 则为需要跳转到领奖页面
+                 	        	 		window.location.href='/user/award.html?interfaceFlag=' + json.obj.interfaceFlag + '&purId=' + json.obj.purId + '&userId=' + json.obj.userId;
+                 	        	 	}
+         	        	 		}
+         	        	 	}
+         	         }
+         	     });
+			}
+			
+		});
+		
+	});
+
+</script>
+</body>
+</html>

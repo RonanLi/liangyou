@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 ">
+<#assign webroot=request.getContextPath()>
+<#assign nid="member" >
+<#include "../../include/resource.html">
+<#include "../../common/function.html">
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+<link href="${webroot}${theme_dir}/media/css/jquery.Jcrop.min.css" rel="stylesheet" type="text/css" />
+
+<body>
+
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="subMenu">
+                <a href="${webroot}/member/myAccount/avatar.html">修改头像</a>
+            </div>
+            <div class="rightDiv">
+                <div class="avatar">
+
+                    <div class="reminder">请上传你网站的头像</div>
+                    <div id="useravatar"><img src="${request.getContextPath()}/imgurl.html?userid=${session_user.userId?c}&size=middle"/></div>
+                    <ul id="cropview">
+                        <li>
+                            <div>
+                                <div id="cropimgbox">
+                                    <div id="cropimg"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="previewBox">
+                                    <img id="preview" src="${request.getContextPath()}/imgurl.html?userid=${session_user.userId?c}&size=middle" alt="Preview"/>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <form enctype="multipart/form-data"  method="post" action="" >
+                        <input type="file" class="input" name="upload" id="upload" onChange="checkAndUpload(this);"/>
+                        <a href="#" id="saveavatar" class="btn-action"  >保存头像</a>
+                    </form>
+                    <div class="notes"> * 温馨提示：请用鼠标自由截取头像大小，并进行保存<!--头像现在有三种，大，中，小--> </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<#include "../../include/footer.html">
+<script type="text/javascript" src="${webroot}${theme_dir}/media/js/jquery.Jcrop.min.js"></script>
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"> </script>
+<script type="text/javascript" src="${webroot}${theme_dir}/media/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="${webroot}${theme_dir}/media/js/upload.js"></script>
+<script type="text/javascript">
+    function checkAndUpload(obj){
+        var pathStr = obj.value;
+        if(/^.+\.(PEG|jpeg|JPG|jpg|GIF|gif|png|PNG)$/.test(pathStr)){
+            return ajaxFileUpload('${request.getContextPath()}/upload.html');
+        }else{
+            alert("请您上传PEG|jpeg|JPG|jpg|GIF|gif|png|PNG格式的图片")
+            obj.value = '';
+            return;
+        }
+    }
+    var cropX,cropY,cropW,cropH;
+
+    function ajaxFileUpload(_url) {
+
+        $.ajaxFileUpload({
+            url:_url,
+            secureuri:false,
+            fileElementId:'upload',
+            dataType: 'json',
+            data:{name:'logan', id:'id'},
+            success: function (data, status) {
+                if(typeof(data.error) != 'undefined') {
+                    if(data.error != '') {
+                        alert(data.message);
+                    } else {
+                        $("#cropimg").html("<img src=\""+data.msg+"?r="+ Math.random()+"\" id=\"target\"></img>");
+                        $("#preview").attr("src",data.msg+"?r="+Math.random());
+                        crop();
+                        $("#useravatar").hide();
+                        $("#cropview").show();
+                        var imgHeight = (300-(data.height))/2;
+                        $("#cropimgbox").css({"paddingTop":imgHeight+"px","height":(300-imgHeight)+"px"});
+                        $(".reminder").text("请上传你网站的头像")
+                    }
+                }
+            },
+            error: function (data, status, e) { alert(e); }
+        });
+        return false;
+    }
+    //绑定保存头像功能
+    $("#saveavatar").bind("click",saveAvatar);
+    //异步保存头像
+    function saveAvatar(){
+        $(".reminder").text("保存成功");
+       /* $.post("../../saveAvatar.action", { cropX:cropX, cropY:cropY, cropW:cropW, cropH:cropH}, function(data,textStatus){
+            if(data.flag){
+                $("#cropview").hide();
+                var img=$("#useravatar").find("img");
+                var src=img.attr("src")+"&t="+(new Date()).getTime();
+                img.attr("src",src);
+                $("#useravatar").show();
+                $(".reminder").text("保存成功");
+            }else{}
+        });*/
+    }
+    function crop(){
+        /**crop**/
+        var cropObj={};
+        var boundx=100;boundy=100;
+        cropObj=$("#target").Jcrop({
+                    onChange: updatePreview,
+                    onSelect: updatePreview,
+                    aspectRatio: 1,
+                    setSelect: boxborder(),
+                    minSize:[30,30] },
+
+        function(){
+            // Use the API to get the real image size
+            var bounds = this.getBounds();
+            boundx = bounds[0];
+            boundy = bounds[1];
+            // Store the API in the jcrop_api variable
+            jcrop_api = this;
+        });
+
+        function updatePreview(c) {
+            if (parseInt(c.w) > 0) {
+                var rx = 100 / c.w;
+                var ry = 100 / c.h;
+                cropX=c.x;
+                cropY=c.y;
+                cropW=c.w;
+                cropH=c.h;
+                $('#preview').css({
+                    width: Math.round(rx * boundx) + 'px',
+                    height: Math.round(ry * boundy) + 'px',
+                    marginLeft: '-' + Math.round(rx * c.x) + 'px',
+                    marginTop: '-' + Math.round(ry * c.y) + 'px'
+                });
+            }
+
+        };
+
+        function boxborder(){ return [0,0,100,100]; }
+
+        return cropObj;
+    }
+
+</script>
+</html>

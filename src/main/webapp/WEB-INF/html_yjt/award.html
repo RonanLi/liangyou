@@ -1,0 +1,299 @@
+
+<!DOCTYPE html>
+<html>
+<script type="text/javascript" src="${webroot}${theme_dir}/media/js/jquery.js"></script>
+<script type="text/javascript" src="${webroot}${theme_dir}/media/js/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="${webroot}${theme_dir}/media/css/index_sy.css" type="text/css" />
+<link rel="stylesheet" href="${webroot}${theme_dir}/media/css/prodect.css" type="text/css" />
+<link rel="stylesheet" href="${webroot}${theme_dir}/media/css/aboutus.css" type="text/css" />
+<link rel="stylesheet" href="${webroot}${theme_dir}/media/css/list.css" type="text/css" media="all" />
+<#assign nid="index" > 
+<#include "include/resource.html">
+<style type="text/css">
+body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	max-width: 100%;
+}
+</style>
+<body class="index-body">
+	<#include "include/header.html">
+	<!--header-end-->
+	<div class="award">
+		<div class="awardDiv">
+			<h1 class="no">&nbsp;</h1>
+			<div class="ticket">
+				<div class="awardT">&nbsp;</div>
+				<div class="redeem h">
+					<b>兑换码</b> <span id="redeemCode"></span>
+				</div>
+			</div>
+		</div>
+		<div class="awardTxt h s">
+			<h2>--- 奖品领取规则 ---</h2>
+			<p>1、礼品数量有限，先到先得，兑完为止。</p>
+			<p>2、礼品兑换生效后，请在活动结束一周内使用，否则礼品将自动失效。</p>
+			<p>3、本活动的最终解释权归金和所所有。</p>
+		</div>
+		<div class="awardTxt h s1 ">
+			<h2>不粘锅系列煎盘领取说明：</h2>
+			<p>1、转盘中抽中粘锅后完成在金和所注册，并领取兑换码。</p>
+			<p>2、下载登录ABS家居APP， 进入“我的卡券”输入兑换码领取礼品券；</p>
+			<p>3、将“ABS不粘锅系列-20厘米煎盘”加入购物车，结算时使用相应礼品券结算即可；</p>
+			<p>4、每次购买仅限使用一张优惠券，不可与其他优惠活动同时使用，邮费自理。</p>
+		</div>
+		<div class="awardTxt h s2">
+			<h2>黑糖姜茶固体饮料领取说明</h2>
+			<p>1、转盘中抽中黑糖姜茶固体饮料后完成在金和所注册，并领取兑换码。</p>
+			<p>
+				2、进入页面：<a href="http://dwz.cn/408O6l">http://dwz.cn/408O6l</a>
+			</p>
+			<p>3、在确认订单信息列表中添加优惠券券码—点击提交订单—选择支付方式并付款，邮费自理。</p>
+		</div>
+		<div class="awardTxt h s3">
+			<h2>薰衣草庄园门票领取规则：</h2>
+			<p>1、转盘中抽中门票后完成在金和所投资100元。</p>
+			<p>2、电话拨打客服热线：400-900-5591告知客服邮寄收门票地址，邮费自理。</p>
+		</div>
+		<div class="awardTxt h s31">
+			<h2>薰衣草庄园门票领取规则：</h2>
+			<p>电话拨打客服热线：400-900-5591告知客服邮寄收门票地址，以便尽快给您邮寄，邮费自理。</p>
+		</div>
+		<div class="awardTxt h s4">
+			<h2>电饭煲领取规则：</h2>
+			<p>1、转盘中抽中电饭煲后完成在金和所投资50000元。</p>
+			<p>2、电话拨打客服热线：400-900-5591告知客服邮寄收门票地址。</p>
+		</div>
+		<div class="awardTxt h s41">
+			<h2>电饭煲领取规则：</h2>
+			<p>电话拨打客服热线：400-900-5591告知客服邮寄收门票地址，以便尽快给您邮寄。</p>
+		</div>
+		<div class="awardTxt h s6">
+			<h2>360行车记录仪 领取规则：</h2>
+			<p>1、转盘中抽中360行车记录仪后完成在金和所投资100000元。</p>
+			<p>2、电话拨打客服热线：400-900-5591告知客服邮寄收门票地址。</p>
+		</div>
+		<div class="awardTxt h s61">
+			<h2>360行车记录仪 领取规则：</h2>
+			<p>电话拨打客服热线：400-900-5591告知客服邮寄收门票地址，以便尽快给您邮寄。</p>
+		</div>
+		<div class="awardTxt h s7">
+			<h2>京东卡 领取规则：</h2>
+			<p>1、转盘中京东卡后完成在金和所投资10000元。</p>
+			<p>2、电话拨打客服热线：400-900-5591告知客服邮寄收门票地址。</p>
+		</div>
+		<div class="awardTxt h s71">
+			<h2>京东卡 领取规则：</h2>
+			<p>电话拨打客服热线：400-900-5591告知客服邮寄收门票地址，以便尽快给您邮寄。</p>
+		</div>
+		<div class="awardTxt h s5">
+			<h2>唱吧直播间ＶＩＰ会员说明：</h2>
+			<h3>VIP会员特权:</h3>
+			<p>1. 专属标识</p>
+			<p>2. 专属座驾</p>
+			<p>2. 专属礼物</p>
+			<p>2. 专属彩色昵称</p>
+			<p>2. 专属私聊功能</p>
+			<p>2. 点“心”间隔缩短10秒</p>
+			<p>2. 发言间隔缩短5秒</p>
+			<h3>兑换说明：</h3>
+			<p>1. 转盘中抽中唱吧ＶＩＰ后完成在金和所注册，并领取兑换码。</p>
+			<p>2. 登陆唱吧直播间网站首页（v.changba.com），进入【商城】-【兑换中心】。</p>
+			<p>2. 在兑换框中【输入兑换码】兑换完成，享受VIP会员特权。</p>
+			<h3>温馨提示：</h3>
+			<p>2. 兑换后会员特权支持唱吧网页端及手机端使用。</p>
+			<p>2. 本券不记名、不挂失、不兑换现金。</p>
+			<p>2. 每个会员账号仅能兑换一次，全国通用。</p>
+			<p>2. 券码有效期：即日起至2016年10月31日</p>
+		</div>
+		<a class="awardBtn" href="/invest/index.html?status=11">立即投资</a>
+	</div>
+
+	<script type="text/javascript" src="http://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
+	<#include "include/footer.html">
+</body>
+<script>
+	var interfaceFlag = '${interfaceFlag!}';
+	var url = ""
+	data = [];
+
+	if (interfaceFlag == 0) {
+		url = "/user/getreceiceResult.html";
+		data = {
+			"userId" : '${userId!}',
+			"purId" : '${purId!}'
+		};
+
+		$.ajax({
+			type : "POST",
+			url : url,
+			dataType : "json",
+			data : data,
+			success : function(Obj) {
+				if (Obj.returnCode == 1) {
+					console.log(Obj);
+					$(".no").html("恭喜您成功获得");
+					switch (Obj.obj.prizeId) {
+						case 1:
+							$(".awardT").html(Obj.obj.prizeName); //电饭锅
+							$(".s4").removeClass("h");
+							break;
+						case 2:
+							$(".awardT").html(Obj.obj.prizeName); //京东卡
+							$(".s7").removeClass("h");
+							break;
+						case 4:
+							$(".awardT").html(Obj.obj.prizeName); //行车记录仪
+							$(".s6").removeClass("h");
+							break;
+						case 5:
+							$(".awardT").html(Obj.obj.prizeName); //唱吧
+							$(".redeem,.s5").removeClass("h");
+							$("#redeemCode").html(Obj.obj.prizeDetail)
+							break;
+						case 6:
+							$(".awardT").html(Obj.obj.prizeName); //不粘锅
+							$(".redeem,.s1").removeClass("h");
+							$("#redeemCode").html(Obj.obj.prizeDetail)
+							break;
+						case 7:
+							$(".awardT").html(Obj.obj.prizeName); //门票
+							$(".s3").removeClass("h");
+							break;
+						case 8:
+							$(".awardT").html(Obj.obj.prizeName); //糖茶
+							$(".redeem , .s2").removeClass("h");
+							$("#redeemCode").html(Obj.obj.prizeDetail);
+							break;
+						default:
+							$(".awardT").html(Obj.obj.prizeName); //行车记录仪
+							$(".s4").removeClass("h");
+							break;
+					}
+				} else if (Obj.returnCode == 2) {
+					$(".no").html("奖品已经领取");
+					$(".awardT").html(Obj.msg).css("font-size","1.5rem");
+					$(".redeem").addClass("h");
+					$(".s").removeClass("h");
+				} else {
+					$(".no").html("感谢您的参与！");
+					$(".awardT").html(Obj.msg).css("font-size","1.5rem");
+					$(".redeem").addClass("h");
+					$(".s").removeClass("h");
+				}
+			}
+		});
+	}
+
+	if (interfaceFlag == 1) {
+		url = "/public/getTenderReceivePrizeResult.html";
+		data = {
+			"userId" : '${userId!}',
+			"purId" : '${purId!}',
+			"money" : '${money!}',
+			"tenderFlag": '${tenderFlag!}'
+		};
+
+		$.ajax({
+			type : "POST",
+			url : url,
+			dataType : "json",
+			data : data,
+			success : function(Obj) {
+				if (Obj.returnCode == 1) {
+					console.log(Obj);
+					$(".no").html("您已成功领取奖品");
+					switch (Obj.obj.prizeId) {
+						case 1:
+							$(".awardT").html(Obj.obj.prizeName); //电饭锅
+							$(".s41").removeClass("h");
+							break;
+						case 2:
+							$(".awardT").html(Obj.obj.prizeName); //京东卡
+							$(".s71").removeClass("h");
+							break;
+						case 4:
+							$(".awardT").html(Obj.obj.prizeName); //行车记录仪
+							$(".s61").removeClass("h");
+							break;
+						case 5:
+							$(".awardT").html(Obj.obj.prizeName); //唱吧
+							$(".redeem,.s5").removeClass("h");
+							$("#redeemCode").html(Obj.obj.prizeDetail)
+							break;
+						case 6:
+							$(".awardT").html(Obj.obj.prizeName); //不粘锅
+							$(".redeem,.s1").removeClass("h");
+							$("#redeemCode").html(Obj.obj.prizeDetail)
+							break;
+						case 7:
+							$(".awardT").html(Obj.obj.prizeName); //门票
+							$(".s31").removeClass("h");
+							break;
+						case 8:
+							$(".awardT").html(Obj.obj.prizeName); //糖茶
+							$(".redeem , .s2").removeClass("h");
+							$("#redeemCode").html(Obj.obj.prizeDetail);
+							break;
+						default:
+							$(".awardT").html(Obj.obj.prizeName); //行车记录仪
+							$(".s41").removeClass("h");
+							break;
+					}
+				} else if (Obj.returnCode == 2) {
+					$(".no").html("奖品已经领取");
+					$(".awardT").html(Obj.msg).css("font-size","1.5rem");
+					$(".redeem").addClass("h");
+					$(".s").removeClass("h");
+				}  else if (Obj.returnCode ==3) {
+					$(".no").html("奖品领取失败");
+					$(".redeem").removeClass("h").html(Obj.msg).css({'font-size':'1rem','text-align':'center'});
+					switch (Obj.obj.prizeId) {
+					case 1:
+						$(".awardT").html(Obj.obj.prizeName); //电饭锅
+						$(".s4").removeClass("h");
+						break;
+					case 2:
+						$(".awardT").html(Obj.obj.prizeName); //京东卡
+						$(".s7").removeClass("h");
+						break;
+					case 4:
+						$(".awardT").html(Obj.obj.prizeName); //行车记录仪
+						$(".s6").removeClass("h");
+						break;
+					case 5:
+						$(".awardT").html(Obj.obj.prizeName); //唱吧
+						$(".s5").removeClass("h");
+						break;
+					case 6:
+						$(".awardT").html(Obj.obj.prizeName); //不粘锅
+						$(".s1").removeClass("h");
+						break;
+					case 7:
+						$(".awardT").html(Obj.obj.prizeName); //门票
+						$(".s3").removeClass("h");
+						break;
+					case 8:
+						$(".awardT").html(Obj.obj.prizeName); //糖茶
+						$(".s2").removeClass("h");
+						break;
+					default:
+						$(".awardT").html(Obj.obj.prizeName); //行车记录仪
+						$(".s4").removeClass("h");
+						break;
+				}
+				}else {
+					$(".no").html("感谢您的参与！");
+					$(".awardT").html(Obj.msg).css("font-size","1.5rem");
+					$(".redeem").addClass("h");
+					$(".s").removeClass("h");
+				}
+			}
+		});
+	}
+	
+</script>
+
+</html>
+

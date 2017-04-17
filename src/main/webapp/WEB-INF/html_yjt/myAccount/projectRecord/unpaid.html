@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html">
+<#assign mid="m_borrow" >
+<#assign nid="member">
+<#import "../../common/function.html" as func>
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+
+<body>
+<div id="main" class="clearfix container">
+
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="userRightMenu">
+                <#include "projectRecordMenu.html">
+            </div>
+            <div class="unpaid">
+                <ul>
+                    <li>
+                        <div>借款标题</div>
+                        <div>应收款日期</div>
+                        <div>借款者</div>
+                        <div>应收款总额</div>
+                        <div>应收本金</div>
+                        <div>应收利息</div>
+                        <div>状态</div>
+                    </li>
+                    <#if list?? && list?size gt 0>
+                        <#list list as item>
+                            <!-- 已经收款|未收款处理-->
+                            <#assign mytotal =  item.getMyTotal()!>
+                            <#assign myInterest =  item.getMyInterest()!>
+                            <li>
+                                <div><a href="${webroot}/invest/detail.html?borrowid=${item.borrowTender.borrow.id?c}" target="_blank" title="${item.borrowTender.borrow.name}">${item.borrowTender.borrow.name} </a></div>
+                                <div><#if item.status ==1 >${item.repayYestime?string('yyyy-MM-dd HH:mm:ss')!}<#else>${item.repayTime?string('yyyy-MM-dd HH:mm:ss')!}</#if></div>
+                                <div>${item.borrowTender.borrow.user.username}</div>
+                                <div>￥${mytotal}</div>
+                                <div>￥${item.capital!}</div>
+                                <div>￥${myInterest}</div>
+                                <div>
+                                    <#if item.status==1>
+                                        <#if dateformat(item.repayTime,item.repayYestime,'diff') lt 3*24*3600 && dateformat(item.repayTime,item.repayYestime,'diff') gt 0 > 正常还款
+                                            <#elseif dateformat(item.repayTime,item.repayYestime,'diff') gt 3*24*3600 > 提前还款
+                                            <#else>逾期还款
+                                        </#if>
+                                        <#else>待还
+                                    </#if>
+                                </div>
+                            </li>
+                        </#list>
+                        <li>
+                            <div id="page">
+                                <#import "../../common/page.html" as pager>
+                                    <@pager.pagination page=page url="/member/myAccount/unpaid.html" map=param style="style3"  />
+                            </div>
+                        </li>
+                        <#else><li>暂无数据</li>
+                    </#if>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"></script>
+<#include "../../include/footer.html">

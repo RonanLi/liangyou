@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html">
+<#assign mid="m_borrow" >
+<#assign nid="member">
+<#import "../../common/function.html" as func>
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+
+<body>
+<div id="main" class="clearfix container">
+
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="userRightMenu">
+                <#include "projectRecordMenu.html">
+            </div>
+            <div class="received">
+
+                <ul>
+                    <li>
+                        <div>借款标题</div>
+                        <div>已收款日期</div>
+                        <div>借款者</div>
+                        <div>已收款总额</div>
+                        <div>已应收本金</div>
+                        <div>已收利息</div>
+                        <div>罚息</div>
+                        <div>状态</div>
+                    </li>
+                    <#if list?? && list?size gt 0>
+                        <#list list as item>
+                            <#assign mytotal =  item.getMyTotal()!>
+                            <#assign myInterest =  item.getMyInterest()!>
+                            <#assign extraMoney =  item.getExtraMoney()!>
+                            <li >
+                                <div><a href="${webroot}/invest/detail.html?borrowid=${item.borrowTender.borrow.id?c}" target="_blank" title="${item.borrowTender.borrow.name}">${item.borrowTender.borrow.name} </a></div>
+                                <div><#if item.status ==1 >${item.repayYestime?string('yyyy-MM-dd HH:mm:ss')!}<#else>${item.repayTime?string('yyyy-MM-dd HH:mm:ss')!}</#if></div>
+                                <div>${item.borrowTender.borrow.user.username}</div>
+                                <div>￥${mytotal}</div>
+                                <div>￥${item.capital!}</div>
+                                <div>￥<#if myInterest!=0>${myInterest}<#else>${mytotal-item.capital}</#if></div>
+                                <div>￥${item.lateInterest!}</div>
+                                <div>${item.borrowRepayType.name}</div>
+                            </li>
+                        </#list>
+                        <li>
+                            <div id="page">
+                                <#import "../../common/page.html" as pager>
+                                    <@pager.pagination page=page url="/member/myAccount/received.html" map=param style="style3"  />
+                            </div>
+                        </li>
+                        <#else><li> 暂无数据</li>
+                    </#if>
+                </ul>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"></script>
+<#include "../../include/footer.html">

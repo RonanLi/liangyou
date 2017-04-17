@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 ">
+<#assign webroot=request.getContextPath()>
+<#assign nid="member" >
+<#include "../../include/resource.html">
+<#include "../../common/function.html">
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+
+<body>
+
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="rightDiv">
+                <div class="personalCenter">
+
+                    <div class="fromBox">
+                        <div class="boxTxt">真实姓名</div>
+
+                        <#if session_user.realStatus??&&(session_user.realStatus==1||session_user.realStatus==3)>
+                            <div class="boxIpt">${session_user.realname[0..0]!}****|&nbsp;${session_user.cardId[0..9]!}********&nbsp;|&nbsp;已认证</div>
+                            <div class="boxBtn"><a href="${webroot}/member/myAccount/realNameActive.html">查看</a></div>
+                            <#else>
+                                <div class="boxIpt">您尚未进行实名认证！</div>
+                                <div class="boxBtn"><a href="${webroot}/member/myAccount/realName.html">认证</a></div>
+                        </#if>
+
+                    </div>
+                    <div class="fromBox">
+                        <div class="boxTxt">注册昵称</div>
+                        <div class="boxIpt">${session_user.username!}</div>
+                        <#if session_user.realStatus??&&(session_user.realStatus==1||session_user.realStatus==3)>
+                            <div class="boxBtn"><a href="${webroot}/member/myAccount/realNameActive.html">查看</a></div>
+                            <#else>
+                                <div class="boxBtn"><a href="${webroot}/member/myAccount/realName.html">查看</a></div>
+                        </#if>
+                    </div>
+                    <div class="fromBox">
+                        <div class="boxTxt">绑定手机</div>
+                        <div class="boxIpt">${session_user.phone[0..6]!}****</div>
+                        <div class="boxBtn"><a href="${webroot}/member/myAccount/phoneActive.html">查看</a></div>
+                    </div>
+                    <div class="fromBox">
+                        <div class="boxTxt">登录密码</div>
+                        <div class="boxIpt">登录金和所时输入的密码</div>
+                        <div class="boxBtn"><a href="${webroot}/member/myAccount/resetPassword.html">修改</a></div>
+                    </div>
+                    <div class="fromBox">
+                        <div class="boxTxt">绑定银行卡</div>
+                        <#if bankSize?? && bankSize gt 0>
+                            <div class="boxIpt"><a href="${webroot}/member/myAccount/myBank.html">已绑定${bankSize}张银行卡</a></div>
+                            <#else>
+                                <div class="boxIpt">尚未绑定银行卡</div>
+                        </#if>
+                        <div class="boxBtn"><a href="${webroot}/member/myAccount/bindBank.html">绑定</a></div>
+                    </div>
+                    <div class="fromBox">
+                        <div class="boxTxt">授权管理</div>
+                        <#if session_user.apiLoanAuthorize??>
+                            <div class="boxIpt">已经授权乾多多</div>
+                            <#else>
+                                <div class="boxIpt"><a href="${webroot}/member/myAccount/loanAuthorize.html">去授权</a></div>
+                        </#if>
+                        <!--<div class="boxBtn"><a href="/member/myAccount/loanAuthorize.html">授权</a></div>-->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<#include "../../include/footer.html">
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"> </script>
+</html>

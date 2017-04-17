@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<#include "../include/resource.html">
+<body>
+<#assign nid="zixun">
+<#include "../include/header.html">
+	<style>
+		*{color:currentColor;}
+	</style>
+
+<div class="container-bg clearfix">
+ <!--    <div class="zx-left float_left">
+	    <div class="zx-lt">咨询服务</div>
+        <div class="zx-mt">
+        	<#list sublist as item>
+        	    <a id="item${item_index+1}" href="${webroot}/article/list.html?code=${item.code}" rel="${item.siteId}">${item.name}</a>
+        	</#list>
+        </div>
+    </div> -->
+
+    <div class="zx-right float_right wh-bg">
+		<div class="index-title" style="color:#666;">
+			<p style="width: 120px; line-height: 35px; background-color: #e7bb70; text-align: center; color: #FFF; font-size: 16px;">${site.name}</p>
+		</div>
+        <div class="zx-righttxt">
+        	该文章ID：${article.id}<br>点击次数：${hits}
+			<div class="content_h3"><h3>${article.name}</h3></div>
+			${article.content}
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(function(){
+		var $articleImg = $('.zx-righttxt img'); 
+		$articleImg.each(function() {
+			console.log($(this).width());
+			// var self = this;
+		 //    var newImg = new Image();
+		 //    newImg.src = this.src;
+		    if($(this).width() > 750) {
+		        this.width = 750;
+		    }
+		});
+
+		var site_id = parseInt("${site.siteId}");
+		var oA = $(".zx-mt a");
+		var oArel = "";
+		oA.each(function(){
+			 var index = oA.index(this);
+			 oArel = parseInt($(oA[index]).attr("rel"));
+			 if(site_id == oArel)
+			 {
+				$(oA[index]).addClass("pagehover");
+			 }	
+		});
+	})
+	$('strong').each(function () {
+		var color=$(this).parent('span').css('color');
+		$(this).css('color',color)
+	})
+
+</script>
+<#include "../include/footer.html"> 

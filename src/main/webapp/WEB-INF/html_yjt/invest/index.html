@@ -1,0 +1,322 @@
+<#macro trunct name>
+	<#assign length=name?length>
+	<#if length&gt;15>
+	<#else>
+		${name}
+	</#if>
+</#macro>
+
+<!DOCTYPE html>
+<html>
+<#include "../include/resource.html">
+<meta name="robots" content="nofollow" />
+<body style="background: url(${theme_dir}/media/bg/bg.gif);">
+
+<#assign nid="invest">
+<#include "../include/header.html">
+<#include "../common/function.html"> 
+<#if param?exists>
+	<#assign isday=param.isday!"0">
+	<#assign type=param.type!"0">
+	<#assign apr=param.apr!"">
+	<#assign naccount=param.naccount!0>
+	<#assign naward=param.naward!0>
+	<#assign timeLimit=param.timeLimit!"0">
+	<#assign timeLimitDay=param.timeLimitDay!"0">
+	<#assign status = param.status!>
+</#if>
+<!--header-end-->
+<div class="bg-invest">
+	<div class="wrapper">
+	</div>
+</div>
+<div id="container" style="margin-top: 20px;">
+	<div class="investitem">
+		<ul class="type clearfix">
+			<li class="current"><a href="javascript:">项目列表</a></li>
+			<li><a href="javascript:">债权转让列表</a></li>
+		</ul>
+		<!-- 投资筛选:begin -->
+	    <div class="invest-filter">
+	        <dl class="attr-list cf">
+            	<div>
+           			<span>项目状态</span>
+           			 <dd>
+                		<h2>招标中</h2>
+               			<ul id="status">
+					 		<li data-value="11">全部</li>
+                    		<li data-value="1">招标中</li>
+                    		<li data-value="10">还款中</li>
+                    		<li data-value="8">已完成</li>
+                		</ul>
+           			</dd>
+            	</div>
+            	<div>
+            	<span>项目类型</span>
+	            <dd>
+	                <h2></h2>
+	                <ul id="biaoType"> 
+	                    <li data-value="all">全部</li>
+	                    <li data-value="105">担保标</li>
+	                    <li data-value="103">抵押标</li>
+	                    <li data-value="102">信用标</li>
+	                    <li data-value="104">净值标</li>
+	                    <li data-value="110">流转标</li>
+	                    <li data-value="101">秒还标</li>
+	                    <!-- <li data-value="115">体验标</li> -->
+	                </ul>
+	            </dd>
+	            </div>
+	            <div>
+            	<span>项目利率</span>
+	            <dd>
+	                <h2></h2>
+	                <ul id="rate">
+	                    <li data-value="all">全部</li>
+	                    <li data-value="12-down">0-12%</li>
+	                    <li data-value="12-18">12-18%</li>
+	                    <li data-value="18-up">18%以上</li>
+	                </ul>
+	            </dd>
+	            </div>
+	            <div>
+	            	<span>项目期限</span>
+	            	<dd style="margin: 0;">
+	                	<h2></h2>
+	                	<ul id="timeLimit">
+	                    	<li data-value="all">全部</li>
+	                    	<li data-value="1-3">1-3个月</li>
+	                    	<li data-value="3-6">3-6个月</li>
+	                    	<li data-value="6-9">6-9个月</li>
+	                    	<li data-value="9-12">9-12个月</li>
+	                    	<li data-value="12-up">12个月以上</li>
+	                	</ul>
+	            	</dd>
+	            </div>
+	        </dl>
+		</div>
+		<!-- 投资筛选:end -->
+		<div  class='investbody'>
+		  <div class='investtop clearfix'>
+		     <ul>
+			    <li class='iv1' style="width:356px;">投资列表<a href='/tools/interest.html' target='_blank'><span>理财计算机</span></a></li>
+				<li class='iv2' style="width:186px;">累计成交总金额 <span>${borrowSum?string("##0")}</span>元</li>
+				<li class='iv3'>累计注册人数&nbsp; <span>${sumTender!0}</span>人</li>
+				<li class='iv2' style="width:240px;">为用户累计赚取 <span>${borrowSumInterest?string("##0.00")}</span>元</li>
+			 </ul>
+		  </div>
+			<div class="type-content bid">
+				<#include "../common/macro_invest.html"> 
+				<#if list?exists>
+					<#list list as item>
+						<@indexListItem item=item />
+					</#list>
+					<div class="clearfix"></div>
+					<div style="margin: 0 auto 0;width: 480px; line-height:50px;">
+						<#import "../common/page.html" as pager>  
+						<@pager.pagination page=page url="${pageUrl}" map=param style="style1" />
+					</div>
+				<#else>
+					<div align="center">没有信息</div>
+				</#if>
+			</div>
+			
+	    </div>
+	</div>
+</div> 
+<!--main end-->
+<#include "../include/footer.html"> 
+</body>
+<script src="${request.getContextPath()}${theme_dir}/media/js/tab.js"></script>
+<script src="${request.getContextPath()}${theme_dir}/media/js/transition.js"></script>
+<script src="${request.getContextPath()}${theme_dir}/media/js/tooltip.js"></script>
+<script src="${request.getContextPath()}${theme_dir}/media/js/popover.js"></script>
+<script type="text/javascript">
+	$('.biao-content').each(function() {
+		var content = $('<p>' + $(this).html() + '</p>').text();
+		if(content.length > 35) {
+			content = content.substring(0, 40) + '......';
+		}
+		$(this).html(content);
+	});
+	$('.type-content.bid ul').each(function(index) {
+	if(index % 3 == 2) {
+		$(this).css({'margin-top':'10px'});/* $(this).css({margin:10});  */
+	}
+});
+
+$('.type-content.assignment ul').each(function(index) {
+	if(index % 3 == 2) {
+		$(this).css({margin:0});
+	}
+});
+
+$('.investitem > ul li').click(function() {
+	var i = $(this).index();
+	$(this).addClass('current').siblings().removeClass('current');
+	$('.type-content').hide().eq(i).show();
+	if(i) {
+		$('.invest-filter').hide();
+	}else{
+		$('.invest-filter').show();
+	}
+});
+function showRemainTime(){
+	var endtimes=$(".endtime");
+	endtimes.each(function(){
+		RemainTime($(this));
+	});
+}
+showRemainTime();
+setInterval("showRemainTime()",1000);
+
+function RemainTime(t){
+	var iDay,iHour,iMinute,iSecond,account;
+	var sDay="",sTime="";
+	var at="data-time"
+	var iTime=t.attr(at);
+	if (iTime >= 0){
+		iDay = parseInt(iTime/24/3600);
+		iHour = parseInt((iTime/3600)%24);
+		iMinute = parseInt((iTime/60)%60);
+		iSecond = parseInt(iTime%60);
+		if (iDay > 0){ 
+			sDay = iDay + "天"; 
+		}
+		sTime =sDay + iHour + "小时" + iMinute + "分钟" + iSecond + "秒";
+		if(iTime==0){
+			sTime="<span style='color:green'>时间到了！</span>";
+		}
+			t.attr(at,iTime-1);
+	  }else{
+		 sTime="<span style='color:red'>此标已过期！</span>";
+	 }
+	t.html(sTime);
+	}
+</script>
+<script type="text/javascript">
+	function getSearch(){
+		var selects=document.getElementById("select");
+		var sear=document.getElementById("sear");
+		var selects=sear[selects.selectedIndex-1];
+		sear.length=1;
+		for(var i=0;i<selects.length;i++){
+			sear[i+1]=new Option(selects[i].selects[i]);
+		}
+	}	
+</script>
+	
+<script type="text/javascript">
+
+    $(".progressbar").each(function() {
+			$(this)[0].style.backgroundPosition = '-'+parseInt($(this).text().replace("%","")) * 54+'px 0px';
+	});
+    
+	$(function(){
+		showSelect($("#biaoType"))
+	});
+	
+	function showSelect(obj){
+		hideAll();
+		var $obj  = $(obj);
+		var selectValue = parseInt($obj.val());
+		if(selectValue>99){//除了天标
+			if(selectValue!=101){//秒表
+				$("#select_month_time").show();
+			}
+		}else{
+			if(selectValue!=0){
+				$("#select_day_time").show();
+			}else{
+				$("#select_month_time").show();
+			}
+		}
+		$("#select_money").show();
+		$("#select_interest").show();
+		$("#select_award").show();
+	}
+	
+	function hideAll(){
+		$("#select_month_time").hide();
+		$("#select_day_time").hide();
+		$("#select_money").hide();
+		$("#select_interest").hide();
+		$("#select_award").hide();
+	}
+
+	// 属性下拉列表hover时展开
+	$('.invest-filter dl dd').hover(function() {
+	    $(this).children('ul').show('blind',250);
+	},function() {
+	    $('.invest-filter dl dd ul').stop().hide();
+	});
+
+	// 所有属性列表
+	var attrList = ['status','biaoType','rate','timeLimit','account'];
+
+	/*根据查找url中每一个参数的值，给对应的筛选属性加上current样式*/
+	$.each(attrList,function(index,val) {
+		var $attrListItem = $('#'+val).children('li');
+		var attrVal = getQueryString(val);
+
+		$attrListItem.each(function() {
+			var dataValue = $(this).attr('data-value');
+			if(attrVal == null) {
+				$(this).parents('dd').find('h2').text($attrListItem.first().text());
+				return false;
+			}else{
+				if(dataValue == attrVal)　{
+					$(this).addClass('current');
+					$(this).parents('dd').find('h2').text($(this).text());
+				}
+			} 
+		});
+	});
+
+	/*遍历每一个属性列表，点击属性，跳转url*/
+	$('.attr-list ul').each(function(){
+		var $attrListItem = $(this).children('li');
+		// 如果没有选择任何筛选属性，属性列表中的第一个高亮
+		if(!$attrListItem.filter('.current').length) {
+			$attrListItem.first().addClass('current');
+		}
+
+		$attrListItem.click(function() {
+			$(this).addClass('current').siblings().removeClass('current');
+			var url = window.location.href;
+			var argIndex = url.indexOf('?');
+			// url中是否有参数
+			if(argIndex < 0) {
+				url = url  + '?' + joinUrl() + 'search=union';
+			}else {
+				url = url.substring(0,argIndex) + '?' + joinUrl() + 'search=union';
+			}
+			window.location.href = url;
+		});
+	});
+
+	/*根据选中的属性，重新拼接url字符串*/
+	function joinUrl(){
+		var urlStr = '';
+		$.each(attrList, function(index, val) {
+			var $attrListItem = $('#'+val).children('li');
+			$attrListItem.each(function() {
+				if($(this).hasClass('current')) {
+					urlStr += val + '=' + $(this).attr('data-value') + '&';
+				}
+			});
+
+		});
+		return urlStr;
+	}
+
+	/*查找url中参数的值*/
+	function getQueryString(name){
+		var reg=new  RegExp("(^|&)"+name+"=([^&]*)(&|$)");
+		var r =window.location.search.substr(1).match(reg);
+		if(r!=null)
+			return  unescape(r[2]);
+		return  null;
+	}
+</script>
+</html>

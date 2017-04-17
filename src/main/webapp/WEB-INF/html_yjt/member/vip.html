@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<#include "../include/resource.html">
+<#include "../common/function.html">
+<body>
+    <#assign nid="member"> 
+	<#include "../include/header.html">
+	<!--header-end-->
+	<link
+		href="${request.getContextPath()}${theme_dir}/media/css/modal.css"
+		rel="stylesheet" type="text/css" />
+	<link
+		href="${request.getContextPath()}${theme_dir}/media/css/tipswindown.css"
+		rel="stylesheet" type="text/css" />
+<div class="container-bg"> 
+	<div id="main" class="clearfix" style="margin-top: 0px;">
+		<div class="wrap950 list_1">
+			<div style="margin-top: 25px; background:#ffecc7; color:#c09853; height:45px; line-height:45px; font-size:16px; text-indent:30px;"
+				class="box_name">
+				您的VIP信息
+			
+			</div>
+			<div class="content">
+			<#if !userCache?exists||!userCache.vipStatus?exists||userCache.vipStatus==0||userCache.vipStatus==3>
+				<form action="${request.getContextPath()}/member/vip.html"
+					method="post" onSubmit="return checkvip()">
+                       <#if kflist?exists>
+                            <#list kflist as item>
+                                <div style="width: 270px;  margin: 0 10px 0 10px; padding: 10px 0; overflow:hidden; height:144px;"><br>
+                                    <div class="floatl clearfix" style="width: 120px;float:left;">
+                                        <input type="radio" name="kefu_userid" value="${item.userId?c}"  /> <img
+                                            src="${request.getContextPath()}/imgurl.html?userid=${item.userId?c}&size=middle"
+                                            style="width: 100px; height: 100px; float: right;" />
+                                    </div>
+                                    <div style="float:right; width:122px;">
+                                        <ul class="kefu_li"
+                                            style=" padding: 0px 0px 0px 10px;">
+                                            <li style="padding-bottom: 5px;">${item.username!}</li>
+                                            <li style="padding-bottom: 5px;">姓名：${item.realname!}</li>
+                                            <li style="padding-bottom: 5px;">电话:${item.tel!}</li>
+                                            <li style="padding-bottom: 5px;"><a target="_blank"
+                                                                                href="http://wpa.qq.com/msgrd?v=3&uin=${item.qq!}&site=qq&menu=yes">
+                                                <img border="0"
+                                                     src="http://wpa.qq.com/pa?p=2:${item.qq!}:41"
+                                                     alt="点击这里给我发消息" title="点击这里给我发消息">
+                                            </a></li>
+                                            <li></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </#list>
+                        </#if> <br>
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#666666" class="viptable">
+						<tr>
+							<td colspan="8" bgcolor="#FFFFFF" height="30" width="80" style="">
+                                <ul class="vipul">
+                                    <li>
+                                        您的状态：　<b>普通会员</b>
+                                    </li>
+                                    <li>
+                                        用  户  名：　<b>${user.username!}</b>
+                                    </li>
+                                    <li>
+                                        姓         名：　<b> <#if user.realname?? && user.realname!="">
+                             ${user.realname[0..0]}**** 
+                           <#else> 
+                       <a href="${request.getContextPath()}/member/apiRealname.html"><font color="#FF0000">请去实名认证</font></a>
+                           </#if> 
+                       </b>
+                                    </li>
+                                </ul>
+                            </td>
+						</tr>
+						<tr>
+							<td colspan="4" bgcolor="#FFFFFF"><strong>温馨提示</strong></td>
+							<td colspan="4" bgcolor="#FFFFFF">
+								<#assign use_money=0 >
+								<#assign nvipFee=vipFee >
+								<#if act?exists&&act.useMoney?exists><#assign use_money=act.useMoney></#if>
+								<font color="red">
+								申请VIP会员将扣除VIP管理费用:${vipFee}元，您的当前可用余额${use_money}元
+								<#if user.apiId??&&user.apiId==""><a href="${webroot}/member/apiRegister.html"><font color="#FF0000">【开通汇付账户】</font></a><#else></#if>
+								<#if use_money lt nvipFee >
+                           		，不够扣除VIP费用，请先<a href="${request.getContextPath()}/member/account/newrecharge.html"><font color="#FF0000">【账号充值】</font></a>
+	                            <#else>
+	                            </#if>
+								</font>
+								<font color="red">本网站非VIP会员期间投标只享有本网站的本金保障权益！
+								</font>
+							</td>
+						</tr>
+						 <#if use_money lt nvipFee >
+			                         <p style="color:#f00; clear:both">您的当前可用余额不足VIP申请费用${vipFee}元，请充值后，再重新申请，谢谢.<a href="${request.getContextPath()}/member/account/newrecharge.html">点击充值</a></p>
+			                     <#else>
+						<tr>
+							<td colspan="4" bgcolor="#FFFFFF" height="30"><strong>备注</strong></td>
+							<td colspan="4" bgcolor="#FFFFFF"><textarea rows="5"
+									cols="100" name="vip_remark" id="vip_remark"></textarea></td>
+						</tr>
+						<tr>
+							<td colspan="4" bgcolor="#FFFFFF" height="30"><strong>验证码</strong></td>
+							<td colspan="4" bgcolor="#FFFFFF">
+							<input name="validCode"  id="validCode"
+								type="text" size="11" maxlength="5" tabindex="3"
+								style="float: left;" />&nbsp;<img
+								src="${request.getContextPath()}/validimg.html" alt="点击刷新"
+								 onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();"
+								align="absmiddle" style="cursor: pointer; float: left;" /></td>
+						</tr>
+						<tr>
+							<td colspan="4" bgcolor="#FFFFFF"><strong></strong></td>
+							<td colspan="4" bgcolor="#FFFFFF"></td>
+						</tr>
+
+						<tr>
+							<td colspan="8" bgcolor="#FFFFFF">
+								<div align="center">
+								
+			                     	<input type="hidden" name="type" value="apply" />
+			                        <input type="submit" value="我要申请" class="btn-action" />
+			                     </#if>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<#else>
+			<!--<ul class="ul_li_1">
+				<li>您的状态是：<#if userCache.vipStatus==0>普通会员<#elseif userCache.vipStatus==2||userCache.vipStatus==-1>VIP申请中<#else>VIP会员</#if></li>
+				<li>用户名：${user.username!}</li>
+				<li>姓 名 ：${user.realname[0..0]!}****</li>
+				<li>邮 箱 ：${user.email[0..3]!}****</li><!-- 
+				<li>客 服 ：<#if kefu??>${kefu.username!}(${kefu.realname!})</#if></li>
+				<li>备 注 ：${userCache.vipRemark!}</li>
+			</ul>-->
+            <style type="text/css">
+              .VIP_apply {padding: 20px 130px 50px 130px;}
+			  .VIP_apply .user_table_three tr td.cor6 {
+color: #666;
+}
+.VIP_apply .user_table_three tr td {
+height: 30px;
+color: #999;
+font-size: 14px;
+padding: 5px 10px;
+}
+            </style>
+             <div class="VIP_apply">
+                
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="user_table_three mt15">
+                    <tr>
+                        <td width="40%" align="right">用户名：</td>
+                        <td width="60%" class="cor6">${user.username!}</td>
+                    </tr>
+                    <tr>
+                        <td width="40%" align="right">当前状态：</td>
+                        <td width="60%" class="cor6"><#if userCache.vipStatus==0>普通会员<#elseif userCache.vipStatus==2||userCache.vipStatus==-1>VIP申请中<#else>VIP会员</#if></td>
+                    </tr>
+                    <tr>
+                        <td width="40%" align="right">真实姓名：</td>
+                        <td width="60%" class="cor6">${user.realname[0..0]!}****</td>
+                    </tr>
+                    <tr>
+                        <td width="40%" align="right">备注：</td>
+                        <td width="60%" class="cor6">
+                           ${userCache.vipRemark!}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+			</#if>
+		</div>
+        </div>
+        </div>
+        </div>
+		<script
+			src="${request.getContextPath()}${theme_dir}/media/js/modal.js"></script>
+		<script
+			src="${request.getContextPath()}${theme_dir}/media/js/tab.js"></script>
+		<script
+			src="${request.getContextPath()}${theme_dir}/media/js/transition.js"></script>
+		<script
+			src="${request.getContextPath()}${theme_dir}/media/js/tipswindown.js"></script>
+		<#include "../include/footer.html">
+		<script type="text/javascript">
+		function checkvip(){
+		var mark = document.getElementById("vip_remark").value;
+		if(mark == '' || mark ==null){
+			alert("请输入备注信息");
+			return false;
+		}
+		 
+		var validCode = $("#validCode").val();
+		if(validCode =='' || validCode ==null){
+			alert("请输入验证码");
+			return false;
+		}
+		return true;
+		}
+		</script>
+</body>
+</html>

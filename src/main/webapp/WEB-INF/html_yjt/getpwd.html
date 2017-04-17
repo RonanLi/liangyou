@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html>
+<#assign nid="member" >
+<#include "include/resource.html">
+<body>
+<#include "include/header.html"> 
+<style type="text/css">
+	.loginhtml-ul li label{ width:77px; }
+</style>
+	<!--忘记密码 开始-->
+<div class="wrp-login wh-bg" style="    margin: 80px auto 120px;  overflow: hidden;  padding: 0; border-radius:8px;"> 
+    <div class="login-title" style="background: #e7bb70;  color: #fff;  border: none;  padding: 8px 0;">找回密码</div>
+    <form action="${request.getContextPath()}/user/getpwdNew.html" method="post" name="formUser"  id="formUser">
+     <ul class="loginhtml-ul" style="float:none; border: 0;width:336px;">
+            <li>
+                <label for="">手机号</label>
+                <input maxLength="25"  class="txt" name="username" id="username" style="width:240px;"  placeholder="请输入您在本平台注册的手机号">
+                <span style="display: block;width:100%;padding-left:80px;color: #0697DA;">限使用手机号码</span>
+            </li>
+            <li  class="clearfix">
+             <label for="">图形码</label>
+                <input style="font-size:14px;background-position: 15px -112px;padding-left:16px;width:134px;height:35px" name="valicode" id="imgCode" type="text" maxlength="4" placeholder=图形验证码 />
+                <img src="${request.getContextPath()}/validimg.html" onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();" title="点击换一个校验码" style=" height:35px;margin-top: 8px;margin-right: 42px;float: right" alt="点击换一个校验码" id="imVcode" style="cursor:pointer;"/>
+            </li>
+            <li class="clearfix">
+                <label for="">验证码</label>
+               <input id="validCodee" name="validCodee" type="text" size="10" maxlength="10" value="" class="txt" style="width: 134px;font-size:14px;">
+               <div class="reg-l-tips" id="username_notice2">
+                	<input id="sendCode" type="button" value="发送验证码" style=" background: gainsboro;  color: #6b6b6b; height: 35px;  font-size: 16px;  padding: 0 10px;  line-height: 32px;">
+               </div>
+            </li>
+            <li class="clearfix">
+                <label for="">新密码</label>
+                <input type="password"  placeholder="6-16个字符(字母+数字)"  name="password" id="password"  style="width:240px;font-size:14px;" class="txt"/>
+            </li>
+            <li class="clearfix">
+                <label for="">重复密码</label>
+                <input type="password"  placeholder="6-16个字符(字母+数字)"  id="passwordDouble"style="width:240px;font-size:14px;" class="txt"/>
+            </li>
+            <li style="margin-top: 35px;">
+			  <a class="zhuce-btn" id="buttonSure" style="background:#e7bb70; color:#fff; font-size:22px; margin-bottom:6px; line-height:44px; width: 60%;  margin: 0 auto;">提交</a>
+			  <input type="hidden" name="getpwdtype" value="${getpwdtype}">
+			  <input type="hidden" value="getpwd" name="actionType"/>
+            </li>
+        </ul>
+    </form>
+</div>
+<!--忘记密码 结束-->
+<#include "include/footer.html">
+<script type="text/javascript">
+$("#sendCode").click(function(){
+		var valicode = $("#imgCode").val();
+		var phone = $("#username").val();
+		var bool = /^1[3|4|5|7|8]\d{9}$/;
+		if(phone == ""){
+			alert("手机号码不能为空")
+		} else if(!(bool.test(phone))){
+			alert("手机号码格式错误")
+		} else{
+			$.get("checkPhone.html?id="+Math.random(), {phone: $("#username").val() },function (result){
+                if(result==true){
+                	alert("该手机号码未注册");
+                }else{
+                    sendPhoneCode(phone, valicode);
+                }
+            });
+		}
+	})
+	function sendPhoneCode(phone, valicode){
+		$.ajax({
+			"url": "/user/getPhoneCode.html",
+			"type": "post",
+			"cache": "false",
+			// add by gy 2016-8-31 11:44:35 增加图形验证码校验参数以及短信类型参数
+			"data": {'phone':phone, 'valicode' : valicode, 'phoneType' : 'get_pwd_phone_code'},
+			"dataType": "json",
+			"error": function(){
+			},
+			"success": function(data){
+				if (data.data != "") {
+					alert(data.data);
+				} else {
+					alert("验证码发送成功，请注意查收！");
+					$("#sendCode").val("输入验证码");
+				}
+			}
+		   
+		})
+	}
+	
+	$("#buttonSure").click(function(){
+		var pwd = $("#password").val();
+		var pwd2 = $("#passwordDouble").val();
+		var phone = $("#username").val();
+		var validCodee = $("#validCodee").val();
+		var bool = /^1[3|4|5|7|8]\d{9}$/;
+//        var reg=/^[a-zA-Z]\w{5,17}$/;
+        var reg=/^(?=.{6,18})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$/;
+		if(phone == ""){
+			alert("手机号码不能为空")
+			return false;
+		} else if(!(bool.test(phone))){
+			alert("手机号码格式错误")
+			return false;
+		} else if (validCodee == null || validCodee == "" || validCodee == "undefined"){
+			alert("验证码未输入")
+			return false;
+		} 
+		if(pwd == "" || pwd == null || pwd ==  "undefined"){
+			alert("密码不能为空")
+			return false;
+		} else if(pwd.length<6){
+			alert("密码位数过少")
+			return false;
+		} else if(pwd.length>18){
+			alert("密码位数大于18位")
+			return false;
+		}else if(!reg.test(pwd)){
+            alert("新密码为6到18的数字和字符组合")
+            return false;
+        }
+		
+		if(pwd != null && pwd2 != null && pwd != "" && pwd2 != "" && pwd != "undefined" && pwd2 != "undefined" && pwd2 == pwd){
+			$("#formUser").submit();
+		} else {
+			alert("两次输入密码不正确");
+			return false;
+		}
+	});
+
+
+	$(function(){
+		$('a[title="贷款计算器"],a[title="返回顶部"]').hide();
+		
+		
+		
+	})
+</script>
+ 
+</body>
+</html>

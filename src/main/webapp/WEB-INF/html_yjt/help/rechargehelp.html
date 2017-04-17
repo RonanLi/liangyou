@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<#include "../include/resource.html"> 
+<body>
+<#include "../include/header.html">
+<link href="${request.getContextPath()}/themes/soonmes/media/css/modal.css" rel="stylesheet" type="text/css" /> 
+<link href="${request.getContextPath()}/themes/soonmes/media/css/about.css" rel="stylesheet" type="text/css" />
+
+<div class="container zx clearfix">
+	<img src="${webroot}${theme_dir}/images/zx-banner.jpg" alt="" class="mb15"> 
+	<div class="zx-left float_left">
+		<div class="zx-lt"></div>
+		 <#include "left_menu.html">
+		<div class="zx-bt"></div>
+		<img src="${webroot}${theme_dir}/images/zx-left-kf.jpg" alt="" class="zx-kefuimg">
+	</div>
+
+	<div class="zx-righthelp float_right">
+		<div class="zx-righttitle clearfix">
+			<img src="${webroot}${theme_dir}/images/zx-rightli.jpg" alt="" class="ml10 float_left"><span class="float_left">当前位置：
+			<a id="ctl00_content_NavigationLink1_main" href="${webroot}/index.html" style=" color:#333; text-decoration:none;">义务贷（浙江得龙进出口有限公司）</a>	&gt;帮助&gt;
+			<a href="${request.getContextPath()}/help/rechargehelp.html?code=help" style="color:#333; text-decoration:none;">易极付激活</a></span>
+		</div>
+
+		<div class="">
+			<div class="info" id="lxjs">
+				<h6>第一步：</h6><h7>用户在用户中心激活易极付账户。</h7><br>
+				 <h3> &nbsp; </h3>
+				    <div class="zx-righttitle clearfix">
+					<img src="${webroot}${theme_dir}/images/help/yjf01.jpg" alt="" height=200/><br/>
+					</div><br/>
+				<h6>第二步：</h6><h7>输入联系方式用户邮箱或手机号码。</h7><br>
+					<h3> &nbsp; </h3>
+					<div class="zx-righttitle clearfix">
+					<img src="${webroot}${theme_dir}/images/help/yjf02.jpg" alt="" height=600/><br/>
+					</div><br/>
+					<h6>第三步：</h6><h7>通过用户联系方式获取验证码。</h7><br>
+					 <h3> &nbsp; </h3>
+					 <div class="zx-righttitle clearfix">
+					<img src="${webroot}${theme_dir}/images/help/yjf03.jpg" alt="" height=400/><br/>
+					</div><br/>
+					 <div class="zx-righttitle clearfix">
+					<h6>第四步：</h6><h7>填写相关用户信息。</h7><br>
+					 <h3> &nbsp; </h3>
+					 <div class="zx-righttitle clearfix">
+					<img src="${webroot}${theme_dir}/images/help/yjf04.jpg" alt="" height=500/><br/>
+					</div><br/>
+					<h6>第五步：</h6><h7>易极付激活成功。</h7><br>
+					 <h3> &nbsp; </h3>
+					<img src="${webroot}${theme_dir}/images/help/yjf05.jpg" alt="" height=300/>
+				</div><br/>
+				
+		
+
+			</div><!--info-->
+		</div><!--myTabContent-->
+	</div><!--right-->
+</div><!--cor_divtop-->
+
+
+<script src="${request.getContextPath()}/themes/soonmes/media/js/modal.js"></script>
+<script src="${request.getContextPath()}/themes/soonmes/media/js/tab.js"></script>
+<script src="${request.getContextPath()}/themes/soonmes/media/js/alert.js"></script>
+<#include "../include/footer.html"> 

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>双乾取现跳转中...</title>
+    <meta http-equiv="content-Type" content="text/html; charset=utf-8" />
+  </head>
+  <body>
+    <div>双乾页面跳转中...,请您不要关闭页面</div>
+    <form action="${mmm.submitUrl}" method="post" id="frm1" style="display: none">
+    <input id="WithdrawMoneymoremore" name="WithdrawMoneymoremore" value="${mmm.withdrawMoneymoremore}"  />
+		<input type="hidden" id="PlatformMoneymoremore" name="PlatformMoneymoremore" value="${mmm.platformMoneymoremore}"  />
+		<input type="hidden" id="OrderNo" name="OrderNo" value="${mmm.orderNo}"  />
+		<input type="hidden" id="Amount" name="Amount" value="${mmm.amount}"  />
+		<input type="hidden" id="FeePercent" name="FeePercent" value="${mmm.feePercent}"  />
+		<input type="hidden" id="CardNo" name="CardNo" value="${mmm.cardNo}"  />
+		<input type="hidden" id="Province" name="Province" value="${mmm.province}"  />
+		<input type="hidden" id="City" name="City" value="${mmm.city}"  />
+		<#--v1.8.0.4_u1 TGPROJECT-292 lx start-->
+		<input type="hidden" id="RandomTimeStamp" name="RandomTimeStamp" value="${mmm.randomTimeStamp!''}"  />
+		<input type="hidden" id="Remark1" name="Remark1" value="${mmm.remark1!''}"  />
+		<input type="hidden" id="Remark2" name="Remark2" value="${mmm.remark2!''}"  />
+		<input type="hidden" id="Remark3" name="Remark3" value="${mmm.remark3!''}"  />
+		<input type="hidden" id="FeeMax" name="FeeMax" value="${mmm.feeMax!''}"  />
+		<#--v1.8.0.4_u1 TGPROJECT-292 lx end-->
+		
+		<input type="hidden" id="CardType" name="CardType" value="${mmm.cardType}"  />
+		<input type="hidden" id="BankCode" name="BankCode" value="${mmm.bankCode}"  />
+		<input type="hidden" id="ReturnURL" name="ReturnURL" value="${mmm.returnURL}"  />
+		<input type="hidden" id="NotifyURL" name="NotifyURL" value="${mmm.notifyURL}"  />
+		<input type="hidden" id="SignInfo" name="SignInfo" value="${mmm.signInfo}"  />
+		<input type="hidden" type="submit" value="提交" />
+     	
+	
+    </form>
+    <script type="text/javascript">
+    	 document.getElementById("frm1").submit();  
+    </script>
+   
+  </body>
+</html>

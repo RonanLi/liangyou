@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="提现审核/查看">
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+		                         <div class="toolbor-module">
+							        <input type="button" class="input-button return" value="返回" onclick="history.go(-1)">
+							    </div>
+                            </div>
+                            <!--工具栏--}-->
+
+                            <div id="main" class="clearfix">
+                                <form name="form1" method="post" action="verifyCash.html" onsubmit="return check_form();" enctype="multipart/form-data" >
+                                    <div class="valBox" style="margin-bottom:20px;">
+                                        <div class="top">
+                                            <strong>提现审核/查看</strong>
+                                        </div>
+                                        <div class="w349 fp clearfix">
+                                            <ul>
+                                                <li>
+                                                    <div class="title">用户名：</div>
+                                                    <div class="v">
+                                                        ${cash.user.username!}
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">提现银行：</div>
+                                                    <div class="v">
+                                                        ${cash.accountBank.bank.bankName!}
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">提现账号：</div>
+                                                    <div class="v">
+                                                        ${cash.accountBank.account!}
+                                                    </div>
+                                                </li>
+                                                <li class="color">
+                                                    <div class="title">提现总额：</div>
+                                                    <div class="v">
+                                                        ${cash.total!0}
+                                                    </div>
+                                                </li>
+                                                <li class="color">
+                                                    <div class="title">到账金额：</div>
+                                                    <div class="v">
+                                                        ${cash.credited!0}
+                                                    </div>
+                                                </li>
+                                                <li class="color">
+                                                    <div class="title">费率：</div>
+                                                    <div class="v">
+                                                        ${cash.fee!0}
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">状态：</div>
+                                                    <div class="v">
+                                                        <#if cash.status??&&cash.status==1>提现成功<#elseif cash.status==0||cash.status==2>提现审核中<#else>提现失败</#if>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">添加时间/IP:</div>
+                                                    <div class="v">
+                                                        ${cash.addtime}/${cash.addip!"--"}
+                                                    </div>
+                                                </li>      
+                                                    
+                                                <li></li>      
+                                                
+                                            </ul>
+                                        </div>
+                                        </div>
+
+                                        <#if cash??&&cash.status??&&cash.status==1> 
+                                        <div class="add-time">
+									        <span class="mr25"><strong>审核信息：</strong>审核人：${cash.verify_username!"admin"},审核时间：${dateformat(cash.verify_time)},审核备注：${cash.verify_remark}</span>
+									    </div>
+									    <#else>
+
+                                        <div id="audit">
+						                    <div class="top">
+						                        <strong>审核</strong>
+						                    </div>
+						                    <div class="v">
+						                        <div class="c">
+						                            <div class="choose">
+						                                <label class="mr15">
+						                                	<input name="status" type="radio" value="1" class="radio">审核通过
+						                                </label>
+						                                <label>
+						                                	<input name="status" type="radio" class="radio" value="3" checked="checked">审核不通过
+						                                </label>
+						                            </div>
+						                            <!--  
+						                            <div class="ce">
+						                                到账金额：
+						                                <input type="text" name="credited" value="${cash.credited!0}" style="text-align:center;">（一旦审核通过将不可再进行修改）
+						                            </div>                
+						                            <div class="ce">
+						                                费率：
+						                               <input type="text" name="fee" value="${cash.fee!0}" style="text-align:center;">
+						                            </div>
+						                            -->
+						                            <textarea class="remark" name="verify_remark">输入审核备注...</textarea>
+						                        </div>
+						                        <div class="other clearfix">
+						                        	<label for="">验证码：</label><input type="text" name="validCode" id="" class="yzm"> <img src="${request.getContextPath()}/validimg.html" alt="点击刷新" 
+	   onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();" style="position:relative;top:13px;" style="position:relative;top:13px;"  />
+						                        </div>
+						                        <div class="other clearfix">
+													<input type="hidden" name="id" value="${cash.id?c}" />
+													<input type="hidden" name="user_id" value="${cash.user.userId?c}" />
+													<input type="hidden" name="cash_token" value="${cash_token}">													
+													<input type="submit"  name="reset" value="确定审核" class="input-button confirm"/>
+						                        </div>
+
+						                    </div>
+						                </div>
+									</#if>
+                                    
+
+                                </form>
+
+                            </div>
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+
+    </body>
+</html>
+<#include "../jsPage.html">
+<script>
+function check_form(){
+	 var frm = document.forms['form1'];
+	 var verify_remark = frm.elements['verify_remark'].value;
+	 var errorMsg = '';
+	  if (verify_remark.length == 0 || verify_remark=='输入审核备注...' ) {
+		errorMsg += '备注必须填写' + '\n';
+	  }
+	  
+	  if (errorMsg.length > 0){
+		alert(errorMsg); return false;
+	  } else{  
+		return true;
+	  }
+}
+				</script>

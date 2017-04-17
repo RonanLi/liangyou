@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 ">
+<#assign webroot=request.getContextPath()>
+<#assign nid="member" >
+
+<link rel="stylesheet" href="${webroot}${theme_dir}/media/css/mixlrn.css" type="text/css" />
+<#include "../include/resource.html">
+<#include "../common/function.html">
+<body>
+<#include "../include/header.html"> 
+<!--header-end--> 
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+  	<div class="user_left"> <#include "user_menu.html"> </div>
+    <div class="user_right">
+	  	<div class="user-right-top clearfix">
+			<div class="user_right_img">
+				<img src="${webroot}/imgurl.html?userid=${user.userId?c}&size=middle"alt="点击刷新" height="100" width="100" class="picborder" />
+				<a href="${webroot}/member/identify/avatar.html" style="color:#e7bb70;">[更换头像]</a>
+			</div>
+
+			<div class="user_right_txt">
+				<ul style="width:550px; overflow:hidden; *float:left; ">
+					<li id="changeUslis">
+					  	<span style="float:left;">认证信息：</span>  
+					  	<#include "../common/macro.html">
+					  	<div style="float:left;height: 22px;margin-top:5px;margin-right: 20px;">
+							<@identifyShow detailuser=user cache=cache/>
+						</div>
+					  	<!-- <span style="float:left;">VIP 期限：</span>
+				  		<a href="${webroot}/member/vip.html" style="float:left;display:block;"> 
+				  			<#if cache.vipStatus==1>
+								<#if ( dateformat(cache.vipVerifyTime?string('yyyy-MM-dd HH:mm:ss')) + 365*24*3600 - dateformat("now") ) lt 0>
+									已经过期
+								<#else> 
+									<span class="endtime" data-time="${( dateformat(cache.vipVerifyTime?string('yyyy-MM-dd HH:mm:ss')) + 365*24*3600 - dateformat("now") )?c}"></span>
+								</#if>
+							<#elseif cache.vipStatus==2>
+								VIP审核中
+							<#else>
+								<font color="#999">开通VIP</font>
+							</#if>
+						</a> -->
+						<#if farmersRank??><span style="float:left;margin-left: 20px;">等级：${farmersRank.name!}</span></#if>
+						<#assign creditRank=user.credit.findCreditRank()> 
+                        <span style="float:left;margin-left: 20px;">积分等级：</span><#if creditRank??><img src="/data/images/credit/${creditRank.pic}" alt="点击刷新" /><#else></#if>
+					</li>
+					<li>乾多多账户：
+						<#if user.apiId??&&user.apiId??>${user.apiUsercustId}
+							<a href="${mmmIndex_url}" target="_blank" style="color: #0697DA;">【登陆乾多多账户】</a>
+						<#else>
+							<a href="${webroot}/member/apiRealname.html" style="color: #0697DA;">开通钱多多账户</a>
+						</#if>
+					</li>
+					<li>系统通知： <a href="${webroot}/member/message/box.html" style="color:#e7bb70;"><font color="red">${unRead?default(0)}</font> 封未读信息</a></li>
+				</ul>
+			</div>
+			<a href="/member/account/newrecharge.html" class="btn-recharge">充值</a>
+			<a href="/member/account/newcash.html" class="btn-cash">提现</a>
+	  	</div>
+	  	<a href="/experienceMoney/myExperienceMoney.html" class="moneyBtn">查看我的体验金！</a>
+	  	<a href="/member/shareReward.html" class="moneyBtn">好友投资我赚钱！</a>
+	  	<div class="user-right-tab">
+			<h1><span>账户详情</span></h1>
+	  		<ul class="clearfix">
+	  			<li>账户总额：<b>￥<#if summary??>${ceil(summary.accountTotal!0)}</#if></b></li>
+	  			<li><a href="${webroot}/member/account/log.html">资金记录查询</a> | <a href="${webroot}/member/account/bank.html"> &nbsp;银行账户设置</a></li>
+	  			<li>可用余额：<b>￥<#if summary??><#if (summary.accountUseMoney!0) lt 0.01>0<#else>${ceil(summary.accountUseMoney!0)}</#if></#if></b></li>
+	  			<li><a href="${webroot}/member/account/recharge.html">充值查询 </a> | <a href="${webroot}/member/account/cash.html">提现查询 </a>|<#if api_code == '1'>  <a href="${webroot}/member/interestGeneratedWealth.html">生利宝</a></#if></li>
+	  			<li>冻结总额：<b>￥<#if summary??>${ceil(summary.accountNoUseMoney!0)}</#if></b></li>
+	  			<li><a href="${webroot}/member/invest/tendering.html">正在进行的投标</a></li>
+	  			<li>净资产：<b>￥<#if summary??>${ceil(summary.accountOwnMoney!0)}</#if></b></li>
+	  			<li><a href="${webroot}/member/account/cash.html">正在申请的提现</a></li>
+				<li>已收利息：<b>￥<#if summary??>${ceil(summary.hasCollectInterestTotal!0)}</#if></b></li>
+				<#-- <li><a href="/invest/introduceInvest.html" target="_blank" style="color: #d30300;">查看网站运营数据</a></li> -->
+	  		</ul>
+	  	</div>				
+	  	<div class="user-right-tab">
+			<h1><span>待收待还详情</span></h1>
+	  		<ul class="clearfix">
+	  			<li>待收总额：<b>￥<#if summary??>${((summary.collectTotal)!0)?string("##.##")}</#if></b></li>
+	  			<li>待收利息：<b>￥<#if summary??>${(summary.collectInterestTotal!0)?string("##.##")}</#if></b></li>
+	  			<li>最近待收金额：<b>￥<#if summary??>${ceil(summary.newestCollectMoney!0)}</#if></b></li>
+	  			<li>最近待收时间：<#if summary??&&summary.newestCollectDate??><b>${summary.newestCollectDate[0..9]}</b><#else>暂无收款</#if></li>
+	  			<li>投资总额：<b><#if summary??>￥${(summary.investTotal!0)?string("##.##")}</#if></b></li>
+	  			<li>已收总额：<b><#if summary??>￥${ceil(summary.hasCollectTotal!0)}</#if></b></li>
+	  			<li>借款总额：<b><#if summary??>￥${ceil(summary.borrowTotal!0)}</#if></b></li>
+	  			<li>待还总额：<b><#if summary??>￥${ceil(summary.repayTotal!0)}</#if></b></li>
+	  			<li>最近待还金额：<b><#if summary??>￥${ceil(summary.newestRepayMoney!0)}</#if></b></li>
+	  			<li>最近待还时间：<#if summary??&&summary.newestRepayDate??><b>${summary.newestRepayDate[0..9]}</b><#else>暂无还款</#if></li>
+	  		</ul>
+	  	</div>	
+	  	<!--  
+	  	<div class="user-right-tab">
+	  		<h1><span>信用额度</span></h1>	
+	  		<ul class="clearfix">
+	  			<li>信用额度：<b>￥<#if amount??>${(amount.credit!0)?string("##.##")}</#if></b></li>
+	  			<li>可用额度：<b>￥<#if amount??>${(amount.creditUse!0)?string("##.##")}</#if></b></li>
+	  		</ul>
+	  	</div>
+	  	-->			
+	</div>
+</div>
+
+<!-- moneyActive  pupup -->
+	<!--如果存在体验金，并且未领取，提示弹窗-->
+<#--<#if em?? && em.receiveStatus == 0>
+	<div class="popup" style="display:block"></div>
+	<div class="bank" style="display:block"><a class=popBtn></a></div>
+</#if>-->
+<!-- moneyActive  pupup 结束 -->
+
+<script type="text/javascript">
+$('.user-right-tab ul li:even').css({'margin-right':100});
+
+
+$(".sucbox").slideFn({isTop:true,slideTimer:"3000"});	
+	function showRemainTime(){
+	var endtimes=$(".endtime");
+	endtimes.each(function(){
+		RemainTime($(this));
+	});
+}
+showRemainTime();
+setInterval("showRemainTime()",1000);
+
+function RemainTime(t){
+	var iDay,iHour,iMinute,iSecond,account;
+	var sDay="",sTime="";
+	var at="data-time"
+	var iTime=t.attr(at);
+	if (iTime >= 0){
+		iDay = parseInt(iTime/24/3600);
+		iHour = parseInt((iTime/3600)%24);
+		iMinute = parseInt((iTime/60)%60);
+		iSecond = parseInt(iTime%60);
+		if (iDay > 0){ 
+			sDay = iDay + "天"; 
+		}
+		sTime =sDay + iHour + "时" + iMinute + "分" + iSecond + "秒";
+		if(iTime==0){
+			sTime="<span style='color:green'>时间到了！</span>";
+		}
+			t.attr(at,iTime-1);
+	  }else{
+		 sTime="<span style='color:red'>VIP已过期！</span>";
+	 }
+	t.html(sTime);
+	}
+</script> 
+<script src="${webroot}${theme_dir}/media/js/modal.js"></script> 
+<script src="${webroot}${theme_dir}/media/js/tab.js"></script> 
+<script src="${webroot}${theme_dir}/media/js/alert.js"></script> 
+<script src="${webroot}${theme_dir}/media/js/transition.js"></script> 
+<#include "../include/footer.html">
+<script type="text/javascript">
+	$(function(){
+		var M = $('#changeUslis');
+		if( M.find('.credit_pic_card_0').attr('title') == '未实名初审' ){
+			window.location.href = '/member/apiRealname.html';
+		}
+		
+	})
+
+</script>
+<script src="${webroot}${theme_dir}/member/experienceMoney/js/moneyActive.js" type="text/javascript" > </script>
+</body>
+</html>
+ 

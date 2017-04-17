@@ -1,0 +1,73 @@
+<!-- 原始树结构 -->
+<div class="nav-oneself">
+    <div class="nav-visitors-item">
+        <div class="bl hidden"></div>
+        <div class="vg"style="height:100%;">
+        	<h1>栏目管理</h1>
+		    <ul class="visitors-block new-menu hidden">
+		        <#if tree??&&tree.hasChild()>
+		            <#list tree.child as item>
+		                <li>
+				            <div class="v"><a class="c" href="javascript:void(0);">${item.model.name!}</a></div>
+				                <#if item??&&item.hasChild()>
+				                <ul class="secondary-menu">
+				                    <li><a class="b" href="showSite.html?siteId=${item.model.siteId!}" data-nav="showSite.html?siteId=${item.model.siteId!}"><span>&#183;</span>根目录：${item.model.name!}</a></li>
+				                    <#list item.child as subitem>
+				                    <li><a class="b" href="showSite.html?siteId=${subitem.model.siteId?c}" data-nav="showSite.html?siteId=${subitem.model.siteId?c}"><span>&#183;</span>${subitem.model.name}</a></li>
+				                    </#list>
+				                </ul>
+				                </#if>
+		       		   </li>
+		           </#list>
+		        </#if>
+		    </ul>
+        </div>
+    </div>
+</div>
+<!-- 李靖自己写的 -->
+<div class="nav-oneself">
+<#if auth_purview??>
+     <#list auth_purview as item>
+     <#if item.pid==4  && item.level==2 && item.name != '栏目管理'>
+	    <div class="nav-visitors-item">
+	        	<h1 class="${item.id}">${item.name}</h1>
+		        <ul class="visitors-block"></ul> 
+	    </div>
+	</#if>
+</#list>
+</#if>
+</div>
+<script type="text/javascript">
+$(function(){
+	function panduan(){
+		$('.visitors-block li a').each(function(){
+			if($($(this))[0].href==String(window.location)){
+	            $(this).parents('.nav-visitors-item').addClass("active");
+	            $(this).addClass('current');
+	        }
+			else{}
+		})
+	}
+	var n=$('.nav-oneself h1').length;
+	for(var i = 1;i < n;i++){
+		var text=$('.nav-oneself h1').eq(i).attr('class');
+		console.log(text,i)
+		left(text,i);
+	}
+	function left(text,i){
+		 $.ajax({
+				type: "POST",
+				url: "/admin/showAuthMenu.html?pid="+text+"&level=3",
+				data: {},
+				dataType : "json",
+				success: function(Obj){
+					for(var j=0;j<Obj.length;j++){
+						$('.nav-oneself .visitors-block').eq(i).append("<li><a href='"+ Obj[j].url +"'>"+ Obj[j].name +"</a></li>");
+						console.log("000");
+					}  
+					panduan();
+				}
+			}); 
+	}
+})
+</script>

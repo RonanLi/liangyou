@@ -1,0 +1,42 @@
+<div class="nav-oneself">
+<#if auth_purview??>
+     <#list auth_purview as item>
+     <#if item.pid==8  && item.level==2 >
+	    <div class="nav-visitors-item">
+	        	<h1 class="${item.id}">${item.name}</h1>
+		        <ul class="visitors-block"></ul> 
+	    </div>
+	</#if>
+</#list>
+</#if>
+</div>
+<script type="text/javascript">
+$(function(){
+	function panduan(){
+		$('.visitors-block li a').each(function(){
+			if($($(this))[0].href==String(window.location)){
+	            $(this).parents('.nav-visitors-item').addClass("active");
+	            $(this).addClass('current');
+	        }
+			else{}
+		})
+	}
+	var n=$('.nav-oneself h1').length;
+	for(var i = 0;i < n;i++){
+		var text=$('.nav-oneself h1').eq(i).attr('class');
+		left(text,i);
+	}
+	function left(text,i){
+		 $.ajax({
+				type: "POST",
+				url: "/admin/showAuthMenu.html?pid="+text+"&level=3",
+				data: {},
+				dataType : "json",
+				success: function(Obj){
+					for(var j=0;j<Obj.length;j++){$('.nav-oneself ul').eq(i).append("<li><a href='"+ Obj[j].url +"'>"+ Obj[j].name +"</a></li>");}  
+					panduan();
+				}
+			}); 
+	}
+})
+</script>

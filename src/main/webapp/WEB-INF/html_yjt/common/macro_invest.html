@@ -1,0 +1,128 @@
+<#macro indexListItem item>
+
+<#if item.type??&&item.type==110>
+     <ul class="listwidth clearfix">
+		 <li class='li1 mli1'><@showBorrowIcon item=item /><a href="${webroot}/invest/detail.html?borrowid=${item.id?c}" class="title"><#if item.name?length lt 9>${item.name}<#else>${item.name[0..8]}...</#if></a>
+			</li>
+		 <li class='li2'></li>
+		 <li class='li3'>
+			 <p><!--${item.apr}%-->
+				 <!--加息活动修改-->
+				 <#if item.isday==1&&item.timeLimitDay==30&&("20161212"?date("yyyyMMdd") lt item.addtime?date) && (item.addtime?date lt "20170401"?date("yyyyMMdd"))>${item.apr-1}%<b style="color:#dfa151;">+1%</b>
+				 <#elseif item.isday==0&&item.timeLimit==1&&("20161212"?date("yyyyMMdd") lt item.addtime?date) && (item.addtime?date lt "20170401"?date("yyyyMMdd"))>${item.apr-1}%<b style="color:#dfa151;">+1%</b>
+				 <#elseif item.isday==0&&item.timeLimit==2&&("20161220"?date("yyyyMMdd") lt item.addtime?date) && (item.addtime?date lt "20170401"?date("yyyyMMdd"))>${item.apr-1}%<b style="color:#dfa151;">+1%</b>
+				 <#elseif item.isday==0&&item.timeLimit==3&&("20161212"?date("yyyyMMdd") lt item.addtime?date) && (item.addtime?date lt "20170401"?date("yyyyMMdd"))>${item.apr-1}%<b style="color:#dfa151;">+1%</b>
+					 <#else>${item.apr}%
+				 </#if>
+				 <!--加息活动修改结束-->
+		 	</p>
+		 </li>
+		 <li class='li4'>${format2(item.account)}元</li>
+		 <li class='li5'><p> 
+			<#if item.isday??&&item.isday==1>${item.timeLimitDay!0}天
+			<#elseif item.type==101>满标即还
+			<#else>${(item.timeLimit)?default("0")}个月</#if></p></li>
+		 <li  class='li6'>
+		 	<span class="progressbar">
+				 ${(item.accountYes/item.account*100)}%
+			</span>
+         </li>
+		 <li class='li7'>
+		 <#if item.status==1&&(item.accountYes lt item.account) > 
+				<a href="${webroot}/invest/detail.html?borrowid=${item.id?c}" class="tb-action">立即投标</a>
+		<#else>
+			<a class="tb-action-gray"><#if item.status==8>停止流转<#else>流转中</#if></a>
+		</#if> 
+		 </li>
+	 </ul>
+	
+<#elseif item.isAssignment != 1>
+<div style="border:1px solid #aaa;margin-bottom:15px;padding-left:20px;">
+	<ul class="listwidth clearfix ">
+		 <li class='li1 mli1'><@showBorrowIcon item=item /><a href="${webroot}/invest/detail.html?borrowid=${item.id?c}" class="title">${item.name}</a></li>
+		 <li class='li5'><p> 借款期限：<span>
+			<#if item.isday??&&item.isday==1>${item.timeLimitDay!0}天
+			<#elseif item.type==101>满标即还
+			<#else>${(item.timeLimit)?default("0")}个月</span></#if></p></li>
+		 <li class='li3'><p>预期年化收益率：
+			 <span>
+			 	<!--${item.apr}%-->
+				 <!--加息活动修改-->
+				 <#if item.isday==1&&item.timeLimitDay==30&&("20161212"?date("yyyyMMdd") lt item.addtime?date) && (item.addtime?date lt "20170401"?date("yyyyMMdd"))>${item.apr-1}%<b style="color:#dfa151;">+1%</b>
+				 <#elseif item.isday==0&&item.timeLimit==1&&("20161212"?date("yyyyMMdd") lt item.addtime?date) && (item.addtime?date lt "20170401"?date("yyyyMMdd"))>${item.apr-1}%<b style="color:#dfa151;">+1%</b>
+				 <#elseif item.isday==0&&item.timeLimit==2&&("20161220"?date("yyyyMMdd") lt item.addtime?date) && (item.addtime?date lt "20170401"?date("yyyyMMdd"))>${item.apr-1}%<b style="color:#dfa151;">+1%</b>
+				 <#elseif item.isday==0&&item.timeLimit==3&&("20161212"?date("yyyyMMdd") lt item.addtime?date) && (item.addtime?date lt "20170401"?date("yyyyMMdd"))>${item.apr-1}%<b style="color:#dfa151;">+1%</b>
+					 <#else>${item.apr}%
+				 </#if>
+				 <!--加息活动修改结束-->
+			 </span>
+			 </p>
+		 </li>
+		 <!-- 
+		 <li class='li7'>
+		 	<@showIndexTenderButton borrow=item />
+		 </li>
+		  -->
+		 
+		 <li class='li4'>项目金额：${format2(item.account)}元</li>
+		 <li class='li2'>还款方式:
+				<#if item.isday??&&item.isday==1>到期全额还款
+                 <#elseif item.type==101>系统自动还款
+                 <#elseif item.type==110>一次性还款
+                 <#elseif item.style??&&item.style=="2">一次性还款
+                 <#elseif item.style??&&item.style=="3">每月还息到期还本
+                 <#else>按月分期还款</#if>
+		</li>
+		 <li  class='li6'>出借进度：
+			 <span class="progressbar">
+				 ${(item.accountYes/item.account*100)}%
+			 </span>
+         </li>
+	 </ul>
+	 <div class="tb-actionBox"><@showIndexTenderButton borrow=item /></div>
+	 <div style="height:0; clear:both; display:table;"></div>
+</div>	
+</#if>
+<script type="text/javascript">
+	$('.biao-content').each(function() {
+		var content = $('<p>' + $(this).html() + '</p>').text();
+		if(content.length > 35) {
+			content = content.substring(0, 40) + '......';
+		}
+		$(this).html(content);
+	});
+	$(".progressbar").each(function() {
+			$(this)[0].style.backgroundPosition = '-'+parseInt($(this).text().replace("%","")) * 54+'px 0px';
+	});
+	
+	
+</script>
+</#macro>
+<#macro showIndexTenderButton borrow>
+	<#assign nowTime=dateformat("now") >
+<#-- 	<#assign startTime=dateformat(borrow.startTenderTime) > -->
+	<#if borrow.status==0>等待初审
+<#-- 	<#elseif startTime - nowTime gt 0> -->
+<#-- 		<a  class="tb-action-gray"  style="cursor: default;">敬请期待</a> -->
+	<#elseif borrow.status==1&&(borrow.accountYes lt borrow.account ) > 
+		<a href="${webroot}/invest/detail.html?borrowid=${borrow.id?c}" class="tb-action">立即投标</a>
+	<#elseif borrow.status==1&&(borrow.accountYes gt borrow.account || borrow.accountYes==borrow.account) > 
+		<a  class="tb-action-gray" style="cursor: default;">审核中</a>
+	<#elseif borrow.status==2> 
+		<a  class="tb-action-gray" style="cursor: default;">初审失败</a>
+	<#elseif borrow.status==3> 
+		<a  class="tb-action-gray" style="cursor: default;">复审通过</a>
+	<#elseif borrow.status==5||borrow.status==-1> 
+		<a  class="tb-action-gray" style="cursor: default;">用户取消</a>
+	<#elseif borrow.status==4> 
+		<a  class="tb-action-gray" style="cursor: default;">复审失败</a>
+	<#elseif borrow.status==6> 
+		<a  class="tb-action-gray" style="cursor: default;">还款中</a>
+	<#elseif borrow.status==7> 
+		<a  class="tb-action-gray" style="cursor: default;">还款中</a>
+	<#elseif borrow.status==8> 
+		<a  class="tb-action-gray" style="cursor: default;">已还款</a>
+	<#else> 
+		<a  class="tb-action-gray" style="cursor: default;">用户取消</a> 
+	</#if> 
+</#macro>

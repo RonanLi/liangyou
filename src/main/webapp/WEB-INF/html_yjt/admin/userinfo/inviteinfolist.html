@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+<body>
+	<table class="mc">
+		<tr>
+			<td class="mc-l">
+				<!--左侧导航---{-->
+				<div id="navPanelContainer">
+					<div class="system-logo cd"></div>
+					<!--管理员信息---{-->
+					<#include "../adminInfo.html">
+					<!--管理员信息---}-->
+					<div class="nav-wrap"><#include "left.html"></div>
+				</div> <!--左侧导航---}-->
+			</td>
+			<td class="mc-m">
+				<div class="navToggle"></div>
+			</td>
+			<td class="mc-r">
+				<!--顶部导航---{--> <#include "../topNav.html"> <!--顶部导航---}--> <!--面包屑导航---{-->
+				<#assign moduleName="推荐信息管理"> <#include "banner.html"> <!--面包屑导航---}-->
+
+				<!--工具栏--{-->
+				<div id="toolbar" class="clearfix">
+					<form action="" method="post">
+						
+						<div class="toolbor-module export">
+                            <input type="button" onclick="exportxls()" value="导出当前报表" class="input-button export-btn"/>
+                        </div>
+
+                        <#if param?exists>
+                            <#if param.get("dotime1")?exists><#assign dotime1=param.get("dotime1")></#if>
+                            <#if param.get("dotime2")?exists><#assign dotime2=param.get("dotime2")></#if>
+                            <#if param.get("username")?exists><#assign username=param.get("username")></#if>
+                            
+                        </#if>
+						
+						<div class="toolbor-module search">
+							<div
+								style="height: 22px; line-height: 22px; float: left; margin-left: 10px;">用户名：</div>
+							<input type="text" name="username" id="username" value="请输入推荐人"
+								class="search-value"> <input type="button" value="搜索"
+								class="input-button" onclick="sousuo();">
+						</div>
+						<div class="toolbor-module search">
+							<div style="height: 22px; line-height: 22px; float: left;">投资时间：</div>
+							<input class="_search-value" name="dotime1" id="dotime1"
+								value="${param.dotime1!}" size="30" onclick="change_picktime()"
+								style="float: left" />
+							<div
+								style="height: 22px; line-height: 22px; float: left; margin: 0 8px;">
+								到</div>
+							<input class="_search-value" name="dotime2" id="dotime2"
+								value="${param.dotime2!}" size="30" onclick="change_picktime()"
+								style="float: left" />
+						</div>
+						<div class="toolbor-module search">
+							<div style="height: 22px; line-height: 22px; float: left;">邀请注册时间：</div>
+							<input class="_search-value" name="dotime3" id="dotime3"
+								value="${param.dotime3!}" size="30" onclick="change_picktime()"
+								style="float: left" />
+							<div
+								style="height: 22px; line-height: 22px; float: left; margin: 0 8px;">
+								到</div>
+							<input class="_search-value" name="dotime4" id="dotime4"
+								value="${param.dotime4!}" size="30" onclick="change_picktime()"
+								style="float: left" />
+						</div>
+					</form>
+				</div> <!--工具栏--}-->
+
+				<div id="main" class="clearfix">
+					<#if inviteUsers??>
+					<table class="data-list">
+						<tr class="header">
+							<td>用户ID</td>
+							<td>用户名</td>
+							<td>推荐人</td>
+							<td>注册时间</td>
+							<td>投资总额</td>
+
+						</tr>
+						<#list inviteUsers as item>
+						<tr class="s">
+							<td>${item.inviteUserId!}</td>
+							<td>${item.username!}</td>
+							<td>${item.inviteUsername!}</td>							
+							<td>${item.addtime!}</td>
+							<td>${item.tenderedMoney!'0'}</td>
+							
+
+						</tr>
+						</#list>
+					</table>
+
+					<#else>暂无</#if>
+`
+
+					<!--底部工具栏--{-->
+					<div id="bottomToolbar" class="clearfix">
+						<div class="other-tool">
+							<dl class="refresh-data">
+								<dt class="refresh-data-icon"></dt>
+								<dd>
+									<a href="javascript:void(0);" class="refresh-page">刷新数据</a>
+								</dd>
+							</dl>
+						</div>
+
+						<!--翻页系统--{-->
+						<div class="container"><#import "../../common/page.html" as
+							pager> <@pager.pagination page=page
+							url="/admin/userinfo/inviteinfolist.html" map=param style="style1"
+							/></div>
+						<!--翻页系统--}-->
+					</div>
+					<!--底部工具栏--}-->
+				</div>
+
+			</td>
+		</tr>
+		<tr>
+			<!--尾部--{-->
+			<td colspan="3" class="mc-b"><#include "../foot.html"></td>
+			<!--尾部--}-->
+		</tr>
+	</table>
+	<script type="text/javascript">
+		
+		var xlsurl = '?search=true&actionType=export';
+		var urls = '?search=true';
+		function sousuo() {
+			var sou = "";
+			var username = $("#username").val();
+			if (username != "" && username != "请输入推荐人") {
+				sou += "&username=" + username;
+			}
+			var dotime1 = $("#dotime1").val();
+			var dotime2 = $("#dotime2").val();
+			var dotime3 = $("#dotime3").val();
+			var dotime4 = $("#dotime4").val();
+			if (dotime1 != null) {
+				sou += "&dotime1=" + dotime1;
+			}
+			if (dotime2 != null) {
+				sou += "&dotime2=" + dotime2;
+			}
+			if (dotime3 != null) {
+				sou += "&dotime3=" + dotime3;
+			}
+			if (dotime4 != null) {
+				sou += "&dotime4=" + dotime4;
+			}
+			location.href = urls + sou;
+		}
+
+		function exportxls() {
+			var sou = "";
+			var username = $("#username").val();
+			if (username != "" && username != "请输入推荐人") {
+				sou += "&username=" + username;
+			}
+			var dotime1 = $("#dotime1").val();
+			var dotime2 = $("#dotime2").val();
+			var dotime3 = $("#dotime3").val();
+			var dotime4 = $("#dotime4").val();
+			if (dotime1 != null) {
+				sou += "&dotime1=" + dotime1;
+			}
+			if (dotime2 != null) {
+				sou += "&dotime2=" + dotime2;
+			}
+			if (dotime3 != null) {
+				sou += "&dotime3=" + dotime3;
+			}
+			if (dotime4 != null) {
+				sou += "&dotime4=" + dotime4;
+			}
+			if (sou != "") {
+				location.href = xlsurl + sou;
+			} else {
+				location.href = xlsurl;
+			}
+		}
+	
+	</script>
+</body>
+</html>
+<#include "../jsPage.html">

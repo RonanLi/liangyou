@@ -1,0 +1,47 @@
+<ul class="wzgg"></ul>
+<div class="webnewsBtn">
+    <span class="newsBtn" id="prev" onclick="num1--; if(num1 < 1){ num1 = 1;}; page1(num1); ">&lt;&lt;</span>
+    <span class="newsBtn"><b class="currentPage1"></b></span>
+    <span class="newsBtn" id="next" onclick="num1++; if(num1 > Pages1){ num1 = Pages1; return;};  page1(num1);">&gt;&gt;</span>
+    <span class="newsBtn">共<b class="Pages1"></b>页</span>
+</div>
+<script type="text/javascript">
+
+function page1(num){
+	var url="/about/nextPage.html?page="+num+"&nid=webnotice";
+	var arr1=[];
+	$.ajax({
+		type : "POST",
+		url : url,
+		dataType : "json",
+		date:{},
+		async:false, 
+		success : function(Obj) {
+			$(".wzgg").html("")
+			var list=Obj.list;
+			arr1[0]=Obj.page.currentPage;
+			arr1[1]=Obj.page.pages;
+			$(".currentPage1").html(arr1[0]);
+			$(".Pages1").html(arr1[1]);
+			for(var i = 0 ; i < list.length ; i++){
+				$(".wzgg")
+				.append("<li>" +
+							"<div>" +
+								"<div class='newsText'>" +
+									"<h1>" + list[i][0] + "</h1>" +
+									"<p>" + list[i][2].substring(0, 115) + "</p>" +
+									"<a href='/article/detail.html?code=web-notice&id="+ list[i][3] +"'>查看详情</a>" +
+								"</div> " +
+								"<div class='newsTime'>" + list[i][1] + "</div>" +
+							"</div>"+
+						"</li>"
+						);
+			}
+		}
+	})
+	return arr1;
+}
+var num1=1;
+var currentPage1=page1(1)[0];
+var Pages1=page1(1)[1];
+</script>

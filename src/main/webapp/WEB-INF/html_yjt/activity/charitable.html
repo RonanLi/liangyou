@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<#assign nid="index" >
+    <#include "../include/resource.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/media/css/mixlrn.css" type="text/css" />
+<body>
+<#include "../include/header.html">
+<div class="charitable">
+<img src="${webroot}${theme_dir}/liangyou/activety/imgs/charitable_1.png" alt="">
+    <div class="chari">
+        <div class="chariP">
+				该活动页ID:${sp.id}<br>
+				点击次数：${sp.hits}
+				<h2><img src="${webroot}${theme_dir}/liangyou/activety/imgs/charitable_2.png" alt=""></h2>
+            <p>随着中国经济的发展和城市化进程的深入，大量人口从农村向城市转移，从中、小城市向大城市转移，截止到2015年11月1日，全国0～17岁儿童总量为29891万，其中流动儿童数量已达3581万，每100个儿童中就有13个流动儿童。</p>
+            <p> 我们开始将目光投注到流动儿童身上，我们期待流动儿童能够接受优质教育健康成长。金和所联合中国扶贫基金会开展守护流动儿童帮扶计划。</p>
+        </div>
+        <div class="chariI"><img src="${webroot}${theme_dir}/liangyou/activety/imgs/charitable_3.png" alt=""></div>
+    </div>
+    <div class="chariBg">
+        <div class="chari">
+            <div class="chariI"><img src="${webroot}${theme_dir}/liangyou/activety/imgs/charitable_4.png" alt=""></div>
+            <div class="chariP">
+                <h2><img src="${webroot}${theme_dir}/liangyou/activety/imgs/charitable_5.png" alt=""></h2>
+                <p>流动儿童玩转城市项目，主要带领打工子弟学校的孩子们走出他们生活的小小天地，通过主题型探访活动，增强对城市资源的了解与运用。 </p>
+                <a href="http://gongyi.qq.com/succor/detail.htm?id=22422&et=fund78g&rqlang=cn&rsv_enter=0" target="_blank" class="chariBtn"><img src="${webroot}${theme_dir}/liangyou/activety/imgs/charitable_6.png" alt=""></a>
+            </div>
+        </div>
+    </div>
+    <div class="chari">
+        <h2><img src="${webroot}${theme_dir}/liangyou/activety/imgs/charitable_7.png" alt=""></h2>
+        <div class="chariS">
+            <h3><img src="${webroot}${theme_dir}/liangyou/activety/imgs/charitable_8.png" alt=""></h3>
+            <p>中国扶贫基金会成立于1989年3月，由国务院扶贫开发领导小组办公室主管。中国扶贫基金会已经成为中国规模最大、实力最强的专职扶贫公益机构。致力于动员社会参与，创新扶贫方式，传递慈善爱心，促进社会和谐发展。</p>
+        </div>
+        <div class="chariS">
+            <h3><img src="${webroot}${theme_dir}/liangyou/activety/imgs/charitable_9.png" alt=""></h3>
+            <p>金和所，成立于2015年12月，是京朋集团全资控股的供应链科技金融平台，占股100%。金和所致力于“合规供应链金融”的金融创新，为京朋集团各大实业板块的供应链上 下游企业服务，同时专注于集团内部水利发电等清洁能源项目建设。以服务大众为宗旨，向广大用户提供安全、有保障、高收益的小微金融服务。</p>
+        </div>
+        <div class="chariS">
+            <h3><img src="${webroot}${theme_dir}/liangyou/activety/imgs/charitable_10.png" alt=""></h3>
+            <p>新公民计划，成立于2007年8月，是一家关注流动儿童教育的公益组织。通过支持流动儿童教育工作者，改善流动儿童成长环境，支持教育行动者、推广优质教育产品，使他们享受公平、优质、适宜的教育。</p>
+        </div>
+    </div>
+</div>
+<#include "../include/footer.html">
+<script>
+    $(function () {
+        window.phone = {
+            ui:{
+                isMobile:function(){
+                    return isMobile = {
+                        Android: function() {
+                            return navigator.userAgent.match(/Android/i);
+                        },
+                        wechat: function() {
+                            return navigator.userAgent.match(/MicroMessenger/i);
+                        },
+                        BlackBerry: function() {
+                            return navigator.userAgent.match(/BlackBerry/i);
+                        },
+                        iOS: function() {
+                            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+                        },
+                        Opera: function() {
+                            return navigator.userAgent.match(/Opera Mini/i);
+                        },
+                        Windows: function() {
+                            return navigator.userAgent.match(/IEMobile/i);
+                        },
+                        any: function() {
+                            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows() || isMobile.wechat());
+                        }
+                    }
+                },
+                gUrlp:function(ll){
+                    return decodeURIComponent((new RegExp('[?|&]' + ll + '=' + '([^&;]+?)(&|#|;|$)', "ig").exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
+                }
+            }
+        };
+
+
+        if( phone.ui.isMobile().any() == null ){
+            //$('body').addClass('notouch');
+
+        }else if( navigator.userAgent.indexOf('WindowsWechat') >= 0 ){
+            alert('请使用手机打开，获得更好的浏览体验！');
+            return false;
+        }else{
+            $('.charitable>img').attr('src','${webroot}${theme_dir}/media/wap/img/activity_banners/banners/6_bans.jpg')
+            $('.chari,.chariP,.chariI,.chariS').css({'width':'100%'})
+            $('.chariI img').css({'width':'100%','margin-top':'1rem'})
+            $('.chariP h2>img,.chariBtn>img,.chari h2>img').css({'width':'80%','margin-top':'1rem'});
+            $('.chariS h3>img').css({'width':'60%','height':'auto','margin':'1rem auto'});
+            $('.chari p').css({'padding':'0 1rem'})
+        }
+    })
+</script>
+</body>
+</html>
+

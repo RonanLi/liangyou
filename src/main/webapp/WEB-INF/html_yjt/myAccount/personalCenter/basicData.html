@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 ">
+<#assign webroot=request.getContextPath()>
+<#assign nid="member" >
+<#include "../../include/resource.html">
+<#include "../../common/function.html">
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+
+<body>
+
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="userRightMenu">
+                <#include "personalCenterMenu.html">
+            </div>
+            <div class="rightDiv">
+                <div class="basicData">
+                    <div class="reminder">请填写您的基本资料</div>
+                    <form action="" name="form1" method="post"  onsubmit="return ckeck_form();">
+                        <div class="fromBox">
+                            <div class="boxTxt">用户昵称：</div>
+                            <div class="boxIpt">
+                                <#if (session_user?exists) >
+                                    ${session_user.username}
+                                </#if>
+                            </div>
+                        </div>
+                        <div class="fromBox">
+                            <div class="boxTxt">性 别：</div>
+                            <div class="boxIpt">
+                                <#assign sex=true>
+                                    <#if (session_user?exists&&session_user.sex?exists&&session_user.sex=="2") >
+                                        <#assign sex=false>
+                                    </#if>
+
+                                    <input type="radio" name="identifyUser.sex" value="1" <#if session_user.sex?exists > </#if> <#if sex==true> checked="checked"</#if>   />男
+                                    <input type="radio" name="identifyUser.sex" value="2" <#if session_user.sex?exists> </#if>  <#if sex==false> checked="checked"</#if>  />女
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">出生日期：</div>
+                            <div class="boxIpt"><input type="text" id="birthday" name="identifyUser.birthday" style="cursor:pointer;" value="<#if session_user?exists&&session_user.birthday?exists>${session_user.birthday}</#if>"  readonly= "true " onclick="" /> </div>
+                            <div class="daoqiDate"></div>
+                        </div>
+                        <script type="text/javascript">
+                            $(function(){
+                                $("#birthday").datepicker({ buttonText: "Choose" , changeMonth: true,
+                                    changeYear: true, dateFormat: "yy-mm-dd",currentText: 'Now', showOtherMonths: true,gotoCurrent: true,yearRange:"1900:2020",
+                                    onSelect:function(dateText){
+                                        var valDay1 = dateText.replace(/-/g, '/');
+                                        var valDay = Date.parse(valDay1);
+                                        var nowDate = (new Date).getTime();
+                                        if(valDay > nowDate)
+                                        {
+                                            $(".daoqiDate").html("<span style='color:#f00'>所选日期不能大于当前日期</span>");
+                                            return false;
+                                        }
+                                        $("#birthday").click(function(){
+                                            $(".daoqiDate").html("");
+                                            $("#birthday").val("");
+                                        })
+                                    }
+                                });
+                            })
+                        </script>
+                        <script type="text/javascript">
+                            function ckeck_form(){
+                                var dateText = $("#birthday").val();
+                                var valDay1 = dateText.replace(/-/g, '/');
+                                var valDay = Date.parse(valDay1);
+                                var nowDate = (new Date).getTime();
+                                if(valDay > nowDate)
+                                {
+                                    $(".daoqiDate").html("<span style='color:#f00'>所选日期不能大于当前日期</span>");
+                                    return false;
+                                }
+                                $("#birthday").click(function(){
+                                    $(".daoqiDate").html("");
+                                    $("#birthday").val("");
+                                })
+
+                            }
+                        </script>
+                        <div class="fromBox">
+                            <div class="boxTxt">户籍所在地：</div>
+                            <div class="boxIpt">
+                                <#if session_user?exists&&session_user.province?exists>
+                                    <@region name="identifyUser.province.id" id="province" value=session_user.province.id! pid="0"></@region>&nbsp;
+                                <#else>
+                                    <@region name="identifyUser.province.id" id="province" pid="0"></@region>&nbsp;
+                                </#if>
+
+                                <#if session_user?exists&&session_user.province?exists>
+                                    <#if session_user.city?exists>
+                                        <@region name="identifyUser.city.id" id="city" value=session_user.city.id! pid=session_user.province.id!></@region>&nbsp;
+                                    <#else>
+                                        <@region name="identifyUser.city.id" id="city" pid="0"></@region>&nbsp;
+                                </#if>
+                                <#else>
+                                    <@region name="identifyUser.city.id" id="city" pid="-1"></@region>&nbsp;
+                                </#if>
+
+                                <#if session_user?exists&&session_user.city?exists>
+                                    <#if session_user.area?exists>
+                                        <@region name="identifyUser.area.id" id="area" value=session_user.area.id! pid=session_user.city.id!></@region>&nbsp;
+                                    <#else>
+                                        <@region name="identifyUser.area.id" id="area" pid=session_user.city></@region>&nbsp;
+                                </#if>
+                                <#else>
+                                    <@region name="identifyUser.area.id" id="area" pid="-1"></@region>&nbsp;
+                                </#if>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">婚姻状况：</div>
+                            <div class="boxIpt">
+                                <#if info?exists&&info.marry?exists>
+                                    <@linkage name="marry" id="marry" typeid=1 default=info.marry></@linkage>
+                                <#else>
+                                    <@linkage name="marry" id="marry" typeid=1></@linkage>
+                                </#if>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">子 女：</div>
+                            <div class="boxIpt">
+                                <#if info?exists&&info.child?exists>
+                                    <@linkage name="child" id="child"  typeid=2 default=info.child></@linkage>
+                                <#else>
+                                    <@linkage name="child" id="child"  typeid=2></@linkage>
+                                </#if>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">学 历：</div>
+                            <div class="boxIpt">
+                                <#if info?exists&&info.education?exists>
+                                    <@linkage name="education" id="education" typeid=3 default=info.education></@linkage>
+                                <#else>
+                                    <@linkage name="education" id="education" typeid=3></@linkage>
+                                </#if>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">月收入：</div>
+                            <div class="boxIpt">
+                                <#if info?exists&&info.income?exists>
+                                    <@linkage name="income" id="income" typeid=4 default=info.income></@linkage>
+                                <#else>
+                                    <@linkage name="income" id="income" typeid=4></@linkage>
+                                </#if>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">社 保：</div>
+                            <div class="boxIpt">
+                                <#if info?exists&&info.income?exists>
+                                    <@linkage name="shebao" id="shebao" typeid=5 default=info.shebao></@linkage>
+                                <#else>
+                                    <@linkage name="shebao" id="shebao" typeid=5></@linkage>
+                                </#if>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">社保电脑号：</div>
+                            <div class="boxIpt"><input type="text" size="30" <#if info?exists&&info.shebao?exists&&info.shebao == 32>disabled="disabled"</#if> name="shebaoid" id="shebaoid" maxlength="20" value="<#if info?exists&&info.shebaoid?exists>${info.shebaoid}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">住房条件：</div>
+                            <div class="boxIpt">
+                                <#if info?exists&&info.housing?exists>
+                                    <@linkage name="housing" id="housing" typeid=6 default=info.housing></@linkage>
+                                <#else>
+                                    <@linkage name="housing" id="housing" typeid=6></@linkage>
+                                </#if>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">是否购车：</div>
+                            <div class="boxIpt">
+                                <#if info?exists&&info.car?exists>
+                                    <@linkage name="car" id="car" typeid=7 default=info.car></@linkage>
+                                <#else>
+                                    <@linkage name="car" id="car" typeid=7></@linkage>
+                                </#if>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">逾期记录：</div>
+                            <div class="boxIpt">
+                                <#if info?exists&&info.late?exists>
+                                    <@linkage name="late" id="late" typeid=8 default=info.late></@linkage>
+                                <#else>
+                                    <@linkage name="late" id="late" typeid=8></@linkage>
+                                </#if>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">&nbsp;</div>
+                            <div class="boxIpt"><input type="submit" class="btn-action"  name="name"  value="确认提交" size="30" /> </div>
+                        </div>
+                        <input type="hidden" name="type" value="1" />
+                    </form>
+                    <div class="notes">* 温馨提示：我们将对所有的信息进行保密</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<#include "../../include/footer.html">
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"> </script>
+</html>

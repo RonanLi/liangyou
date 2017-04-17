@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 "> <#assign webroot=request.getContextPath()> <#assign nid="member" > <#include
+"../include/resource.html"> <#include "../common/function.html">
+<style>
+        .rewardTab { overflow: hidden; padding-left: 1%;}
+        .rewardTab span {float: left;width: 100px;height: 40px;line-height: 40px;background: #aaa;color: #fff;margin-right: 1%;text-align: center;border-radius: 5px;cursor: pointer;}
+        .rewardTab span:hover { background: #a67621;}
+        .rewardD {display: none;}
+        .rewardList {width: 95%;overflow: hidden; border: 1px solid #eee;margin: 20px auto 0;}
+        .rewardList > div { display: inline-block;}
+        .rewardImg {float: left;width: 20%;height: 120px;}
+        .rewardImg > img {height: 80px; width: 80px;margin-top: 20px;}
+        .rewardM { float: left;width: 50%;height: 120px;}
+        .rewardM p, .rewardM h3 {text-align: left;}
+        .rewardM h3 {font-weight: bold;margin: 20px 0 10px;font-size: 1rem;}
+        .rewardM p {font-size: 0.8rem;}
+        .rewardR {float: right;width: 25%;height: 120px;}
+        .rewardR a,.rewardR b{ color: #666;display: block; width: 95%; height: 40px; line-height: 40px; text-align: center; margin-top: 40px;font-size: 1rem;}
+		.rewardR a{background: #e7bb70; border-radius: 10px;color:#fff;}
+        .rewardTab .cur {background: #a67621;}
+        .on {display: block;}
+    </style>
+<body>
+	<#include "../include/header.html"> <#include
+	"../common/function.html"> <#if param?exists> <#assign
+	isday=param.isday!"0"> <#assign type=param.type!"0"> <#assign
+	apr=param.apr!""> <#assign naccount=param.naccount!0> <#assign
+	naward=param.naward!0> <#assign timeLimit=param.timeLimit!"0"> <#assign
+	timeLimitDay=param.timeLimitDay!"0"> <#assign status = param.status!>
+	</#if>
+
+	<!--header-end-->
+	<!--用户中心的主栏目 开始-->
+	<div id="main" class="clearfix container">
+		<div class="user_left"><#include "../member/user_menu.html"></div>
+		<div class="user_right">
+
+			<#if msg?exists>
+			<div id="msg24">
+				<p class="ok">${msg}</p>
+			</div>
+			<#else> <#if errormsg?exists>
+			<div id="msg25">
+				<p class="error">${errormsg}</p>
+			</div>
+			</#if> </#if>
+			<div class="user_right_menu">
+				<div class="rewardTab">
+					<span class="cur">未使用</span><span>已使用</span><span>已失效</span>
+				</div>
+			</div>
+
+			<div class="user-right-tab" style="height: 800px;">
+
+				<div class="rewardD rewardW on">
+					<#if list?exists> 
+                    <#list list as prize>
+                    <div class='rewardList'> 
+                    <div class='rewardImg'><img src='" + prize[i].prizeImgUrl + "' alt='图片加载失败'></div>
+                    <div class='rewardM'><h3> ${prize.prizeName} </h3><p>领取时间${prize.prizeTime!}</p>
+                    <p>奖品详情请致电咨询400-900-5591</p></div>
+                    <div class='rewardR'><b>${prize.exchangeCode!}</b></div>
+                    </div></div>
+                    </#list>
+                    
+                    <div class="clearfix"></div>
+                    <div style="margin: 0 auto 0; width: 480px; line-height: 50px;">
+                        <#import "../common/page.html" as pager> 
+                        <@pager.pagination page=page url="${pageUrl}" map=param style="style1" /></div>
+                    <#else>
+                    <div align="center">没有信息</div>
+                    </#if>
+				</div>
+			</div>
+			
+			<div class="rewardD rewardY"></div>
+			<div class="rewardD rewardS"></div>
+			<!-- <div class="rewardList">
+                        <div class="rewardImg"><img src="" alt=""></div>
+                        <div class="rewardM">
+                            <h3>奖品名称</h3>
+                            <p>兑换时间</p>
+                            <p>奖品详情请致电咨询400-900-5591</p>
+                        </div>
+                        <div class="rewardR"><a href="">立即投资</a></div>
+                  </div>  -->
+		</div>
+	</div>
+	</div>
+	<!-- <script type="text/javascript">
+		$(document).ready(
+				function() {
+					$(".rewardTab span")
+							.click(
+									function() {
+										$(".rewardTab span")
+												.eq($(this).index()).addClass(
+														"cur").siblings()
+												.removeClass('cur');
+										$(".rewardD").hide()
+												.eq($(this).index()).show();
+									});
+				});
+
+		var url = "/lottery/index.html";
+		$.ajax({
+					type : "POST",
+					url : url,
+					dataType : "json",
+					success : function(Obj) {
+						/* var prize = Obj.obj.prizes;
+						console.log(prize.length);
+						console.log(Obj.obj.prizes);
+						for (var i = 0; i <= prize.length; i++) {
+							console.log(prize[i]);
+							$(".rewardW")
+									.append(
+											"<div class='rewardList'> "
+													+ "<div class='rewardImg'><img src='" + prize[i].prizeImgUrl + "' alt='图片加载失败'></div><div class='rewardM'><h3>"
+													+ prize[i].prizeName
+													+ "</h3><p>领取时间"
+													+ prize[i].prizeTime
+													+ "</p><p>奖品详情请致电咨询400-900-5591</p></div><div class='rewardR'><a href='${webroot}/invest/index.html'>立即投资</a></div></div></div>")
+						}
+					} */
+				});
+	</script> -->
+	<#include "../include/footer.html">
+
+</body>
+</html>

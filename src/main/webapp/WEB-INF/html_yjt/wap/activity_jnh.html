@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh_Hans_CN" class="staticPage fT actiVity">
+<head><#include "_head.html">
+<style type="text/css" media="screen">
+  .imy{ width: 100%; display: block; border-top: 1px solid #fff; }
+  .rhj{ padding: 2% 2% 2% 8%; color: #333; }
+  .rhj.O:before{ content:'\f0a1'; text-indent: -7.2%; color:#ca870d; }
+  .details > h3{ margin:6% 0; line-height: 1; border-left: 4px solid #ff9500; padding-left: 8px; font-size: .42rem; font-weight: 500; }
+  table{ width: 100%; border-collapse: collapse; border:1px solid orange; width: 93.5%;margin: 0 auto;}
+  td{ text-align: center; border:1px solid orange; padding: 1% 0; }
+  th{ padding:2% 0; font-weight: 500; color: #333;}
+  table tr:nth-child(even){ background-color: #ffdd9d; }
+  .ul{ width: 93.5%; margin:0 auto; }
+  .ul li{ text-align: justify; margin:1% 0 0; }
+  .footer-smword{ line-height: 55px; color: #c7c7c7; }
+  .ul strong{ color:#6a6a6a; }
+  .ul ul{ margin-left: 2rem; font-size: .34rem; list-style-type: circle; }
+</style>
+</head>
+<body class="paused">
+    <!-- Whether the user is logged in  -->
+    <input type="hidden" id="usersession" data-ssion="${usersession}">
+    <!-- Whether the user is logged in  end-->
+    <!-- common module -->
+    <section class="mob-con" id="MobileR">
+        <div class="mob-cen"><i></i><div>请使用手机竖屏查看</div></div>
+    </section>
+    <section class="tooltips" id="tooltips"><div></div></section>
+    <div class="loadDataCircles d-n"><div class="bg"><div class="circLe"></div><br/>努力加载中</div> </div>
+    <section id="backtotop" class="O backtotop T"></section>
+    <!-- common module end-->
+    <article class="hey">
+        <header class="fixheader">
+          <div class="R">
+            <a href="javascript:void(0);" class="goback O" id="goBack">返回</a>
+            <span class="logo">金鸡贺岁,别让年终奖睡大觉</span>
+           <!--  <a href="Innerpage.html" class="innerPAGE O"></a> 个人主页-->
+          </div>
+        </header>
+        <main class="listBids details T" role="main" >
+            <img class="imy" src="${webroot}${theme_dir}/media/wap/img/activity_banners/ac7.jpg"/>
+            <p class="rhj O">尊敬的金和所投资用户,“金鸡贺岁,别让年终奖睡大觉”活动自上线以来，简单、清晰的福利获取方式受到了广大投资用户的一致好评，第一期活动已于2017年1月18日结束。经京朋集团金和所运营团队综合考虑，在广大投资用户的反馈下决定，将于2017年1月19日开启平台第二期“金鸡贺岁,别让年终奖睡大觉”活动，并延续至2017年2月8日，特此通知。活动详情如下：活动期间，投资用户在金和所平台投资，并在活动时间内累计投资达到一定金额(X)，即可获取相应红包返现奖励。</p>
+            <h3>奖励规则：</h3>
+            <table>
+              <colgroup>
+                <col width="50%"/>
+                <col width="50%"/>
+              </colgroup>
+              <tbody>
+                <tr>
+                  <th>累计投资金额（万元）</th>
+                  <th>返现红包奖励（元）</th>
+                </tr>
+                <tr><td>1≤X＜5</td><td>50</td></tr>
+                <tr><td>5≤X＜10</td><td>125</td></tr>
+                <tr><td>10≤X＜20</td><td>300</td></tr>
+                <tr><td>20≤X＜40</td><td>700</td></tr>
+                <tr><td>40≤X＜70</td><td>1600</td></tr>
+                <tr><td>70≤X＜100</td><td>3150</td></tr>
+                <tr><td>100以上</td><td>5000</td></tr>
+              </tbody>
+            </table>
+            <h3>活动说明：</h3>
+            <ul class="ul">
+              <li><strong>活动时间：</strong>2017年1月19日—2017年2月8日</li>
+              <li><strong>参与对象：</strong>金和所平台所有用户</li>
+              <li><strong>活动规则：</strong>
+                <ul>
+                  <li>活动期间，在金和所平台投资，单人在活动时间内累计投资达到一定金额，即可获取相应红包返现奖励；</li>
+                  <li><span style="color:#111">累计投资总金额是指在活动期间内投资人累计投资总金额；</span></li>
+                  <li>活动返现红包将在活动结束后3个工作日内派发至投资用户；</li>
+                  <li>本活动最终解释权归金和所平台所有，如有疑问，欢迎致电金和所客服热线：400-900-5591（工作时间：周一至周五9:00-18:00）。官方QQ群：289709304</li>
+                </ul>
+            </ul>
+        </main>
+    </article>
+    <footer class="f-Copyright ftb T" >
+        <!-- <div class="footer-linkHelp">
+           <a href="aboutus.html">关于我们</a><span class="divideLine"></span><a href="newguidance.html">新手指导</a><span class="divideLine"></span><a href="protocols.html">用户协议</a>
+        </div> -->
+        <div class="footer-smword">©2017 金和所. 版权所有.</div>
+    </footer>
+<script src="${webroot}${theme_dir}/media/wap/js/process.js" type="text/javascript"></script>
+<script src="${webroot}${theme_dir}/media/wap/js/fy-slide.js" type="text/javascript"></script>
+<script src="${webroot}${theme_dir}/media/wap/js/easypiechart.min.js" type="text/javascript"></script>
+<script src="${webroot}${theme_dir}/media/wap/js/jhs-base-wap.js" type="text/javascript"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html">
+<#assign mid="m_borrow" >
+<#assign nid="member">
+<#import "../../common/function.html" as func>
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+
+<body>
+<div id="main" class="clearfix container">
+
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="userRightMenu">
+                <#include "projectRecordMenu.html">
+            </div>
+            <div class="lending">
+                <ul>
+                    <li>
+                        <div>借款人</div>
+                        <div>标题</div>
+                        <div>借出总额</div>
+                    </li>
+                    <#if list?? && list?size gt 0>
+                        <#list list as item>
+                            <li>
+                                <div>${item.borrow.user.username}</div>
+                                <div><a href="${request.getContextPath()}/invest/detail.html?borrowid=${item.borrow.id?c}">${func.subString(item.borrow.name,15)}...</a></div>
+                                <div>￥${item.account!0}</div>
+                            </li>
+                        </#list>
+                        <li>
+                            <div id="page">
+                                <#import "../../common/page.html" as pager>
+                                    <@pager.pagination page=page url="/member/myAccount/lending.html" map=param style="style3"  />
+                            </div>
+                        </li>
+                        <#else><li>暂无数据</li>
+                    </#if>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"></script>
+<#include "../../include/footer.html">

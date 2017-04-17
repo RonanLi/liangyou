@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="易极付任务" >
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+                              <#if param??>
+		                			 <#assign borrowid=param.borrowid!'请输入标ID' />
+		                			 <#assign period=param.period!'请输入期数' />
+			                		 <#assign status=param.status!''/>
+		                			 <#assign operatetype=param.operatetype!/>
+		                			 <#assign service=param.service!/>
+							  </#if>
+                                <div class="toolbor-module search">
+                                   <input type="text" name="borrowid" id="borrowid" value="${borrowid}" class="search-value">
+                                   <input type="text" name="period" id="period" value="${period}" class="search-value">
+                                   <#-- <input type="text" name="orderno" id="orderno" value="请输入订单号" class="search-value">-->
+                                    <div class="select-box" id="status">
+                                        <div class="tag-select">请选择状态</div>
+                                        <ul class="tag-options">
+                                            <li data-value="" <#if status??&&status==''>class="open-selected"</#if>>请选择状态</li>
+                                            <li data-value="1" <#if status??&&status =='1'>class="open-selected"</#if>>成功</li>
+                                            <li data-value="2" <#if status??&&status =='2'>class="open-selected"</#if>>失败</li>
+                                            <li data-value="0" <#if status??&&status =='0'>class="open-selected"</#if>>未处理</li>
+                                        </ul>
+                                    </div>
+                                     <div class="select-box" id="operatetype">
+                                        <div class="tag-select">请选择交易类型</div>
+                                      
+                                        <ul class="tag-options">
+                                            <li data-value=""  <#if operatetype??&&operatetype==''>class="open-selected"</#if>> 请选择交易类型</li>
+                                            <li data-value="ADDBORROW" <#if operatetype??&&operatetype=='ADDBORROW'>class="open-selected"</#if>> 发标</li>
+                                            <li data-value="ADDTENDER" <#if operatetype??&&operatetype=='ADDTENDER'>class="open-selected"</#if>> 投标</li>
+                                             <li data-value="DOREPAY"  <#if operatetype??&&operatetype=='DOREPAY'>class="open-selected"</#if>> 还款</li>
+                                            <li data-value="PREREPAY" <#if operatetype??&&operatetype=='PREREPAY'>class="open-selected"</#if>> 提前还款</li>
+                                            <li data-value="AUTOREPAY" <#if operatetype??&&operatetype=='AUTOREPAY'>class="open-selected"</#if>> 自动还款</li>
+                                            <li data-value="AUTOVERIFYFULLSUCCESS" <#if operatetype??&&operatetype=='AUTOVERIFYFULLSUCCESS'>class="open-selected"</#if>> 后台满标复审通过</li>
+                                            <li data-value="VERIFYBORROW" <#if operatetype??&&operatetype=='VERIFYBORROW'>class="open-selected"</#if>> 满标初审</li>
+                                            <li data-value="FAIL"  <#if operatetype??&&operatetype=='FAIL'>class="open-selected"</#if>> 后台满标复审不通过</li>
+                                            <li data-value="AUTOCANCEL" <#if operatetype??&&operatetype=='AUTOCANCEL'>class="open-selected"</#if>> 取消的标</li>
+                                            <li data-value="AUTODOREPAYFORSECOND" <#if operatetype??&&operatetype=='AUTODOREPAYFORSECOND'>class="open-selected"</#if>> 秒标冻结</li>
+                                            <li data-value="VERIFYFULLBORROW" <#if operatetype??&&operatetype=='VERIFYFULLBORROW'> class="open-selected" </#if> > 前台满标处理</li>
+                                            <li data-value="VERIFYRECHARGE" <#if operatetype??&&operatetype=='VERIFYRECHARGE'>class="open-selected"</#if>> 扣款审核</li>
+                                            <li data-value="VERIFYVIPSUCCESS" <#if operatetype??&&operatetype=='VERIFYVIPSUCCESS'>class="open-selected"</#if>> vip审核通过</li>
+                                            <li data-value="VERIFYVIPFAIL" <#if operatetype??&&operatetype=='VERIFYVIPFAIL'>class="open-selected"</#if>> vip审核不通过</li>
+                                            <li data-value="WEBSITEPAYFORLATEBORROW" <#if operatetype??&&operatetype=='WEBSITEPAYFORLATEBORROW'>class="open-selected"</#if>> 发标</li>
+                                            <li data-value="NEWCASH" <#if operatetype??&&operatetype=='NEWCASH'>class="open-selected"</#if>> 提现申请</li>
+                                            <li data-value="VERIFYCASH" <#if operatetype??&&operatetype=='VERIFYCASH'>class="open-selected"</#if>> 提现审核</li>
+                                            <li data-value="CASHBACK" <#if operatetype??&&operatetype=='CASHBACK'>class="open-selected"</#if>> 扣款</li>
+                                            <li data-value="CANCELCASH" <#if operatetype??&&operatetype=='CANCELCASH'>class="open-selected"</#if>> 取消提现</li>
+                                            <li data-value="FLOWREPAY" <#if operatetype??&&operatetype=='FLOWREPAY'>class="open-selected"</#if>> 流标还款</li>
+                                            <li data-value="CANCELBORROW" <#if operatetype??&&operatetype=='CANCELBORROW'>class="open-selected"</#if>> 标初审取消</li>
+                                       
+                                       </ul>
+                                       
+                                    </div>
+                                   
+                                     <div class="select-box" id="service">
+                                        <div class="tag-select">请选择服务类型</div>
+                                        
+                                         <ul class="tag-options">
+                                            <li data-value=""  <#if service??&&service==''>class="open-selected"</#if>> 请选择服务类型</li>
+                                            <li data-value="tradeCreatePoolTogether"  <#if service??&&service=='tradeCreatePoolTogether'>class="open-selected"</#if>> 接口创建交易号 </li>
+                                            <li data-value="tradePayerApplyPoolTogether"  <#if service??&&service=='tradePayerApplyPoolTogether'>class="open-selected"</#if>> 费流转标投标</li>
+                                            <li data-value="tradePayerQuitPoolTogether"  <#if service??&&service=='tradePayerQuitPoolTogether'>class="open-selected"</#if>> 撤回投标</li>
+                                            <li data-value="tradePayPoolTogether"  <#if service??&&service=='tradePayPoolTogether'>class="open-selected"</#if>>放款</li>
+                                            <li data-value="tradeCreatePoolReverse"  <#if service??&&service=='tradeCreatePoolReverse'>class="open-selected"</#if>> 创建还款交易</li>
+                                            <li data-value="tradePayPoolReverse"  <#if service??&&service=='tradePayPoolReverse'>class="open-selected"</#if>> 还款</li>
+                                            <li data-value="tradeCreatePool"  <#if service??&&service=='tradeCreatePool'>class="open-selected"</#if>> 流转标创建交易号</li>
+                                            <li data-value="tradePoolReceiveBorrow"  <#if service??&&service=='tradePoolReceiveBorrow'>class="open-selected"</#if>> 流转标投标</li>
+                                            <li data-value="tradeTransfer"  <#if service??&&service=='tradeTransfer'>class="open-selected"</#if>> 转账</li>
+                                            <li data-value="applyWithdraw"  <#if service??&&service=='applyWithdraw'>class="open-selected"</#if>> 提现</li>
+                                        </ul>
+                                         
+                                    </div>
+                                    <input type="button" value="搜索"  class="input-button" onclick="sousuo();">
+                                </div>
+                            </div>
+                            <!--工具栏--}-->
+
+                            <div id="main" class="clearfix">
+                                <form action="" method="post">
+                                    <table class="data-list">
+                                        <tr class="header">
+                                         <td></td> 
+                                            
+                                          <!--  <td>发起者</td>
+                                            <td>接收者</td> -->
+                                           
+                                            <td>标ID</td>
+                                            <td>期数</td>
+                                            <td>金额</td>
+                                            <td>服务类型</td>
+                                            <td>操作类型</td>
+                                            <td>状态</td>
+                                            <td>订单号</td>
+                                            <td>交易号</td>
+                                            <td>子交易号</td>
+                                            <td>备注</td>                                           
+                                            
+                                        </tr>
+                                        <#list list as item>
+                                            <tr class="s">
+                                            <td>
+                                            <#if ( !(item.status??)||(item.status??&&item.status!=1) )&& (item.service!='applyWithdraw'  )   >
+                                            <input  type="checkbox" name="ids" value=${item.id?c!}>
+                                            <#else>
+                                            --
+                                            </#if>
+                                            </td>
+                                                                                      
+                                           <!--  <td>${item.userid!'-'}</td>
+                                            <td>${item.touserid!'-'}</td>--> 
+                                            <td>${item.borrowid!'-'}</td>
+                                            <td>${item.period!'-'}</td>
+                                            <td>${item.money!'-'}</td>
+                                            <td>${item.service!'-'}</td>
+                                            <td>${item.operatetype!'-'}</td>
+                                            <td>
+                                            <#if item.status??>
+	                                            <#if item.status==1>
+	                                            	易极付处理成功
+	                                            <#elseif item.status==2>
+	                                               易极付处理失败
+	                                            <#else>
+	                                            易极付处理未处理
+	                                            </#if>
+	                                        <#else>
+	                                         未处理
+	                                        </#if>
+                                            
+                                            </td>                                            
+                                            <td>${item.orderno!'-'}</td>
+                                            <td>${item.tradeno!'-'}</td>
+                                            <td>${item.subtradeno!'-'}</td>
+                                            <td>${item.errormsg!'-'}</td>
+                                            
+                                            </tr>
+                                        </#list>
+
+                                    </table>
+                                   
+                                </form>
+                                 	<input type="button" value="全选"  onclick="allSelected()" >
+                                 	<input type="button" value="取消全部"  onclick="cancelSelected()" >
+                                   <input id="send" type="button" value="重新触发" onclick="getValues();" >
+
+                                <!--底部工具栏--{-->
+                                <div id="bottomToolbar" class="clearfix">
+                                    <div class="other-tool">
+                                        <dl class="refresh-data">
+                                            <dt class="refresh-data-icon"></dt>
+                                            <dd><a href="javascript:void(0);" class="refresh-page">刷新数据</a></dd>
+                                        </dl>
+                                    </div>
+
+                                    <!--翻页系统--{-->
+                                    <div class="container">
+                                        <#import "../../common/page.html" as pager>
+                                            <@pager.pagination page=page url="/admin/borrow/schedule.html" map=param style="style1" />
+                                    </div>
+                                    
+                                    <!--翻页系统--}-->
+                                </div>
+                                <!--底部工具栏--}-->
+                                <script>
+                                    function sousuo(){
+                                        var url='/admin/borrow/schedule.html?search=true';
+                                        var sou='';
+                                        var borrowid = $("#borrowid").val();
+                                        if (borrowid!=""&&borrowid!=null&&borrowid!="undefine"&&borrowid!="请输入标ID"){
+                                            sou += "&borrowid="+borrowid;
+                                        }                                        
+                                        var period = $("#period").val();
+                                        if (period!=""&&period!=null&&period!="undefine"&&period!="请输入期数"){
+                                            sou += "&period="+period;
+                                        }                                        
+                                        var orderno = $("#orderno").val();
+                                        if (orderno!=""&&orderno!=null&&orderno!="undefine"&&orderno!="请输入订单号"){
+                                            sou += "&orderno="+orderno;
+                                        }
+                                        var status = $("#status").find(".open-selected").attr("data-value");
+                                        if (status!=""&&status!=null&&status!="undefine"){
+                                            sou += "&status="+status;
+                                        }
+                                        var service = $("#service").find(".open-selected").attr("data-value");
+                                        if (service!=""&&service!=null&&service!="undefine"){
+                                            sou += "&service="+service;
+                                        }
+                                        var operatetype = $("#operatetype").find(".open-selected").attr("data-value");
+                                        if (operatetype!=""&&operatetype!=null&&operatetype!="undefine"){
+                                            sou += "&operatetype="+operatetype;
+                                        }
+                                        
+                                        if (sou!=""){
+                                            location.href=url+sou;
+                                        }
+                                    }
+                                    
+                                    function getValues(){
+                                   		var str='';
+                               			$(":checkbox[name='ids'][checked]").each(function () {
+                               				str = str+$(this).val()+","
+                                		});
+                               		 	location.href = "/admin/borrow/schedule.html?ids="+str;
+                                    }
+                                    
+                            		function allSelected(){
+                            			$("input:checkbox[name=ids]").each(function(){
+                            				$(this).attr("checked", true);
+                            			});
+                            		}
+                            		
+                            		function cancelSelected(){
+                            			$("input:checkbox[name=ids]").each(function(){
+                            				$(this).removeAttr("checked");
+                            			});
+                            		}
+                            		
+                            		 $(function(){
+                	                   	 $("#type").find(".tag-select").html( $("#type").find(".open-selected").html() );
+                	                	 $("#status").find(".tag-select").html( $("#status").find(".open-selected").html());
+                	                	 $("#operatetype").find(".tag-select").html( $("#operatetype").find(".open-selected").html());
+                	                	$("#service").find(".tag-select").html( $("#service").find(".open-selected").html());
+                                	});
+                                </script>
+                            </div>
+
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+
+    </body>
+</html>
+<#include "../jsPage.html">

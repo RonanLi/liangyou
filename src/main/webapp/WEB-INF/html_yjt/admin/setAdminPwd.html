@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>${webname!}后台管理登陆</title>
+<link href="${request.getContextPath()}/themes/admin/css/adminBasis.css" rel="stylesheet" type="text/css" />
+
+<script>
+    function check_repwd(){
+    	  var password = document.getElementById("password").value;
+    	  var pwd = document.getElementById("newpassword").value;
+    	  var newpwd = document.getElementById("newpassword1").value; 
+    	  var valicode = document.getElementById("valicode").value; 
+    	  var pass_reg = /^(?![0-9A-Za-z]+$)[0-9A-Za-z~!@#$%^&*()]{10,}$/ ;
+        if (password==""){
+            alert("原始密码不能为空！ ");
+            return false;
+        }else if (pwd==""){
+            alert("新密码不能为空！ ");
+            return false;
+        }else if (pwd !=newpwd){
+            alert("两次输入的密码不一致！ ");
+            document.getElementById("newpassword").value="";
+        	document.getElementById("newpassword1").value="";
+            return false;
+        }else if(!pass_reg.exec(pwd)){
+        	alert("密码必须包含数字、字母、特殊字符【 ~!@#$%^&*()】，长度不少于10位 ");
+        	document.getElementById("newpassword").value="";
+        	document.getElementById("newpassword1").value="";
+            return false;
+        }else if(pwd ==password){
+        	 alert("新密码和原始密码不能相同！ ");
+             return false;
+        }else if(valicode==""){
+        	alert("验证码不能为空！ ");
+            return false;
+        }
+        return true;
+
+    }
+    
+</script>
+</head>
+<body style="background: #fff url(${request.getContextPath()}/themes/admin/images/login_bg.png) repeat-x top; overflow:hidden;" >
+<div id="login">
+	<div id="login_header">
+		<h1 class="login_logo">
+			<img src="${request.getContextPath()}/themes/admin/images/logo.png" />
+		</h1>
+	</div>
+	<div id="login_content" style="top:4px;">
+
+		<div class="resetloginForm clearfix" 
+		<#if queryType??&&queryType == "payPwd">
+			style="background: url(/themes/admin/images/resetloginForm_pay.png) no-repeat"
+		<#else>
+			style="background: url(/themes/admin/images/resetloginForm.png) no-repeat"
+		</#if>  >
+			
+			<form id="form1" name="form1" method="post"  autocomplete="off" action="${webroot}/admin/resetadminpwd.html" onsubmit="return check_repwd();">
+				<#if msg??><span class="tip">提示信息： <font color="#FF0000" size="2">${msg}。密码必须包含数字、字母、特殊字符【 ~!@#$%^&*()】，长度不少于10位 </font></span></#if>
+				<div class="inner_reset clearfix">
+				<p class="clearfix">
+					<label>用户名： </label>
+					<span style="margin-top: 1px">${username!}</span>
+					<input type="hidden" name="username" id="username" value="${username!}" class="login_input" tabindex="1" maxlength="20"/>
+					<b>管理员名称 </b>
+				</p>
+				<p class="clearfix">
+					<label><#if queryType??&&queryType == "payPwd">原始交易密码 <#else>原始密码 </#if>： </label>
+					<span><input type="password" name="password" id="password" style="width:120px;" size="20" tabindex="2" class="login_input" maxlength="20"/></span>
+					<#if queryType??&&queryType == "payPwd"><b>请输入原始支付密码（如未设置，输入你的登陆密码。） </b><#else><b>请输入原始登录密码 </b></#if>
+				</p>
+				<p class="clearfix">
+					<label><#if queryType??&&queryType == "payPwd">新交易密码 <#else>新密码 </#if>： </label>
+					<span><input type="password" name="newpassword" id="newpassword" style="width:120px;" size="20" tabindex="2" class="login_input" maxlength="20"/></span>
+					<b></b>
+				</p>
+				<p class="clearfix">
+					<label ><#if queryType??&&queryType == "payPwd">确认密码<#else>确认新密码</#if>：</label>
+					<span><input type="password" name="newpassword1" id="newpassword1" style="width:120px;" size="20" tabindex="2" class="login_input" maxlength="20"/></span>
+					<b></b>
+				</p>
+				<div class="clear"></div>
+				<div class="reset_yzm">
+					<label>验证码： </label>
+					<input class="code" name="valicode" id="valicode" type="text" maxlength="5" tabindex="3" style=" width:50px; *margin-left:3px;" />
+				<span><img src="${webroot}/validimg.html" alt="点击刷新" onClick="this.src='${webroot}/validimg.html?t=' + Math.random();" align="absmiddle" style="cursor:pointer; height:22px;" /></span>
+				</div>				
+		
+				<div class="login_bar">
+					<input type="submit" value="确定修改 " class='btn'/>
+				</div>
+				<input type="hidden"  name="queryType" value="${queryType!}" />
+			</div>
+			</form>
+			
+		</div>
+
+		<div class="login_main " style="height:113px"></div>
+		
+	</div>
+	<div id="login_footer">
+		 <td colspan="3" class="mc-b"><#include "foot.html"></td>
+	</div>
+</div>
+<script>
+    document.getElementById("password").focus();
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<#include "../common/res.html">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script type="text/javascript">
+			function doDelete(id){
+				if(confirm("确定删除?")){
+					window.location.href='${webroot}/wx/delMenuGroup.html?id='+id;
+				}
+			}
+			function doPublish(){
+				var gid = $('input:radio[name=radio_name]:checked').val();
+				if(gid != null && gid != 'undefined'){
+					if(confirm("确定生成微信账号菜单?")){
+						window.location.href='${webroot}/wx/addWeChatMenu.html?gid='+gid;
+					}
+				}else{
+					alert("请选择菜单组");
+				}
+			}
+			function doCancel(){
+				if(confirm("确定删除微信账号菜单?")){
+					window.location.href='${webroot}/wx/delWechatMenu.html';
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<#include "../common/header.html">
+		<div class="content">
+			<div class="block-nav">
+				<#include "../common/nav.html">
+			</div>
+		
+			<div class="block-content" >
+				<div class="block-content-nav">
+					<span class="title">菜单管理</span>
+				</div>
+				
+				<div class="block-content-description">
+					<span>
+						每个账号可以创建多套菜单，根据不同情况选择不同的菜单
+					</span>
+				</div>
+				
+				<div class="block-content-content">
+					<form id="id_fm_form" method="post" action="${webroot}/wx/showMenuGroup.html">
+						<table class="fm-table menuGroup">
+							<thead>
+								<tr>
+									<td></td>
+									<td>菜单组名称</td>
+									<td>是否在用</td>
+									<td>
+										<input class="btn" onclick="window.location.href='${webroot}/wx/toAddMenuGroup.html'" type="button" value="添 加"/>
+									</td>
+								</tr>
+							</thead>
+							<tbody>
+								<#list list as item>
+								<#if item_index %2 == 0>
+								<tr>
+								<#else>
+								<tr class="even-tr">
+								</#if>
+									<td>
+									<input type="radio" name="radio_name" value="${item.id!}" style="width:15px;"/>
+									</td>
+									<td>${item.name!}</td>
+									<td>
+										<#if item.enable == 1>
+										<span style="color:green;">是</span>
+										<#else>
+										否
+										</#if>
+									</td>
+									<td>
+										<a href="${webroot}/wx/showMenu.html?gid=${item.id!}">配置</a>&nbsp;&nbsp;
+										<a href="javascript:void(0);" onclick="doDelete('${item.id}')">删除</a>&nbsp;&nbsp;
+									</td>
+								</tr>
+								</#list>
+							</tbody>
+						</table>
+						<div class="optbar">
+							<input class="btn" onclick="doPublish();" type="button" value="生成微信账号菜单"/>
+							<input class="btn" onclick="doCancel();" type="button" value="删除微信账号菜单"/>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="clearfloat"></div>
+		</div>
+		 <#include "../common/footer.html">
+	</body>
+</html>

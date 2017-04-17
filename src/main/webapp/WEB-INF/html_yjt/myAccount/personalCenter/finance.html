@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 ">
+<#assign webroot=request.getContextPath()>
+<#assign nid="member" >
+<#include "../../include/resource.html">
+<#include "../../common/function.html">
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+
+<body>
+
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="userRightMenu">
+                <#include "personalCenterMenu.html">
+            </div>
+            <div class="rightDiv">
+                <div class="finance">
+                    <div class="reminder">请填写您财务状况</div>
+                    <form action="" name="form1" method="post" >
+                        <div class="fromBox">
+                            <div class="boxTxt">每月无抵押借款还款额：</div>
+                            <div class="boxIpt"><input type="text" size="15" maxlength="20" name="financeRepayment" value="<#if info?exists&&info.financeRepayment?exists>${info.financeRepayment?c}</#if>" /> 元 </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">自有房产：</div>
+                            <div class="boxIpt">
+                                <#if info?exists&&info.financeProperty?exists>
+                                    <@linkage name="financeProperty" id="financeProperty" nid="user_finance_property" default=info.financeProperty></@linkage>
+                                <#else>
+                                    <@linkage name="financeProperty" id="financeProperty" nid="user_finance_property"></@linkage>
+                                </#if>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">每月房屋按揭金额：</div>
+                            <div class="boxIpt"><input type="text" size="15" maxlength="20" name="financeAmount" value="<#if info?exists&&info.financeAmount?exists>${info.financeAmount?c}</#if>" /> 元 </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">自有汽车：</div>
+                            <div class="boxIpt">
+                                <#if info?exists&&info.financeCar?exists>
+                                    <@linkage name="financeCar" id="financeCar" nid="user_finance_car" default=info.financeCar></@linkage>
+                                <#else>
+                                    <@linkage name="financeCar" id="financeCar" nid="user_finance_car"></@linkage>
+                                </#if>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">每月汽车按揭金额：</div>
+                            <div class="boxIpt"><input type="text" size="15" maxlength="20" name="financeCaramount" value="<#if info?exists&&info.financeCaramount?exists>${info.financeCaramount?c}</#if>" /> 元 </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">每月信用卡还款金额：</div>
+                            <div class="boxIpt"><input type="text" size="15" maxlength="20" name="finaceCreditcard" value="<#if info?exists&&info.finaceCreditcard?exists>${info.finaceCreditcard?c}</#if>" /> 元 </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">&nbsp;</div>
+                            <div class="boxIpt"><input type="submit" class="btn-action"  value="确认提交" size="30" /></div>
+                        </div>
+                        <input type="hidden" name="type" value="finance" />
+                    </form>
+                    <div class="notes"> * 温馨提示：我们将对所有的信息进行保密</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<#include "../../include/footer.html">
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"> </script>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<#include "../include/resource.html"> 
+<body>
+<#assign nid="zixun">
+<#include "../include/header.html">
+<div class="container-bg">
+	<div class="index-h3" style="height:30px;"></div>
+<div class="zx clearfix">
+  
+    <div class="zx-left float_left">
+        <div class="zx-lt">${site.name!}</div>
+        <div class="zx-mt">
+            <#list sublist as item>
+                <#if item??&&item.url??&&((item.url)?length gt 0)>
+            	<a id="item${item_index+1}" href="${webroot}${item.url}" rel="${item.siteId}">${item.name}</a>
+                <#else>
+                <a id="item${item_index+1}" href="${webroot}/article/list.html?code=${item.code}" rel="${item.siteId}">${item.name}</a>
+                </#if>
+            </#list>
+        </div>
+
+       
+    </div>
+
+    <div class="zx-right float_right wh-bg">
+        
+		<div class="index-title">
+			<p style="width: 120px; line-height: 35px; background-color: #8CC785; text-align: center; color: #FFF; font-size: 16px;">在线客服</p>
+		</div>
+        <div class="zx-righttxt">
+			<div class="info" id="lxjs">
+			<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#666666">
+				<tr>
+					<td colspan="6" bgcolor="#FFFFFF">
+						<#if kflist??>
+						<#list kflist as item>
+							<div style="width: 260px; float: left; margin: 0 10px 0 10px; overflow:hidden;"><br>
+								<div class="floatl" style="width: 120px">
+								<img src="${request.getContextPath()}/imgurl.html?userid=${item.userId?c}&size=middle"
+										style="width: 100px; height: 100px; float: right;" />
+								</div>
+								<div style="margin-left: 10px;">
+									<ul class="kefu_li"
+										style="float: left; padding: 0px 0px 0px 10px;">
+										<li style="padding-bottom: 5px;">${item.username}</li>
+										<li style="padding-bottom: 5px;">姓名：${item.realname?default("")}</li>
+										<li style="padding-bottom: 5px;">电话:${item.tel?default("")}</li>
+										<li style="padding-bottom: 5px;"><a target="_blank"
+											href="http://wpa.qq.com/msgrd?v=3&uin=${item.qq!}&site=qq&menu=yes">
+												<img border="0"
+												src="http://wpa.qq.com/pa?p=2:${item.qq!}:45"
+												alt="点击这里给我发消息" title="点击这里给我发消息">
+										</a></li>
+									</ul>
+								</div>
+							</div>
+						</#list>
+						</#if>
+					</td>
+				</tr>
+			</table>
+			</div><!--info-->
+		</div><!--myTabContent-->
+	</div><!--right-->
+</div><!--cor_divtop-->
+</div>
+<script type="text/javascript">
+	$(function(){
+		var site_id = parseInt(8);
+		var oA = $(".zx-mt a");
+		var oArel = "";
+		oA.each(function(){
+			 var index = oA.index(this);
+			 oArel = parseInt($(oA[index]).attr("rel"));
+			 if(site_id == oArel)
+			 {
+				$(oA[index]).addClass("pagehover");
+			 }	
+		})
+	})
+</script>
+
+<#include "../include/footer.html"> 

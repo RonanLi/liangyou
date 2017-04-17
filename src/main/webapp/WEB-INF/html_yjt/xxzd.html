@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>优聚投-新手指引</title>
+    <script type="text/javascript" src="${webroot}${theme_dir}/media/js/jquery.js"></script>
+	<script type="text/javascript" src="${webroot}${theme_dir}/media/js/pageswitch.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$("#container").switchPage({
+				'loop' : true,
+				'keyboard' : true,
+				'direction' : 'vertical'
+			});
+		});
+		
+	$(function(){
+	$(".imgbox img").hide();
+	$(".imgbox img").eq(0).show();
+	var n=0;
+	$(".aleft").click(function(){
+		if(n>2){ 
+        n=0;
+		}
+		else{
+			n=n+1;
+			}
+		document.title=n;
+		$(".imgbox img").hide();
+		$(".imgbox img").eq(n).show();
+		})
+	$(".aright").click(function(){
+		if(n>2){
+        n=0;
+		}
+		else{
+			n=n+1;
+			}
+		$(".imgbox img").hide();
+		$(".imgbox img").eq(n).show();
+		})
+	})
+	</script>
+	<style type="text/css">
+		h1,body,html{
+			padding: 0;
+			margin: 0;
+		}
+		body{
+			font-family: Arial,"Microsoft YaHei","Hiragino Sans GB",sans-serif;
+		}
+		html,body{
+			height: 100%;
+			overflow: hidden;
+		}
+		#container,.section{
+			height: 100%;
+			position: relative;
+		}
+		#section0,
+		#section1,
+		#section2,
+		#section3,
+		#section4{
+			background-color: #000;
+			background-size: cover;
+			background-position: 50% 50%;
+		}
+		#section0{
+			background-color:#d52c4d;
+			color: #fff;
+			text-shadow:1px 1px 1px #333;
+		}
+		#section1{
+			color: #fff;
+			text-shadow:1px 1px 1px #333;
+			background-color:#3a95dc;
+		}
+		#section2{
+			background-color:#f0a607;
+			color: #fff;
+			text-shadow:1px 1px 1px #666;
+		}
+		#section3{
+			color: #008283;
+			background-color:#5040af;
+			text-shadow:1px 1px 1px #fff;
+		}
+		#section4{
+			color: #008283;
+			background-color:#79c039;
+			text-shadow:1px 1px 1px #fff;
+		}
+		.left{
+			float: left;
+		}
+		.intro{
+			position: absolute;
+			top: 8%;
+			width: 100%;
+			-webkit-transform: translateY(-50%);
+			transform: translateY(-50%);
+		}
+		#pages{
+			position:fixed;
+			right: 150px;
+			top: 40%;
+			list-style: none;
+		}
+		#pages li{
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+			background: #fff;
+			margin: 0 0 17px 5px;
+		}
+		#pages li.active{
+			width: 14px;
+			height: 14px;
+			border: 2px solid #FFFE00;
+			background: none;
+			margin-left: 0;
+		}
+		@-webkit-keyframes sectitle0{
+			0%{
+				-webkit-transform: translateX(-100%);
+				transform: translateX(-100%);
+			}
+			100%{
+				-webkit-transform: translateX(0);
+				transform: translateX(0);
+			}
+		}
+		@keyframes sectitle0{
+			0%{
+				-webkit-transform: translateX(-100%);
+				transform: translateX(-100%);
+			}
+			100%{
+				-webkit-transform: translateX(0);
+				transform: translateX(0);
+			}
+		}
+		@-webkit-keyframes sec0{
+			0%{
+				-webkit-transform: translateX(100%);
+				transform: translateX(100%);
+			}
+			100%{
+				-webkit-transform: translateX(0);
+				transform: translateX(0);
+			}
+		}
+		@keyframes sec0{
+			0%{
+				-webkit-transform: translateX(100%);
+				transform: translateX(100%);
+			}
+			100%{
+				-webkit-transform: translateX(0);
+				transform: translateX(0);
+			}
+		}
+		.imgbox{width:1244px;height:450px; position:relative; margin:0 auto; margin-top:240px;}
+		.imgbox img{width:1020px; height:450px; margin:0 0 0 115px;}
+		.imgbox a{display:block; width:43px;height:50px;position:absolute; top:200px; cursor:pointer;}
+		.aleft{background-image:url(${webroot}${theme_dir}/images/aleft.png);left:10px;}
+		.aright{background-image:url(${webroot}${theme_dir}/images/aright.png);right:10px;}
+		
+		.page-title{position:absolute; right:12px;top:40%;}
+		.page-title ul{margin:12px 0; padding:0;}
+		.page-title ul li{height: 14px; color:#fff; list-style:none; margin-bottom:12px;}
+		.Red-section{width:100%; position:absolute;top:20%;height:100%; background-image:url(${webroot}${theme_dir}/images/section-red.png) no-repeat center bottom;}
+		.Red-section .redBloud{position:absolute; left:20%; top:0;}
+		.Red-section .redBtrig{position:absolute; left:20%; top:350px;}
+		.Red-section .redtrig{position:absolute; left:80%; top:40px;}
+		.Red-section  .redshow{position:absolute; left:52%; top:100px;}
+		.Red-section .redbloud{position:absolute; left:70%; top:320px;}
+		.produce{position:absolute; left:27%; top:200px;}
+		.produce p{ text-align:left; line-height:36px;}
+		#section1 .redshow{position:absolute; left:27%; top:200px;}
+		#section1 .produce{position:absolute; left:52%; top:100px;}
+		#section1 .blueshow{position:absolute; left:25%; top:100px;}
+		#section1 .produce{position:absolute; left:61%; top:215px;}
+		#section2 .produce{position:absolute; left:26%; top:50px;}
+		#section2 .redshow{position:absolute; left:61%; top:180px;}
+		#section2 p span{ display:inline-block; font-size:18px; padding:2px 12px; background:#fff; color:#e26c00; margin-top:10px;}
+		#section3 .text{position:absolute; left:31%; top:100px;}
+		#section4 .text{position:absolute; left:26%; top:150px;}
+		#section4  a{display:block; width:369px; height:91px; position:absolute; top:500px;left:39%; text-align:center; line-height:91px; font-size:50px; background:url(${webroot}${theme_dir}/images/a-bg.png) no-repeat left top; cursor:pointer; text-decoration:none; color:#087503;text-shadow:none; }
+		#section4 p{position:absolute; left:42%; top:200px; line-height:130px; font-size:40px; text-shadow:none;}
+		#section4 p span:nth-child(1){color:#ee4747;}
+		#section4 p span:nth-child(2){color:#135f82;}
+		#section4 p span:nth-child(3){color:#eeb221;}
+		#section4 p span:nth-child(4){color:#3b7737;}
+		.page-title ul li a{color:#fff; text-decoration:none;}
+		.page-title ul li a:hover{text-decoration:underline}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<div class="section active" id="section0">
+			<div class="intro">
+				<div class="Red-section">
+                	<div>
+                    <img class="redBloud" src="${webroot}${theme_dir}/images/r-Bloud.png"  width="250" height="133"/>
+                    <img class="redBtrig" src="${webroot}${theme_dir}/images/red-bloud.png" width="41" height="39"/>
+                    <img class="redtrig" src="${webroot}${theme_dir}/images/red-Bigbloud.png" width="68" height="65"/>
+                    <img class="redbloud" src="${webroot}${theme_dir}/images/red-r-bloud.png" width="164" height="87"/>
+                    <img class="redshow" src="${webroot}${theme_dir}/images/red-show.png" width="596" height="488"/>
+                    <div class="produce">
+                    <div class="produce-title">
+                    	<img src="${webroot}${theme_dir}/images/product-text.png" width="347" height="83"/>
+                    </div>
+                    <p>金屋魔方8年以上金融、互联网、法律专业团队，致力于为广<br/>
+大投资者提供安全、贴心、收益稳健的理财服务。</p>
+					<p>通过金屋魔方的推荐的产品，均有《金屋本息保障计划》担保。<br/>
+您可放心的将闲余资金出借，并获取最高15%的年化收益。</p>
+					</div>
+                    </div>
+                </div>
+			</div>
+		</div>
+		<div class="section" id="section1">
+			<div class="intro">
+				<div class="Red-section">
+                	<div>
+                    <img class="redBloud" src="${webroot}${theme_dir}/images/b-Bloud.png" width="260" height="137"/>
+                    <img class="redBtrig" src="${webroot}${theme_dir}/images/blue-xing.png" width="41" height="39"/>
+                    <img class="redtrig" src="${webroot}${theme_dir}/images/blue-Bigxing.png" width="68" height="65"/>
+                    <img class="redbloud" src="${webroot}${theme_dir}/images/b-r-Bloud.png" width="164" height="87"/>
+                    <img class="blueshow" src="${webroot}${theme_dir}/images/blue-show.png" width="531" height="543"/>
+                    <div class="produce">
+                        <div class="produce-title">
+                            <img src="${webroot}${theme_dir}/images/blue-product-text.png" width="346" height="82"/>
+                        </div>
+                        <p>
+                        <b>高收益</b>   稳定的15%年化收益、43倍银行存款利息<br/>
+                        <b>低门槛</b>   100元即可投资理财，0手续费<br/>
+                        <b>重安全</b>   8道审核、MD5加密技术、银行级隐私保障<br/>
+                        <b>高保障</b>   100%本息保障、第三方机构资金托管
+                        </p>     
+					</div>
+                    </div>
+                </div>
+			</div>
+			
+		</div>
+		<div class="section" id="section2">
+			<div class="intro">
+				<div class="Red-section">
+                	<div>
+                    <img class="redBloud" src="${webroot}${theme_dir}/images/y-Bloud.png"  width="250" height="133"/>
+                    <img class="redBtrig" src="${webroot}${theme_dir}/images/yellow-xing.png" width="25" height="24"/>
+                    <img class="redtrig" src="${webroot}${theme_dir}/images/yellow-Bigxing.png" width="62" height="59"/>
+                    <img class="redbloud" src="${webroot}${theme_dir}/images/y-r-Bloud.png" width="164" height="87"/>
+                    <img class="redshow" src="${webroot}${theme_dir}/images/yellow-show.png"  width="401" height="494"/>
+                    <div class="produce">
+                    <div class="produce-title">
+                    	<img src="${webroot}${theme_dir}/images/y-product-text.png" width="698" height="84"/>
+                    </div>
+                    <p>
+                    	<span>借款逾期怎么办？</span><br/>
+                        金屋魔方将启用账户安全保障金直接赔付，借款人过失不对投资人本息造成任何损失<br/>
+                        <span>账户安全保障金从哪里来？</span><br/>
+                        平台每笔借款成交时，将提取借款人借款金额的2%作为账户安全保障金<br/>
+                        账户安全保障金基本消除逾期未还对投资人本息造成的损失<br/>
+                        金屋魔方目前逾期率、坏账率均为0<br/>
+                        <span>如何启动账户安全保障金？</span><br/>
+                        当借款人出现逾期未还时，金屋魔方将启用账户安全保障金直接赔付<br/>
+                        <span>平台是否可以挪用投资款或账户安全保障金？</span><br/>
+                        金屋魔方将用户资金完全托管，真正隔离，形成封闭支付环境。资金运作全部由用户通过<br/>
+第三方支付平台操作完成。
+                        
+                    </p>
+					</div>
+                    </div>
+                </div>
+			</div>
+		</div>
+        <div class="section" id="section3">
+			<div class="intro">
+                <div class="Red-section">
+                    <div>
+                        <img class="redBloud" src="${webroot}${theme_dir}/images/p-Bloud.png" width="243" height="128"/>
+                        <img class="redBtrig" src="${webroot}${theme_dir}/images/pp-Bigxing.png" width="62" height="59"/>
+                        <img class="redtrig" src="${webroot}${theme_dir}/images/pp-xing.png" height="24" width="25"/>
+                        <img class="redbloud" src="${webroot}${theme_dir}/images/p-r-Bloud.png" width="154" height="81"/>
+                        <img class="text" src="${webroot}${theme_dir}/images/p-text.png" width="743" height="83">
+                         <div class="imgbox">
+                            <img src="${webroot}${theme_dir}/images/re-1.png" >
+                            <img src="${webroot}${theme_dir}/images/re-2.png">
+                            <img src="${webroot}${theme_dir}/images/re-3.png">
+                            <img src="${webroot}${theme_dir}/images/re-4.png">
+                            <a class="aleft"></a>
+                            <a class="aright"></a>
+                          </div>
+                      </div>
+                 </div>
+			</div>
+		</div>
+		<div class="section" id="section4">
+			<div class="intro">
+				<div class="Red-section">
+                    <div>
+                        <img class="redBloud" src="${webroot}${theme_dir}/images/g-Bloud.png" width="243" height="128"/>
+                        <img class="redBtrig" src="${webroot}${theme_dir}/images/g-Bigxing.png" width="62" height="59"/>
+                        <img class="redtrig" src="${webroot}${theme_dir}/images/blue-xing.png" height="31" width="33"/>
+                        <img class="redbloud" src="${webroot}${theme_dir}/images/g-r-Bloud.png" width="154" height="81"/>
+                        <img class="text" src="${webroot}${theme_dir}/images/b-text.png" width="953" height="81">
+                        <p>
+                        <span>[首]</span>
+                        <span>[满]</span>
+                        <span>[任]</span>
+                        <span>[锤]</span>
+                        </p>
+                         <a href="registpage.html">免费注册</a>
+                      </div>
+                 </div>
+			</div>
+		</div>
+	</div>
+	<div class="page-title">
+    <ul>
+    	<li><a href="#section0">金屋魔方</a></li>
+        <li><a href="#section1">平台优势</a></li>
+        <li><a href="#section2">金屋本息保障计划</a></li>
+        <li><a href="#section3">注册流程</a></li>
+        <li><a href="#section4">开始使用</a></li>
+    </ul>
+    </div>
+</body>
+</html>

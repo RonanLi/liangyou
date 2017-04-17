@@ -1,0 +1,222 @@
+﻿<!-- v1.8.0.4_u1 TGPROJECT-270 zf 2014-5-8 start  -->
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html"> 
+<body>
+<#assign nid="invest">
+<#include "../../include/header.html">
+<#include "../../common/function.html"> 
+<#include "../../common/macro_zr.html"> 
+<div class="container">
+
+<div class="bor-search clearfix">
+<h3>投票标题</h3>
+<form action="${webroot}/member/vote/voteList.html" method="post">
+<input type="text" name="title">   
+<input type="submit" class="btn-action" id="search_btn" value="搜索" />
+</form>
+</div>
+
+<div class="vote_wrap">
+<div class="vote_question_title">
+  问卷题目选择：
+</div>
+
+<ul class="vote_question">
+<#list list as item>
+ <li>
+<a href="${webroot}/member/vote/voteList.html?id=${item.id}">${item.title}</a>
+ </li>
+</#list>
+</ul> 
+
+<div class="page_list">
+<#import "../../common/page.html" as pager>  
+<@pager.pagination page=page url="${webroot}/member/vote/voteList.html" map=param style="style1" />
+</div>
+<#if list??>
+<#if vote??>
+<div class="vote_title">
+${vote.title!}
+</div>
+
+<div class="vote_description">
+${vote.description!}
+</div>
+
+</#if>
+
+<#if flag=="true">
+<div class="vote_content">  
+您已经投过此票
+</div>
+<#else>
+
+
+<form action="${webroot}/member/vote/submitVote.html" method="post" class="vote_form">
+<#if titles??>
+      <#list titles as item>
+      <ul class="vote_ul clearfix <#if item.type=="多选"> checkbox_ul <#else> radio_ul</#if>">
+      <#if item.status==1>
+        <li class="title"><span>${item_index+1}.</span>${item.title!}<#if item.type=="多选">(多选项：最少选<span class="checkbox_min">${item.min!}</span>项,最多选<span class="checkbox_max">${item.max!}</span>项)</#if><span class="vote_tip"></span></li>
+      
+            <#list item.voteOption as option>
+             <li>
+             <#if item.type=="多选">
+             <input type="checkbox" name="option${item.id!}" value="${option.id!}" data-value="${option.name!}" >
+             <#else>
+             <input type="radio" name="option${item.id!}" value="${option.id!}" data-value="${option.name!}" >
+             </#if>
+             </li>
+            </#list>
+            </#if>
+      </ul>
+    </#list>
+<#if vote??>
+<div class="div_vote_btn">
+<input type="hidden" name="id" value="${vote.id}"></#if>
+<input type="button" class="btn-action vote_btn" value="提交投票">
+<div class="vote_btn_tip"></div>
+    <#else> 
+      暂无
+    </#if>
+<span class="vote_tip"></span>
+</div>
+</form>
+</#if>
+</#if>
+<script>
+$(".vote_btn").click(function() { 
+  var i = 0;
+      $(".radio_ul").each(function(){
+       if(!$(this).find("input:radio:checked").val())
+        {
+          $(this).find(".vote_tip").html("请选择");
+          i++;
+        }
+        else
+        {
+          $(this).find(".vote_tip").html("");
+        }
+      });
+
+      $(".checkbox_ul").each(function(){
+        var min = parseInt($(this).find(".checkbox_min").text());
+        var max = parseInt($(this).find(".checkbox_max").text());
+        var len = parseInt($(this).find("input:checkbox:checked").length);
+        if(len < min)
+        {
+          i++;
+          $(this).find(".vote_tip").html("请至少选择"+min+"个");
+        }
+        else if(len > max)
+        {
+          i++;
+          $(this).find(".vote_tip").html("请最多选择"+max+"个");
+        }
+        else
+        {
+          $(this).find(".vote_tip").html("");
+        }
+      });
+      if(i == 0)
+      {
+        $(".vote_btn_tip").html("");
+        layer.msg('投票成功',2,{type:1,shade:false});
+         $(".vote_form").submit();
+      }
+      else
+      {
+        $(".vote_btn_tip").html("还有未填写项目");
+      }
+         
+        
+        
+});
+
+  (function($){
+        $.fn.extend({
+            minRadio:function(options){
+                var defaults = {
+          checkedClass:"radio_box_hover", //点击后的变化样式
+          Element:"radio_box",  //radio的动态添加父级
+          showTxt:true //是否生成标题文字结构
+                };
+                var options = $.extend(defaults,options);
+                 this.each(function(){
+                    var o = options;
+                    var obj = $(this);
+          obj.wrap("<div class="+o.Element+"></div>").hide().before("<b></b>");
+          if(o.showTxt)
+          {
+            obj.before("<label></label>").siblings("label").text(obj.attr("data-value"))  
+          }
+          //创建DOM结构并且隐藏掉radio元素，再给同级的label的文字内容修改成当前的radio的data-value值
+          var obj_name = obj.attr("name");
+          var radioChild = $("input[name="+obj_name+"]")
+          var radioParent = obj.parent("."+o.Element)  //获得当前radio的父级元素
+          //radioParent.addClass("clearfix") //清除浮动
+          radioParent.click(function()
+          {
+            var radioParents = $("input[name="+obj_name+"]").parent() //所有radio的父级元素
+            radioParents.removeClass(o.checkedClass)    
+            $(this).addClass(o.checkedClass);
+            radioChild.prop("checked", false);  //所有radio的状态checked改成false
+            $(obj).prop("checked", true); //当前的radio状态checked改成true
+          })
+                })
+            }
+        })
+    })(jQuery);
+  $("input[type='radio']").each(function(){
+    $(this).minRadio(); 
+  });
+
+  (function($){
+        $.fn.extend({
+            minCheck:function(options){
+                var defaults = {
+          checkedClass:"check_box_hover", //点击之后的样式变化
+          Element:"check_box",  //checkbox的父级对象
+          showTxt:true //是否生成标题文字结构
+                };
+                var options = $.extend(defaults,options);
+                 this.each(function(){
+                    var o = options;
+                    var obj = $(this);
+          obj.wrap("<div class="+o.Element+"></div>").hide().before("<b></b>");
+          if(o.showTxt)
+          {
+            obj.before("<label></label>").siblings("label").text(obj.attr("data-value")); 
+          }
+          //创建DOM结构并且隐藏掉checkbox元素，再给同级的label的文字内容修改成当前的checkbox的data-value值
+          var checkParent = obj.parent("."+o.Element);//获得当前checkbox的父级元素
+          //checkParent.addClass("clearfix") 清楚浮动
+          checkParent.click(function(){
+            if($(this).hasClass(o.checkedClass))
+            {
+              $(this).removeClass(o.checkedClass);
+              $(obj).prop("checked",false)
+            }
+            else{
+              $(this).addClass(o.checkedClass);
+              $(obj).prop("checked",true) 
+            } 
+          })
+
+                })
+            }
+        })
+    })(jQuery);
+  $("input[type='checkbox']").each(function(){
+    $(this).minCheck({showTxt:true}); 
+  })
+</script>
+
+
+</div>
+</div>    
+<#include "../../include/footer.html"> 
+</body>
+</html>
+<!-- v1.8.0.4_u1 TGPROJECT-270 zf 2014-5-8 end -->

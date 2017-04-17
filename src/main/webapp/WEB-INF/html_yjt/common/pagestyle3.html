@@ -1,0 +1,32 @@
+<#--
+    简单样式的分页模板1
+    样式如下：共19条 首页 上一页 下一页 尾页
+-->
+
+<#macro pagestyle3 page url param>
+
+    <#if page.pages gt 1>
+        <a href="${url}page=1${param}">&lt;&lt;</a>
+        <#else><span>&lt;&lt;</span>
+    </#if>
+
+    <#if page.hasPreview() >
+        <a href="${url}page=${(page.currentPage-1)?c}${param?default("")}">&lt;</a>
+        <#else><span >&lt;</span>
+    </#if>
+
+    <b>&nbsp;${(page.currentPage)?c}&nbsp;</b>
+
+    <#if page.hasNext() >
+        <a href="${url}page=${(page.currentPage+1)?c}${param}">&gt;</a>
+        <#else><span >&gt;</span>
+    </#if>
+
+    <#if page.pages gt 1>
+        <a href="${url}page=${(page.pages)?c}${param}">&gt;&gt;</a>
+        <#else><span>&gt;&gt;</span>
+    </#if>
+
+    <b>共&nbsp;${(page.pages)?c}&nbsp;页</b>
+
+</#macro>

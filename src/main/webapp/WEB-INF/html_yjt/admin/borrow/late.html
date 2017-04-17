@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="逾期">
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+                            
+                            <div class="toolbor-module export">
+                                    <input type="button" onclick="exportxls()" value="导出当前报表" class="input-button export-btn"/>
+                                </div>
+                                <#if param?exists>
+                                    <#if param.get("keywords")?exists><#assign keywords=param.get("keywords")></#if>
+                                </#if>
+                                <div class="toolbor-module search">
+                                    <input type="text" name="keywords" id="keywords" value="请输入标名称关键字" class="search-value">
+
+                                    <input type="button" value="搜索"  class="input-button" onclick="sousuo();">
+                                </div>
+                                
+                                <div class="toolbor-module search">
+                                   <div style="height:22px;line-height:22px;float:left;">还款时间：</div>
+                    	<input class="_search-value" name="dotime1" id="dotime1" value="${param.dotime1!}" size="30" onclick="change_picktime()" style="float:left"/>
+                   				 <div style="height:22px;line-height:22px;float:left;margin:0 8px;"> 到 </div>
+                   	 <input class="_search-value" name="dotime2" id="dotime2"  value="${param.dotime2!}"  size="30" onclick="change_picktime()" style="float:left"/>
+                                </div>
+                            </div>
+                            <!--工具栏--}-->
+
+                            <div id="main" class="clearfix">
+                                <form action="" method="post">
+                                    <table class="data-list">
+                                        <tr class="header">
+                                            <td>ID</td>
+                                            <td>借款人</td>
+                                            <td>借款标的名称</td>
+<!--                                             <td>期数</td> -->
+                                            <td>应还时间</td>
+											<td>应还金额</td>
+											<td>本金</td>
+											<td>利息</td>
+											<td>逾期天数</td>
+											<td>逾期利息</td>
+											<td>操作</td>
+											<td>审核进度</td>
+                                        </tr>
+                                        <#import "../../common/function.html" as func>
+                                            <#list list as item>
+                                                <tr>
+                                                    <td>${item.id?c}</td>
+                                                    <td><a href="javascript:void(0)" onclick='alertPop("用户详细信息查看","url:get?${request.getContextPath()}/admin/attestation/viewUserInfo.html?userId=${item.borrow.user.userId?c}",500,230,"true","","true","text")'>${item.borrow?if_exists.user?if_exists.username?if_exists}</a></td>
+                                                    <td>
+                                                    <#if item.borrow.name?length lt 14>${item.borrow.name}<#else>${item.borrow.name[0..13]}...</#if>
+                                                    </td>
+<!--                                                     <td>${item.period+1}/${item.borrow?if_exists.timeLimit?if_exists}</td> -->
+                                                    <td>${item.repaymentTime}</td>
+                                                    <td>${item.repaymentAccount?c}</td>
+                                                    <td>${item.capital?c}</td>
+                                                    <td>${item.interest?c}</td>
+                                                    <td>${item.lateDays}</td>
+                                                    <td>${item.lateInterest?c}</td>
+                                                    <td>
+                                                    	<#if item.status?exists && item.status == 0 && item.webstatus?exists && item.webstatus == 0 >
+															<a href="/admin/borrow/showDetailWebSitePay.html?repayMentId=${item.id}">垫付</a>
+														<#elseif item.status?exists && item.status == 2 && item.webstatus?exists && item.webstatus == 3 >
+															网站已垫付
+														<#elseif item.status?exists && item.status == 1 && item.webstatus?exists && item.webstatus == 3 >
+															用户已还款给网站
+														</#if>
+														<a class="un" href="${request.getContextPath()}/admin/borrow/viewBorrow.html?id=${item.borrow.id?c}" >查看</a>
+														
+                                                    </td>    
+                                                    <#assign operateDetail=item.getOperateDetail()>
+                                                    <td><#if operateDetail!="-">${operateDetail[0..13]}<#else>-</#if></td>
+                                                </tr>
+                                            </#list>
+                                    </table>
+                                </form>
+
+                                <!--底部工具栏--{-->
+                                <div id="bottomToolbar" class="clearfix">
+                                    <div class="other-tool">
+                                        <dl class="refresh-data">
+                                            <dt class="refresh-data-icon"></dt>
+                                            <dd><a href="javascript:void(0);" class="refresh-page">刷新数据</a></dd>
+                                        </dl>
+                                    </div>
+
+                                    <!--翻页系统--{-->
+                                    <div class="container">
+                                        <#import "../../common/page.html" as pager>
+                                            <@pager.pagination page=page url="/admin/borrow/late.html" map=param style="style1" />
+                                    </div>
+                                    <!--翻页系统--}-->
+                                </div>
+                                <!--底部工具栏--}-->
+
+                                <script>
+                                	var xlsurl = '?search=true&actionType=export';
+                                    var urls = 'late.html?search=true';
+                                    function sousuo(){
+                                        var sou = "";
+                                        
+                                        var keywords = $("#keywords").val();
+                                        if (keywords!=""&&keywords!="请输入标名称关键字"){
+                                            sou += "&keywords="+keywords;
+                                        }
+                                        
+                                        var dotime1 = $("#dotime1").val();
+                                        var dotime2 = $("#dotime2").val();
+                                        if (dotime1!=null){
+                                            sou += "&dotime1="+dotime1;
+                                        }
+                                        if (dotime2!=null){
+                                            sou += "&dotime2="+dotime2;
+                                        }
+                                        location.href=urls+sou;
+                                    }
+                                    
+                                    function exportxls(){
+										var sou = "";
+                                        var keywords = $("#keywords").val();
+                                        if (keywords!=""&&keywords!="请输入标名称关键字"){
+                                            sou += "&keywords="+keywords;
+                                        }
+                                        var dotime1 = $("#dotime1").val();
+                                        var dotime2 = $("#dotime2").val();
+                                        if (dotime1!=null){
+                                            sou += "&dotime1="+dotime1;
+                                        }
+                                        if (dotime2!=null){
+                                            sou += "&dotime2="+dotime2;
+                                        }
+                                        location.href=xlsurl+sou;
+                                   }
+                                </script>
+                            </div>
+
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+
+    </body>
+</html>
+<#include "../jsPage.html">

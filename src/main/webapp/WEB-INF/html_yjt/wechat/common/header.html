@@ -1,0 +1,28 @@
+<div class="head">
+    <div>
+        <a href="${webroot}/wx/doLogin.html" class="logo">
+            <img src="${webroot}${theme_dir}/wechat/imgs/logo.png" alt="图片无法显示">
+        </a>
+        <span>
+            <a href="${webroot}/user/logout.html">返回前台</a>&nbsp;|
+            <a href="${webroot}/wx/weChatLogOut.html">退出</a>
+        </span>
+    </div>
+</div>
+
+<script>
+    var DEFAULT_VERSION = "8.0";
+    var ua = navigator.userAgent.toLowerCase();
+    var isIE = ua.indexOf("msie")>-1;
+    var safariVersion;
+    if(isIE){
+        safariVersion =  ua.match(/msie ([\d.]+)/)[1];
+        if(safariVersion <= DEFAULT_VERSION ){
+            $("body").css("display","none");
+            alert("请使用IE8及以上浏览器或者将浏览器改为极速模式");
+        }
+    }
+    $('.topWeixin').click(function(){
+        $('.topWeixin img').toggle()
+    })
+</script>

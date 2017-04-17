@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html">
+<body>
+	<#assign mid="m_account" >
+	<#assign nid="member"> 
+	<#assign mid="m_account" >
+	<#include "../../include/header.html">
+	<link href="${request.getContextPath()}/media/css/modal.css" rel="stylesheet" type="text/css" />
+	<!-- #main start-->
+    <div class="container-bg">
+	<div id="main" class="clearfix">
+		<!-- .wrap950 开始-->
+		<div class="wrap950 ">
+			<!--左边的导航user_left 开始-->
+			<div class="user_left">
+				<#include "../user_menu.html">
+			</div> 
+			<!--左边的导航user_left 结束-->
+
+			<!--右边的内容user_right 开始-->
+			<div class="user_right">
+				<div class="user_right_menu">
+					<#assign account_type="newrecharge">
+					<#include "account_menu.html">
+				</div>
+				<!--右边的内容user_right_main 开始-->
+				<div class="user_right_main">
+					<div class="user_help alert" style="text-align: left;margin-top:0px;text-indent:3em;">
+                    * 温馨提示：网上银行充值过程中请耐心等待,充值成功后返回${webname},充值金额才能打入您的帐号。<br>
+                    	<p style="font-size: 12px;color:#c09853;text-indent:8.8em;font-weight:bold;">建议使用IE浏览器。</p>
+                   
+                    </div>
+		<div class="user_right_border" style="margin-top:10px;">
+			<div class="l" >真实姓名：</div>
+			<div class="c" style="font-size:16px;">${user.realname[0..0]!""}***</div>
+		</div>
+		
+		<#-- <div class="user_right_border">
+			<div class="l" style="font-weight:bold;">联系Email：</div>
+			<div class="c">${session_user.email[0..4]!""}******</div>
+		</div> -->
+		<form method="post" id="Fwoo1x" name="form1" target="_blank" >
+		<div id="returnpay">
+		<div class="user_right_border">
+			<div class="l" >充值方式：</div>
+			<div class="c" style="font-size:16px;">
+				<input type="radio" name="type"  id="type"  style="vertical-align:middle; margin-top:-2px; margin-bottom:1px;" onclick="changeRecharge(this)" checked="checked" value="1" class="teachs_sd" /> 网上充值
+				<input type="radio" name="type"  id="type"  style="vertical-align:middle; margin-top:-2px; margin-bottom:1px;margin-left:20px;"  onclick="changeRecharge(this)" value="8" class="teach_sd" /> 汇款充值<a id="teach_sd" style=" font-size: 14px; display: none; margin-left: 5px; color: #a06e14;" href="http://www.jinhefax.com/article/detail.html?code=web-notice&id=149">(教程)</a>
+				<#-- 
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="radio" name="type"  id="type"  style="vertical-align:middle; margin-top:-2px; margin-bottom:1px;" onclick="changeRecharge(this)"  value="2"  /> 线下充值
+				
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="radio" name="type"  id="type"  style="vertical-align:middle; margin-top:-2px; margin-bottom:1px;" onclick="changeRecharge(this)"  value="3"  /> 无卡代扣充值
+				-->
+			</div>
+		<div class="user_right_border">
+			<div class="l" >充值金额：</div>
+			<div class="c">
+				<input type="text" name="money" id = "money"  class="input_border" value="" size="10" onblur="clearNoNum(this)"/> 元 <span style='color:#f00' class="tip"></span><#--<span id="realacc">实际入账：<font color="#FF0000" id="real_money">0</font> 元</span> -->
+			</div>
+		</div>
+		</div>
+		<div id="off_line_recharge" style="display: none;">
+			<div class="user_right_border">
+			<div class="l" style=" float:left;">单号/流水号：</div>
+			<div class="c">
+				<input type="text" name="serial_no" maxlength="25"  id="serial_no"  style="vertical-align:middle; margin-top:-2px; margin-bottom:1px;" />&nbsp;&nbsp;&nbsp;为了方便查询，请您填写转账时银行留下的单据号<br>
+			</div>
+			</div>
+			
+			<div class="user_right_border">
+			<div class="l" style=" float:left;">户名：</div>
+			<div class="c">
+				<input type="text" name="account_name"  id="account_name"  style="vertical-align:middle; margin-top:-2px; margin-bottom:1px;"/>&nbsp;&nbsp;&nbsp;为了方便查询，请您填写转账时用的真实姓名<br>
+			</div>
+			</div>
+			
+			<div class="user_right_border">
+			<div class="l" style=" float:left;">请您选择收款卡号：</div>
+			<div class="c">
+				<input type="radio" name="bank_in"  id="bank_in"  style="vertical-align:middle; margin-top:-2px; margin-bottom:1px;" checked="checked" value="农业银行-倪总-6228270320931849521"  /> 农业银行-xx总-6228270320931849521<br>
+				<input type="radio" name="bank_in"  id="bank_in"  style="vertical-align:middle; margin-top:-2px; margin-bottom:1px;" checked="checked" value="农业银行-倪总-6228270320931849521"  /> 农业银行-xx总-6228270320931849521<br>
+				<input type="radio" name="bank_in"  id="bank_in"  style="vertical-align:middle; margin-top:-2px; margin-bottom:1px;" checked="checked" value="农业银行-倪总-6228270320931849521"  /> 农业银行-xx总-6228270320931849521<br>
+				<input type="radio" name="bank_in"  id="bank_in"  style="vertical-align:middle; margin-top:-2px; margin-bottom:1px;" checked="checked" value="农业银行-倪总-6228270320931849521"  /> 农业银行-xx总-6228270320931849521<br>
+			</div>
+			</div>
+		</div>
+		<#-- <div  id="off_line_recharge2">
+			<div class="user_right_border">
+			<div class="l" style="float:left;">请选择代扣的卡号：</div>
+			<div class="c">
+			<#if bankList?size == 0>
+			<p>无签约银行卡，不能使用代扣充值。<a href="/member/deductYjf.html" style="font-weight: bold;color: red;" target="_blank">点此签约银行卡</a></p>
+			 <#else>
+			<#list bankList as item>
+				<input type="radio" name="bankId"  id="bankId"  style="vertical-align:middle; margin-top:-2px; margin-bottom:1px;" checked="checked" value="${item.id}"/>${item.bank.bankName}  :${item.account}<br>
+				
+			</#list>
+			</#if>
+			
+			</div>
+			</div>
+		</div> -->
+		</div>
+		
+		<div class="user_right_border">
+			<div class="l" style="float:left;">验证码：</div>
+			<div class="c" >
+				<input name="valicode" id="invalwW" type="text" size="11" maxlength="5"  tabindex="3"  style="float:left;"/>&nbsp;&nbsp; <img src="${request.getContextPath()}/validimg.html" alt="点击刷新" onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();" align="absmiddle" style="cursor:pointer; display:inline-block;zoom:1;*display:inline; *float:none;" />
+			</div>
+		</div>
+		<div class="user_right_border">
+			<div class="l"></div>
+			<div class="c"><!-- szl onClick="return check_form()"-->
+				<input type="button" class="btn-action" target="_blank"  name="name"  value="确认支付" size="30" id="goincharge" style="height:30px;margin-left:0px"/>
+			</div>
+			<span class="showErroR" style="display:none; font-size:12px; padding-top: 5px;"><img src="/themes/soonmes_yjt/images/tipimg-y.png" style="vertical-align:middle;margin:0 4px 0 8px;"><span style="font-size:12px;"></span></span>
+		</div>
+		</form>
+		</div>
+		<script>
+    	</script>
+		
+		<div class="user_right_foot alert" style="text-align: left;background:none; color:#333;s">
+		${webname}禁止信用卡套现、虚假交易等行为,一经发现将予以处罚,包括但不限于：限制收款、冻结账户、永久停止服务,并有可能影响相关信用记录。
+		</div>
+					
+					<!-- 内容结束 -->
+				</div>
+				<!--右边的内容user_right_main 结束-->
+			</div>
+			<!--右边的内容user_right 结束-->
+		</div>
+		<!-- .wrap950 结束-->
+	</div>
+    </div>
+	<!-- #main start-->
+	<script type="text/javascript">
+		function clearNoNum(obj){
+			obj.value = obj.value.replace(/[^\d.]/g,"");
+			obj.value  =obj.value.replace( /[1-9]\d{8}/,"");
+			obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3');
+			if(obj.value !=""){
+				obj.value= parseFloat(obj.value);
+			}
+		}
+
+		function changeRecharge(obj){
+			$this = $(obj);
+			var type = $this.val();
+			if(type==='1'){//线上充值
+				$("#off_line_recharge").hide();
+				$("#off_line_recharge2").hide();
+			}else if(type==='2'){//线下充值
+				$("#off_line_recharge").show();
+				$("#off_line_recharge2").hide();
+			}else{
+				$("#off_line_recharge2").show();
+				$("#off_line_recharge").hide();
+			}
+		}
+	    var val=$('input:radio[name="type"]:checked').val();
+	    if(val==='1'){//线上充值
+			$("#off_line_recharge").hide();
+			$("#off_line_recharge2").hide();
+		}else if(val == '2'){//线下充值
+			$("#off_line_recharge").show();
+			$("#off_line_recharge2").hide();
+		}else{
+			$("#off_line_recharge2").show();
+		}
+	    
+		$("#money").blur(function(){
+			var money=$("#money").val();
+			var type = $this.val();
+			var remitMoney = ${remitMoney!"5000"};
+			var textBox = $("input[name='money']");
+			 if(type==8 && money<remitMoney){
+				 $(".tip").html("&nbsp;&nbsp;* 汇款充值金额不能低于"+remitMoney+"元。")
+				 $("#money").focus();
+			 }else{
+				 $(".tip").html("")
+			 }
+		});
+		
+		function check_form(){
+			var money=$("#money").val();
+			var type = $this.val();
+			var remitMoney = ${remitMoney!"5000"};
+			var flg = false;
+			 if(type==8 && money<remitMoney){
+				 $(".tip").html("&nbsp;&nbsp;* 汇款充值金额不能低于"+remitMoney+"元。")
+				 $("#money").focus();
+				 return false;
+			 }else{
+				 $(".tip").html("")
+			 }
+		}
+	   
+	   $('#goincharge').click(function(){
+	   		var remitMoney = ${remitMoney!"5000"};
+	   		if( $('#money').val().trim() == ''){
+	   			$('.showErroR').show().find('span').text('请输入充值金额');
+	   			return false;
+	   		}else if( $('#invalwW').val().trim() == ''){
+	   			$('.showErroR').show().find('span').text('请输入验证码');
+	   			return false;
+	   		}else if( isNaN($('#money').val().trim()) ){
+	   			$('.showErroR').show().find('span').text('请输入正确的充值金额【数字】');
+	   			return false;
+	   		}else if( parseInt( $('#money').val().trim() ) <  remitMoney && $('input[value="8"]').is(':checked') ){
+	   			$('.showErroR').show().find('span').text('汇款充值金额不能低于'+ remitMoney +'元');
+	   			return false;
+	   		}else if( parseInt( $('#money').val().trim() ) < 10 ){
+	   			$('.showErroR').show().find('span').text('网上充值金额不能低于10元');
+	   			return false;
+	   		}else{
+	   			$.ajax({
+	   				url: '/member/account/newrecharge.html',
+	   				type: 'POST',
+	   				data: $('#Fwoo1x').serialize(),
+	   				success:function(msg){ 
+	   					var x = document.createElement('html');
+		           	        	 	x.innerHTML = msg;
+		           	        	 	var errorMSG = $(x).find('#error_zl').text();
+		           	        	 	if( $(x).find('title').text().indexOf('跳转') >= 0 ){
+		           	        	 		$('.showErroR').hide();
+		           	        	 		$('body').append( $(x).find('form') );
+										document.getElementById("frm1").submit();
+		           	        	 	}else{
+		           	        	 	$('.showErroR').show().find('span').text(errorMSG);
+	   								return false;
+		           	        	 	}
+	   				}
+	   			});
+	   			
+	   		}
+
+
+	   });
+
+	$(function(){
+		if($('.teach_sd').is(':checked')){
+			$('#teach_sd').css('display','inline-block');
+		}
+
+		$('.teachs_sd').click(function(){
+			$('#teach_sd').hide();
+		});
+
+		$('.teach_sd').click(function(){
+			$('#teach_sd').css('display','inline-block');
+		});
+	});
+
+
+	</script>
+	<#include "../../include/footer.html">

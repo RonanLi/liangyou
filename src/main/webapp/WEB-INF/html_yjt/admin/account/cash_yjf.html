@@ -1,0 +1,35 @@
+<table class="data-list">
+                                        <tr class="header">
+                                            <td>ID</td>
+                                            <td>用户名称</td>
+                                            <td>真实姓名</td>
+                                            <td>提现账号</td>
+                                            <td>类型</td>
+                                            <td>提现银行</td>
+                                            <td>提现总额</td>
+                                            <td>到账金额</td>
+                                            <td>手续费</td>
+                                            <td>提现时间</td>
+                                            <td>状态</td>
+                                            <td>操作</td>
+                                        </tr>
+                                        <#include "../../common/function.html">
+                                            <#list list as item>
+                                                <tr class="s">
+                                                    <td>${(item.id!0)?c}</td>
+                                                    <td><#if item.user??&&item.user.username??><a onclick='alertPop("用户详细信息查看","url:post?${request.getContextPath()}/admin/attestation/viewUserInfo.html?username=${item.username!}",500,230,"true","","true","text");'
+                                                                                        href="javascript:void(0)">${item.user.username!}</a><#else>-</#if></td>
+                                                    <td><#if item.user??&&item.user.realname??>${item.user.realname!}<#else>-</#if></td>
+                                                    <td><#if item??&&item.accountBank.account??>${item.accountBank.account!}<#else>-</#if></td>
+                                                    <td><#if item??&&item.accountBank?? &&item.accountBank.bank?? && item.accountBank.bank.memo??>${item.accountBank.bank.memo}<#else>-</#if></td>
+                                                    <td><#if item??&&item.accountBank?? &&item.accountBank.bank?? && item.accountBank.bank.bankName??>${item.accountBank.bank.bankName!}<#else>-</#if></td>
+                                                    <td><#if item??&&item.total??>${format2((item.total!"0"))}<#else>-</#if></td>
+                                                    <td><#if item??&&item.credited??>${format2((item.credited!"0"))}<#else>-</#if></td>
+                                                    <td><#if item??&&item.fee??>${format2((item.fee!"0"))}<#else>-</#if></td>
+                                                    <td><#if item??&&item.addtime??>${item.addtime}<#else>-</#if></td>
+                                                    <td><#if item.status==0>待审核<#elseif item.status==1>成功<#elseif item.status==2>用户取消<#else>审核失败</#if></td>
+                                                    <td><#if item.status==0><a href="viewCash.html?id=${item.id?c}">审核/查看</a><#else>-</#if></td>
+                                                </tr>
+                                            </#list>
+
+                                    </table>

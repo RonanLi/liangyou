@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="账户间转账">
+                        <#include "banner.html">
+                        <div id="main" class="clearfix">
+							<form method="post" action="glodTransfer.html?actionType=transfer" >
+								<div class="other clearfix" >
+							            <label for="">付款账户：</label>
+							             <input type="radio" value="MDT000001" name="account" > 专属账户
+							             <input type="radio" value="BASEDT" name="account" > 基本借记户
+							            <input type="radio" value="SDT000001" name="account" > 担保账户
+							            <input type="radio" value="SDT000002" name="account" > 风险金账户
+							            <input type="radio" value="DEP000001" name="account" > 保证金账户
+							       </div>
+							       <div class="other clearfix" >
+							            <label for="">接收账户：</label>
+							            <input type="radio" value="MDT000001" name="payAccount" > 专属账户
+							            <input type="radio" value="BASEDT" name="payAccount" > 基本借记户
+							            <input type="radio" value="SDT000001" name="payAccount" > 担保账户
+							            <input type="radio" value="SDT000002" name="payAccount" > 风险金账户
+							            <input type="radio" value="DEP000001" name="payAccount" > 保证金账户
+							       </div>
+								<div class="other clearfix" >
+						            <label for="">转账金额：</label><input type="text" name="money" > 	
+						        </div>
+						        <div class="ce">
+						                                管理员支付密码：<#if auth_user.paypassword??>
+						                         <input type="password" name="psword" size="15" >
+						                   <#else>
+						                   		<a href="${request.getContextPath()}/admin/system/queryAdminUser.html?queryType=payPwd" target="_brank">点击添加支付密码</a>
+						                   </#if>
+						        </div>
+						         <div class="ce">
+                                            <label for="">备注：</label>
+                                        </div>
+				        			<div class="c">
+		                                            <textarea  name="remark" style="height:64px; width:562px;" class="remark">输入备注...</textarea>
+		                                        </div>
+								<div class="other clearfix" >
+						            <label for="">验&nbsp;证&nbsp;码&nbsp;：</label><input type="text" name="validCode" id="" class="yzm"> <img src="${request.getContextPath()}/validimg.html" alt="点击刷新" 
+	  									 onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();" style="position:relative;top:13px;"   />
+						        </div>
+								<input type="submit" value="确认转账"  style="width:77px; height:30px; margin-left:74px; margin-top:5px;"/>
+							</form>	
+                            
+                  </div>
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+<div class="msgClass">
+    ${rsmsg!""}
+</div>
+</body>
+</html>
+<#include "../jsPage.html">

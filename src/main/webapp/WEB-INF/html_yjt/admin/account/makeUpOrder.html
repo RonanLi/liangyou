@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html" />
+<body>
+<table class="mc">
+    <tr>
+        <td class="mc-l">
+            <!--左侧导航---{-->
+            <div id="navPanelContainer">
+                <div class="system-logo cd"></div>
+                <!--管理员信息---{-->
+                <#include "../adminInfo.html" />
+                <!--管理员信息---}-->
+                <div class="nav-wrap">
+                    <#include "left.html" />
+                </div>
+            </div>
+            <!--左侧导航---}-->
+        </td>
+        <td class="mc-m">
+            <div class="navToggle"></div>
+        </td>
+        <td class="mc-r">
+            <!--顶部导航---{-->
+            <#include "../topNav.html" />
+            <!--顶部导航---}-->
+
+            <!--面包屑导航---{-->
+            <#assign moduleName="补单" />
+            <#include "banner.html" />
+            <div id="main" class="clearfix">
+                <label for="radio_input1"><input id="radio_input1" type="radio" name="radio_input" value="1" />投标补单</label>
+                <label for="radio_input2"><input id="radio_input2" type="radio" name="radio_input" value="2" />提现补单</label>
+                <label for="radio_input3"><input id="radio_input3" type="radio" name="radio_input" value="3" />充值补单</label>
+                <label for="radio_input4"><input id="radio_input4" type="radio" name="radio_input" value="4" />开户补单</label>
+                <div style="height: 30px;"></div>
+                <form id="sub_form" method="post">
+                    <p>请输入数据包：</p>
+                    <p><textarea name="param" style="width: 700px;height: 300px;font-family: cursive;font-size: larger;"></textarea>
+                    <p><input type="submit" id="sub_btn" value="提交"/></p>
+                </form>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <!--尾部--{-->
+        <td colspan="3" class="mc-b">
+            <#include "../foot.html" />
+        </td>
+        <!--尾部--}-->
+    </tr>
+</table>
+<div class="msgClass">
+    ${rsmsg!""}
+</div>
+<script type="text/javascript">
+    $('#main input:radio').click(function() {
+        if (this.value == 1) { // 投标
+            $("#sub_form").attr("action", "${request.getContextPath()}/public/mmm/doTenderNotify.html");
+        }
+        if (this.value == 2) { // 提现
+            $("#sub_form").attr("action", "${request.getContextPath()}/public/mmm/doCashNotify.html");
+        }
+        if (this.value == 3) { // 充值
+            $("#sub_form").attr("action", "${request.getContextPath()}/public/mmm/doRechargeNotify.html");
+        }
+        if (this.value == 4) { // 开户
+            $("#sub_form").attr("action", "${request.getContextPath()}/public/mmm/doRegisterNotify.html");
+        }
+    });
+</script>
+</body>
+</html>
+<#include "../jsPage.html" />

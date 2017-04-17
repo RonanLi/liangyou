@@ -1,0 +1,124 @@
+<#macro indexListItem item>
+<#if item.type??&&item.type==110>
+			<div class="list-div">
+            		
+                    <div class="itam-img">
+                    	<a href="${webroot}/invest/detail.html?borrowid=${item.id?c}">
+                    		<img src="${webroot}/imgurl.html?userid=${item.user.userId?c}&size=middle" class="productimg">
+                        </a>        
+                    </div>
+                          
+                    <ul class="list-ul">
+                        <li style="width:120px;text-indent:20px;padding-left:8px; position:relative; top:-15px;">
+                           <span>
+                                <a href="${webroot}/invest/detail.html?borrowid=${item.id?c}" class="titletxt">
+                             <#if item.name?length lt 20>${item.name}<#else>${item.name[0..10]}...</#if>&nbsp;&nbsp;</a>
+                           </span> 
+                       	   <@showBorrowIcon item=item/>
+                        </li> 
+                       <li style="width:60px; text-align:center; color:#F00">￥${format2(item.account)}</li>
+						 <li style="width:60px; color:#F00">
+                            ${item.apr}%
+                        </li>  
+                        <li style="width:60px;text-align:center;color:#F00">
+                            <#if item.isday??&&item.isday==1>${item.timeLimitDay!0}>天
+                        <#elseif item.type==101>满标自动还款
+                            <#else>${(item.timeLimit)?default("0")}个月</#if>
+                        </li> 
+                        <li class="clearfix" style="width:100px;padding-left:10px;">
+                        	<#assign creditRank=item.user.credit.findCreditRank()>
+                            <img class="rank pl25" src="${request.getContextPath()}/data/images/credit/${creditRank.pic}" title="${item.user.credit.value}"  />
+                        </li> 
+						                        <li class="clearfix" style="width:130px;">
+                         
+                            <div class="jindu float_left">
+                                 <div class="rate_tiao" style="width:${(item.accountYes/item.account)*100}%">
+                                 ${(item.accountYes/item.account)*100}%
+                                </div>
+                                <#if item.status==1><div class="endtime" data-time="${dateformat(item.verifyTime?string("yyyy-MM-dd HH:mm:ss"), item.validTime )?c}"></div><#else>已结束</#if>
+                            </div> 
+                           
+                        </li>
+                    </ul>
+<div class="list-btnbox">
+                        <a href="${webroot}/invest/detail.html?borrowid=${item.id?c}" class="list-btn">	<#if item.status==1&&(item.accountYes lt  item.account ) > 
+	立即投标
+	<#else> 
+	流转中
+	</#if></a>
+</div>
+                </div>
+<#else>
+            <div class="list-div">
+           			<div class="itam-img">
+            			<a href="${webroot}/invest/detail.html?borrowid=${item.id?c}">
+                    		<img src="${webroot}/imgurl.html?userid=${item.user.userId?c}&size=middle" class="productimg">
+                        </a>
+                    </div>
+                    <ul class="list-ul">
+                       	  <li style="width:120px;text-indent:20px;padding-left:8px; position:relative; top:-15px;">
+                               <span>
+                                    <a href="${webroot}/invest/detail.html?borrowid=${item.id?c}" class="titletxt">
+                                     <#if item.name?length lt 20>${item.name}<#else>${item.name[0..10]}...</#if>&nbsp;&nbsp;</a>
+                               </span>  
+                       	   <div><@showBorrowIcon item=item/></div>
+                        </li> 
+                        <li style="width:60px;text-align:center;color:#F00">￥${format2(item.account)}</li>
+                      
+						 <li style="width:60px;text-align:center;color:#F00">
+                            ${item.apr}%
+                        </li>   
+                        <li style="width:60px;text-align:center;color:#F00">
+                            <#if item.isday??&&item.isday==1>${item.timeLimitDay!0}天
+                        <#elseif item.type==101>满标自动还款
+                            <#else>${(item.timeLimit)?default("0")}个月</#if>
+                        </li> 
+                        <li class="clearfix" style="width:100px;padding-left:10px;">
+                        	<#assign creditRank=item.user.credit.findCreditRank()>
+                            <img class="rank pl25" src="${request.getContextPath()}/data/images/credit/${creditRank.pic}" title="${item.user.credit.value}"   />
+                        </li>
+						 <li class="clearfix" style="width:138px;">
+                            <div class="jindu float_left">
+                                 <div class="rate_tiao" style="width:${(item.accountYes/item.account)*100}%">${(item.accountYes/item.account)*100}%</div>
+                                <#if item.status==1><div class="endtime" data-time="${dateformat(item.verifyTime?string("yyyy-MM-dd HH:mm:ss"), item.validTime )?c}"></div><#else>已结束</#if>
+                            </div> 
+                           
+                        </li>
+						 
+						                       
+                    </ul>
+                    <div class="list-btnbox">
+                        <a href="${webroot}/invest/detail.html?borrowid=${item.id?c}" class="list-btn"><@showIndexTenderButton item /></a>
+                    </div>
+                </div>
+            
+</#if>
+</#macro>
+
+<#macro showIndexTenderButton borrow>
+    <#assign nowTime=dateformat("now") >
+	<#if borrow.status==0>等待初审
+	<#elseif (dateformat(borrow.verifyTime?string("yyyy-MM-dd HH:mm:ss"),borrow.validTime) lt 0)&&borrow.status==1>
+	 已经结束
+	<#elseif borrow.status==1&& ( borrow.accountYes lt borrow.account) > 
+	立即投标
+	<#elseif borrow.status==1&&( borrow.accountYes gt borrow.account || borrow.accountYes==borrow.account ) > 
+	已满标
+	<#elseif borrow.status==2> 
+	初审失败
+	<#elseif borrow.status==3> 
+	复审通过
+	<#elseif borrow.status==5||borrow.status==-1> 
+	用户取消</a>
+	<#elseif borrow.status==4> 
+	复审失败
+	<#elseif borrow.status==6> 
+	还款中</a>
+	<#elseif borrow.status==7> 
+	还款中</a>
+	<#elseif borrow.status==8> 
+	已还款</a>
+	<#else> 
+	用户取消</a> 
+	</#if> 
+</#macro>

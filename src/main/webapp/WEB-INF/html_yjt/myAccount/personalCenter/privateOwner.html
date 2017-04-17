@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 ">
+<#assign webroot=request.getContextPath()>
+<#assign nid="member" >
+<#include "../../include/resource.html">
+<#include "../../common/function.html">
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+
+<body>
+
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="userRightMenu">
+                <#include "personalCenterMenu.html">
+            </div>
+            <div class="rightDiv">
+                <div class="privateOwner">
+                    <div class="reminder">请填写您个人业主资料</div>
+                    <form action="" name="form1" method="post" >
+                        <div class="fromBox">
+                            <div class="boxTxt">私营企业类型：</div>
+                            <div class="boxIpt">
+                                <#if info?exists&&info.privateType?exists>
+                                    <@linkage name="privateType" id="privateType" nid="user_company_industry" default=info.privateType></@linkage>
+                                <#else>
+                                    <@linkage name="privateType" id="privateType" nid="user_company_industry"></@linkage>
+                                </#if>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">成立日期：</div>
+                            <div class="boxIpt"><input type="text" size="25" name="privateDate" value="<#if info?exists&&info.privateDate?exists>${info.privateDate?string('yyyy-MM-dd')}</#if>" onclick="change_picktime()"/> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">经营场所：</div>
+                            <div class="boxIpt"><input type="text" maxlength="20" size="25" name="privatePlace" value="<#if info?exists&&info.privatePlace?exists>${info.privatePlace}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">租金：</div>
+                            <div class="boxIpt"><input type="text" maxlength="20" size="25" name="privateRent" value="<#if info?exists&&info.privateRent?exists>${info.privateRent?c}</#if>" /> 元 </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">租期：</div>
+                            <div class="boxIpt"><input type="text" maxlength="20" size="25" name="privateTerm" value="<#if info?exists&&info.privateTerm?exists>${info.privateTerm?c}</#if>" /> 月 </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">税务编号：</div>
+                            <div class="boxIpt"><input type="text" maxlength="20" size="25" name="privateTaxid" value="<#if info?exists&&info.privateTaxid?exists>${info.privateTaxid}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">工商登记号：</div>
+                            <div class="boxIpt"><input type="text" maxlength="20" size="25" name="privateCommerceid" value="<#if info?exists&&info.privateCommerceid?exists>${info.privateCommerceid}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">盈利/亏损额：</div>
+                            <div class="boxIpt"><input type="text" maxlength="20" size="25" name="privateIncome" value="<#if info?exists&&info.privateIncome?exists>${info.privateIncome?c}</#if>" /> 元（年度） </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">雇员人数：</div>
+                            <div class="boxIpt"><input type="text" maxlength="20" size="25" name="privateEmployee" value="<#if info?exists&&info.privateEmployee?exists>${info.privateEmployee?c}</#if>" /> 人 </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">&nbsp;</div>
+                            <div class="boxIpt"><input type="submit" class="btn-action"  value="确认提交" size="30" /></div>
+                        </div>
+                        <input type="hidden" name="type" value="firm" />
+                    </form>
+                    <div class="notes"> * 温馨提示：我们将对所有的信息进行保密</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<#include "../../include/footer.html">
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"> </script>
+</html>

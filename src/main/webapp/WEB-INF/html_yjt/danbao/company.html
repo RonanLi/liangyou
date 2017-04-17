@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>担保机构</title>
+<link rel="stylesheet" href="${webroot}${theme_dir}/media/css/danbao.css" type="text/css" media="all" />
+<script type="text/javascript" src="${webroot}${theme_dir}/media/js/jquery.js"></script>
+	 <script type="text/javascript" >
+	 	$(function(){
+	 		$(".close").click(function(){
+				window.close();
+			});
+	 	});
+	 </script>
+</head>
+<body>
+<body class="bgbody" ryt11859="1">
+<div class="lb">
+<div class="danbaoxixitanchu"></div>
+<div class="danbaoxixitanchucenter">
+<ul>
+<li> <label>担保机构名称:</label>${warrant.name}</li>
+<li> <label>担保机构所在区域:</label>${warrant.area}</li>
+
+<li class="danbaoliset2"> <label>注册资本:</label>
+	${warrant.capital}万元
+</li> 
+<li class="danbaoliset2"> <label>成立时间:</label>${warrant.addtime?string('yyyy-MM-dd')}</li>
+<li class="danbaoliset2"> <label>联系人姓名:</label>${warrant.relationUser}</li>
+<li class="danbaoliset2"> <label>联系电话:</label>
+	${warrant.phone}
+</li>
+<li> <label>联系地址:</label>${warrant.address}</li>
+<li class="mab"> <label>公司简介:</label>${warrant.summary}</li>
+</ul>
+</div>
+<div class="danbaoxixitanchubotoom"></div>
+<div class="anniubuton">
+</div>
+</div>
+
+
+
+
+</body>
+</body>
+</html>

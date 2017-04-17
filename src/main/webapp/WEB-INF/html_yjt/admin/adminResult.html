@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<#include "head.html">
+<body>
+<table class="mc">
+<tr>
+<td class="mc-l">
+    <!--左侧导航---{-->
+    <div id="navPanelContainer" style="display:none;">
+        <div class="system-logo cd"></div>
+        <!--管理员信息---{-->
+            <!--管理员信息---}-->
+            <div class="nav-wrap">
+
+            </div>
+    </div>
+    <!--左侧导航---}-->
+</td>
+<td class="mc-m">
+    <div class="navToggle" style="width:10px;"></div>
+</td>
+<td class="mc-r">
+
+<div id="main" class="clearfix">
+<div class="valBox">
+<div class="top" style="text-align:center;" >
+    系统提示
+</div>
+<div class="val clearfix" >
+<ul class="ci">
+<li style="text-align:center;" id="msg_content">
+    <img src="/data/images/base/loading.gif" />系统处理中，请您稍等...
+</li>
+</ul>
+</div>
+</div>
+
+</div>
+</td>
+</tr>
+<tr>
+    <!--尾部--{-->
+    <td colspan="3" class="mc-b"><#include "foot.html"></td>
+    <!--尾部--}-->
+</tr>
+</table>
+<script type="text/javascript"> 
+var timer =  setInterval("testTime()",500); 
+function testTime() { 
+	 $.ajax({
+         type: "post",//使用get方法访问后台
+         dataType: "json",//返回json格式的数据
+         url: "/public/getResult.html",//要访问的后台地址
+         data: "tenderFlag=" + '${tenderFlag}',//要发送的数据
+         timeout:1000*1,
+         success: function(msg){//msg为返回的数据，在这里做数据绑定
+             var data = msg.msg_data;
+         if(data){
+        	 if(data == 'success'){
+            	 document.getElementById('msg_content').innerHTML = "${r_msg}<a href='${ok_url}'>>>返回上一步</a>";
+            	 clearInterval(timer);
+             }else{
+            	 document.getElementById('msg_content').innerHTML = data+"<a href='${back_url}'>>>返回上一步</a>";
+            	 clearInterval(timer);
+             } 
+         }
+         },
+         error:function(){
+        	 document.getElementById('msg_content').innerHTML = "服务器响应过慢，请您1分钟后查看";
+        	 clearInterval(timer);
+         }
+     });
+} 
+</script>
+</body>
+</html>
+<#include "jsPage.html">

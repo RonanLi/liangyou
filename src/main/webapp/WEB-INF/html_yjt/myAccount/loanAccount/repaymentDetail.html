@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html">
+<#assign mid="m_borrow" >
+<#assign nid="member">
+<#import "../../common/function.html" as func>
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+
+<body>
+    <div id="main" class="clearfix container">
+
+        <div class="user_left">
+            <#include "../userLeftMenu.html">
+        </div>
+
+        <div class="user_right">
+            <div class="user-right-top clearfix">
+                <div class="userRightMenu">
+                    <#include "loanAccountMenu.html">
+                </div>
+                <div class="repaymentDetail">
+                    <#if param?exists>
+                        <#if param.get("dotime1")?exists><#assign dotime1=param.get("dotime1")></#if>
+                        <#if param.get("dotime2")?exists><#assign dotime2=param.get("dotime2")></#if>
+                        <#if param.get("searchkeywords")?exists><#assign searchkeywords=param.get("searchkeywords")></#if>
+                    </#if>
+                    <ul>
+                        <li>
+                            <div>标题</div>
+                            <div>第几期</div>
+                            <div>应还款日期</div>
+                            <div>本期应还本息</div>
+                            <div>利息</div>
+                            <div>逾期利息</div>
+                            <div>逾期天数</div>
+                            <div>还款状态</div>
+                            <div>操作</div>
+                        </li>
+                        <#if list?? && list?size gt 0>
+                            <#list list as item>
+                                <li>
+                                    <div><a href="/invest/detail.html?borrowid=${(item.borrow.id)?c}" target="_blank"> <#if item.borrow.name?length lt 9>${item.borrow.name}<#else>${item.borrow.name[0..8]}...</#if></a> </div>
+                                    <div>第${item.period+1}期<#if item.timeLimit?exists>/总共${item.timeLimit}期</#if></div>
+                                    <div>${item.repaymentTime?string("yyyy-MM-dd HH:mm:ss")}</div>
+                                    <div>￥${func.format2(item.repaymentAccount!0)}</div>
+                                    <div>￥${func.format2(item.interest!0)}</div>
+                                    <div>￥${func.format2(item.lateInterest!0)}</div>
+                                    <div>${item.lateDays!0}天</div>
+                                    <div><#if item.status==0 && item.webstatus==0>待还款<#elseif item.status==2 && item.webstatus==3>网站先垫付<#elseif item.status==1>已还款<#else>还款中</#if></div>
+                                    <div>
+                                        <#if item.status==1>用户已经还款
+                                            <#elseif item.status==2 && item.webstatus==3>
+                                                <a href="#" onclick="javascript:opDialog(this)"
+                                                   money="${func.format2(item.repaymentAccount!0)}"
+                                                   captial="${func.format2(item.capital!0)}"
+                                                   interest="${func.format2(item.interest!0)}"
+                                                   late_interest="${func.format2(item.lateInterest!0)}"
+                                                   repayment_time="${item.repaymentTime?string('yyyy-MM-dd HH:mm:ss')}"
+                                                   address="${webroot}/member/borrow/repayToWebSite.html"
+                                                   borrowId="${item.id?c}">网站垫付，还款给网站</a>
+                                            <#else>
+                                                <a href="#" onclick="javascript:opDialog(this)"
+                                                   money="${func.format2(item.repaymentAccount!0)}"
+                                                   captial="${func.format2(item.capital!0)}"
+                                                   interest="${func.format2(item.interest!0)}"
+                                                   late_interest="${func.format2(item.lateInterest!0)}"
+                                                   repayment_time="${item.repaymentTime?string('yyyy-MM-dd HH:mm:ss')}"
+                                                   address="${webroot}/member/borrow/repay.html"
+                                                   borrowId="${item.id?c}"><font color="red">还款</font></a>
+                                        </#if>
+                                    </div>
+                                </li>
+                            </#list>
+                            <li>
+                                <div id="page">
+                                    <#import "../../common/page.html" as pager>
+                                        <@pager.pagination page=page url="/member/myAccount/repaymentDetail.html" map=param style="style3"  />
+                                </div>
+                            </li>
+                            <#else><li> 无数据</li>
+                        </#if>
+                    </ul>
+
+                    <!--弹窗-->
+                    <div id="modal_dialog" style="display: none;" title="借款管理/我要还款">
+                        <div class="pop-tb-con clearfix" style="background:#fff;">
+                            <div class="pop-tb-r">
+                                <form action=""
+                                      id="form1_pay" method="post" >
+                                    <ul id="flow_num">
+                                        <li id="money_"></li>
+                                        <li id="captial_"></li>
+                                        <li id="interest_"></li>
+                                        <li id="late_interest_"></li>
+                                        <li id="repay_tips_" ></li>
+                                    </ul>
+                                    <p class="mar20" style="width: 270px;">
+                                        <a class="btn" onClick="check_form()">确认还款</a>
+                                    </p>
+                                    <p style="width: 270px;">
+                                        <input type="hidden" id="id_pay" name="id"/>
+                                        <input type="hidden" name="repay_token" value="${repay_token}">
+                                        注意：点击按钮表示您将确认还款.
+                                    </p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--弹窗结束-->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<#include "../../include/footer.html">
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"></script>

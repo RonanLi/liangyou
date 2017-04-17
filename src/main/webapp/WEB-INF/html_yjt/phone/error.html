@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type"
+	content="application/xhtml+xml; charset=utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+<meta name="viewport"
+	content="width=device-width, minimum-scale=1.0, initial-scale=1.0, maximum-scale=1.0, user-scalable=1" />
+<meta name="format-detection" content="telephone=no" />
+<style type="text/css">
+.center	 div {
+	
+}
+
+.moneydiv {
+	background-color: white;
+	cursor: auto;
+	margin-left: 35px
+}
+
+#ban {
+	padding-left: 35px
+}
+
+#ban div input {
+	width: 30px
+}
+
+#ban div img {
+	vertical-align: middle;
+}
+</style>
+</head>
+<body>
+	<div id="main" class="clearfix">
+		<div class="box">
+			<div class="box-con">
+				<p class="reg-pro">系统提示信息</p>
+				<div align="center" id="msg_content">
+					<br> <br> <img src="/data/images/base/loading.gif" />处理失败:${resMsg}
+				</div>
+				<div id="useragent"></div>
+			</div>
+		</div>
+		<a href="zhangdaibao://torecharge/?resCode=0" id="return">点击返回</a>
+	</div>
+	<script type="text/javascript">
+	    var ua = navigator.userAgent;
+		var resCode = '${resCode}';var resMsg = '${resMsg}';
+		var timer =  setInterval("testTime()",1000); 
+		function testTime(){
+			 if (ua.indexOf('Android') > -1) {
+				 window.webReturn.webReturn(resCode,resMsg);
+        	 }else if(ua.indexOf('iPhone') > -1 || ua.indexOf('iPod') > -1
+        				|| ua.indexOf('iPad') > -1){
+        		 document.getElementById("return").href = "zhangdaibao://torecharge/?resCode=0&resMsg="+encodeURIComponent(resMsg);
+        		 document.getElementById("return").click();
+        	 }
+		
+		}
+	
+		</script>
+
+</body>
+</html>

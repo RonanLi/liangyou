@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="收回转账">
+                        <#include "banner.html">
+                        <div id="main" class="clearfix">
+							<#if user??>
+							<form method="post" action="backRecharge.html" >
+								<div class="title" style="height:30px; line-height:30px; padding-left:25px;">用户名： ${user.username!}</div>
+								<div class="title" style="height:30px; line-height:30px; padding-left:25px;">真实姓名： ${user.realname!}</div>
+								<div class="title" style="height:30px; line-height:30px; padding-left:25px;">邮&nbsp;&nbsp;&nbsp;箱： ${user.email!}</div>
+								<div class="title" style="height:30px; line-height:30px; padding-left:25px;">电&nbsp;&nbsp;&nbsp;话： ${user.phone!}</div>
+								<div class="other clearfix" >
+						            <label for="">收回转账金额：</label><input type="text" name="account" > 
+						        </div>
+						         <br/>
+						        <div class="other clearfix" >
+						            <label for="">备注：</label> <textarea name="verify_remark" ></textarea>
+						        </div>
+						        <!--  <div class="ce">
+						                                管理员支付密码：<#if auth_user.paypassword??>
+						                         <input type="password" name="psword" size="15" >
+						                   <#else>
+						                   		<a href="${request.getContextPath()}/admin/system/queryAdminUser.html?queryType=payPwd" target="_brank">点击添加支付密码</a>
+						                   </#if>
+						        </div>-->
+								<div class="other clearfix" >
+						            <label for="">验&nbsp;证&nbsp;码&nbsp;：</label><input type="text" name="validCode" id="" class="yzm"> <img src="${request.getContextPath()}/validimg.html" alt="点击刷新" 
+	  									 onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();" style="position:relative;top:13px;"   />
+						        </div>
+								<input type="hidden"  name="userId" value="${user.userId}" />
+								<input type="submit" value="确认收回"  style="width:77px; height:30px; margin-left:74px; margin-top:5px;"/>
+							</form>	
+							<#else>
+	                            	<form method="post" action="addBackRecharge.html" >
+	                                	输入用户名：<input type="text" name="username" size="15" />
+	                                	<input type="hidden"  name="type" value="query" />
+	                                	<input type="submit" value="查询" />
+									</form>	
+	                           
+                            </#if>
+                            
+                  </div>
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+<div class="msgClass">
+    ${rsmsg!""}
+</div>
+</body>
+</html>
+<#include "../jsPage.html">

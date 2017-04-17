@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+<body>
+<table class="mc">
+    <tr>
+        <td class="mc-l">
+            <!--左侧导航---{-->
+            <div id="navPanelContainer">
+                <div class="system-logo cd"></div>
+                <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                <!--管理员信息---}-->
+                <div class="nav-wrap">
+                    <#include "left.html">
+                </div>
+            </div>
+            <!--左侧导航---}-->
+        </td>
+        <td class="mc-m">
+            <div class="navToggle"></div>
+        </td>
+        <td class="mc-r">
+            <!--顶部导航---{-->
+            <#include "../topNav.html">
+            <!--顶部导航---}-->
+
+            <!--面包屑导航---{-->
+            <#assign moduleName="异常记录">
+            <#include "banner.html">
+            <!--面包屑导航---}-->
+
+            <!--工具栏--{-->
+            <div id="toolbar" class="clearfix">
+                <div class="toolbor-module search">
+                    <input type="button" value="搜索"  class="input-button" onclick="sousuo();">
+                </div>
+                <div class="toolbor-module search">
+                    <div style="height:22px;line-height:22px;float:left;">类型：</div>
+                   <div class="select-box" id="type">
+                        <div class="tag-select">全部</div>
+                        <ul class="tag-options">
+                           <li data-value="">全  部</li>
+                           <li data-value="3">ParseException</li>
+                           <li data-value="0">Exception</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- <div class="toolbor-module search">
+                    <div style="height:22px;line-height:22px;float:left;">时间：</div>
+                    <input class="_search-value" name="startTime" id="startTime" value="" size="15" onclick="change_picktime()"/>
+                    <div style="height:22px;line-height:22px;float:left;margin:0 8px;"> 到 </div>
+                    <input class="_search-value" name="endTime" id="endTime"  value=""  size="15" onclick="change_picktime()"/>
+                </div> -->
+            </div>
+            <!--工具栏--}-->
+
+            <div id="main" class="clearfix">
+                <form action="" method="post">
+                    <table class="data-list">
+                        <tr class="header">
+                            <td>ID</td>
+                            <td>异常类型</td>
+                            <td>时间</td>
+                            <td>IP</td>
+                            <td>类路径</td>
+                            <td>方法</td>
+                            <td>异常内容</td>
+                            <td>操作</td>
+                        </tr>
+                        <#import "../../common/function.html" as func>
+                        <#list list as item>
+                            <tr class="s">
+                                <td>${item.id!if_exists}</td>
+                                <td><#if item.type?exists && item.type==3>ParseException<#elseif item.type?exists && item.type==0>Exception</#if></td>
+                                <td>${item.addTime?string("MM-dd HH:mm:ss")}</td>
+                                <td>${item.ip?if_exists}</td>
+                                <td>${item.className?if_exists}</td>
+                                <td>${item.methodName?if_exists}</td>
+                                <td><#if item.message?exists><#if item.message?length gt 50>${item.message[0..50]}..<#else>${item.message}</#if></#if></td>
+                                <td>
+                                 	<a class="un" href="${request.getContextPath()}/admin/system/exceptionLogShow.html?id=${item.id?if_exists}" >查看</a>
+                                </td>
+                            </tr>
+                        </#list>
+                    </table>
+                </form>
+
+                <!--底部工具栏--{-->
+                <div id="bottomToolbar" class="clearfix">
+                    <div class="other-tool">
+                        <dl class="refresh-data">
+                            <dt class="refresh-data-icon"></dt>
+                            <dd><a href="javascript:void(0);" class="refresh-page">刷新数据</a></dd>
+                        </dl>
+                    </div>
+
+                    <!--翻页系统--{-->
+                    <div class="container">
+                        <#import "../../common/page.html" as pager>
+                            <@pager.pagination page=page url="${pageUrl}" map=param style="style1" />
+                    </div>
+                    <!--翻页系统--}-->
+                </div>
+                <!--底部工具栏--}-->
+
+                <script>
+                    var urls = '?search=true';
+                    function sousuo(){
+                        var startTime = $("#startTime").val();
+                        //var endTime = $("#endTime").val();
+                        if (startTime!=null){
+                        	urls += "&startTime="+startTime;
+                        }
+                        //if (endTime!=null){
+                        //	urls += "&endTime="+endTime;
+                        //}
+                        var type = $("#type").find(".open-selected").attr("data-value");
+                        if(type!=null&&type!=""&&type!="undefine"){
+                        	urls += "&type="+type;
+                        }
+                        location.href=urls;
+                    }
+                </script>
+            </div>
+
+        </td>
+    </tr>
+    <tr>
+        <!--尾部--{-->
+        <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+        <!--尾部--}-->
+    </tr>
+</table>
+</body>
+</html>
+<#include "../jsPage.html">

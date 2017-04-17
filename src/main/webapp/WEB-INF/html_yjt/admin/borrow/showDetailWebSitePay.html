@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="网站垫付审核">
+                              
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+
+                                <div class="toolbor-module">
+                                                
+                                    <input type="button" class="input-button return" value="返回" onclick="javascript:location.href='late.html'">
+                                </div>
+                            </div>
+                            <!--工具栏--}-->
+
+                            <div id="main" class="clearfix">
+                                <form name="form1" method="post" action="/admin/borrow/websitepayborrow.html" onsubmit="return checkformwebrepay();" enctype="multipart/form-data">
+
+                                    <div class="valBox mb15">
+                                        <div class="top">
+                                            <strong>借款标详情</strong>
+                                        </div>
+                                        <div class="fp w349 clearfix">
+                                            <ul>
+                                                <li>
+                                                    <div class="title">借款人：</div>
+                                                    <div class="v"><a href="javascript:void(0)" onclick='alertPop("用户详细信息查看","url:get?${request.getContextPath()}/admin/attestation/viewUserInfo.html?userId=${b.user.userId?c}",500,230,"true","","true","text")'>${b.user.username!}</a></div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">状态：</div>
+                                                    <div class="v">
+                                                       <#import "../../common/function.html" as func>
+                                                                <@func.statusTypeName status=b.status />
+                                                    </div>
+                                                </li>
+                                                <li class="color">
+                                                    <div class="title">借款用途：</div>
+                                                    <div class="v">
+                                                        <@linkage plantext=true default=b.usetype!''></@linkage>
+                                                    </div>
+                                                </li>
+                                                <li class="color">
+                                                    <div class="title"> <#if b.type!=110>借款期限<#else>流转周期</#if>：</div>
+                                                    <div class="v">
+                                                    	<#if b.isday??&&b.isday==1>${b.timeLimitDay!0}天<#elseif b.type==101>满标即还<#else>${(b.timeLimit)!0}月</#if>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">还款方式：</div>
+                                                    <div class="v">
+                                                        <#if b.isday??&&b.isday==1>到期全额还款<#elseif
+															b.type ==100>系统自动还款<#elseif b.type==110>一次性还款
+															<#elseif b.style??&&b.style=="2">一次性还款
+															<#elseif b.style??&&b.style=="3">每月还息到期还本
+															<#else>按月分期还款</#if>  
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">借贷总金额：</div>
+                                                    <div class="v">
+                                                        ${b.account!}
+                                                                <input type="hidden" name="account" value="50000" /> 元
+                                                    </div>
+                                                </li>
+                                                <li class="color">
+                                                    <div class="title">年利率：</div>
+                                                    <div class="v">
+                                                        ${b.apr!} %
+                                                    </div>
+                                                </li>
+                                                <li class="color">
+                                                    <div class="title">最低投标金额：</div>
+                                                    <div class="v">
+                                                        <#if b.lowestAccount??&&b.lowestAccount gt 0>${b.lowestAccount}元<#else>无限制</#if>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">最多投标总额：</div>
+                                                    <div class="v">
+                                                        <#if b.mostAccount??&&b.mostAccount gt 0>${b.mostAccount}元<#else>无限制</#if>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">有效时间：</div>
+                                                    <div class="v">
+                                                        <#if b.borrowProperty?? && b.borrowProperty.endTime??>${b.borrowProperty.endTime?string("yyyy-MM-dd")} <#else> 未规定时间</#if>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="valBox mb15">
+                                        <div class="top">
+                                            <strong>还款详情</strong>
+                                        </div>
+                                        <div class="fp w349 clearfix">
+                                            <ul>
+                                                <li>
+                                                    <div class="title">当前期数/总期数：</div>
+                                                    <div class="v">${(br.period+1)!}/${b.timeLimit!}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">应还时间：</div>
+                                                    <div class="v">
+                                                       ${br.repaymentTime!}
+                                                    </div>
+                                                </li>
+                                                <li class="color">
+                                                    <div class="title">应还金额：</div>
+                                                    <div class="v">
+                                                        ${br.repaymentAccount!}
+                                                    </div>
+                                                </li>
+                                                <li class="color">
+                                                    <div class="title">本金：</div>
+                                                    <div class="v">
+                                                        ${br.capital!}
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">利息：</div>
+                                                    <div class="v">${br.interest!}
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">逾期天数：</div>
+                                                    <div class="v">${br.lateDays!}
+                                                    </div>
+                                                </li>
+                                                <li class="color">
+                                                    <div class="title">逾期利息：</div>
+                                                    <div class="v">${br.lateInterest!}
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    
+                                    <table class="data-list" style="margin-bottom:20px;">
+                                    <tr class="header">
+                                        <b style="font-weight: bold;font-size: 15px;">垫付审核进度</b>
+                                    </tr>
+                                         <tr class="header">
+                                            <td>ID</td>
+                                            <td>审核人</td>
+                                            <td>职位</td>
+                                           <!--  <td>操作描述</td> -->
+                                            <td>实时进度</td>
+                                            <td>备注</td>
+                                            <td>时间</td>
+                                        </tr>
+                                         <#if operateLoglist?size == 0> 
+		                                   	 <tr class="s"><td align="center" colspan="6">暂无进度</td></tr>
+		                                 </#if>
+                                    <#list operateLoglist as operate>
+					   					<tr class="s">
+											<td>${operate.id}</td>
+											<td>${operate.operateUser.username}</td>
+											<td>${operate.operateUser.userType.name}</td>
+											<!-- <td>${operate.operateProgress.nowOperateFlow.name}/<#if operate.status==1>审核通过<#elseif operate.status==2>审核不通过<#elseif operate.status==0>退回上一个流程</#if></td> -->
+											<td>${operate.operateDetail}</td>
+											<td id="${operate.id}" style="display: none;">${operate.memo}</td>
+											<td><a href="javascript:void(0);" onclick='alert(document.getElementById("${operate.id}").innerHTML)'>点我查看</a></td>
+											<td>${operate.addtime}</td>
+										</tr>
+                                      </#list>
+                                    </table>
+
+                                    <div id="audit">
+                                        <div class="top">
+                                            <strong>审核此垫付流程</strong>
+                                        </div>
+                                        <div class="v">
+                                            <div class="c">
+                                                <div class="choose">
+                                                    <label class="mr15"><input name="status" onclick="showDianFuType1()" value="1" type="radio" class="radio" <#if op??&&op.param??>checked="checked"</#if> >审核通过</label>
+                                                    <label class="mr15"><input name="status" onclick="showDianFuType2()" value="0" type="radio" class="radio" <#if !(op??&&op.param??)>checked="checked"</#if>>返回上一个流程</label>
+                                                </div>
+                                                <div class="choose" <#if op??&&op.param??>style="display: block;"<#else>style="display: none;"</#if>  id="dianfu">
+                                                    <label class="mr15"><input <#if op??&&op.param??&&op.param=='2'> checked="checked"</#if> name="type" value="2" type="radio" class="radio">垫付全部</label>
+                                                    <label class="mr15"><input <#if op??&&op.param??&&op.param=='1'> checked="checked"</#if> name="type" value="1" type="radio" class="radio">垫付当期</label>
+                                                </div>
+                                                <textarea  name="verifyRemark" class="remark" id="verify_remark">输入审核备注...</textarea>
+                                            </div>
+                                            <div class="other clearfix">
+						                        	<label for="">验证码：</label><input type="text" name="validCode" id="validCode" class="yzm"> <img src="${request.getContextPath()}/validimg.html" alt="点击刷新" 
+	   onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();" style="position:relative;top:13px;"   />
+						                        </div>
+                                            <div class="other clearfix">
+                                                <input type="hidden" name="id" value="${(b.id!0)?c}" />
+                                                <input type="hidden" name="repayMentId" value="${(br.id!0)?c}" />
+                                                
+                                                <input type="submit"  name="reset" value="确认审核" class="input-button confirm"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                           <script>
+                           function checkformwebrepay(){
+               			    var frm = document.forms['form1'];
+               			    var verify_remark =  $("#verify_remark").val();
+               			    var yzm = $("#validCode").val();
+               			    var errorMsg = '';
+               			    if (verify_remark.length == 0 || verify_remark=='输入审核备注...') {
+               			        errorMsg += '备注必须填写' + '\n';
+               			    }
+               			    if(yzm==''){
+                               	errorMsg += '验证码必须填写' + '\n';
+                               }
+               			    if (errorMsg.length > 0){
+               			        alert(errorMsg); return false;
+               			    } else{
+               			        return true;
+               			    }
+               			}
+                                
+                                function showDianFuType1(){
+                                	$("#dianfu").show();
+                                }
+                                function showDianFuType2(){
+                                	$("#dianfu").hide();
+                                }
+                            </script>
+                            </div>
+
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+<div class="msgClass">
+                                                              ${rsmsg!""}
+                                                          </div>
+    </body>
+</html>
+<#include "../jsPage.html">

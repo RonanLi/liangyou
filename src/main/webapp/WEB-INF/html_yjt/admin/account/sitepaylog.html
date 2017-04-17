@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="网站垫付日志">
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+                            
+                            <div class="toolbor-module export">
+                                    <input type="button" onclick="exportxls()" value="导出当前报表" class="input-button export-btn"/>
+                                </div>
+                                <div class="toolbor-module search">
+                                    <input type="button" value="搜索"  class="input-button" onclick="sousuo();">
+                                </div>
+                                
+                                <div class="toolbor-module search">
+                                   <div style="height:22px;line-height:22px;float:left;">垫付时间：</div>
+                    	<input class="_search-value" name="dotime1" id="dotime1" value="${param.dotime1!}" size="30" onclick="change_picktime()" style="float:left"/>
+                   				 <div style="height:22px;line-height:22px;float:left;margin:0 8px;"> 到 </div>
+                   	 <input class="_search-value" name="dotime2" id="dotime2"  value="${param.dotime2!}"  size="30" onclick="change_picktime()" style="float:left"/>
+                                </div>
+                            </div>
+                            <!--工具栏--}-->
+
+                            <div id="main" class="clearfix">
+                                <form action="" method="post">
+                                    <table class="data-list">
+                                        <tr class="header">
+                                            <td>ID</td>
+                                            <td>标名</td>
+                                            <td>借款人</td>
+                                            <td>投资人</td>
+                                            <td>投标金额</td>
+                                            <td>垫付类型</td>
+                                            <td>网站应该垫付金额</td>
+                                            <td>网站实际垫付的金额</td>
+                                            <td>网站应该垫付的总金额</td>
+                                            <td>网站实际垫付的总金额</td>
+                                            <td>垫付时间</td>
+                                        </tr>
+                                        <#import "../../common/function.html" as func>
+                                            <#list list as item>
+                                                <tr>
+                                                    <td>${item.id?c}</td>
+                                                    <td>${item.borrow.name!}</td>
+                                                    <td>${item.borrow.user.username!}</td>
+                                                    <td>${item.user.username!}</td>
+                                                    <td>${item.borrowTender.account}</td>
+                                                    <td>
+														<#if item.type == "site_pay_capital">
+															网站垫付本金
+														<#elseif item.type == "site_pay_interest" >
+															网站垫付利息
+														<#elseif item.type == "site_pay_late_interest" >
+															网站垫付逾期利息
+														<#elseif item.type == "site_pay_all" >
+															网站垫付当前及全部
+														</#if>
+                                                    </td>
+                                                    <td>${item.moneyPay}</td>
+                                                    <td>${item.accountPay}</td>
+                                                    <td>${item.moneyTotal}</td>
+                                                    <td>${item.accountTotal}</td>
+                                                    <td>${item.addtime}</td>
+                                                </tr>
+                                            </#list>
+                                    </table>
+                                </form>
+
+                                <!--底部工具栏--{-->
+                                <div id="bottomToolbar" class="clearfix">
+                                    <div class="other-tool">
+                                        <dl class="refresh-data">
+                                            <dt class="refresh-data-icon"></dt>
+                                            <dd><a href="javascript:void(0);" class="refresh-page">刷新数据</a></dd>
+                                        </dl>
+                                    </div>
+
+                                    <!--翻页系统--{-->
+                                    <div class="container">
+                                        <#import "../../common/page.html" as pager>
+                                            <@pager.pagination page=page url="/admin/account/sitePayLog.html" map=param style="style1" />
+                                    </div>
+                                    <!--翻页系统--}-->
+                                </div>
+                                <!--底部工具栏--}-->
+
+                                <script>
+                                	var xlsurl = '?search=true&actionType=export';
+                                    var urls = 'sitePayLog.html?search=true';
+                                    function sousuo(){
+                                        var sou = "";
+                                        
+                                        var dotime1 = $("#dotime1").val();
+                                        var dotime2 = $("#dotime2").val();
+                                        if (dotime1!=null){
+                                            sou += "&dotime1="+dotime1;
+                                        }
+                                        if (dotime2!=null){
+                                            sou += "&dotime2="+dotime2;
+                                        }
+                                        location.href=urls+sou;
+                                    }
+                                    
+                                    function exportxls(){
+										var sou = "";
+                                        var dotime1 = $("#dotime1").val();
+                                        var dotime2 = $("#dotime2").val();
+                                        if (dotime1!=null){
+                                            sou += "&dotime1="+dotime1;
+                                        }
+                                        if (dotime2!=null){
+                                            sou += "&dotime2="+dotime2;
+                                        }
+                                        location.href=xlsurl+sou;
+                                   }
+                                </script>
+                            </div>
+
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+
+    </body>
+</html>
+<#include "../jsPage.html">

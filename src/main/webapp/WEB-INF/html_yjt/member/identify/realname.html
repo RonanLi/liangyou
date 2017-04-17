@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html" />
+<body>
+<style type="text/css">
+    /* szl 优化 */
+    #emOnemim {
+        color: inherit;
+        font-size: 12px;
+    }
+
+    #emOnemim i {
+        font-weight: normal;
+        padding: 0 4px;
+        color: #8a7110;
+        font-size: 14px;
+    }
+
+    }
+</style>
+
+<#assign mid="m_info" />
+<#assign nid="member" />
+<#include "../../include/header.html" />
+<!--header-end-->
+<!--用户中心的主栏目 开始-->
+<div class="container-bg">
+    <div id="main" class="clearfix">
+        <div class="wrap950 " style="margin-top:0">
+            <!--左边的导航 开始-->
+            <div class="user_left">
+                <#include "../user_menu.html" />
+            </div>
+            <!--左边的导航 结束-->
+
+            <!--右边的内容 开始-->
+            <div class="user_right">
+
+                <div class="user_right_menu">
+                    <#assign userinfo_type="realname" />
+                    <#include "identify_menu.html" />
+                </div>
+                <div class="user_help alert" id="sqq_0sd" style="text-align: left; padding-left:14px;">您<em style="display:none;" id="emOnemim">于<i>1分钟前</i></em>通过了实名认证，您的实名信息已被提交到第三方支付平台备案，此操作能确保您的提现和账户安全！
+                    <div class="UNsqoo-d" style="padding: 5px 0px; display:none;"></div>
+                </div>
+                <div class="user_right_border" style="background: #E8EEE5">
+                    <div class="l">用户名：</div>
+                    <div class="c">${user.username!}</div>
+                </div>
+
+
+                <#if user.userType?? && user.userType.typeId == 28>
+                    <div class="user_right_border" style="background: #E8EEE5">
+                        <div class="l">企业名：</div>
+                        <div class="c">
+                            <#if user.realname?exists&&user.realname?length gt 0>
+                                <#if user?exists&&user.realname??>
+                                    ${user.realname[0..0]!}****
+                                <#else>
+                                    -
+                                </#if>
+                            <#else>
+                                ---
+                            </#if>
+                        </div>
+                    </div>
+
+                    <div class="user_right_border" style="background: #E8EEE5">
+                        <div class="l">证件类别：</div>
+                        <div class="c">
+                            <#if user?exists&&user.cardType?exists>
+                                <@linkage name="cardType" plantext=true default=user.cardType></@linkage>
+                            <#else>
+                                -
+                            </#if>
+                        </div>
+                    </div>
+
+                    <div class="user_right_border" style="background: #E8EEE5">
+                        <div class="l">营业执照号：</div>
+                        <div class="c">
+                            <#if user??&&user.cardId??>
+                                ${user.cardId[0..13]!}****
+                            <#else>
+                                -
+                            </#if>
+                        </div>
+                    </div>
+
+                <#else>
+
+                    <div class="user_right_border" style="background: #E8EEE5">
+                        <div class="l">真实姓名：</div>
+                        <div class="c">
+                            <#if user.realname?exists&&user.realname?length gt 0>
+                                <#if user?exists&&user.realname??>
+                                    ${user.realname[0..0]!}****
+                                <#else>
+                                    -
+                                </#if>
+                            <#else>
+                                ---
+                            </#if>
+                        </div>
+                    </div>
+
+                    <div class="user_right_border" style="background: #E8EEE5">
+                        <div class="l">证件类别：</div>
+                        <div class="c">
+                            <#if user?exists&&user.cardType?exists>
+                                <@linkage name="cardType" plantext=true default=user.cardType></@linkage>
+                            <#else>
+                                -
+                            </#if>
+                        </div>
+                    </div>
+
+                    <div class="user_right_border" style="background: #E8EEE5">
+                        <div class="l">证件号码：</div>
+                        <div class="c">
+                            <#if user??&&user.cardId??>
+                                ${user.cardId[0..13]!}****
+                            <#else>
+                                -
+                            </#if>
+                        </div>
+                    </div>
+                </#if>
+                <div class="user_right_foot alert" style="padding-left:14px;"> * 温馨提示：我们将对所有的信息进行保密</div>
+            </div>
+        </div>
+        <!--右边的内容 结束-->
+    </div>
+</div>
+
+</div>
+<script type="text/javascript"> // szl
+if (location.search.substr(1) == 'authcallback') {
+    $('#emOnemim').show();
+
+    var er = 5;
+    var r = window.setInterval(function () {
+        if (er < 1) {
+            window.clearInterval(r);
+            window.location.href = '/member/account/newrecharge.html';
+            return false;
+        } else {
+            $('.UNsqoo-d').show().html('即将在' + er + '秒后为您跳转到<a href="/member/account/newrecharge.html" style="padding: 0 2px; text-decoration: underline; ">账户充值</a>页面。即刻充值投资，享限时优惠活动。');
+            er--;
+        }
+    }, 1000);
+
+}
+</script>
+<!--用户中心的主栏目 结束-->
+<script src="${request.getContextPath()}${theme_dir}/media/js/modal.js"></script>
+<script src="${request.getContextPath()}${theme_dir}/media/js/tab.js"></script>
+<script src="${request.getContextPath()}${theme_dir}/media/js/alert.js"></script>
+<script src="${request.getContextPath()}${theme_dir}/media/js/transition.js"></script>
+<script type="text/javascript" src="${request.getContextPath()}${theme_dir}/media/js/area.js"></script>
+<#include "../../include/footer.html" />
+</body>
+</html>

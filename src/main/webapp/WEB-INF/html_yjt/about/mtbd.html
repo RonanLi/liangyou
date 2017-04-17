@@ -1,0 +1,48 @@
+<ul class="mtbd"></ul>
+<div class="webnewsBtn">
+    <span class="newsBtn" id="prev" onclick="num--; if(num < 1){ num=1 ;} ; page(num);">&lt;&lt;</span>
+    <span class="newsBtn"><b class="currentPage"></b></span>
+    <span class="newsBtn" id="next" onclick="num++; if(num > Pages){ num=Pages ; return;} ; page(num);">&gt;&gt;</span>
+    <span class="newsBtn">共<b class="Pages"></b>页</span>
+</div>
+<script type="text/javascript">
+function page(num){
+	var url="/about/nextPage.html?page="+num+"&nid=mtbd";
+	var arr=[];
+	
+	$.ajax({
+		type : "POST",
+		url : url,
+		dataType : "json",
+		date:{},
+		async:false,
+		success : function(Obj) {
+			$(".mtbd").html("")
+			var list=Obj.list;
+			arr[0]=Obj.page.currentPage;
+			arr[1]=Obj.page.pages;
+			$(".currentPage").html(arr[0]);
+			$(".Pages").html(arr[1]);
+			for(var i = 0 ; i < list.length ; i++){
+				$(".mtbd")
+				.append("<li>" +
+							"<div>"+
+								"<div class='newsImg'><img src='"+list[i][4]+"' alt='图片无法显示'/></div>"+
+								"<div class='newsText'>" +
+									"<h1>" + list[i][0] + "</h1>" +
+									"<p>" + list[i][2].substring(0, 45) + "</p>" +
+									"<a href='/article/detail.html?code=mtbd&id="+ list[i][3] +"'>查看详情</a>" +
+								"</div> " +
+								"<div class='newsTime'>" + list[i][1] + "</div>" +
+							"</div>"+
+						"</li>"
+						);
+			}
+		}
+	})
+	return arr;
+}
+ var num=1;
+ var currentPage=page(1)[0];
+ var Pages=page(1)[1];
+</script>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html" />
+<body>
+<table class="mc">
+    <tr>
+        <td class="mc-l">
+            <!--左侧导航---{-->
+            <div id="navPanelContainer">
+                <div class="system-logo cd"></div>
+                <!--管理员信息---{-->
+                <#include "../adminInfo.html" />
+                <!--管理员信息---}-->
+                <div class="nav-wrap">
+                    <#include "left.html" />
+                </div>
+            </div>
+            <!--左侧导航---}-->
+        </td>
+        <td class="mc-m">
+            <div class="navToggle"></div>
+        </td>
+        <td class="mc-r">
+            <!--顶部导航---{-->
+            <#include "../topNav.html" />
+            <!--顶部导航---}-->
+
+            <!--面包屑导航---{-->
+            <#assign moduleName="批量查询异常金额账户" />
+            <#include "banner.html" />
+            <!--面包屑导航---}-->
+
+            <!--工具栏--{-->
+            <div id="toolbar" class="clearfix">
+
+               <!-- <div class="toolbor-module export">
+                    <input type="button" onclick="exportxls()" value="导出列表" class="input-button export-btn"/>
+                </div>-->
+
+                <div class="toolbor-module search">
+                    <div style="height:22px;line-height:22px;float:left;margin-left: 10px;">用户id：</div>
+                    <input type="text" name="userIdStart" id="userIdStart" value="" class="search-value">
+                    <div style="height:22px;line-height:22px;float:left;margin:0 8px;"> 到 </div>
+                    <input type="text" name="userIdEnd" id="userIdEnd" value="" class="search-value">
+                    <input type="button" value="搜索"  class="input-button" onclick="sousuo();">
+                </div>
+            </div>
+            <!--工具栏--}-->
+
+            <div id="main" class="clearfix">
+                <form action="" method="post">
+                    <table class="data-list">
+                        <tr class="header">
+                            <td>ID</td>
+                            <td>用户名</td>
+                            <td>真实姓名</td>
+                            <td>账户可用余额</td>
+                            <td>${api_name}可用金额</td>
+                            <td>账户冻结余额</td>
+                            <td>${api_name}冻结余额</td>
+                        </tr>
+                        <#if list??>
+                            <#list list as item>
+                                <tr class="s">
+                                    <td>${(item.user.userId!0)?c}</td>
+                                    <td>${item.user.username!}</td>
+                                    <td>${item.user.realname!}</td>
+                                    <td><#if item.user.account??>${item.user.account.useMoney!"NULL"}</#if></td>
+                                    <td>${item.apiUseMoney!"NULL"}</td>
+                                    <td><#if item.user.account??>${item.user.account.noUseMoney!"NULL"}</#if></td>
+                                    <td>${item.apiNoUseMoney!"NULL"}</td>
+                                </tr>
+                            </#list>
+                        </#if>
+                    </table>
+                </form>
+
+                <!--底部工具栏--{-->
+                <div id="bottomToolbar" class="clearfix">
+                    <div class="other-tool">
+                        <dl class="refresh-data">
+                            <dt class="refresh-data-icon"></dt>
+                            <dd><a href="javascript:void(0);" class="refresh-page">刷新数据</a></dd>
+                        </dl>
+                    </div>
+                </div>
+                <!--底部工具栏--}-->
+        </td>
+    </tr>
+    <tr>
+        <!--尾部--{-->
+        <td colspan="3" class="mc-b">
+            <#include "../foot.html" />
+        </td>
+        <!--尾部--}-->
+    </tr>
+</table>
+
+<script>
+    var url = 'batchQueryBalance.html?search=true';
+    var xlsurl = 'log.html?excel=export';
+
+    function sousuo() {
+        var sou = "";
+        var userIdStart = $("#userIdStart").val();
+        if (userIdStart !="" /*&& userIdStart != "请您输入用户名"*/){
+            sou += "&userIdStart=" + userIdStart;
+        }
+        var userIdEnd = $("#userIdEnd").val();
+        if (userIdEnd != "" /*&& userIdEnd != "请您输入交易对方用户名"*/){
+            sou += "&userIdEnd=" + userIdEnd;
+        }
+        location.href=url + sou;
+    }
+
+  /*  function exportxls(){
+        var sou = "";
+        var username = $("#username").val();
+        if (username!=""&&username!="请您输入用户名"){
+            sou += "&username="+username;
+        }
+        var tousername = $("#tousername").val();
+        if (tousername!=""&&tousername!="请您输入交易对方用户名"){
+            sou += "&tousername="+tousername;
+        }
+
+        var dotime1 = $("#dotime1").val();
+        var dotime2 = $("#dotime2").val();
+        var account_type = $("#account_type").val();
+
+        if (dotime1!=null){
+            sou += "&dotime1="+dotime1;
+        }
+        if (dotime2!=null){
+            sou += "&dotime2="+dotime2;
+        }
+        if (account_type!=null){
+            sou += "&type="+account_type;
+        }
+        if (sou!=""){
+            location.href=xlsurl+sou;
+        }else{
+            location.href=xlsurl;
+        }
+    }*/
+</script>
+
+</body>
+</html>
+<#include "../jsPage.html" />

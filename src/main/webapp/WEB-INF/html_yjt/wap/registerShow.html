@@ -1,0 +1,234 @@
+<!DOCTYPE html> <!-- 1.2改版开始。 -最后保留- -->
+<html lang="zh_Hans_CN" >
+<head>
+    <#include "_head.html" />
+    <#include "../common/function.html" />
+    <#macro showIndexTenderButton borrow>
+        <#assign nowTime=dateformat("now") >
+            <#if borrow.status==0>等待初审
+                <#elseif borrow.status==1&&(borrow.accountYes lt borrow.account ) >
+                <a class="tb-action-gray" style="cursor: default;">立即投标</a>
+                <#elseif borrow.status==1&&(borrow.accountYes gt borrow.account || borrow.accountYes==borrow.account) >
+                <a  class="tb-action-gray" style="cursor: default;">审核中</a>
+                <#elseif borrow.status==2>
+                <a  class="tb-action-gray" style="cursor: default;">初审失败</a>
+                <#elseif borrow.status==3>
+                <a  class="tb-action-gray" style="cursor: default;">复审通过</a>
+                <#elseif borrow.status==5||borrow.status==-1>
+                <a  class="tb-action-gray" style="cursor: default;">用户取消</a>
+                <#elseif borrow.status==4>
+                <a  class="tb-action-gray" style="cursor: default;">复审失败</a>
+                <#elseif borrow.status==6>
+                <a  class="tb-action-gray" style="cursor: default;">还款中</a>
+                <#elseif borrow.status==7>
+                <a  class="tb-action-gray" style="cursor: default;">还款中</a>
+                <#elseif borrow.status==8>
+                <a  class="tb-action-gray" style="cursor: default;">已还款</a>
+                <#else>
+                <a  class="tb-action-gray" style="cursor: default;">用户取消</a>
+        </#if>
+    </#macro>
+    <link rel="stylesheet" href="${webroot}${theme_dir}/media/wap/css/swiper.min.css">
+
+    <style>
+        .PageContainer,main,body{height:auto;}
+        header>img{width:100%;}
+        .logo>img{    position: absolute; width: 30%; top: 0.2rem; left: 35%; }
+        .register{position:relative; padding: 20px 0;background:#fee4c4;}
+        #Error{position:absolute;width:80%;line-height:20px;left:10%;top:0;text-align:center;font-size:12px;color:red;display:none;}
+        .iptBox{position:relative;width:290px;margin:10px auto;border-radius: 19px;}
+        .iptBox>i{position:absolute;display: inline-block;width:24px;height:25px;top:10px;left:15px;
+            background: url('${webroot}${theme_dir}/media/wap/img/register_icon.png') no-repeat -165px -55px;}
+        .iptBox>input{width:100%;height:38px;padding:0 19px 0 45px;border-radius: 19px;border:none;outline: none;font-size:14px;color:#333;}
+        .ipts>input{width:145px;}
+        .linefocus{ background: #fff; height: 38px; display: inline-block; float: right; width: 128px; overflow: hidden; border-radius: 20px; }
+        .linefocus>img{ display: block; height: 45px; margin: 0 auto; }
+        .linefocus>input{ border-radius: 20px; border: 0; outline: none; color: #d58f6b; background: #fff3e2; font-size: 14px; width: 100%; height: 38px; line-height: 38px; display: block; box-shadow: 1px 2px 4px rgba(241, 112, 112, 0.77); }
+        input.btn{ background: -webkit-gradient(linear, 0 0, 0 100%, from(#fc854d), to(#f96d7a)); width: 290px;height:38px; margin: .5rem auto;padding:0; border:0;outline: none;}
+        .safe{overflow: hidden; margin-bottom: .5rem;}
+        .safe li{float:left;width:50%;margin:.5rem 0 0;}
+        .safe li>div{width: 60px; height: 55px;margin:10px auto;}
+        .safe li>h4,.safe li>p{text-align:center;}
+        .safe li>h4{color:#f97866;}
+        .safe li>p{ line-height: 0.8rem;color:#d58f6b;font-size: 12px;}
+        .item{background: #fa7f5b;padding-top:.5rem;overflow: hidden;}
+        .item>h2,.swiper-container>h2{width:144px;height:35px;line-height:28px;margin:auto;text-align:center;color:#fff;background: url("${webroot}${theme_dir}/media/wap/img/register_icon.png") no-repeat 0 -55px;}
+        .item li{width:90%;height:110px;margin:.5rem auto;background: #fff;box-shadow: 2px 2px 1px 1px #e36037;}
+        .item li h3{line-height:40px;font-size: 14px;color:#fa4b5b;text-align: center;border-bottom:1px solid #eee;}
+        .line2Div{float:left;width:33%;}
+        .line2Div>h1,.line2Div>p{text-align: center;}
+        .line2Div>h1{ margin-top: .4rem;font-size: 16px;}
+        .line2Div>p{color:#d58f6b;}
+        .btnBox{width:290px;margin:auto;padding:.5rem 0;}
+        .btn{ display: block; width: 100%; height: 38px; line-height: 38px; min-height: .68rem; margin: .5rem auto; -webkit-appearance: none; color: #fff; font-size: 0.484rem; border-radius: 22px; text-align: center; background: -webkit-gradient(linear, 0 0, 0 100%, from(#fc854d), to(#f96d7a)); transition: width 0.3s 0.15s, font-size 0.1s 0.2s; -webkit-transition: width 0.3s 0.15s, font-size 0.1s 0.2s; overflow: hidden; }
+        .footWord{text-align: center;padding-bottom: .2rem;}
+
+
+        .swiper-container { width: 100%;padding:.5rem 0; }
+        .swiper-wrapper{margin-top:.4rem;}
+        .swiper-slide {position: relative; text-align: center; font-size: 18px; background: #fff; display: -webkit-box; display: -ms-flexbox; display: -webkit-flex; display: flex; -webkit-box-pack: center; -ms-flex-pack: center; -webkit-justify-content: center; justify-content: center; -webkit-box-align: center; -ms-flex-align: center; -webkit-align-items: center; align-items: center; }
+        .swiper-slide>p{position:absolute;display: block;top:-0.8rem;font-size:14px;text-align:center;}
+        .swiper-slide>img{display:block;width:70%;}
+
+    </style>
+</head>
+<body class="paused">
+<!-- Whether the user is logged in  -->
+<!-- Whether the user is logged in  end-->
+<!-- common module -->
+<section class="mob-con" id="MobileR">
+    <div class="mob-cen"><i></i><div>请使用手机竖屏查看</div></div>
+</section>
+<section class="tooltips" id="tooltips"><div></div></section>
+<div id="loading_money" class="l_pageLoading"><div class="ropimg"><img src="${webroot}${theme_dir}/media/wap/img/logovertical.png" /></div></div>
+<section id="backtotop" class="O backtotop T"></section>
+<!-- common module end-->
+<article class="PageContainer">
+    <header>
+        <img src="${webroot}${theme_dir}/media/wap/img/registerShow.jpg" alt="">
+        <a href="" class="logo"><img src="${webroot}${theme_dir}/media/wap/img/register_logo.png" alt=""></a>
+        <div class="register">
+
+            <!--<div class="icon username O svg">
+                <svg class="svg-icon" viewBox="0 0 20 20">
+                    <path d="M0,20 a10,8 0 0,1 20,0z M10,0 a4,4 0 0,1 0,8 a4,4 0 0,1 0,-8"></path>
+                </svg>
+            </div>
+            <div class="icon username O svg">
+                <svg class="svg-icon" viewBox="0 0 20 20">
+                    <path d="M0,20 20,20 20,8 0,8z M10,13 10,16z M4,8 a6,8 0 0,1 12,0"></path>
+                </svg>
+            </div>
+            -->
+                <input type="hidden" id="channel" name="channel" value="<#if channel ? exists>${channel}</#if>" />
+                <input type="hidden" id="code" name="code" value="<#if code ? exists>${code}</#if>" />
+                <input type="hidden" id="test" name="test" value="<#if test ? exists>${test}</#if>" />
+
+            <!--注册-->
+            <div id="Error"></div>
+            <div class="iptBox"><i style="background: url('${webroot}${theme_dir}/media/wap/img/register_icon.png') no-repeat -143px -55px" ></i>
+                <input type="tel" id="username" name="username" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="请输入手机号码" class="phone" maxlength="11"  autofocus="true">
+            </div>
+            <div class="iptBox"><i></i>
+                <input type="password" id="password" name="password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" class="password fz-chas" placeholder="请输入登录密码">
+
+            </div>
+            <div class="iptBox ipts"><i></i>
+                <input type="tel" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" class="imgCode" placeholder="图形验证码" maxlength="4">
+                <span class="linefocus R">
+                    <img class="updateimg_1" src="${request.getContextPath()}/validimg.html"  onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();">
+                </span>
+            </div>
+            <div class="iptBox ipts"><i></i>
+                <input type="tel" id="validCodee" name="validCodee" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" class="phoneCode" placeholder="手机验证码" maxlength="6">
+                <span class="linefocus R"><input type="button" value="发送验证码" id="sendPhoneCode" class="regBtnForbid"></span>
+            </div>
+            <input type="button" class="btn" id="regBtn" value="注册">
+
+
+            <!--注册结束-->
+        </div>
+    </header>
+    <main role="main" class="">
+        <section>
+            <div class="safe">
+                <ul>
+                    <li>
+                        <div style="background:url('${webroot}${theme_dir}/media/wap/img/register_icon.png')no-repeat -120px 0;"></div>
+                        <h4>背景雄厚</h4>
+                        <p>京朋集团全资控股平台</p>
+                    </li>
+                    <li>
+                        <div style="background:url('${webroot}${theme_dir}/media/wap/img/register_icon.png')no-repeat -180px 0;"></div>
+                        <h4>债权真实透明</h4>
+                        <p>供应链金融100元起投</p>
+                    </li>
+                    <li>
+                        <div style="background:url('${webroot}${theme_dir}/media/wap/img/register_icon.png')no-repeat 0 0;"></div>
+                        <h4>银行存管</h4>
+                        <p>不碰资金，直接流向借款人</p>
+                    </li>
+                    <li>
+                        <div style="background:url('${webroot}${theme_dir}/media/wap/img/register_icon.png')no-repeat -60px 0;"></div>
+                        <h4>安全保障</h4>
+                        <p>数据加密保障账户安全</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <section>
+            <div class="item">
+                <h2>推荐项目</h2>
+                <ul>
+                    <#if borrowList?exists>
+                        <#list borrowList as item>
+                            <li>
+                                <h3>${item.name}</h3>
+                                <div class="line2Div line2Div2">
+                                    <h1>
+                                        <#if item.isday==1&&item.timeLimitDay==30&&("20161212"?date("yyyyMMdd") lt item.addtime?date) && (item.addtime?date lt "20170401"?date("yyyyMMdd"))><span>${item.apr-1}%</span><i class="xep">+1%</i>
+                                            <#elseif item.isday==0&&item.timeLimit==1&&("20161212"?date("yyyyMMdd") lt item.addtime?date) && (item.addtime?date lt "20170401"?date("yyyyMMdd"))><span>${item.apr-1}%</span><i class="xep">+1%</i>
+                                            <#elseif item.isday==0&&item.timeLimit==2&&("20161212"?date("yyyyMMdd") lt item.addtime?date) && (item.addtime?date lt "20170401"?date("yyyyMMdd"))><span>${item.apr-1}%</span><i class="xep">+1%</i>
+                                            <#elseif item.isday==0&&item.timeLimit==3&&("20161212"?date("yyyyMMdd") lt item.addtime?date) && (item.addtime?date lt "20170401"?date("yyyyMMdd"))><span>${item.apr-1}%</span><i class="xep">+1%</i>
+                                            <#else><span>${item.apr}%</span>
+                                        </#if>
+                                    </h1>
+                                    <p>预期年化</p>
+                                </div>
+                                <div class="line2Div line2Div2">
+                                    <h1><#if item.isday??&&item.isday==1>${item.timeLimitDay!0}天<#elseif item.type==101>满标即还<#else>${(item.timeLimit)?default("0")}个月</#if></h1>
+                                    <p>项目期限</p>
+                                </div>
+                                <div class="line2Div line2Div3">
+                                    <@showIndexTenderButton borrow=item />
+                                </div>
+                            </li>
+                        </#list>
+                    </#if>
+
+                </ul>
+            </div>
+        </section>
+        <!--轮播-->
+        <section>
+            <div class="swiper-container">
+                <h2>荣誉称号</h2>
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <!--<p>"企业信用评价AAA级信用企业"</p>-->
+                        <img src="${webroot}${theme_dir}/media/wap/img/registerShow_1.png" alt="">
+                    </div>
+                    <div class="swiper-slide">
+                       <!-- <p>"中国电子商业协会互联网金融研究院委员单位"</p>-->
+
+                        <img src="${webroot}${theme_dir}/media/wap/img/registerShow_2.png" alt="">
+                    </div>
+                    <div class="swiper-slide">
+                       <!-- <p>"2016年度供应链金融创新合规奖"</p>-->
+
+                        <img src="${webroot}${theme_dir}/media/wap/img/registerShow_3.png" alt="">
+                    </div>
+                </div>
+                <!-- Add Pagination -->
+                <!--<div class="swiper-pagination"></div>-->
+                <!-- Add Arrows -->
+                <!--<div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>-->
+            </div>
+        </section>
+        <!--轮播结束-->
+        <section style="background: #fee4c4">
+            <div class="btnBox">
+                <a class="btn" href="#" style="margin:0;">马上去赚钱</a>
+            </div>
+            <div class="footWord">©2017 金和所. 版权所有.</div>
+        </section>
+    </main>
+</article>
+
+<script src="${webroot}${theme_dir}/media/wap/js/swiper.min.js"></script>
+<script src="${webroot}${theme_dir}/media/wap/js/jhs_basic_wap2.js" type="text/javascript"></script>
+<script src="${webroot}${theme_dir}/media/wap/js/process.js" type="text/javascript"></script>
+<script src="${webroot}${theme_dir}/media/wap/js/jhs-base-wap.js" type="text/javascript"></script>
+</body>
+</html>

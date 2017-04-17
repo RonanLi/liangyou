@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 ">
+<#assign webroot=request.getContextPath()>
+<#assign nid="member" >
+<#include "../../include/resource.html">
+<#include "../../common/function.html">
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+
+<body>
+
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="userRightMenu">
+                <#include "personalCenterMenu.html">
+            </div>
+            <div class="rightDiv">
+                <div class="education">
+                    <form action="" method="post">
+                        <div class="fromBox">
+                            <div class="boxTxt">最高学历：</div>
+                            <div class="boxIpt">
+                                <#if info?exists&&info.educationRecord?exists>
+                                    <@linkage name="educationRecord" id="educationRecord" nid="user_education" default=info.educationRecord></@linkage>
+                                <#else>
+                                    <@linkage name="educationRecord" id="educationRecord" nid="user_education"></@linkage>
+                                </#if>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">最高学历学校：</div>
+                            <div class="boxIpt"><input type="text" maxlength="20" size="25" name="educationSchool" value="<#if info?exists&&info.educationSchool?exists>${info.educationSchool}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">专业：</div>
+                            <div class="boxIpt"><input type="text" size="25" maxlength="20" name="educationStudy" value="<#if info?exists&&info.educationStudy?exists>${info.educationStudy}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">时间：</div>
+                            <div class="boxIpt">
+                                <input type="text" size="25" name="educationTime1" value="<#if info?exists&&info.educationTime1?exists>${info.educationTime1?string('yyyy-MM-dd')}</#if>" onclick="change_picktime()" />--<input type="text" size="25" name="educationTime2" value="<#if info?exists&&info.educationTime2?exists>${info.educationTime2?string('yyyy-MM-dd')}</#if>" onclick="change_picktime()" />
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">&nbsp;</div>
+                            <div class="boxIpt"><input type="submit" class="btn-action"  value="确认提交" size="30" /></div>
+                        </div>
+
+                        <input type="hidden" name="type" value="education" />
+                    </form>
+                    <div class="notes"> * 温馨提示：我们将对所有的信息进行保密</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<#include "../../include/footer.html">
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"> </script>
+</html>

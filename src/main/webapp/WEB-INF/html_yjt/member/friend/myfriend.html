@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html">
+<body>
+	<#assign nid="member"> 
+	<#include "../../include/header.html">
+	<!--header-end-->
+	<!--用户中心的主栏目 开始-->
+    <div class="container-bg"> 
+	<div id="main" class="clearfix" >
+		<div class="wrap950 " style="margin-top:0">
+			<!--左边的导航 开始-->
+			<div class="user_left">
+            <#assign mid="m_friend" >
+            <#include "../user_menu.html"></div>
+			<!--左边的导航 结束-->
+		<div class="user_right">
+			<!--右边的内容 开始-->
+			<div class="user_right_menu">
+				<#assign query_type="myfriend">
+				<#include "friend_menu.html" >
+			</div>
+			<div class="user_right_main">
+				<!--我的好友 开始-->
+				<div class="user_main_title" style="height:30px; padding-top:7px;"> 
+				&nbsp; &nbsp; &nbsp; 用户名：<input type="text" name="username" id="username" value="" /> <input value="搜索" type="button"   class="btn-action"  onclick="sousuo('{$_U.query_url}/publish')"  />
+				</div>
+				<table  border="0"  cellspacing="1" class="table table-striped  table-condensed" style="width:98%">
+					  <form action="" method="post">
+						<tr class="head" >
+							<td  >对方名称</td>
+							<td  >添加时间</td>
+							<#-- <td  >是否投资</td>
+							<td  >投资金额</td> -->
+							
+						</tr>
+						<#if (list?exists)&&(list?size>0)>
+						<#list list as item>
+						<tr>
+							<td>${item.user.username?default('')}</td>
+							<td>${item.addtime}</td>
+							<#-- <td><#if item.isTender==1>是<#else>否</#if></td>
+							<td>${item.tenderTotal}</td> -->
+							
+						</tr>
+						</#list>
+						</#if>
+					</table>
+				</form>	
+				 <div align="center" class="pt10 pb10">
+                        <#if list?exists>
+							<#import "../../common/page.html" as pager>
+							<@pager.pagination page=page url="/member/friend/myfriend.html" map=param style="style1"  />
+						<#else>
+							无数据
+						</#if>
+                    </div> 
+				</div>
+				<!--我的好友 结束-->
+			</div>
+			<!--右边的内容 结束-->
+		</div>
+	</div>
+    
+	<!--用户中心的主栏目 结束-->
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/modal.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/tab.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/alert.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/transition.js"></script>
+	<script type="text/javascript"
+		src="${request.getContextPath()}${theme_dir}/media/js/area.js"></script>
+	<#include "../../include/footer.html">
+</body>
+</html>

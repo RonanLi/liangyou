@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="VIP激活">
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+                             <#assign vipStatus=param.vipStatus!'' />
+                                <div class="toolbor-module search">
+                                    <form action="vip.html" method="post">
+                                     <div style="height:22px;line-height:22px;float:left;margin-left: 10px;">用户名：</div>
+                                      <input type="text" name="username" id="username" value="请输入用户名" class="search-value">
+                                      <div style="height:22px;line-height:22px;float:left;margin-left: 10px;">真实姓名：</div>
+                                     <input type="text" name="realname" id="realname" value="请输入真实姓名" class="search-value">
+                                       <div style="height:22px;line-height:22px;float:left;margin-left: 10px;">VIP：</div>
+                                        <select id="vipStatus" name="vipStatus" style="width: 80px;height:22px;line-height:22px;" >
+                                        	<option value=""  <#if vipStatus=="" >selected="selected"</#if>>全部</option>
+                                        	<option value="1" <#if vipStatus=="1" >selected="selected"</#if>>是</option>
+                                        	<option  value="0" <#if vipStatus=="0" >selected="selected"</#if>>否</option>   
+                                                                    	
+                                        </select>
+                                        <input type="button" value="搜索"  class="input-button" onclick="sousuo();" style="float:none;">
+                                    </form>
+                                </div>
+                            </div>
+                            <!--工具栏--}-->
+
+                            <div id="main" class="clearfix">
+                                    <table class="data-list">
+                                        <tr class="header">
+                                            <td>ID</td>
+                                            <td>用户名</td>
+                                            <td>真实姓名</td>
+                                            <td>实名认证</td>
+                                            <td>手机认证</td>
+                                            <td>邮箱认证</td>
+                                            <td>操作</td>
+                                        </tr>
+                                        <#if list??> 
+                                        	<#list list as obj>                                            
+                                                <tr class="s">
+                                                    <td>${obj.user.userId!"-"}</td>
+                                                    <td>${obj.user.username!"-"}</td>
+                                                    <td>${obj.user.realname!"-"}</td>
+                                                    <td><#if obj.user.realStatus?? && obj.user.realStatus==1 || obj.user.realStatus==3><font color="blue">已认证</font><#elseif obj.user.realStatus?? && obj.user.realStatus==2><font color="red">等待审核</font><#else><font color="red">未申请</font></#if></td>
+                                                    <td><#if obj.user.phoneStatus?? && obj.user.phoneStatus==1><font color="blue">已认证</font><#else><font color="red">未认证</font></#if></td>
+                                                    <td><#if obj.user.emailStatus?? && obj.user.emailStatus==1><font color="blue">已认证</font><#else><font color="red">未认证</font></#if></td>
+                                                    <td><#if obj.vipStatus?? && obj.vipStatus!=1>
+                                                    		<a class="un" href="#" onClick="javascript:if(confirm('确定【激活】?')) location.href='${request.getContextPath()}/admin/attestation/vipActivate.html?type=activate&id=${obj.id?c}'">激活</a>
+                                                    	<#else>
+                                                    	<#--<a class="un" href="#" onClick="javascript:if(confirm('确定【取消】?')) location.href='${request.getContextPath()}/admin/attestation/vipActivate.html?type=cancle&id=${obj.id?c}'">取消</a>-->
+                                                   		</#if></td>                                                   
+                                                </tr>
+                                        	</#list> 
+                                       </#if>
+                                    </table>
+
+                                <!--底部工具栏--{-->
+                                <div id="bottomToolbar" class="clearfix">
+                                    <div class="other-tool">
+                                        <dl class="refresh-data">
+                                            <dt class="refresh-data-icon"></dt>
+                                            <dd><a href="javascript:void(0);" class="refresh-page">刷新数据</a></dd>
+                                        </dl>
+                                    </div>
+
+                                    <!--翻页系统--{-->
+                                    <div class="container">
+                                        <#import
+                                                "../../common/page.html" as pager> <@pager.pagination page=page
+                                            url="/admin/attestation/vipActivate.html" map=param
+                                            style="style1" />
+
+                                    </div>
+                                    <!--翻页系统--}-->
+                                </div>
+                                <!--底部工具栏--}-->
+								<script type="text/javascript">
+								 var url = '/admin/attestation/vipActivate.html?search=true';
+								  function sousuo(){
+                                      var sou = "";
+                                      var username = $("#username").val();
+                                      var realname = $("#realname").val();
+                                      var vipStatus = $("#vipStatus").val();
+                                      if (username!=""&&username!="请输入用户名"){
+                                          sou += "&username="+username;
+                                      }
+                                      if (realname!=""&&realname!="请输入真实姓名"){
+                                          sou += "&realname="+realname;
+                                      }
+                                      if (vipStatus!=""){
+                                          sou += "&vipStatus="+vipStatus;
+                                      }
+                                     
+                                          location.href=url+sou;
+                                     
+                                  }
+								</script>
+                            </div>
+
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+
+    </body>
+</html>
+<#include "../jsPage.html">

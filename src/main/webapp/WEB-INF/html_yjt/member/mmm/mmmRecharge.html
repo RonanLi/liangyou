@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>双乾充值跳转中...</title>
+    <meta http-equiv="content-Type" content="text/html; charset=utf-8" />
+  </head>
+  <body>
+    <div>双乾页面跳转中...,请您不要关闭页面</div>
+    <form action="${mmm.submitUrl}" method="post" id="frm1" style="display: none">
+    <input id="RechargeMoneymoremore" name="RechargeMoneymoremore" value="${mmm.rechargeMoneymoremore}"  />
+		<input type="hidden" id="PlatformMoneymoremore" name="PlatformMoneymoremore" value="${mmm.platformMoneymoremore}"  />
+		<input type="hidden" id="OrderNo" name="OrderNo" value="${mmm.orderNo}"  />
+		<input type="hidden" id="Amount" name="Amount" value="${mmm.amount}"  />
+	    <input type="hidden" id="Amount" name="RechargeType" value="${mmm.rechargeType!}" />
+    	<input type="hidden" id="Amount" name="FeeType" value="${mmm.feeType!}" />
+		<input type="hidden" id="ReturnURL" name="ReturnURL" value="${mmm.returnURL}"  />
+		<input type="hidden" id="NotifyURL" name="NotifyURL" value="${mmm.notifyURL}"  />
+		<input type="hidden" id="SignInfo" name="SignInfo" value="${mmm.signInfo}"  />
+		<input type="hidden" type="submit" value="提交" />
+     	
+    </form>
+    <script type="text/javascript">
+    	document.getElementById("frm1").submit();  
+    </script>
+   
+  </body>
+</html>

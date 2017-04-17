@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 " />
+<#assign webroot=request.getContextPath() />
+<#assign nid="member" />
+
+<link rel="stylesheet" href="${webroot}${theme_dir}/member/experienceMoney/css/moneyActive.css" type="text/css"/>
+<#include "../include/resource.html" >
+<#include "../common/function.html" />
+<body>
+<#include "../include/header.html" />
+<!--header-end-->
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+    <div class="user_left">
+        <#include "../member/user_menu.html" />
+    </div>
+    <div class="user_right">
+        <#if msg?exists>
+            <div id="msg24"><p class="ok"> ${msg} </p></div>
+        <#else>
+            <#if errormsg?exists>
+                <div id="msg25"><p class="error"> ${errormsg} </p></div>
+            </#if>
+        </#if>
+        <div class="rewardMoney">
+            <h1>我的体验金</h1>
+            <#if em??>
+                <ul>
+                    <li><img src="${webroot}${theme_dir}/member/experienceMoney/imgs/rewardMoney.png" title="请重新加载"/></li>
+                    <li>
+                        <h2>年利率</h2>
+                        <p>${borrow.apr}%</p>
+                    </li>
+                    <li>
+                        <h2>借款金额</h2>
+                        <p>${borrow.account}</p>
+                    </li>
+                    <li>
+                        <h2>借款期限</h2>
+                        <p><#if borrow.isday??&&borrow.isday==1>${borrow.timeLimitDay!0}天<#else>${(borrow.timeLimit)!0}个月</#if></p>
+                    </li>
+                    <li>
+                        <#if em.useStatus?? && em.useStatus == 0>
+                            <a href="/invest/detail.html?borrowid=${borrow.id}">立即使用</a>
+                        <#else>
+                            <a href="#" style="background:#aaa">已经使用</a>
+                        </#if>
+                    </li>
+                </ul>
+                <div class="rewardMoneyRecord">
+                    <div style="border-right:1px solid #aaa; height: 120px;">
+                        <p>我的体验金额：<span>${em.experienceMoney}</span><b>元</b><#if em.useStatus == 2><span>(已过期)</span></#if></p>
+                        <p>可用体验金额：<span><#if em.useStatus == 0>${em.experienceMoney}<#else>0</#if></span><b>元</b></p>
+                        <p>已用体验金额：<span><#if em.useStatus == 1>${em.experienceMoney}<#else>0</#if></span><b>元</b></p>
+                        <#if experienceMoneyDeadline??><p>有&nbsp;&nbsp;效&nbsp;&nbsp;期&nbsp;&nbsp;至：<span>${experienceMoneyDeadline[0..9]}</span></p></#if>
+                    </div>
+                    <div>
+                        <p>已收益：<span><#if em.interestIncomeStatus == 1>${em.experienceInterest}<#else>0</#if></span><b>元</b><#if em.interestIncomeStatus == 1 && em.interestUseStatus == 1><span>(已使用)</span><#elseif em.interestIncomeStatus == 1 && em.interestUseStatus == 0>(未使用)<#elseif em.interestUseStatus == 2>(已过期)</#if></p>
+                        <p>待收益：<span><#if em.interestIncomeStatus == 0>${em.experienceInterest}<#else>0</#if></span><b>元</b></p>
+                        <p>
+                            <#if em.interestIncomeStatus == 0>
+                                待收时间：<span><#if bc??>${bc.repayTime[0..9]}<#else>暂无收益</#if></span>
+                            <#elseif em.interestIncomeStatus == 1>
+                                已收时间：<span>${em.interestIncomeTime[0..9]}</span>
+                            <#else>
+                                待收时间：<span>暂无收益</span>
+                            </#if>
+                        </p>
+                        <#if interestDeadline??><p>有效期至：<span>${interestDeadline[0..9]}</span></p></#if>
+                    </div>
+                </div>
+            </#if>
+        </div>
+    </div>
+</div>
+
+<#include "../include/footer.html" />
+</body>
+</html>
+ 

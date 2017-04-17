@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<#include "../include/resource.html">
+<body>
+<#assign nid="borrow" >
+<#include "../include/header.html">
+<div class="bg-stripe-borrow">
+    <div class="bg-borrow">
+        <div class="wp-type">
+            <a href="javascript:" class="btn-prev"></a>
+        	<div class="wp-type-list">
+                <ul>
+                    <li class="list-item1">
+                        <!-- add by gy 2016-10-21 13:46:24 -->
+                        <h1>体验标</h1>
+                        <p>这里是体验标的描述。。。</p>
+                        <a href="/borrow/loan.html?t=experience" class='deep'>立即申请</a>
+                    </li>
+                    <li class="list-item1">
+                        <h1>净值标</h1>
+                        <p>净值借款标显示标记“净”，允许发布的最大金额为净资产减去代收利息，净资产负数 0 、500元以下金额不能发标。 可以循环借款。</p>
+                        <a href="/borrow/loan.html?t=jin" class='deep'>立即申请</a>
+                    </li>
+					<li class="list-item3">
+                        <h1>信用标</h1>
+                        <p>信用借款标显示“信”字标记，是一种免抵押、免担保、纯信用，最高授信为10万的小额个人信用贷款标，主要面向公务员、医生或教师等机关企事业单位...</p>
+                        <a href="/borrow/loan.html?t=month" class='light'>立即申请</a>
+                    </li>
+                    <li class="list-item2 ">
+                        <h1>抵押标</h1>
+                        <p>抵、质押借款标显示"抵"字标记，是${webname}经过线下严格核查借款人资产负债、抵押担保手续（不仅限）、有关政府以及商业银行推荐、优质资产和...</p>
+				
+                        <a href="/borrow/loan.html?t=fast" class='deep'>立即申请</a>
+                    </li>         
+                   
+                    <li class="list-item5">
+                        <h1>流转标</h1>
+                        <p>债权人将手中的债权拆分成小额等份的债权转让给众多投资者，并且承诺到期进行还款的一种理财标种，称为流转标。投资者对于流转标的购买份额最小为...</p>
+                        <a href="/borrow/loan.html?t=flow" class='light'>立即申请</a>
+                    </li>
+					 <li class="list-item4">
+                        <h1>秒还标</h1>
+                        <p>秒还标显示标记“秒”，借款者发布秒还标，利息和管理费将被冻结，投标满后，系统自动审核通过，发标人瞬间送出利息和管理费，投资者则</p>
+                        <a href="/borrow/loan.html?t=miaobiao" class='deep'>立即申请</a>
+                    </li>
+                    <li class="list-item6">
+                        <h1>担保标</h1>
+                        <p>担保借款标显示“担”，是有资金需求的借款人，在保证人或担保单位签订好保证合同或者担保合...</p>
+                        <a href="/borrow/loan.html?t=vouch" class='light'>立即申请</a>
+                    </li>
+                </ul>
+            </div>
+            <a href="javascript:" class="btn-next"></a>
+        </div>
+    </div>
+</div>
+<#include "../include/footer.html"> 
+</body>
+<script type="text/javascript">
+	$('.wp-type-list ul li').hover(function() {
+		$(this).addClass('hover').siblings().removeClass('hover');
+	});
+
+    $.fn.listScroll = function(options) {
+        var options = $.extend({
+            scrollList      :'.scroll-list',
+            prevBtn         :'.prev',
+            nextBtn         :'.next',
+            speed           :300,
+            autoPlay        :true,
+            autoPlayInterval:4
+        }, options);
+        
+        var $scrollList      = $(options.scrollList);
+        var $prevBtn         = $(options.prevBtn);
+        var $nextBtn         = $(options.nextBtn);
+        var speed            = options.speed;
+        var autoPlay         = options.autoPlay;
+        var autoPlayInterval = options.autoPlayInterval;
+        var itemWidth  = $scrollList.children('li').outerWidth(true);
+        var itemHeight = $scrollList.children('li').outerHeight(true);
+
+        $(this).css({position:'relative'}); 
+        $scrollList.css({position:'absolute'});
+        // 根据列表中li的个数动态设置滚动列表的宽度
+        $scrollList.css({width:($scrollList.children('li').length + 1) * itemWidth});
+        var showprevItem = function() {
+            if(!$scrollList.is(':animated')) {
+                $scrollList.find('li:last').clone().prependTo($scrollList);
+                $scrollList.css({left:-itemWidth});
+                $scrollList.animate({left: 0},speed,function() {
+                $scrollList.find('li.hover').prev().addClass('hover').siblings().removeClass('hover');
+                    $scrollList.find('li:last').remove();
+                });
+            }
+        };
+        var showNextItem = function() {
+            if(!$scrollList.is(':animated')) {
+                $scrollList.find('li:first').clone().appendTo($scrollList);
+                $scrollList.animate({left:-itemWidth},speed,function() {
+                    $scrollList.css({left:0});
+                    $scrollList.find('li.hover').next().addClass('hover').siblings().removeClass('hover');
+                    $scrollList.find('li:first').remove();
+                });
+            }
+        };
+
+        $prevBtn.click(function() {
+            showprevItem();
+        });
+
+        $nextBtn.click(function() {
+            showNextItem();
+        });
+
+        if(autoPlay) {
+            listScrollTimer = setInterval(function() {
+                showNextItem();
+            },autoPlayInterval * 1000);
+            $(this).hover(function() {
+                clearInterval(listScrollTimer);
+            },function() {
+                listScrollTimer = setInterval(function() {
+                    showNextItem();
+                },autoPlayInterval * 1000);
+            });
+        }
+    }
+
+    $('.wp-type-list').listScroll({
+        scrollList      :'.wp-type-list ul',
+        prevBtn         :'.wp-type .btn-prev',
+        nextBtn         :'.wp-type .btn-next',
+    });
+</script>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="查看所有账户">
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+
+                                <div class="toolbor-module export">
+                                    <input type="button" onclick="exportxls()" value="导出列表" class="input-button export-btn"/>
+                                    
+                                </div>
+								<form action="${request.getContextPath()}/admin/account/autoTenderLog.html" method="post">
+                                <div class="toolbor-module search">
+                                 	<div style="height:22px;line-height:22px;float:left;margin-left: 10px;">用户名：</div>
+                                    <input type="text" name="name" id="username" value="${name!''}" class="search-value">
+                                    
+                                    <input type="submit" value="搜索"  class="input-button" >
+                                </div>
+                                </form>
+                            </div>
+                            <!--工具栏--}-->
+
+                            <div id="main" class="clearfix">
+                                <form action="" method="post">
+                                    <table class="data-list">
+                                        <tr class="header">
+                                            <td>排名</td>
+                                            <td>用户名</td>
+                                            <td>账户可用余额</td>
+                                            <td>自动投标设置金额</td>
+                                            <td>还款方式</td>
+                                            <td>借款期限</td>
+                                            <td>利息率</td>
+                                            <td>投标奖励</td>
+                                            <td>投标标种</td>
+                                            <td>添加时间</td>
+                                        </tr>
+                                        <#list list as item>
+                                            <tr class="s">
+                                                <td>${(item.id!0)?c}</td>
+                                                <td>${item.user.username!}</td>
+                                                <td>${item.user.userAmount.creditUse!}</td>
+                                                <td>${item.tenderAccount!0}</td>
+                                                <td><#if item.borrowStyleStatus==1>(已启用)<#else>(未启用)</#if></td>
+                                                <td>${item.timelimitMonthFirst}-${item.timelimitMonthLast}<#if item.timelimitStatus==1>(已启用)<#else>(未启用)</#if></td>
+                                                <td>${item.aprFirst}%-${item.aprLast}%<#if item.aprStatus==1>(已启用)<#else>(未启用)</#if></td>
+                                                <td>${item.award}%<#if item.awardStatus==1>(已启用)<#else>(未启用)</#if></td>
+                                                <td>${item.borrowType}<#if item.borrowStyleStatus==1>(已启用)<#else>(未启用)</#if></td>
+                                                <td>${item.addtime}</td>
+                                                <td></td>
+                                            </tr>
+                                        </#list>
+                                    </table>
+                                </form>
+
+                                <!--底部工具栏--{-->
+                                <div id="bottomToolbar" class="clearfix">
+                                    <div class="other-tool">
+                                        <dl class="refresh-data">
+                                            <dt class="refresh-data-icon"></dt>
+                                            <dd><a href="javascript:void(0);" class="refresh-page">刷新数据</a></dd>
+                                        </dl>
+                                    </div>
+
+                                    <!--翻页系统--{-->
+                                    <div class="container">
+                                        <#import "../../common/page.html" as pager>
+                                            <@pager.pagination page=page url="/admin/account/autoTenderLog.html" map=param style="style1" />
+                                    </div>
+                                    <!--翻页系统--}-->
+                                </div>
+                                <!--底部工具栏--}-->
+
+                                
+                            </div>
+
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+
+    </body>
+</html>
+<#include "../jsPage.html">

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh_Hans_CN" class="indexPage" data-area="indexPage">
+<head><#include "_head.html" /><#include "../common/function.html" /></head>
+<body class="paused">
+    <!-- Whether the user is logged in  -->
+    <input type="hidden" id="usersession" data-ssion="${usersession}">
+    <!-- Whether the user is logged in  end-->
+    <!-- common module -->
+    <section class="mob-con" id="MobileR">
+        <div class="mob-cen"><i></i><div>请使用手机竖屏查看</div></div>
+    </section>
+    <section class="tooltips" id="tooltips"><div></div></section>
+    <!--<div id="loading_money" class="l_pageLoading"><div class="ropimg"><img src="${webroot}${theme_dir}/media/wap/img/logovertical.png" /></div></div>-->
+    <section id="backtotop" class="O backtotop T"></section>
+    <!-- common module end-->
+    <article class="PageContainer">
+        <header role="header" class="headerindex R">
+            <div class="inerheader R">
+                <a href="index.html" class="headerlogoa F">
+                    <img src="${webroot}${theme_dir}/media/wap/img/logosloganB.jpg"/>
+                </a>
+                <div class="navBtn" id="circleLines">
+                    <#if session_user?exists >
+                        <a href="logout.html">退出</a>
+                        <#else><a href="aggregationPage.html?router=login">登录</a><span class="divl">／</span><a href="aggregationPage.html?router=register">注册</a>
+                    </#if>
+                </div>
+            </div>
+        </header>
+        <main role="main" class="floralHaHa">
+            <section class="index-banners">
+                <div class="carousel R">
+                    <#if wapScrollPic?exists>
+                        <#list wapScrollPic as item>
+                            <div class="carousel-cell"><a href="${item.url}" target="_blank"><img src="../${item.pic}"/></a></div>
+                        </#list>
+                    </#if>
+                </div>
+            </section>
+            <section class="growingNumbers">
+                <div class="dinfo">平台累计成交总金额
+                    <div class="O"><i id="numberaniamte">${borrowSum?string(",##0.00#")!}</i></div>
+                </div>
+            </section>
+            <section class="items-out-index">
+                <h2 class="suTitle" >精选产品</h2>
+                <#if borrowList?exists>
+                    <#list borrowList as item>
+                        <article class="cards-bids">
+                            <a href="bid_details.html?id=${item.id}" class="d-b">
+                                <div class="titleinfo F">
+                                    <span>${item.name}</span>
+                                    <span class="tittype">
+		                                <#if item.isday??&&item.isday==1>到期全额还款
+						                <#elseif item.type==101>系统自动还款
+						                <#elseif item.type==110>一次性还本付息
+						                <#elseif item.style??&&item.style=="2">一次性还本付息
+						                <#elseif item.style??&&item.style=="3">每月还息到期还本
+						                <#else>按月分期还款
+						                </#if>
+					                </span>
+                                </div>
+                                <div class="F info-Cards">
+                                    <div class="inFO">
+                                        <ul class="F">
+                                            <li>
+                                                <#if item.isday==1&&item.timeLimitDay==30&&("20161212"?date("yyyyMMdd") lt item.addtime?date) && (item.addtime?date lt "20170401"?date("yyyyMMdd"))>${item.apr-1}%<i class="xep">+1%</i>
+                                                    <#elseif item.isday==0&&item.timeLimit==1&&("20161212"?date("yyyyMMdd") lt item.addtime?date) && (item.addtime?date lt "20170401"?date("yyyyMMdd"))>${item.apr-1}%<i class="xep">+1%</i>
+                                                    <#elseif item.isday==0&&item.timeLimit==2&&("20161212"?date("yyyyMMdd") lt item.addtime?date) && (item.addtime?date lt "20170401"?date("yyyyMMdd"))>${item.apr-1}%<i class="xep">+1%</i>
+                                                    <#elseif item.isday==0&&item.timeLimit==3&&("20161212"?date("yyyyMMdd") lt item.addtime?date) && (item.addtime?date lt "20170401"?date("yyyyMMdd"))>${item.apr-1}%<i class="xep">+1%</i>
+                                                    <#else>${item.apr}%
+                                                </#if>
+                                                <em>预期年化收益率</em>
+                                            </li>
+                                            <li class="inside">
+                                                <#if item.isday??&&item.isday==1>${item.timeLimitDay!0}天<#elseif item.type==101>满标即还<#else>${(item.timeLimit)?default("0")}个月</#if>
+                                                <em>项目期限</em>
+                                            </li>
+                                            <li class="linePercent">
+                                                <div class="lineProject R">
+                                                    <span class="R">
+                                                        <i class="wDih"  data-wid="${(item.accountYes/item.account)*100}"></i>
+                                                    </span>
+                                                </div>
+                                                <em>项目进度</em>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </a>
+                        </article>
+                    </#list>
+                </#if>
+            </section>
+        </main>
+    </article>
+
+    <section class="_ad_banner d-n" style="display:none;">
+        <div class="ad_carousel">
+          <div class="xr_qxe">
+            <a href="http://m.jinhefax.com/wap/activity_jnh.html"><img src="${webroot}${theme_dir}/media/wap/img/activity_banners/bac5.jpg?v=230" /></a>
+            <a href="javascript:void(0);" class="clo_img_banad O"></a>
+          </div>
+        </div>
+    </section>
+    <footer class="f-Copyright ftb T">
+        <div class="footer-linkHelp">
+            <a href="aboutus.html">关于我们</a><span class="divideLine"></span><a href="protocols.html">用户协议</a><span class="divideLine"></span><a href="security.html">安全保障</a>
+        </div>
+        <div class="footer-smword">©2017 金和所. 版权所有.</div>
+    </footer>
+    <#macro showIndexTenderButton borrow>
+      <#assign nowTime=dateformat("now") >
+      <#if borrow.status==0>等待初审
+      <#elseif borrow.status==1&&(borrow.accountYes lt borrow.account ) >
+          <a class="tb-action-gray" style="cursor: default;">立即投标</a>
+      <#elseif borrow.status==1&&(borrow.accountYes gt borrow.account || borrow.accountYes==borrow.account) >
+          <a  class="tb-action-gray" style="cursor: default;">审核中</a>
+      <#elseif borrow.status==2>
+          <a  class="tb-action-gray" style="cursor: default;">初审失败</a>
+      <#elseif borrow.status==3>
+          <a  class="tb-action-gray" style="cursor: default;">复审通过</a>
+      <#elseif borrow.status==5||borrow.status==-1>
+          <a  class="tb-action-gray" style="cursor: default;">用户取消</a>
+      <#elseif borrow.status==4>
+          <a  class="tb-action-gray" style="cursor: default;">复审失败</a>
+      <#elseif borrow.status==6>
+          <a  class="tb-action-gray" style="cursor: default;">还款中</a>
+      <#elseif borrow.status==7>
+          <a  class="tb-action-gray" style="cursor: default;">还款中</a>
+      <#elseif borrow.status==8>
+          <a  class="tb-action-gray" style="cursor: default;">已还款</a>
+      <#else>
+          <a  class="tb-action-gray" style="cursor: default;">用户取消</a>
+      </#if>
+    </#macro>
+<#include "_foot.html" />
+</body>
+</html>

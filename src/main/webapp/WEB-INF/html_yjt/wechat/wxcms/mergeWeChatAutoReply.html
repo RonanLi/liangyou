@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <#include "../common/res.html">
+</head>
+
+<body class="bg">
+<#include "../common/header.html">
+    <div class="content">
+        <div class="block-nav">
+            <#include "../common/nav.html">
+        </div>
+        <div class="block-content" >
+
+            <div class="block-content-nav">
+                <span class="title">自动回复消息 添加/修改</span>
+            </div>
+
+            <div class="block-content-description">
+				
+            </div>
+
+            <div class="block-content-content">
+                <form class="fm-form" action="${webroot}/wx/mergeWeChatAutoReply.html" method="post" enctype="multipart/form-data">
+                    <ul>
+                        <li>
+                            <label>关键字 </label>
+                            <input name="weChatAutoReply.keyWords" type="text" value="${weChatAutoReply.keyWords!}"/>
+                        </li>
+                        <li>
+                            <label>内容 </label>
+                            <input name="weChatAutoReply.content" type="text" value="${weChatAutoReply.content!}"/>
+                        </li>
+                        <li>
+                            <input name="weChatAutoReply.id" type="hidden" value="${weChatAutoReply.id!}"/>
+                        </li>
+                        <li>
+                            <input name="weChatAutoReply.status" type="hidden" value="${weChatAutoReply.status!}"/>
+                        </li>
+                    </ul>
+
+                    <div>
+                        <input class="btn" type="submit" value="保 存"/>
+                        <a href="${webroot}/wx/getWeChatAutoReply.html" class="btn" type="button"> 返回</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="clearfloat"></div>
+    </div>
+    <#include "../common/footer.html">
+</body>
+
+</html>

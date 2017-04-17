@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<#include "../include/resource.html"> 
+<body>
+<#include "../include/header.html">
+<link href="${request.getContextPath()}/themes/soonmes/media/css/modal.css" rel="stylesheet" type="text/css" /> 
+<link href="${request.getContextPath()}/themes/soonmes/media/css/about.css" rel="stylesheet" type="text/css" />
+
+<div class="container zx clearfix">
+    <img src="${webroot}${theme_dir}/images/zx-banner.jpg" alt="" class="mb15"> 
+    <div class="zx-left float_left">
+        <div class="zx-lt"></div>
+         <#include "left_menu.html">
+        <div class="zx-bt"></div>
+        <img src="${webroot}${theme_dir}/images/zx-left-kf.jpg" alt="" class="zx-kefuimg">
+    </div>
+
+    <div class="zx-righthelp float_right">
+        <div class="zx-righttitle clearfix">
+            <img src="${webroot}${theme_dir}/images/zx-rightli.jpg" alt="" class="ml10 float_left"><span class="float_left">当前位置：
+			<a id="ctl00_content_NavigationLink1_main" href="${webroot}/index.html" style=" color:#333; text-decoration:none;">义务贷（浙江得龙进出口有限公司）</a>	&gt;帮助&gt;
+			<a href="${request.getContextPath()}/help/bankhelp.html?code=help" style="color:#333; text-decoration:none;">银行卡绑定</a></span>
+		</div>
+		
+        <div class="zx-righttxt">
+			<div class="info" id="lxjs">
+         <h6>第一步：</h6>
+					<h7>银行卡绑定首先要进行手机认证，手机是网站通知用户的重要途径，输入用户手机号，点击获取验证码验证。</h7>
+					<br />
+					<h3>&nbsp;</h3>
+					<div class="zx-righttitle clearfix">
+						<img src="${webroot}${theme_dir}/images/help/rz04.jpg" alt="" />
+					</div>
+					<br />
+         <h6>第二步：</h6><h7>用户我的账户中点击银行账户,根据要求输入正确的银行卡信息。直接点击获取验证码，将手机收到的验证码输入后点击点击确认提交。</h7><br/>
+            <h3> &nbsp; </h3>
+         <div class="zx-righttitle clearfix">
+              <img src="${webroot}${theme_dir}/images/help/bank01.jpg" alt="" class="ml10 float_left" height=360/><br/>
+         </div><br>
+         <h6>第三步：</h6><h7>如果用户设置银行卡信息错误或者要更换银行卡，可先解绑原先的银行卡，并再次绑定新的银行卡。</h7>
+            <h3> &nbsp; </h3>
+         <div class="zx-righttitle clearfix">
+             <img src="${webroot}${theme_dir}/images/help/bank02.jpg" alt="" class="ml10 float_left"  height=400/>
+         </div><br/>
+       
+			</div><!--info-->
+		</div><!--myTabContent-->
+	</div><!--right-->
+</div><!--cor_divtop-->
+
+
+<script src="${request.getContextPath()}/themes/soonmes/media/js/modal.js"></script>
+<script src="${request.getContextPath()}/themes/soonmes/media/js/tab.js"></script>
+<script src="${request.getContextPath()}/themes/soonmes/media/js/alert.js"></script>
+<#include "../include/footer.html"> 

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="查看${api_name}资金">
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+
+                                <div class="toolbor-module export">
+                                  
+                                </div>
+
+                             
+                            </div>
+                            <!--工具栏--}-->
+
+                            <div id="main" class="clearfix">
+                                <form action="" method="post">
+                                   <div class="module_title">
+										<strong>${api_name}资金状况</strong>
+									</div>
+								<div class="module_border">
+										<div class="l">用户名：</div>
+										<div class="c">
+											${user.username}
+										</div>
+								</div>
+								<div class="module_border">
+									<div class="l" >姓名：</div>
+									<div class="c">
+										<span name="username"><#if user.realname??>${user.realname}<#else>--</#if></span>
+									</div>
+								</div>
+								<div class="module_border">
+									<div class="l">${api_name}可用金额：</div>
+									<div class="c">
+										${money.apiUseMoney!"NULL"}
+									</div>
+									<div class="l">账户可用金额：</div>
+									<div class="c">
+										${user.account.useMoney!"NULL"}
+		
+									</div>
+								</div>
+
+						<div class="module_border">
+							<div class="l">${api_name}冻结余额：</div>
+							<div class="c">
+								${money.apiNoUseMoney!"NULL"}
+							</div>
+							<div class="l">账户冻结余额：</div>
+							<div class="c">
+								${user.account.noUseMoney!"NULL"}
+							</div>
+						</div>
+                                </form>
+
+                           
+
+                                  
+                                </div>
+
+                               
+
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+
+    </body>
+</html>
+<#include "../jsPage.html">

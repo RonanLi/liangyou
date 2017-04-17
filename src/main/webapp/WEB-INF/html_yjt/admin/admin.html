@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<#include "head.html">
+<body>
+<table class="mc">
+<tr>
+<td class="mc-l">
+    <!--左侧导航---{-->
+    <div id="navPanelContainer">
+        <div class="system-logo cd"></div>
+        <!--管理员信息---{-->
+        <#include "adminInfo.html">
+            <!--管理员信息---}-->
+            <div class="nav-wrap">
+
+            </div>
+    </div>
+    <!--左侧导航---}-->
+</td>
+<td class="mc-m">
+    <div class="navToggle"></div>
+</td>
+<td class="mc-r">
+<!--顶部导航---{-->
+<#include "topNav.html">
+<!--顶部导航---}-->
+
+<!--面包屑导航---{-->
+<div id="breadcrumbNav">
+    <div class="home-icon"></div>
+    <ul>
+        <li>管理首页</li>
+        <li class="v">系统信息</li>
+    </ul>
+</div>
+<!--面包屑导航---}-->
+
+<!--工具栏--{-->
+<div id="toolbar" class="clearfix">
+
+</div>
+<!--工具栏--}-->
+
+<div id="main" class="clearfix">
+<div class="valBox w750">
+<div class="top">
+    <strong>后台系统</strong>
+</div>
+<div class="val clearfix">
+<ul class="ci">
+    欢迎登录后台系统
+<#-- <li>
+    <div class="title">操作系统版本：</div>
+    <div class="v">
+        ${props['os.name']!} ${props['os.version']!}
+    </div>
+</li>
+<li>
+    <div class="title">操作系统类型：</div>
+    <div class="v">
+        ${props['os.arch']!} ${props['sun.arch.data.model']!}位
+    </div>
+</li>
+<li>
+    <div class="title">用户、目录、临时目录：</div>
+    <div class="v">
+        ${props['user.name']!}, ${props['user.dir']!}, ${props['java.io.tmpdir']!}
+    </div>
+</li>
+<li>
+    <div class="title">JAVA运行环境：</div>
+    <div class="v">
+        ${props['java.runtime.name']!} ${props['java.runtime.version']!}
+    </div>
+</li>
+<li>
+    <div class="title">JAVA虚拟机：</div>
+    <div class="v">
+        ${props['java.vm.name']!} ${props['java.vm.version']!}
+    </div>
+</li>
+<li>
+    <div class="title">Mysql版本：</div>
+    <div class="v">
+        5.5.25
+    </div>
+</li> -->
+</ul>
+</div>
+</div>
+
+</div>
+</td>
+</tr>
+<tr>
+    <!--尾部--{-->
+    <td colspan="3" class="mc-b"><#include "foot.html"></td>
+    <!--尾部--}-->
+</tr>
+</table>
+
+</body>
+</html>
+<#include "jsPage.html">

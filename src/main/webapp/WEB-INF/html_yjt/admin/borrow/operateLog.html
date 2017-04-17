@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="审核日志" >
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+                             <div id="toolbar" class="clearfix">
+               
+                <div class="toolbor-module search">
+                    <input type="button" value="搜索"  class="input-button" onclick="sousuo();">
+                </div>
+                    <#if param??>
+                 <#assign username=param.username!'请输入审核用户名' />
+                 <#assign realname=param.realname!'请输入真实姓名' />
+                 <#assign type=param.operateType!>
+                 <#assign orderid=param.orderNo!'请输入审核项Id'>
+                 <#assign dotime1=param.dotime1!>
+                 <#assign dotime2=param.dotime2!>
+               
+				</#if>
+                <div class="toolbor-module search">
+                    <div style="height:22px;line-height:22px;float:left;">类型：</div>
+                   <div class="select-box" id="operateType">
+                        <div class="tag-select">全部</div>
+                        <ul class="tag-options">
+                          <li data-value="" <#if type??&&type ==''>class="open-selected"</#if> >全部</li>
+                           <li data-value="001" <#if type??&&type =='001'>class="open-selected"</#if> >初审</li>
+                           <li data-value="002" <#if type??&&type =='002'>class="open-selected"</#if> >复审</li>
+                           <li data-value="003" <#if type??&&type =='003'>class="open-selected"</#if> >信用额度</li>
+                           <li data-value="004" <#if type??&&type =='004'>class="open-selected"</#if> >网站垫付</li>
+                           <li data-value="005" <#if type??&&type =='005'>class="open-selected"</#if> >撤回</li>
+                        </ul>
+                    </div>
+                   
+                 
+                  
+                </div>
+                
+                <div class="toolbor-module search">
+                 <div style="height:22px;line-height:22px;float:left;">审核人姓名：</div>
+                    <input type="text" name="username" id="username" value="${username}" class="search-value">
+                
+		            <div style="height:22px;line-height:22px;float:left;margin-left: 10px;">真实姓名：</div>
+		                <input type="text" name="realname" id="realname" value="${realname}" class="search-value">
+		                  <div style="height:22px;line-height:22px;float:left;">审核项Id：</div>
+                    <input type="text" name="orderNo" id="orderNo" value="${orderid}" class="search-value">
+                    
+		                  <div style="height:22px;line-height:22px;float:left;">时间：</div>
+                    	<input class="_search-value" name="dotime1" id="dotime1" value="${dotime1!}" size="15" onclick="change_picktime()" style="float:left"/>
+                    <div style="height:22px;line-height:22px;float:left;margin:0 8px;"> 到 </div>
+                   	 <input class="_search-value" name="dotime2" id="dotime2"  value="${dotime2!}"  size="15" onclick="change_picktime()" style="float:left"/>
+                </div>
+				
+                  
+                    
+            </div>
+                            <!--工具栏--}-->
+
+                            <div id="main" class="clearfix">
+                                <form action="" method="post">
+                                    <table class="data-list">
+                                        <tr class="header">
+                                            <td>ID</td>
+                                            <td>审核人网站名</td>
+                                            <td>审核人真实姓名</td>
+                                            <td>操作类型</td>
+                                            <td>进度详情</td>
+                                            <td>备注</td>
+                                            <td>审核项Id</td>
+                                            <td>添加时间</td>
+                                        </tr>
+                                        <#list list as item>
+                                            <tr class="s">
+                                                <td>${item.id!?c}</td>
+                                                <td>
+                                                     ${item.operateUser.username!}
+                                                </td>
+                                                <td>
+                                                     ${item.operateUser.realname!}
+                                                </td>
+                                                <td><#if item.type=="001">初审<#elseif item.type=="002">复审 <#elseif item.type=="003">审核信用额度<#elseif item.type=="004">网站垫付 <#elseif item.type=="005">撤回</#if></td>
+                                                <td>${item.operateDetail!}</td>
+                                                <td id="${item.id}" style="display: none;">${item.memo}</td>
+											<td><a href="javascript:void(0);" onclick='alert(document.getElementById("${item.id}").innerHTML)'>点我查看</a></td>
+                                               <td>${item.orderNo!}</td>
+                                                <td>${item.addtime!}</td>
+                                            </tr>
+                                        </#list>
+                                    </table>
+                                </form>
+                                <!--底部工具栏--{-->
+                                <div id="bottomToolbar" class="clearfix">
+                                    <div class="other-tool">
+                                        <dl class="refresh-data">
+                                            <dt class="refresh-data-icon"></dt>
+                                            <dd><a href="javascript:void(0);" class="refresh-page">刷新数据</a></dd>
+                                        </dl>
+                                    </div>
+
+                                    <!--翻页系统--{-->
+                                    <div class="container">
+                                        <#import "../../common/page.html" as pager>
+                                            <@pager.pagination page=page url="/admin/borrow/showOperateLog.html" map=param style="style1" />
+                                    </div>
+                                    <!--翻页系统--}-->
+                                </div>
+                                  <script>
+                    var urls = '?search=true';
+                    function sousuo(){
+                        var sou = "";
+                        var username = $("#username").val();
+                        if (username!=null&&username!=""&&username!="undefine"&&username!="请输入审核用户名"){
+                            sou += "&username="+username;
+                        }
+                        var realname = $("#realname").val();
+                        if (realname!=null&&realname!=""&&realname!="undefine"&&realname!="请输入真实姓名"){
+                            sou += "&realname="+realname;
+                        }
+                        
+                        var dotime1 = $("#dotime1").val();
+                        var dotime2 = $("#dotime2").val();
+                        var account_type = $("#account_type").val();
+                       
+
+                        if (dotime1!=null && dotime1 !=""){
+                            sou += "&dotime1="+dotime1;
+                        }
+                        if (dotime2!=null && dotime2 !=""){
+                            sou += "&dotime2="+dotime2;
+                        }
+                        var type = $("#operateType").find(".open-selected").attr("data-value");
+                        
+                        var ordno = $("#orderNo").val();
+                        if (ordno!=null&&ordno !=""&&ordno !="undefine"&&ordno!="请输入审核项Id"){
+                        	 if(type ==null || type =="" || type =="undefine"){
+                             	alert("根据审核项ID搜索时，必须要选择对象的审核类型进行搜索！");
+                             	return ;
+                             }
+                        	 sou += "&orderNo="+ordno;
+                          }
+                        
+                        if(type!=null&&type!=""&&type!="undefine"){
+                        	sou += "&operateType="+type;
+                        }
+                        var url=urls+sou
+                        location.href=url;
+                    }
+                    
+                    $(function(){
+	                   	 $("#operateType").find(".tag-select").html( $("#operateType").find(".open-selected").html() );
+	                	
+               	});
+                </script>
+                 
+                 </div>
+
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+
+    </body>
+</html>
+<#include "../jsPage.html">

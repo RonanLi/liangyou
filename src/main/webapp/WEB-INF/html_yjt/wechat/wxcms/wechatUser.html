@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<#include "../common/res.html">
+	<script type="text/javascript">
+		function doSync(){
+			if(confirm("确定同步?")){
+				window.location.href='${webroot}/wx/syncWeChatUserList.html';
+			}
+		}
+	</script>
+</head>
+	
+<body class="bg">
+	<#include "../common/header.html">
+	<div class="content">
+		<div class="block-nav">
+			<#include "../common/nav.html">
+		</div>
+		<div class="block-content" >
+
+			<div class="block-content-nav">
+				<span class="title">公众号用户(粉丝)管理</span>
+			</div>
+
+			<div class="block-content-description">
+				<span>
+					管理、同步微信公众账号的用户(粉丝)（认证公众号）
+				</span>
+			</div>
+			<!--<form id="queryPageForm" action="">-->
+			<div class="block-content-content">
+				<input type="text" value="输入用户昵称" class="seach"/><a id="seach">搜索</a>
+				<input class="btn topBtn" onclick="doSync();" type="button" value="同步粉丝"/>
+				<table class="fm-table">
+					<thead>
+						<tr>
+							<td>昵称</td>
+							<td>性别</td>
+							<td>省-市</td>
+							<td>关注时间</td>
+						</tr>
+					</thead>
+					<tbody>
+						<#list list as row>
+						<#if row_index %2 == 0>
+						<tr>
+						<#else>
+						<tr style="background-color:#f9f9f9;">
+						</#if>
+							<td><a href="toReplyMessage.html?openid=${row.openid}">${row.nickname!} </a></td>
+							<td>
+								<#if row.sex == 1 >
+									男
+								<#else>
+									女
+								</#if>
+							</td>
+							<td>${row.province!}-${row.city!}</td>
+							<td>${row.subscribe_time!}</td>
+						</tr>
+						</#list>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="clearfloat"></div>
+	</div>
+	<#include "../common/footer.html">
+</body>
+<script type="text/javascript">
+	/*$('.seach').click(function () {
+		$(".seach").val("");
+	});*/
+	$("#seach").click(function () {
+		var nickname= $(".seach").val();
+		if(nickname!==""){
+			window.location.href="${webroot}/wx/getWeChatUser.html?nickname="+nickname;
+		}else{
+			window.location.href="${webroot}/wx/getWeChatUser.html";
+		}
+	});
+
+	$(".seach").keydown(function(event) {
+		var event = window.event || arguments.callee.caller.arguments[0];
+		if (event.keyCode == 13) {
+			var nickname = $(".seach").val();
+			window.location.href="${webroot}/wx/getWeChatUser.html?nickname="+nickname;
+		}
+		if($(".seach").val()==""){
+			window.location.href="${webroot}/wx/getWeChatUser.html";
+		}
+	});
+
+</script>
+</html>

@@ -1,0 +1,41 @@
+<#macro indexListItem item>
+	<#if item.isAssignment == 1>
+	 <ul class="listwidth clearfix">
+		 <li class='li1 mli1'><@showBorrowIcon item=item /><a href="${webroot}/invest/detail.html?borrowid=${item.id?c}" class="title"><#if item.name?length lt 9>${item.name}<#else>${item.name[0..8]}...</#if></a>
+			</li>
+		 <li class='li2'></li>
+		 <li class='li3'><p>${item.apr}%</p></li>
+		 <li class='li4'>${format2(item.account)}元</li>
+		 <li class='li5'>
+				<p> 
+				 	<#assign starRank=item.user.credit.findStarRank()>
+					<#if item.isday??&&item.isday==1>${item.timeLimitDay!0}天
+					<#elseif item.type==101>满标自动还款
+					<#else>${(item.timeLimit)!0}个月</#if>
+				</p>
+			</li>
+		 <li class='li6'>
+			<span class="progressbar">
+				<#if (item.accountYes/item.account*100)?floor == 99>
+				99%
+				<#else>
+				${(item.accountYes/item.account*100)}%
+			</#if></span>
+         </li>
+		 <li class='li7'>
+		<#if item.status==1&&(item.accountYes lt item.account) > 
+				<a href="${webroot}/invest/detail.html?borrowid=${item.id?c}" class="tb-action">立即投标</a>
+			<#else>
+				<a class="tb-action-gray"><#if item.status==8>停止流转<#else>流转中</#if></a>
+			</#if>
+		 </li>
+	 </ul>
+		
+	</#if>
+<script type="text/javascript">
+	
+	$(".progressbar").each(function() {
+			$(this)[0].style.backgroundPosition = '-'+parseInt($(this).text().replace("%","")) * 54+'px 0px';
+	});
+</script>
+</#macro>

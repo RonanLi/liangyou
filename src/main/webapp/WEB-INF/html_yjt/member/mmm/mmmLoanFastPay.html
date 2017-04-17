@@ -1,0 +1,33 @@
+<!--//v1.8.0.4  TGPROJECT-382 wsl 2014-08-08 start  -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>双乾三合一跳转中...</title>
+    <meta http-equiv="content-Type" content="text/html; charset=utf-8" />
+  </head>
+  <body>
+    <div>双乾三合一页面跳转中......,请您不要关闭页面</div>
+      <form action="${mmm.submitUrl}" method="post" id="frm1" style="display: none">
+		<input id="MoneymoremoreId" name="MoneymoremoreId" value="${mmm.moneymoremoreId!''}" type="hidden" />
+		<input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value="${mmm.platformMoneymoremore}" type="hidden" />
+		<input id="Action" name="Action" value="${mmm.action}" type="hidden" />
+		<input id="CardNo" name="CardNo" value="${mmm.cardNo!''}" type="hidden" />
+		<input id="WithholdBeginDate" name="WithholdBeginDate" value="${mmm.withholdBeginDate!''}" type="hidden" />
+		<input id="WithholdEndDate" name="WithholdEndDate" value="${mmm.withholdEndDate!''}" type="hidden" />
+		<input id="SingleWithholdLimit" name="SingleWithholdLimit" value="${mmm.singleWithholdLimit!''}" type="hidden" />
+		<input id="TotalWithholdLimit" name="TotalWithholdLimit" value="${mmm.totalWithholdLimit!''}" type="hidden" />
+		<input id="RandomTimeStamp" name="RandomTimeStamp" value="${mmm.randomTimeStamp!''}" type="hidden"  />
+		<input id="Remark1" name="Remark1" value="${mmm.remark1!''}" type="hidden" />
+		<input id="Remark2" name="Remark2" value="${mmm.remark2!''}" type="hidden" />
+		<input id="Remark3" name="Remark3" value="${mmm.remark3!''}" type="hidden" />
+		<input id="ReturnURL" name="ReturnURL" value="${mmm.returnURL}" type="hidden"/>
+		<input id="NotifyURL" name="NotifyURL" value="${mmm.notifyURL}" type="hidden"/>
+		<input id="SignInfo" name="SignInfo" value="${mmm.signInfo}" type="hidden"/>
+		<input type="submit" value="提交" />
+	  </form>
+    <script type="text/javascript">
+    	document.getElementById("frm1").submit();  
+    </script>
+  </body>
+</html>
+<!--//v1.8.0.4  TGPROJECT-382 wsl 2014-08-08 end  -->

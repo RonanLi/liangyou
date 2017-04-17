@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+
+<#include "../include/resource.html" />
+
+<meta name="robots" content="nofollow"/>
+
+<#assign nid="invest" />
+<link rel="stylesheet" href="${webroot}${theme_dir}/member/experienceMoney/css/moneyActive.css" type="text/css"/>
+<#include "../include/header.html" />
+<#include "../common/function.html" />
+<#assign user=borrow.user />
+
+<body>
+
+<div id="container" style="margin-top: 25px;">
+    <#assign account=user.account />
+
+    <!-- 标的详细信息:begin -->
+    <div class="detail-wrap">
+        <div class="detail-title">
+            <b><#if borrow.name?length lt 30>${borrow.name}<#else>${borrow.name[0..30]}...</#if> <@showBorrowIcon item=borrow /></b>
+        </div>
+        <div class="invest-detail">
+            <input type="hidden" id="borrow-id" value="${borrow.id}">
+            <ul class="bid-info clearfix">
+                <li>
+                    <span class="title">年化利率</span>
+                    <span class="number">${borrow.apr}%</span>
+                </li>
+                <li>
+                    <span class="title">借款金额</span>
+                    <span class="number">${borrow.viewMoney?string(",###")}元</span>
+                </li>
+                <li>
+                    <span class="title">借款期限</span>
+                    <span class="number"><#if borrow.isday??&&borrow.isday==1>${borrow.timeLimitDay!0}天<#else>${(borrow.timeLimit)!0}个月</#if></span>
+                </li>
+                    <li class="cf">
+
+                            <form action="${webroot}/borrow/tender.html" name="form1" method="post" autocomplete="off">
+                                <div class="remain-amount">
+	                                <span>体验金总金额：<b><#if em??>${em.experienceMoney}<#else>0</#if>元</b></span>
+	                                <span>预期收益：<b><#if em??>5<#else>0</#if>元</b></span>
+                                </div>
+                                <div class="fl">
+                                    <a href="javascript:" class="change-amount" id="decrease">-</a>
+                                    <#if em?exists && em.useStatus == 0 >
+                                        <input type="text" id="money" name="money" value="${em.experienceMoney!}" readonly tabindex=1>
+                                    <#else>
+                                        <input type="text" id="money" name="money" value="0" readonly tabindex=1>
+                                    </#if>
+                                    <a href="javascript:" class="change-amount" id="add">+</a>
+                                </div>
+                                <div class="fl">
+                                    <#if borrow.status == 1>
+	                                    <#if borrow.accountYes gt borrow.account || borrow.accountYes == borrow.account>
+	                						<a class="btn-invest bid-full" style="cursor:default;background:#aaa;margin-top:10px;">已满标</as>
+	                					<#else>
+	                                        <#if session_user??>
+	                                            <a class="btn-invest" onclick="formSub();" style="cursor:pointer;margin-top:10px;">确认投标</a>
+	                                        <#else>
+	                                            <a href="/user/login.html" class="please-login">请先登录</a>
+	                                        </#if>
+	                                    </#if>
+                                    <#elseif borrow.status == 8>
+                                        <a class="bid-full btn-invest" style="margin-top:10px;">已完成</a>
+                                    <#elseif borrow.status == -1>
+                                        <a class="bid-full btn-invest" style="margin-top:10px;">已撤回</a>
+                                    <#elseif borrow.status == 2>
+                                        <a class="bid-full btn-invest" style="margin-top:10px;">初审未通过</a>
+                                    <#elseif borrow.status == 4 ||  borrow.status == 49>
+                                        <a class="bid-full btn-invest" style="margin-top:10px;">初审未通过</a>
+                                    <#elseif borrow.status == 5>
+                                        <a class="bid-full btn-invest" style="margin-top:10px;">用户取消</a>
+                                    <#elseif borrow.status == 0>
+                                        <a class="bid-full btn-invest" style="margin-top:10px;">等待初审</a>
+                                    <#else>
+                                        <a class="bid-full btn-invest" style="margin-top:10px;">已经满标</a>
+                                    </#if>
+                                </div>
+                                <p><input type="hidden" name="id" value="${((borrow.id)?default(0))?c}"/></p>
+                            </form>
+
+                        <#if borrow.award??&&borrow.award==1><span class="award">${(borrow.partAccount)!0}% 投标奖励</span>
+                            <#elseif borrow.award??&&borrow.award==2><span class="award">${(borrow.funds)!0}元 投标奖励</span>
+                        </#if>
+                    </li>
+
+            </ul>
+
+        </div>
+    </div>
+    <!-- 标的详细信息:end -->
+
+    <div class="clearfix"></div>
+
+    <!-- 选项卡内容begin -->
+    <div id="detail-tab">
+        <ul id="tab" class="list-tab-invest clearfix">
+            <li class="active"><a href="###" data-toggle="tab">借款详细说明</a></li>
+            <li><a href="###" data-toggle="tab">安全保障措施</a></li>
+            <li><a href="###" data-toggle="tab">投标记录</a></li>
+        </ul>
+        <div id="myTabContent">
+
+            <!-- 借款详情:begin -->
+            <div class="tab-pane" style="display: block;">
+                <div class="borrow-content">
+	                <div class="money-detail">
+	                	<h1></h1>
+	                	<div>
+                            <p>1. 体验金有效期15天，可在【我的账户】-【奖励管理】中查看，用户须在有效期内参与体验标，逾期不能使用；</p>
+                            <p>2. 用户参与体验金活动须完成平台安全认证，体验金不能提现，体验标到期后平台将收回本金，体验金利息收益将发至【我的账户】-【奖励管理】-【我的体验金管理】中；</p>
+                            <p>3. 体验金利息收益不可直接提现，可作为投资本金使用（有效期15天），用于购买平台任一定期理财产品（不含购买债权转让）。</p>
+                            <p>注：本活动最终解释权归金和所所有，如有疑问，欢迎致电金和所客服热线：400-900-5591（工作时间：周一至周五9:00—18:00）。</p>
+                        </div>
+	                </div>
+                    <div class="outer">
+                        <div class="card f">
+                            <h1>体验金是什么？</h1>
+                            <div>
+                                <p>体验金理财产品是金和所提供给平台用户进行投资体验的产品，该产品仅支持用体验金购买，体验金理财产品为一次性投资且到期后平台收回本金，利息归用户所有，可作投资本金使用购买平台任一定期理财产品（不含购买债权转让）。</p>
+                            </div>
+                        </div>
+                        <div class="card f re">
+                            <h1>如何获得体验金？</h1>
+                            <div>
+                                <p>活动期间，新老用户完成注册或登录后体验金将直接发放给用户，用户可在<a class="sq" href="/member/index.html">【我的账户】</a>-<a class="sq" href="/experienceMoney/myExperienceMoney.html">【我的体验金】</a>中查看</p>
+                            </div>
+                        </div>
+                        <div class="card f">
+                            <h1>如何购买体验金理财产品？</h1>
+                            <div>
+                                <p>用户必须完成平台安全认证方可购买体验金理财产品，体验金仅限定购买指定产品，体验金有效期为15天，过期将不能使用，请在有效期内购买指定体验金理财产品</p>
+                            </div>
+                        </div>
+                        <div class="card f re">
+                            <h1>如何获取体验金利息收益？</h1>
+                            <div>
+                                <p>体验金理财产品利息收益将在用户购买平台指定体验金理财产品到期后发放，体验金利息收益可在<a class="sq" href="/member/index.html">【我的账户】</a>-<a class="sq" href="/experienceMoney/myExperienceMoney.html">【我的体验金】</a>中查看 </p>
+                            </div>
+                        </div>
+                        <div class="card f re">
+                            <h1>体验金和利息收益可以提现吗？</h1>
+                            <div>
+                                <p>体验金不能提现，用户购买指定体验金理财产品，投资到期后平台将收回本金，体验金利息收益可作为投资本金使用，用于购买平台任一定期理财产品（不含购买债权转让），体验金利息收益有效期为15天，过期将不能使用，请在有效期内尽快完成投资</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 借款详情:end -->
+
+            <!-- 安全保障:begin -->
+            <div class="tab-pane hide">
+                <div class="container">
+                    <img src="/themes/soonmes_yjt/liangyou/imgs/xp1.jpg" alt="点击刷新" style="margin-bottom: 10px;"/>
+                    <div class="outer">
+                        <div class="card f show">
+                            <h1>&nbsp;合规性多重资金担保</h1>
+                            <div>
+                                <div>
+                                    <p>京朋国际集团（香港）有限公司由董事局主席李柄江先生创办，于2001年成立福建永榕集团。李柄江先生不断依据国家大政方针，敏锐调整企业发展宏观战略，带领企业历时17载春秋，砥砺前行，如今集团业务已经辐射中国大陆、香港及东南亚等国际市场，企业成长为一家横跨电力、地产、国际贸易、金融、大农业等多领域的集团公司。 </p>
+                                    <p>2016年8月，集团公司正式进军北京，成立京朋（北京）贸易集团有限公司，隶属于京朋国际集团（香港）有限公司，负责中国大陆市场的整体运营，将严格遵循董事局战略方针，保证企业在中国大陆市场高效、有序运营，并取得快速、迅猛发展，力争把京朋打造成为国际一流企业及知名品牌。</p>
+                                    <p>宏京担保有限公司是经中华人民共和国国家工商行政总局批准登记注册的一家专业担保公司。注册资金10,100.00万人民币。经国家金融局工作核准颁发获得《中华人民共和国担保机构经营许可证》。 </p>
+                                </div>
+                                <img src="/themes/soonmes_yjt/liangyou/imgs/xpd6.png" alt="点击刷新" width="250"/>
+                            </div>
+                        </div>
+                        <div class="card f  re">
+                            <h1>&nbsp;资金安全</h1>
+                            <div>
+                                <p class="lef">金和所用户的理财资金是与业内领先的第三方支付公司<span class="sq">双乾</span>进行合作，保证资金流转不经过金和所的银行账户，避免资金流入平台的银行账户形成资金池，导致资金池内资金被挪用而给交易双方带来的风险。</p>
+                                <img src="/themes/soonmes_yjt/liangyou/imgs/xpd3.jpg" alt="点击刷新"/>
+                            </div>
+                        </div>
+                        <div class="card f">
+                            <h1>&nbsp;账户安全保障金</h1>
+                            <div>
+                                <p class="lef">据招商银行出具的最新报告显示，截至2016年12月1日，金和所的账户安全保障金更新增至为人民币<span class="sq">60414266.02</span>元，风向准备金成功突破6000万大关。。</p>
+                                <img src="/themes/soonmes_yjt/liangyou/imgs/xpd2.jpg" alt="点击刷新"/>
+                            </div>
+                        </div>
+                        <div class="card f re">
+                            <h1>&nbsp;全链条风控</h1>
+                            <div class="justimg">
+                                <img src="/themes/soonmes_yjt/liangyou/imgs/xpq5.jpg" alt="点击刷新"/>
+                            </div>
+                        </div>
+                        <div class="card f re">
+                            <h1>&nbsp;项目保障</h1>
+                            <div class="justimg ep">
+                                <p>所有项目均由金和所风控部和风审会进行严格审核。一个优质项目的诞生，要经过8道审核工序，37层严格筛选，层层剥离风险敞口。</p>
+                                <img src="/themes/soonmes_yjt/liangyou/imgs/xpq10.jpg" alt="点击刷新"/>
+                            </div>
+                        </div>
+                        <div class="card f re">
+                            <h1>&nbsp;机构保障</h1>
+                            <div class="justimg xrr">
+                                <img src="/themes/soonmes_yjt/liangyou/imgs/xpdq29.jpg" alt="点击刷新"/>
+                                <h2>合作保障机构</h2>
+                                <p>金和所有一套完善的保障机构评估体系，从区域地位、体量、历史、股东背景、风控水平、处置能力等多方面对机构进行考察。目前金和所已与全国80多家保障机构达成战略合作。保障机构不仅从贷前会对项目进行调研及风险评估，也会与金和所一起进行贷后管理。</p>
+                                <h2>本息保障制度</h2>
+                                <p>为了给投资人营造安全的投资环境，保证投资人的本息安全，保障机构会对投资人的本息提供保障，当投资项目出现企业无力偿还的情况，保障机构会进行全额赔付，保护投资人权益。</p>
+                            </div>
+                        </div>
+                        <div class="card f seven">
+                            <h1>&nbsp;合规保障</h1>
+                            <div class="topb">
+                                <h3>信息披露真实合规</h3>
+                                <p>金和所建立了专业的风控团队对项目进行全方位尽职调查，确保信息的真实性和合法性。并且将项目信息、借款企业情况公开透明，投资人可根据项目信息进行风险判断，进行自主投资。</p>
+                                <img src="/themes/soonmes_yjt/liangyou/imgs/qp8.jpg" alt="点击刷新" style="margin-top: -58px;"/>
+                            </div>
+                            <div class="rpox">
+                                <p><strong>资金流转安全保障</strong>为最大程度的保障投资人的账户资金安全，资金的流转并不经过金和所平台，资金由第三方资产公司进行托管，实现了平台与资金的真正隔离，确保交易的真实性和投资人的资金安全。</p>
+                                <img src="/themes/soonmes_yjt/liangyou/imgs/qp9.jpg" alt="点击刷新"/>
+                            </div>
+                            <div>
+                                <h3>CFCA安全认证</h3>
+                                <p>中国金融认证中心简称CFCA，是经中国人民银行和国家信息安全管理机构批准成立的国家级权威的安全认证机构。金和所作为业内首家通过CFCA安全认证的互联网金融平台，您的每一次投资都由CFCA对网络交易及电子合同安全上锁。</p>
+                                <img src="/themes/soonmes_yjt/liangyou/imgs/qp10.jpg" alt="点击刷新"/>
+                            </div>
+                            <div class="rpox">
+                                <p><strong>法律法规保障</strong>金和所与傲雪律师事务所进行合作，律所起草并审核金和所所有主营业务合同，制定充分保护投资人利益的条款；律所监督审核金和所对融资项目的尽职调查工作，确保尽调合规性、合法性、合理性。</p>
+                                <img src="/themes/soonmes_yjt/liangyou/imgs/qp11.jpg" alt="点击刷新"/>
+                            </div>
+                        </div>
+                        <div class="card f re">
+                            <h1>&nbsp;技术保障</h1>
+                            <div class="justimg ep">
+                                <p>技术层面，我们秉承用户的数据就是我们生命线的原则，通过多种防护手段保障用户数据安全，包括但不限于：</p>
+                                <img src="/themes/soonmes_yjt/liangyou/imgs/sjjj.jpg" alt="点击刷新"/>
+                            </div>
+                        </div>
+                        <div class="card f re none">
+                            <h1>&nbsp;自我保障</h1>
+                            <div class="justimg ep">
+                                <p>账户安全需要大家和金和所的共同努力。在此，我们倡导在网站使用过程中，注意以下几点：</p>
+                                <ul class="ulr" style="margin-left: 38px;">
+                                    <li>
+                                        <div class="pad-r"> 牢记金和所官方网址：www.jinhefax.com
+                                            <div>不要点击来历不明的链接访问金和所，谨防网站钓鱼和欺诈。我们建议您将金和所官方网址加入浏览器收藏夹，以方便您的下次登录。</div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="pad-r">设置高强度的密码
+                                            <div>在设置登录密码和安全密码时，密码不要有一定的规律,密码长度要在6位以上，最好是数字和字母结合。定期修改密码并且不要将密码分享给他人。</div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="pad-r">设置紧急联系人
+                                            <div>在“我的账户 – 安全设置”中设置紧急联系人信息。当出现紧急情况，如果我们无法与您联系，我们将与您设置的紧急联系人联系。</div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="pad-r">不要在公共场所登录
+                                            <div>不要在网吧、公司等公共场所登录您的金和所账号，如果一定要登录请记得退出。</div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="pad-r">注重电脑运行环境的安全
+                                            <div>及时为您的电脑进行系统更新、安装安全补丁，以防系统漏洞被黑客利用。为您的电脑安装杀毒软件或防火墙，并定期为电脑进行查毒、杀毒。</div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 借款人资料:end -->
+            <!-- 安全保障:end -->
+
+            <!-- 投标记录:begin -->
+            <div class="tab-pane hide" id="tbinfo">
+                <ul class="clearfix" id="tbjlbox"></ul>
+                <div class="page">
+                    <div class="wp-page cf">
+                        <a href="javascript:" class="btn-prev">&lt;</a>
+                        <dl class="list-btn-page cf"></dl>
+                        <a href="javascript:" class="btn-next">&gt;</a>
+                    </div>
+                </div>
+            </div>
+            <!-- 投标记录:end -->
+
+            <!-- 借还款记录:begin -->
+            <div class="tab-pane hide">
+                <h1 class="tab-content-title">借还款记录</h1>
+                <#if borrow?? && borrow.openBorrow==1>
+                    <ul class="repay-detail clearfix">
+                        <li>借款总额：￥${(summary.borrowTotal)!0}元</li>
+                        <li>已还款总额：￥${(summary.yesRepayTotal)!0}元</li>
+                        <li>待还款总额：￥${(summary.repayTotal)!0}元</li>
+                        <li>逾期总额：￥${(summary.lateTotal)!0}元</li>
+                        <li>借款成功：${(summary.borrowTimes)!0} 次</li>
+                        <li>待还款期数： ${summary.waitRepayCount!0}期</li>
+                        <li>已成功还款： ${summary.hadRepayCount!0}期</li>
+                    </ul>
+                    <#else><p style="line-height: 30px; color: #777; font-size: 14px; padding: 10px 0;">借款人未选择公开借款详情</p>
+                </#if>
+            </div>
+            <!-- 借还款记录:end -->
+        </div>
+    </div>
+    <!-- 选项卡内容end -->
+</div>
+
+<#include "../include/footer.html" />
+
+</body>
+<script type="text/javascript">
+
+    function formSub() {
+        var frm = document.forms['form1'];
+        frm.submit();
+    }
+
+    Date.prototype.format = function (format) {
+        var o = {
+            "M+": this.getMonth() + 1, //month
+            "d+": this.getDate(), //day
+            "h+": this.getHours(), //hour
+            "m+": this.getMinutes(), //minute
+            "s+": this.getSeconds(), //second
+            "q+": Math.floor((this.getMonth() + 3) / 3), //quarter
+            "S": this.getMilliseconds() //millisecond
+        }
+        if (/(y+)/.test(format))
+            format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(format))
+                format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+        return format;
+    }
+    function format(pnumber, decimals) {
+        if (isNaN(pnumber)) {
+            return 0
+        }
+        ;
+        if (pnumber == '') {
+            return 0
+        }
+        ;
+        var snum = new String(pnumber);
+        var sec = snum.split('.');
+        var whole = parseFloat(sec[0]);
+        var result = '';
+        if (sec.length > 1) {
+            var dec = new String(sec[1]);
+            dec = String(parseFloat(sec[1]) / Math.pow(10, (dec.length - decimals)));
+            dec = String(whole + Math.round(parseFloat(dec)) / Math.pow(10, decimals));
+            var dot = dec.indexOf('.');
+            if (dot == -1) {
+                dec += '.';
+                dot = dec.indexOf('.');
+            }
+            while (dec.length <= dot + decimals) {
+                dec += '0';
+            }
+            result = dec;
+        } else {
+            var dot;
+            var dec = new String(whole);
+            dec += '.';
+            dot = dec.indexOf('.');
+            while (dec.length <= dot + decimals) {
+                dec += '0';
+            }
+            result = dec;
+        }
+        return result;
+    }
+
+    var pageTotal = -1;
+    var pageCount = 0;
+
+    showTenderList(1);
+
+    function showTenderList(pagenum) {
+        jQuery.extend({
+            detailTenderPage: function (options) {
+                var defaults = {
+                    param: {},
+                    currentPage: 1,
+                    url: "",
+                    callback: {}
+                };
+                var opts = $.extend(defaults, options);
+                opts.param.page = defaults.currentPage;
+                $.get(defaults.url, defaults.param, defaults.callback);
+            }
+        });
+        $.detailTenderPage({
+            param: {borrowid:${borrow.id}},
+            currentPage: pagenum,
+            url: 'detailTenderForJson.html',
+            callback: function (result) {
+                var databox = $("#tbjlbox");
+                var strs =  '<li class="title clearfix">' +
+                            '   <div>投资人</div>' +
+                            '   <div>年化收益</div>' +
+                            '   <div>投资金额</div>' +
+                            '   <div>有效金额</div>' +
+                            '   <div>投资时间</div>' +
+                            '</li>';
+                var strlenght = result.data.list.length;
+                if (pageTotal < 0) {
+                    pageTotal = result.data.page.pages;//分页数
+                    pageCount = pageTotal;
+                }
+                for (var i = 0; i < strlenght; i++) {
+                    strs += "<li class='clearfix'>" +
+                            "   <div>" + result.data.list[i].user.username + "</div>" +
+                            "   <div>" + "${borrow.apr}%" + "</div>" +
+                            "   <div style='color:#ca9b5a'>￥" + result.data.list[i].money + "</div>" +
+                            "   <div style='color:#ca9b5a'>￥" + result.data.list[i].account + "</div>" +
+                            "   <div>" + new Date(result.data.list[i].addtime).format("yyyy-MM-dd hh:mm:ss") + "</div>" +
+                            "</li>";
+                }
+                databox.html(strs);
+                console.log('do');
+                showTenderPage(pagenum);
+            }
+        });
+    }
+
+    function showTenderPage(pagenum) {
+        var firstBtn = '<dd><a href="javascript:void(0);" onclick = showTenderList(1);>1</a></dd>';
+        var lastBtn = '<dd><a href="javascript:showTenderList(' + pageCount + ')">' + pageCount + '</a></dd>';
+        var minIndexBtn;
+        var maxIndexBtn;
+        var omitSymbol = '<dd class="omit-symbol">...</dd>';
+        var currentIndex = pagenum;
+
+        $('.list-btn-page').empty();
+        if (pageCount <= 1) {
+            $('.wp-page').parent().remove();
+        }
+
+        if (pageCount <= 7) {
+            for (var i = 1; i <= pageCount; i++) {
+                var pageBtn = '<dd><a href="javascript:showTenderList(' + i + ')">' + i + '</a></dd>';
+                $('.list-btn-page').append(pageBtn);
+            }
+        } else {
+            if (currentIndex >= 5) {
+                if (currentIndex + 2 >= pageCount) {
+                    minIndexBtn = pageCount - 5;
+                    maxIndexBtn = pageCount - 1
+                } else {
+                    minIndexBtn = currentIndex - 2;
+                    maxIndexBtn = currentIndex + 2;
+                }
+            } else {
+                minIndexBtn = 2;
+                maxIndexBtn = 6;
+            }
+            $('.list-btn-page').append(firstBtn);
+            // 如果minIndexBtn大于2，在首页按钮后面插入一个省略号
+            if (minIndexBtn > 2) {
+                $('.list-btn-page').append(omitSymbol);
+            }
+            for (var i = minIndexBtn; i <= maxIndexBtn; i++) {
+                var pageBtn = '<dd><a href="javascript:showTenderList(' + i + ')">' + i + '</a></dd>';
+                $('.list-btn-page').append(pageBtn);
+            }
+            if (maxIndexBtn < pageCount - 1) {
+                $('.list-btn-page').append(omitSymbol);
+            }
+            $('.list-btn-page').append(lastBtn);
+        }
+
+        $('.list-btn-page dd').children('[href="javascript:showTenderList(' + currentIndex + ')"]').addClass('current');
+    }
+
+    $('.btn-prev').bind('click', function () {
+        var currentIndex = parseInt($('.list-btn-page dd a.current').text());
+        currentIndex > 1 ? showTenderList(currentIndex - 1) : '';
+    });
+    $('.btn-next').click(function () {
+        var currentIndex = parseInt($('.list-btn-page dd a.current').text());
+        currentIndex < pageCount ? showTenderList(currentIndex + 1) : '';
+    });
+
+</script>
+
+<#if isBlackFriend??&&isBlackFriend==1 >
+    <script> alert('本标借款者已存在您的好友黑名单中，请谨慎投资!'); </script>
+</#if>
+
+<script type="text/javascript" src="${request.getContextPath()}${theme_dir}/media/js/jquery.fancybox-1.3.1.pack.js"></script>
+<link rel="stylesheet" type="text/css" href="${request.getContextPath()}${theme_dir}/media/css/fancybox.css">
+
+<script type="text/javascript">
+    $(function () {
+        $("a[rel=group]").fancybox({
+            'titlePosition': 'over',
+            'cyclic': true,
+            'titleFormat': function (title, currentArray, currentIndex, currentOpts) {
+                return '<span id="fancybox-title-over">' + (currentIndex + 1) + ' / ' + currentArray.length + (title.length ? ' &nbsp; ' + title : '') + '</span>';
+            }
+        });
+    });
+</script>
+
+
+<script type="text/javascript" src="http://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $('.card').on('click', 'h1', function () {
+            if ($(this).parent().hasClass('show')) {
+                $(this).parent().removeClass('show');
+            } else {
+                $(this).parent().addClass('show');
+            }
+
+        });
+    });
+</script>
+
+</html>

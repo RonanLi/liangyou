@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 ">
+<#assign webroot=request.getContextPath()>
+<#assign nid="member" >
+<#include "../../include/resource.html">
+<#include "../../common/function.html">
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+
+<body>
+
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="userRightMenu">
+                <#include "personalCenterMenu.html">
+            </div>
+            <div class="rightDiv">
+                <div class="houseData">
+                    <div class="reminder">请填写你个人的房产资料相关信息</div>
+                    <form action="" name="form1" method="post" >
+
+                        <div class="fromBox">
+                            <div class="boxTxt">房产地址：</div>
+                            <div class="boxIpt"><input type="text" maxlength="20"size="30" name="houseAddress" value="<#if info?exists&&info.houseAddress?exists>${info.houseAddress}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">建筑面积：</div>
+                            <div class="boxIpt"><input type="text" maxlength="20" size="25" name="houseArea" value="<#if info?exists&&info.houseArea?exists>${info.houseArea?c}</#if>"/> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">建筑年份：</div>
+                            <div class="boxIpt"><input type="text" size="25" maxlength="20" name="houseYear" value="<#if info?exists&&info.houseYear?exists>${info.houseYear?string('yyyy-MM-dd')}</#if>" onclick="change_picktime()" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">供款状况：</div>
+                            <div class="boxIpt"><input type="text" size="25" maxlength="20" name="houseStatus" value="<#if info?exists&&info.houseStatus?exists>${info.houseStatus?c}</#if>" /> 元 </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">所有权人1：</div>
+                            <div class="boxIpt"><input type="text" size="25" maxlength="20" name="houseHolder1" value="<#if info?exists&&info.houseHolder1?exists>${info.houseHolder1}</#if>" /></div>
+                        </div>
+
+                       <div class="fromBox">
+                           <div class="boxTxt">产权份额：</div>
+                            <div class="boxIpt"><input type="text" maxlength="20" size="25" name="houseRight1" value="<#if info?exists&&info.houseRight1?exists>${info.houseRight1?c}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">所有权人2：</div>
+                            <div class="boxIpt"><input type="text" size="25" maxlength="20"  name="houseHolder2" value="<#if info?exists&&info.houseHolder2?exists>${info.houseHolder2}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">产权份额：</div>
+                            <div class="boxIpt"><input type="text" maxlength="20" size="25" name="houseRight2" value="<#if info?exists&&info.houseRight2?exists>${info.houseRight2?c}</#if>" /></div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="text">若房产尚在按揭中, 请填写</div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">借款年限：</div>
+                            <div class="boxIpt"><input type="text" maxlength="20" size="10" name="houseLoanyear" value="<#if info?exists&&info.houseLoanyear?exists>${info.houseLoanyear?c}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">每月供款：</div>
+                            <div class="boxIpt"><input type="text" maxlength="20" size="10" name="houseLoanprice" value="<#if info?exists&&info.houseLoanprice?exists>${info.houseLoanprice?c}</#if>" /> 元 </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">尚欠借款余额：</div>
+                            <div class="boxIpt"><input type="text" size="25" maxlength="20" name="houseBalance" value="<#if info?exists&&info.houseBalance?exists>${info.houseBalance?c}</#if>" /> 元 </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">按揭银行：</div>
+                            <div class="boxIpt"><input type="text" maxlength="20" size="25" name="houseBank" value="<#if info?exists&&info.houseBank?exists>${info.houseBank}</#if>" /> </div>
+                        </div>
+
+                        <script>
+                            function change_type(type){
+                                if (type==2){
+                                    $("#type_net").addClass("dishide");
+                                    $("#type_now").removeClass();
+                                }else{
+                                    $("#type_now").addClass("dishide");
+                                    $("#type_net").removeClass();
+                                }
+
+                            }
+                        </script>
+
+                        <div class="fromBox">
+                            <div class="boxTxt"></div>
+                            <div class="boxIpt"><input type="submit" class="btn-action"  value="确认提交" size="30" /></div>
+                        </div>
+
+                <input type="hidden" name="type" value="building" />
+                </form>
+                    <div class="notes"> * 温馨提示：我们将对所有的信息进行保密</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<#include "../../include/footer.html">
+    <script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"> </script>
+</html>

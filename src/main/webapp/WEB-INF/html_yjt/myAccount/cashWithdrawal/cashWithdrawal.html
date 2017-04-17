@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html">
+<body>
+<#assign mid="m_account" >
+<#assign nid="member">
+<#include "../../common/function.html">
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+    <!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="rightDiv">
+                <div class="asset">
+                    <div class="assetLeft">
+                        <#if param?exists>
+                            <#if param.get("summary")?exists><#assign summary=param.summary!''></#if>
+                        </#if>
+                        <h1><span>￥</span>${ceil(summary.accountTotal!0)}</h1>
+                        <p>账户总额(元)</p>
+                        <div class="assetBtn">
+                            <a href="${webroot}/member/myAccount/recharge.html">充值</a>
+                            <a href="${webroot}/invest/index.html?status=11">投资</a>
+                            <a href="${webroot}/member/myAccount/withdrawals.html">提现</a>
+                        </div>
+                    </div>
+                    <div class="assetRight">
+                        <div class="bank">
+                            <a class="plus" href="${webroot}/member/myAccount/bindBank.html">+</a>
+                            <a href="${webroot}/member/myAccount/bindBank.html">添加银行卡</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rightDiv">
+                <h1><span>资金记录</span></h1>
+                <div class="cashWithdrawal">
+                    <#if param?exists>
+                        <#if param.get("dotime1")?exists><#assign dotime1=param.dotime1!''></#if>
+                        <#if param.get("dotime2")?exists><#assign dotime2=param.dotime2!''></#if>
+                        <#if param.type?exists><#assign account_type=param.type></#if>
+                    </#if>
+                    <div class="user_main_title well">
+                        记录时间：
+                        <input type="text" name="dotime1" id="dotime1" value="${dotime1}" onKeyUp="value=value.replace(/[^0-9/-]/g,'')" size="20" onClick="change_pickdate_time()"/>
+                        到
+                        <input type="text"  name="dotime2" value="${dotime2}" id="dotime2" onKeyUp="value=value.replace(/[^0-9/-]/g,'')" size="20" onClick="change_pickdate_time()"/>
+                        <#if account_type?exists>
+                            <@linkage name="account_type" id="account_type" class="account_type" nid="account_type" type="value" default=account_type noselect="全部"/>
+                            <#else>
+                                <@linkage name="account_type" id="account_type" class="account_type" nid="account_type" type="value" noselect="全部"/>
+                        </#if>
+                        <input value="搜索" type="submit" class="btn-action" onClick="sousuo();" style="height:25px;width: 160px;line-height:25px;margin-left: 20px;"/>
+                    </div>
+                    <ul>
+                        <li>
+                            <div>类型</div>
+                            <div>操作金额</div>
+                            <div>总金额</div>
+                            <div>可用金额</div>
+                            <div>冻结金额</div>
+                            <div>待收金额</div>
+                            <!--<div>待还金额</div>-->
+                            <!--<div>交易对方</div>-->
+                            <div>记录时间</div>
+                            <div>备注信息</div>
+                        </li>
+                        <#list list as item>
+                            <li>
+                                <div>${accountType(item.type,'account_type').name!"错误类型!"}</div>
+                                <div>￥${item.money}</div>
+                                <div>￥${item.total}</div>
+                                <div>￥${item.useMoney}</div>
+                                <div>￥${item.noUseMoney}</div>
+                                <div>￥${item.collection}</div>
+                                <!--<div>￥${item.repay}</div>-->
+                                <!--<div>
+                                    <#if item.type??&&item.type=='recharge'>-
+                                        <#elseif item.type??&& (item.type?index_of('cash_')>-1)>-
+                                        <#else>
+                                            <#if item.toUser.userId == 1>${webname}
+                                                <#else>${item.toUser.username!}
+                                            </#if>
+                                    </#if>
+                                </div>-->
+                                <div>${item.addtime}</div>
+                                <div><p>${item.remark!""}</p></div>
+                            </li>
+                        </#list>
+                        <li>
+                            <div id="page">
+                                <#import "../../common/page.html" as pager>
+                                    <@pager.pagination page=page url="/member/myAccount/cashWithdrawal.html" map=param style="style3"/>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+<#include "../../include/footer.html">
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"></script>
+</html>

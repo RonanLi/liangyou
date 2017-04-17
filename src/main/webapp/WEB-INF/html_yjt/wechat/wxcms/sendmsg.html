@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-Type" content="text/html; charset=utf-8" />
+	<#include "../common/res.html">
+</head>
+
+<body class="bg">
+<#include "../common/header.html">
+	<div class="content">
+		<div class="block-nav">
+			<#include "../common/nav.html">
+		</div>
+
+		<div class="block-content" >
+			<div class="block-content-nav">
+				<span class="title">发送消息</span>
+			</div>
+
+			<div class="block-content-description">
+				<span>
+					给微信用户发送消息：客服消息、模板消息、群发消息。客服消息，请确保24小时之内给微信公众号发送过消息才有效。 <br/>
+				</span>
+			</div>
+
+			<div class="block-content-content">
+                <div class="reply">
+                        <ul id="replyType" class="tabList"> <li class="cur">文本回复</li><li>图文回复</li> <li>语音回复</li><li>模板回复</li> </ul>
+                        <h2>用户昵称：<span>${weChatMsg.userName}</span></h2>
+                        <div>
+                            <div class="on replyMsg">
+                                <form action="${webroot}/wx/sendCustomTextMsg.html" method="post">
+                                    <input type="hidden" name='msgid' value='${weChatMsg.id}'/>
+                                    <input type="hidden" name='openid' value='${weChatMsg.openid}'/>
+                                    <input type="hidden" name='userName' value='${weChatMsg.userName}'/>
+                                    <!--<p>回复内容：<input type="text" name='messageContent'/></p>-->
+                                    <p>回复内容：</p>
+                                    <p><textarea name='messageContent'></textarea></p>
+                                    <input type="submit" value="发送" class="btn"/>
+                                    <input type="reset" class="btn">
+                                </form>
+                            </div>
+                            <!--图文回复-->
+                            <div class="replyMsg">
+                                <form action="">
+                                    <p>回复内容：</p>
+                                    <#include "../../common/ueditor.html">
+                                    <@showUeditor width=680 heigth=200 id="content" name="weChatGraphicMsg.content" content="${weChatGraphicMsg.content!}" />
+                                    <input type="submit" value="发送" class="btn"/>
+                                </form>
+                            </div>
+                            <!--语音回复-->
+                            <div class="replyMsg">
+                                <form action="">
+                                    <p>语音回复尚未完成</p>
+
+                                </form>
+                            </div>
+                            <!--模板回复-->
+                            <div class="replyMsg">
+                                <form action="${webroot}/wxapi/sendTemplateMessage.html">
+                                    <input type="hidden" name='msgid' value='${weChatMsg.id}'/>
+                                    <input type="hidden" name='openid' value='${weChatMsg.openid}'/>
+                                    <p>模板消息：<input name="openid" id="id_msgIds" onclick="getMsgs()"/><input type="button" value="选择" class="choose" onclick="getMsgs()"></p>
+                                    <input type="submit" value="发送" class="btn"/>
+                                    <input type="reset" class="btn">
+                                </form>
+                            </div>
+                        </div>
+						<!--TODO 群发功能-->
+						<!--<div class="replyMsg" style="margin-top:10px;">
+							群发文本消息(时间有延迟)
+						</div>
+						<div>
+							<form action="${webroot}/wxapi/massSendTextMsg.html" method="post">
+								openid：<input name="openid" style="width:250px;"/>
+								<input type="submit" value="发送" class="btn"/>
+								<input type="button" class="btn" value="添加收件人"onclick="getMsgs()">
+							</form>
+						</div>-->
+					</div>
+			</div>
+
+		</div>
+
+		<div class="clearfloat"></div>
+	</div>
+	<div id="id_msgs" class="layer">
+		<iframe id="id_msgs_frame" style="width:100%;height:100%;border:none;" src="${webroot}/wx/getCustomTMMsg.html">
+		</iframe>
+	</div>
+	<#include "../common/footer.html">
+    <script>
+
+    </script>
+</body>
+</html>

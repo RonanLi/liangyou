@@ -1,0 +1,22 @@
+<div class="nav-oneself">
+	<div class="nav-visitors-item">
+			<h1>抽奖管理</h1>
+			<ul class="visitors-block hidden">
+				<li><a class="v" href="${request.getContextPath()}/admin/lottery/lotteryDetail.html" id="lotteryList" data-nav="lotteryDetail.html">抽奖用户查询</a></li>
+			</ul>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	function panduan(){
+		$('.visitors-block li a').each(function(){
+			if($($(this))[0].href==String(window.location)){
+	            $(this).parents('.nav-visitors-item').addClass("active");
+	            $(this).addClass('current');
+	        }
+			else{}
+		})
+	}
+	panduan();
+})
+</script>

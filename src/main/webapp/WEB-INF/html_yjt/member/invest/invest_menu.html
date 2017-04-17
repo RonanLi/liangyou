@@ -1,0 +1,10 @@
+<ul class="list-tab clearfix">
+	<li <#if invest_type?exists&&invest_type=="tendering">class="cur"</#if>><a href="${webroot}/member/invest/tendering.html">招标中的项目</a></li>
+	<li <#if invest_type?exists&&invest_type=="hasTender">class="cur"</#if> ><a href="${webroot}/member/invest/hasTender.html">借出明细</a></li>
+	<li <#if invest_type?exists&&invest_type=="notCollect">class="cur"</#if>><a href="${webroot}/member/invest/notCollect.html">未收款明细</a></li>
+	<li <#if invest_type?exists&&invest_type=="hasCollect">class="cur"</#if> ><a href="${webroot}/member/invest/hasCollect.html">已收款明细</a></li>
+	<!-- 债权转让去掉
+	<li <#if invest_type?exists&&invest_type=="assignment">class="cur"</#if> ><a href="${webroot}/member/invest/assignmentList.html">债权转让</a></li>
+	-->
+	
+</ul>

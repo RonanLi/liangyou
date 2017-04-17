@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<#include "../include/resource.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/about/css/abStyle.css" type="text/css" />
+<body>
+<#include "../include/header.html">
+    <!--header-end-->
+    <img class="safeImgB"src="/themes/soonmes_yjt/about/imgs/history.jpg"/>
+    <div class="contain history">
+        <div class="tab"><span class="cur">金和所简介<i></i></span><span>发展历程<i></i></span><span>荣誉资质<i></i></span><!--<span>金和风采<i></i></span>--></div>
+        <div class="hisLine S">
+            <h1 class="hisTit">金和所简介</h1>
+            <h1 class="hisTitE">Introduce</h1>
+            <hr size="2" color="#a6771f">
+            <div class="hisCon">
+                <img src="/themes/soonmes_yjt/about/imgs/history_1.jpg">
+                <div class="text">
+                    <p>金和所，成立于2015年12月，是京朋集团创立并全资控股的供应链科技金融平台，京朋集团占股100%。金和所致力于“合规供应链科技金融”的金融创新，为京朋集团各大实业板块的供应链上下游企业服务，同时专注于集团内部水利发电等清洁能源项目建设。以服务大众为宗旨，向广大用户提供安全、有保障、高收益的小微金融服务。</p>
+                    <p>京朋国际集团（香港）有限公司由董事局主席李柄江先生创办，于2001年成立福建永榕集团。李柄江先生不断依据国家大政方针，敏锐调整企业发展宏观战略，带领企业历时17载春秋，砥砺前行，如今集团业务已经辐射中国大陆、香港及东南亚等国际市场，企业成长为一家横跨电力、地产、国际贸易、金融、大农业等多领域的集团公司。 </p>
+                </div>
+            </div>
+        </div>
+        <div class="hisLine">
+            <h1 class="hisTit">发展历程</h1>
+            <h1 class="hisTitE">Development Path</h1>
+            <hr size="2" color="#a6771f">
+            <div class="hisConS">
+                <h1 class="title">&nbsp;</h1>
+				<#if yearList?exists>
+                    <#list yearList as itemOut><!--外循环 查找年份-->
+                        <div class="year">
+                            <h2><a href="#">${itemOut.year}<i></i></a></h2>
+                            <div class="list">
+                                <ul>
+                                    <if devHistoryList?exists>
+                                        <#list devHistoryList! as itemIn><!--内循环 查找当年日期-->
+                                            <#if itemIn.year?contains("${itemOut.year}")>
+                                                <li class="cls">
+                                                    <p class="date">${itemIn.time!}</p>
+                                                    <p class="intro">${itemIn.content!}</p>
+                                                    <p class="version">&nbsp;</p>
+                                                    <div class="more">
+                                                    <#if itemIn.pic?length gt 0 >
+                                                        <img src="${webroot}/${itemIn.pic}">
+                                                    </#if>
+                                                    </div>
+                                                </li>
+                                            </#if>
+                                        </#list>
+                                    </if>
+                                </ul>
+                            </div>
+                        </div>
+                    </#list>
+                </#if>
+            </div>
+        </div>
+        <div class="hisLine">
+            <h1 class="hisTit">荣誉资质</h1>
+            <h1 class="hisTitE">Honor&Qualifications</h1>
+            <hr size="2" color="#a6771f">
+            <div class="hisCon">
+                <ul class="hisDiv">
+                    <#if honorList?exists>
+                        <#list honorList as item>
+                            <li>
+                                <div class="hisI"><img src="${webroot}/${item.pic}" alt=""></div>
+                                <p>${item.content}</p>
+                            </li>
+                        </#list>
+                    </#if>
+                </ul>
+            </div>
+        </div>
+       <!-- <div class="hisLine">
+            <h1 class="hisTit">金和风采</h1>
+            <h1 class="hisTitE">Jinhe Style</h1>
+            <hr size="2" color="#a6771f">
+            <div class="hisCon">
+                <ul class="hisDiv">
+                    <#if staffList?exists>
+                        <#list staffList as item>
+                            <li>
+                                <div class="hisI"><img src="${webroot}/${item.pic}" alt=""></div>
+                                <p>${item.content}</p>
+                            </li>
+                        </#list>
+                    </#if>
+                </ul>
+            </div>
+        </div>-->
+    </div>
+    <#include "../include/footer.html">
+</body>
+<script src="${webroot}${theme_dir}/about/js/abcommon.js" type="text/javascript"></script>
+</html>

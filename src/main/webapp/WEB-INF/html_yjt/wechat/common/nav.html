@@ -1,0 +1,60 @@
+
+<div style="height:10px;"></div>
+
+<ul class="nav-ul" style="border-bottom: none;">
+	<li>
+		<span class="title">金和所微信公众号</span>
+	</li>
+	<li  <#if cur_nav?? && cur_nav == 'sendAll' > class="cur-nav" </#if> ><a href="${webroot}/wx/toSendAllMsg.html">
+		<span>群发功能</span>
+	</a></li>
+	<li  <#if cur_nav?? && cur_nav == 'autoReply' > class="cur-nav" </#if> ><a href="${webroot}/wx/getWeChatAutoReply.html">
+		<span>自动回复</span>
+	</a></li>
+	<li  <#if cur_nav?? && cur_nav == 'menu' > class="cur-nav" </#if> ><a href="${webroot}/wx/getMenuGroup.html">
+		<span>菜单管理</span>
+	</a></li>
+	
+	<li  <#if cur_nav?? && cur_nav == 'text' > class="cur-nav" </#if> ><a href="${webroot}/wx/getCustomTextMsg.html">
+		<span>消息管理</span>
+	</a></li>
+	<li  <#if cur_nav?? && cur_nav == 'weChatLog' > class="cur-nav" </#if> ><a href="${webroot}/wx/getWeChatLog.html">
+		<span>聊天记录</span>
+	</a></li>
+	<li  <#if cur_nav?? && cur_nav == 'fans' > class="cur-nav" </#if> ><a href="${webroot}/wx/getWeChatUser.html">
+		<span>用户管理</span>
+	</a></li>
+	
+	<li  <#if cur_nav?? && cur_nav == 'news' > class="cur-nav" </#if> ><a href="${webroot}/wx/getGraphicMsg.html">
+		<span>图文管理</span>
+	</a></li>
+	<li  <#if cur_nav?? && cur_nav == 'image' > class="cur-nav" </#if> ><a href="${webroot}/wx/getWeChatImage.html">
+		<span>图片管理</span>
+	</a></li>
+	<li  <#if cur_nav?? && cur_nav == 'sdk' > class="cur-nav" </#if> ><a href="${webroot}/wx/jssdk.html">
+		<span>js-sdk</span>
+	</a></li>
+	
+	<#-- <li  <#if cur_nav?? && cur_nav == 'material' > class="cur-nav" </#if> ><a href="${webroot}/wx/syncMaterials.html">
+		<span>素材管理</span>
+	</a></li> -->
+	<li  <#if cur_nav?? && cur_nav == 'kf' > class="cur-nav" </#if> ><a href="${webroot}/wx/getCustomList.html">
+		<span>客服账号管理</span>
+	</a></li>
+	<!-- <li  <#if cur_nav?? && cur_nav == 'qrcode' > class="cur-nav" </#if> ><a href="${webroot}/wxcms/qrcode.html">
+		<span>生成参数二维码</span>
+	</a></li>
+	<li  <#if cur_nav?? && cur_nav == 'oauthInterceptor' > class="cur-nav" </#if> ><a href="${webroot}/wxcms/oauthInterceptor.html">
+		<span>拦截器处理OAuth认证</span>
+	</a></li>
+	
+	<li  <#if cur_nav?? && cur_nav == 'jssdk' > class="cur-nav" </#if> ><a href="${webroot}/wxcms/jssdk.html">
+		<span>JS-SDK接口</span>
+	</a></li>
+	<li  <#if cur_nav?? && cur_nav == 'weui' > class="cur-nav" </#if> ><a href="${webroot}/wxcms/weui.html">
+		<span>WeUI</span>
+	</a></li> -->
+</ul>
+
+
+

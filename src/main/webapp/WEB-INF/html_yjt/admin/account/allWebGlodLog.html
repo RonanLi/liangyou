@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+                  
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="金账户操作记录">
+                        <#include "banner.html">
+                           <div id="toolbar" class="clearfix">
+ 								<div class="toolbor-module export">
+                                    <input type="button" onclick="exportxls()" value="导出当前报表" class="input-button export-btn"/>
+                                </div></div>
+                            <!--面包屑导航---}-->
+                            <div id="main" class="clearfix">
+                                <form action="" method="post">
+                                    <table class="data-list">
+                                        <tr class="header">
+                                            <td>ID</td>
+                                            <td>操作管理员</td>
+                                            <td>金额</td>
+                                            <td>手续费</td>
+                                            <td>类型</td>
+                                            <td>订单号</td>
+                                            <td>添加时间</td>
+                                            <td>备注</td>
+                                        </tr>
+                                        <#list list as item>
+                                            <tr class="s">
+                                                <td>${(item.id!0)?c}</td>
+                                                <td>${item.user.username!}</td>
+                                                <td>${item.money!0}</td>
+                                                <td>${item.fee!0}</td>
+                                                <td>
+                                                	<#if item.type == "recharge">金账户充值<#elseif item.type == "cash">金账户取现</#if>
+                                                </td>
+                                                <td>${item.ordId}</td>
+                                                <td>${item.addtime!0}</td>
+                                                <td>${item.memo!''}</td>
+                                            </tr>
+                                        </#list>
+                                    </table>
+                                </form>
+
+                                <!--底部工具栏--{-->
+                                <div id="bottomToolbar" class="clearfix">
+                                    <div class="other-tool">
+                                        <dl class="refresh-data">
+                                            <dt class="refresh-data-icon"></dt>
+                                            <dd><a href="javascript:void(0);" class="refresh-page">刷新数据</a></dd>
+                                        </dl>
+                                    </div>
+
+                                    <!--翻页系统--{-->
+                                    <div class="container">
+                                        <#import "../../common/page.html" as pager>
+                                            <@pager.pagination page=page url="${pageUrl}" map=param style="style1" />
+                                    </div>
+                                    <!--翻页系统--}-->
+                                </div>
+                                <!--底部工具栏--}-->
+
+                            </div>
+
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+    <script type="text/javascript">
+    function exportxls(){
+        var sou = "/admin/account/allWebGlodLog.html?type=export";
+        location.href=sou;
+    }
+    
+    </script>
+    </body>
+</html>
+<#include "../jsPage.html">

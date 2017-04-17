@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="修改积分类型">
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+                                <div class="toolbor-module search">
+                                    <input type="button" class="input-button return" value="返回" onclick="history.go(-1)">
+                                </div>
+                            </div>
+                            <!--工具栏--}-->
+
+                            <div id="main" class="w850 clearfix">
+                            <form action="${request.getContextPath()}/admin/userinfo/updateusercredit.html" method="post">
+                            <input type="hidden" value="0" name="updatetype">
+                                       <div class="hidden customer-info"  id="user_info_menu_1">
+                                            <ul class="title-v">
+                                                <li>
+                                                    <div class="title">用户ID：</div>
+                                                    <div class="v">
+                                                        <#if userCredit??>${userCredit.user.userId!""}</#if>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">用户名称：</div>
+                                                    <div class="v">
+                                                        <#if userCredit??>${userCredit.user.username!""}</#if>
+                                                    </div>
+                                                </li>
+                                                
+                                                <li>
+                                                    <div class="title">总积分：</div>
+                                                    <div class="v">
+                                                        <#if userCredit??>${userCredit.value!""}</#if>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">可用积分：</div>
+                                                    <#if userCredit??><input type="hidden" value="${userCredit.validValue!''}" id="validValue"></#if>
+                                                    <div class="v" >
+                                                        <#if userCredit??>${userCredit.validValue!""}</#if>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">可用积分增减操作：</div>
+                                                    <div class="v">
+                                                        <input type="text" name="operation" id="operation"> 
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">操作备注：</div>
+                                                    <div class="v">
+                                                    	<textarea name="remark"></textarea>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">消费积分：</div>
+                                                    <div class="v">
+                                                        <#if userCredit??>${userCredit.expenseValue!""} </#if>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">投资积分：</div>
+                                                    <div class="v">
+                                                        <#if userCredit??>${userCredit.tenderValue!""}</#if>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">借款积分：</div>
+                                                    <div class="v">
+                                                        <#if userCredit??>${userCredit.borrowValue!""}</#if>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">赠送积分：</div>
+                                                    <div class="v">
+                                                        <#if userCredit??>${userCredit.giftValue!""}</#if>
+                                                    </div>
+                                                </li>
+                                                
+                                            </ul>
+                                        </div>
+                                    <div id="bottomToolbar" class="clearfix">
+                                        <#if userCredit??><input type="hidden" value="${userCredit.id}" name="id" /></#if>
+                                        <input type="submit" name="submit" class="input-button post" value="提交">
+                                        <input type="reset" name="reset" class="input-button reset" value="重置">
+                                    </div>
+                                </form>
+
+
+
+                            </div>
+                            <script type="text/javascript">
+                                change_menu_tab("user_info_menu");
+                            </script>
+
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+
+    </body>
+</html>
+<#include "../jsPage.html">
+    <script>
+        $(function(){
+            $(".customer-info").eq(0).removeClass("hidden");
+            $("#operation").focus();
+        	$("#operation").change(function(){
+        		var number = parseInt($("#operation").val());
+        		var validValue = $("#validValue").val();
+            	if(parseInt(number)!=number){
+            		alert("请输入整数");
+            		$("#operation").val("");
+            	}else if(parseInt(validValue)+parseInt(number)<0){
+            		alert("减的积分不能大于可用积分");
+            		$("#operation").val("");
+            	}
+        	})
+        });
+    </script>
+

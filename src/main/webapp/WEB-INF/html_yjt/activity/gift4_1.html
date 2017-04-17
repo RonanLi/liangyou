@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+<#include "../include/resource.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/media/css/mixlrn.css" type="text/css" />
+<style type="text/css">
+.sec3 .giftS{background:#49c4fe;padding-bottom:30px;}
+.sec3 .giftS p{line-height: 2rem;text-align:left;font-size:1rem;text-indent:2rem;color:#001b37;font-weight: normal;}
+.sec4 .giftS{background:#ffe56e;padding-bottom: 60px;}
+.sec4 .giftS h1,.sec4 .giftS p{color:#621700;}
+</style>
+<body id="gift4_1">
+<#include "../include/header.html">
+<div id="share">
+    <div class="sec1">
+		<div class="banner">
+		    <div class="bannerBg" style="height:550px;background:url('${webroot}${theme_dir}/liangyou/imgs/gift4_log.png') no-repeat center">
+		        <div class="bannerBox">
+		            <div class="login" style="top:2px;">
+		                <div class="reg_box" style="height: 520px;position:relative;box-sizing:border-box;padding:0 44px;">
+		                    <div class="reg_txt" style="margin: 0;padding: 15px 0 6px;color: #bf2628;letter-spacing: 5px;line-height: 1;height: auto;">立即注册</div>
+		                    <form action="${request.getContextPath()}/user/doRegister.html" method="post" name="formUser" id="reg_sub">
+			                    <div style="background: #efefef;width: 80%;position: absolute;top: 0;left: 50%;margin-left: -40%;border-radius: 0 0 6px 6px;" id="div_errorbox">
+			                        <div class="reg_error" id="dvErrorDesc" style="display:none;"></div>
+			                    </div>
+			                    <div class="reg_user">
+			                    	<input name="username" id="phone" type="text" maxlength="11" placeholder=请输入手机号码>
+			                    </div>
+			                    <div class="reg_user">
+			                    	<input name="password" id="passWord" type="password" maxlength="18" placeholder=密码由6-18个字符(字母+数字组成)>
+			                    </div>
+								<div class="reg_user">
+									<input name="confirm_password" id="passWordd" type="password" maxlength="18"placeholder=确认密码由6-18个字符(字母+数字组成)>
+			                    </div>
+			                    <div class="reg_user">
+			                        <input style="background-position: 15px -112px;width:230px;" name="valicode" id="imgCode"type="text"maxlength="4" placeholder=图形验证码 />
+			                        <img src="${request.getContextPath()}/validimg.html" onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();" title="点击换一个校验码" style=" height:50px; float: right"alt="点击换一个校验码" id="imVcode" style="cursor:pointer;"/>
+			                    </div>
+			                    <div class="reg_user">
+			                        <input name="validCodee" id="messCode" type="text" maxlength="6" placeholder=手机验证码>
+			                        <a class="messCode_but" id="btnSendMsg" style=" text-align:center; width:145px;cursor:pointer;margin-left: 10px;     height: 38px;    line-height: 38px;    background-color: #DADADA;    padding: 0 9px;" >获取手机验证码</a>
+			                    </div>
+			                    <input type="checkbox" checked="checked" id="dianji"  style="position:relative; top:8px; margin-right:5px;"><a href="/article/list.html?code=fuwuxieyi" style="color:#757575;font-size:14px; color:" target="/article/list.html?code=fuwuxieyi">《金和所网站服务协议》</a>
+			                    <a class="reg_but" id="btnReg" style="cursor:pointer;font-weight: normal;font-size: 24px;letter-spacing: 14px;text-indent: 14px;">注册</a>
+		                    	<input id="invitateCode" name="invitateCode" type="hidden" value="${invitateCode!}"/>
+		                    </form>
+		                    <p class="denglu">已有账号，请<a href="/user/login.html"  target="_blank" style=" padding: 0 4px;text-decoration: underline;">登录</a></p>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+	</div>
+
+    <div class="sec2">
+    	<div class="giftS">
+    		<div class="boxB">
+	            <div class="gift4">
+	            	<img src="/themes/soonmes_yjt/liangyou/imgs/gift4_bg1.png" alt=""/>
+	            </div>
+				<p>在金和所注册成功的客户即可获得一个邀请链接，邀请好友使用该邀请链接注册10天内，单人首次投资达到一定金额后，即可获得返佣奖励。</p>
+				<p>应得佣金=被邀请人单人首次投资金额*对应梯度百分比*<span style="color:#e7bb70;font-size:1.2rem">标的系数</span>（1月标的为1、2月标的为2、3月及3月以上标的为3）</p>
+				<div class="gift4_table">
+					<table border="collapse">
+						<thead><td>被邀请人单人首次投资3月标金额</td><td>邀请人获得奖励百分比</td><td>奖励金额区间(元)</td></thead>
+						<tbody>
+						<tr><td>1千元< X ≤3万元</td><td>0.10%</td><td>(1~30)*3</td></tr>
+						<tr><td>3万元< X ≤5万元</td><td>0.15%</td><td>(45~75)*3</td></tr>
+						<tr><td>5万元< X ≤8万元</td><td>0.20%</td><td>(100~160)*3</td></tr>
+						<tr><td>8万元< X ≤15万元</td><td>0.25%</td><td>(200~375)*3</td></tr>
+						<tr><td>15万元< X ≤30万元</td><td>0.30%</td><td>(450~900)*3</td></tr>
+						<tr><td>高于30万元</td><td>0.40%</td><td>(>1200)*3</td></tr>
+						</tbody>
+					</table>
+				</div>
+    		</div>
+		</div>
+    </div>
+
+    <div class="sec3">
+		<div class="giftS">
+	    	<div class=" boxB">
+	            <div class="gift4">
+	            	<img src="/themes/soonmes_yjt/liangyou/imgs/gift4_bgP2.png" alt=""/>
+	            </div>
+	            <p>金和所（www.jinhefax.com）由上海众苑金融信息服务有限公司负责运营，注册实缴资金10000万元。公司前生是京朋国际集团（成立于1998年）的核心供应链金融合作企业，多年来为其提供安全、合规、稳定的供应链金融服务。</p>
+   				<p> 金和所致力于“合规供应链金融”的金融创新，以服务大众为宗旨，向广大用户提供安全、有保障、高收益的小微金融服务。平台引入德国IPC风险控制技术，并参照英国互联网金融的监管模式管理，携手众安保险充分保障出借人资金安全。此外，金和所开发了与平台上多种投资理财产品结合的专有债权模式，实现了平台内产品风险闭环。金和所在成立之初，与京朋国际集团在内的知名国内供应链企业签订战略合作协议，当线上认证标的及实地认证标的出现逾期时，担保股东对投资人的债权进行100%回购代偿，保证投资人的本金及收益。</p>
+		    </div>
+		</div>
+	</div>
+
+    <div class="sec4">
+		<div class="giftS">
+	    	<div class=" boxB">
+	            <div class="gift4">
+	            	<img src="/themes/soonmes_yjt/liangyou/imgs/gift4_bg3.png" alt=""/>
+	            </div>
+	            <ul>
+	            	<li>
+	            		<img alt="" src="/themes/soonmes_yjt/liangyou/imgs/gift4_ul1.png">
+	            		<h1>三方联合存管</h1>
+	            		<p>徽商银行+双乾支付+金和所</p>
+	            		<p>充分保障资金安全 </p>
+	            	</li>
+	            	<li>
+	            		<img alt="" src="/themes/soonmes_yjt/liangyou/imgs/gift4_ul2.png">
+	            		<h1>足额银行账户安全保障金</h1>
+	            		<p>1小时内先行垫付</p>
+	            		<p>强监管下安全再升级</p>
+	            	</li>
+	            	<li>
+	            		<img alt="" src="/themes/soonmes_yjt/liangyou/imgs/gift4_ul3.png">
+	            		<h1>知名担保公司战略合作</h1>
+	            		<p>提供合规性投融资担保</p>
+	            		<p>承担无限连带保障责任</p>
+	            	</li>
+	            	<li>
+	            		<img alt="" src="/themes/soonmes_yjt/liangyou/imgs/gift4_ul4.png">
+	            		<h1>傲雪律师事务所深度合作</h1>
+	            		<p>确保融资项目</p>
+	            		<p>充分合规、合法、合理</p>
+	            	</li>
+	            </ul>
+		    </div>
+		</div>
+	</div>
+
+    <div class="sec5">
+    	<div class="giftS">
+			<div class=" boxB">
+				<p>活动说明：</p>
+				<p>1、应得佣金=被邀请人单人首次投资金额*对应梯度百分比*标的系数（1月标的为1、2月标的为2、3月及3月以上标的为3）;</p>
+				<p>2、此活动与平台内任何其他返佣活动不并存;</p>
+				<p>3、邀请好友的返现奖励可在我的账户—奖励管理中查看，返现金额由我平台核算后2个工作日内发放;</p>
+				<p>4、金和所对本活动保留最终解释权,如有任何疑问欢迎咨询金和所官方微信(搜索订阅号 “jinhefax”金和所)。</p>
+			</div>
+		</div>
+	</div>
+</div>
+<#include "../include/footer.html">
+<script type="text/javascript">
+	$(function(){
+		var system ={win : false,mac : false,xll : false};
+		//检测平台
+		var p = navigator.platform;
+		system.win = p.indexOf("Win") == 0;
+		system.mac = p.indexOf("Mac") == 0;
+		system.x11 = (p == "X11") || (p.indexOf("Linux") == 0);
+		//跳转语句
+		if(system.win||system.mac||system.xll){
+			$('#share>div').removeClass('section');
+		}else{
+			$('.sec1').height($(window).height()-100);
+		}
+	})
+
+	$(function(){
+		$("#btnSendMsg").click(function(){
+			if( $('#phone').val().trim() == '' ){
+				$("#dvErrorDesc").html("<i></i>手机号不能为空");
+				$("#dvErrorDesc").show();
+				return false;
+			}else if( $('#imgCode').val().trim() == '' ){
+				$("#dvErrorDesc").html("<i></i>图形验证码不能为空");
+				$("#dvErrorDesc").show();
+				return false;
+			}else if( !$(this).hasClass('ok') ){
+				sendPhoneCode($('#phone').val().trim(), $('#imgCode').val().trim());
+			}
+
+		});
+
+		function sendPhoneCode(phone, valicode){
+			$("#dvErrorDesc").hide();
+			var tim = 60, xt;
+			$.ajax({
+				"url": "/user/getPhoneCode.html",
+				"type": "post",
+				"cache": "false",
+				"data": {'phone':phone, 'valicode' : valicode},
+				"dataType": "json",
+				success: function(data){
+
+					if (data.data != "") {
+						$("#dvErrorDesc").html("<i></i>"+data.data);
+						$("#dvErrorDesc").show();
+						$('#imVcode').trigger('click');
+						return false;
+					} else {
+						$("#btnSendMsg").addClass('ok').css('cursor','no-drop');
+						xt = window.setInterval(function(){
+							if(tim < 1){
+								window.clearInterval(xt);
+								$('#btnSendMsg').text('获取验证码').removeClass('ok').css('cursor','pointer');
+								$("#dvErrorDesc").hide();
+							}else{
+								$('#btnSendMsg').text(tim+'秒后重发');
+								tim--;
+							}
+						},1000);
+						$("#dvErrorDesc").html("<i></i>验证码发送成功，请注意查收");
+						$("#dvErrorDesc").show();
+						return false;
+					}
+				}
+
+			})
+		}
+		String.prototype.endWith=function(s){
+			if(s==null||s==""||this.length==0||s.length>this.length)
+				return false;
+			if(this.substring(this.length-s.length)==s)
+				return true;
+			else
+				return false;
+			return true;
+		}
+
+		$("#btnReg").click(function(){
+			var userMes = $("#dvErrorDesc");
+			/*$("#phone").blur();
+			 if(isErr.html()==""||isErr.html()=="<i></i>")
+			 $("#passWord").blur();
+			 if(isErr.html()==""||isErr.html()=="<i></i>")
+			 $("#checkpwd").blur();
+			 if(isErr.html()==""||isErr.html()=="<i></i>")
+			 testForm();
+			 */
+			if( $('#phone').val().trim() == '' ){
+				userMes.html("<i></i>手机号不能为空");
+				userMes.show();
+				return false;
+			}else if( $('#passWord').val().trim() == '' ){
+				userMes.html("<i></i>密码不能为空");
+				userMes.show();
+				return false;
+			}else if( $('#passWordd').val().trim() == '' ){
+				userMes.html("<i></i>重复密码不能为空");
+				userMes.show();
+				return false;
+			}else if( $('#imgCode').val().trim() == '' ){
+				userMes.html("<i></i>图形验证码不能为空");
+				userMes.show();
+				return false;
+			}else if( $('#messCode').val().trim() == '' ){
+				userMes.html("<i></i>手机验证码不能为空");
+				userMes.show();
+				return false;
+			}else{
+				userMes.html("<i></i>");
+				userMes.hide();
+				testForm();
+			}
+
+		});
+
+		function postData(){
+
+		}
+
+		function testForm(){
+			var dvErroDescHtml = $("#dvErrorDesc").html();
+			//验证码不能为空
+			var validCodee = $("#messCode").val();
+			if(validCodee == ""){
+				alert("手机验证码不能为空");
+				return false;
+			}
+			if(dvErroDescHtml=="" || dvErroDescHtml=="<i></i>")
+			{
+				if($('#dianji').attr("checked")){
+					// szl  $("#reg_sub").submit();
+					$.ajax({
+						type: "POST",
+						url:"/user/doRegister.html",
+						data:$('#reg_sub').serialize(),
+						beforeSend:function(){
+							$('#btnReg').css({"letter-spacing":"0px","text-indent":"0px"}).text('正在注册...');
+							$("#btnReg").unbind("click"); //移除click事件
+						},
+						success: function(msg) {
+							var x = document.createElement('html');
+							x.innerHTML = msg;
+							var errorMSG = $(x).find('#error_zl').text();
+							if( errorMSG.indexOf('注册成功') >= 0 ){
+								var p = 3;
+								var _xc = window.setInterval(function(){
+									if( p == 0 ){
+										window.clearInterval(_xc);
+										window.location.href='/user/login.html?phone='+$('#phone').val().trim() + '&flag=${flag!}';
+									}else{
+										$('#btnReg').css('font-size','18px').html('注册已成功,'+ p +'秒后跳转到登录页');
+										p--;
+									}
+								},1000);
+
+							}else{
+								$('#btnReg').css({"letter-spacing":"14px","text-indent":"14px","font-size":"24px"}).text('注册');
+								$("#dvErrorDesc").html("<i></i>"+errorMSG);
+								$("#dvErrorDesc").show();
+								return false;
+							}
+
+						}
+					});
+				}
+				else{
+					alert("请勾选我已阅读并且同意协议!")
+				}
+			}
+			else{
+				return false;
+			}
+		}
+
+		function formTest(){
+			function str_length(val) {
+				var len = 0;
+				var a = val.split("");
+				for (var i=0;i<a.length;i++) {
+					if (a[i].charCodeAt(0)<299) {
+						len++;
+					} else {
+						len+=2;
+					}
+				}
+				return len;
+			}//判断中文为2个字符，英文为一个
+
+			function userName(){
+				var userBox = $("#phone");
+				//var phone = $("#phone").val();
+				var userMes = $("#dvErrorDesc");
+
+				var reg = /[\d\w]{4,15}/;
+				var str;
+				userBox.focus(function(){
+					//userMes.html("");
+				}).blur(function(){
+					str = userBox.val();
+					var str_len = str_length(str);
+					var phone = $("#phone").val();
+					var bool = /^1[3|4|5|7|8]\d{9}$/;
+					if(str =="")
+					{
+						userMes.html("<i></i>请输入11位有效手机号码");
+						userMes.show();
+						return false;
+					}
+					else if(str_len<11)
+					{
+						userMes.html("<i></i>请输入11位有效手机号码");
+						userMes.show();
+						return false;
+					}
+					else if(str_len>11)
+					{
+						userMes.html("<i></i>请输入11位有效手机号码");
+						userMes.show();
+						return false;
+					}
+					else if(!(bool.test(phone))){//手机号码正则验证
+						userMes.html("<i></i>请输入11位有效手机号码");
+						userMes.show();
+						return false;
+					}
+					else if(reg.exec(str)){
+						//判断是否存在
+						$.get("/user/checkPhone.html?id="+Math.random(), {phone: $("#phone").val() },function (result){
+
+							if(result==true){
+								userMes.html("<i></i>");
+								userMes.hide();
+								return true;
+							}
+							else{
+								userMes.html("<i style='position:relative'><em id='forbUi' style='position: absolute; width: 444px; margin-left: -36px; height: 366px; background: transparent; z-index: 9; margin-top: 100px;'></em></i>手机号已注册,<a href='/user/login.html' style='text-decoration: underline; padding: 0 5px; color: #333;'>马上登录</a>");
+								userMes.show();
+
+								$("input:password").val("").attr("disabled", true);
+								$("#imgCode").attr("disabled", true);
+								$("#messCode").attr("disabled", true);
+
+								return false;
+							}
+						});
+
+						$("input:password").attr("disabled", false);
+						$("#imgCode").attr("disabled", false);
+						$("#messCode").attr("disabled", false);
+						//userBox.attr("value",str);
+						return true;
+					}
+					else{
+						userMes.html("<i></i>请输入11位有效手机号码");
+						userMes.show();
+						return false;
+					}
+				})
+			}
+			userName();
+
+			$('#forbUi').on('click',function(){
+				event.stopPropagation();
+				event.preventDefault();
+				return false;
+			});
+
+			function checkPwd(){
+				var pwdBox = $("#passWord");
+				//var firstMes = $(".firstpwdb");
+				var checkBox = $("#passWordd");
+				//var checkMes = $(".checkpwdb");
+				var pwdErroDesc = $("#dvErrorDesc");
+
+				pwdBox.focus(function(){
+					//firstMes.text("");
+					passwordTest();
+				}).blur(function(){
+					var value = pwdBox.val();
+					var cvalue = checkBox.val();
+					var pwdtestVal = getResult(value);;
+					var str_len = value.length;
+					if( $("#dvErrorDesc").text().indexOf('手机号已注册') >= 0 ){
+
+						return false;
+					}else if((str_len>7)&&(str_len<17)){
+						if(pwdtestVal<2)
+						{
+							pwdErroDesc.html("<i></i>请输入6至16位，数字加字母的密码");
+							pwdErroDesc.show();
+							return false;
+						}else if(cvalue !="" && cvalue !=value){
+							pwdErroDesc.html("<i></i>确认密码不一致");
+							pwdErroDesc.show();
+							return false;
+						}
+						else{
+							pwdErroDesc.html("<i></i>");
+							pwdErroDesc.hide();
+							return true;
+						}
+					}else{
+						pwdErroDesc.html("<i></i>请输入6至16位，数字加字母的密码");
+						pwdErroDesc.show();
+						return false;
+					}
+				});
+				checkBox.focus(function(){
+					//checkMes.text("");
+				}).blur(function(){
+					var str = pwdBox.val();
+					var checkStr = checkBox.val();
+					var checkpwd =getResult(checkStr);
+					if( $("#dvErrorDesc").text().indexOf('手机号已注册') >= 0 ){
+
+						return false;
+					}else if(checkStr=="")
+					{
+						pwdErroDesc.html("<i></i>请输入6至16位，数字加字母的密码");
+						pwdErroDesc.show();
+						return false;
+					}else if(checkStr.length<=7){
+						pwdErroDesc.html("<i></i>请输入6至16位，数字加字母的密码");
+						pwdErroDesc.show();
+						return false;
+					}
+					else if(checkStr!=str){
+						pwdErroDesc.html("<i></i>两次输入的密码不一致");
+						pwdErroDesc.show();
+						return false;
+					}else if(checkpwd <2){
+						pwdErroDesc.html("<i></i>请输入6至16位，数字加字母的密码");
+						pwdErroDesc.show();
+						return false;
+					}
+					else{
+						pwdErroDesc.html("<i></i>");
+						pwdErroDesc.hide();
+						return true;
+					}
+				});
+
+
+				function passwordTest() {
+					pwdBox.keyup(function(){
+						var value = pwdBox.val();
+						var str_len = value.length;
+						if((str_len>7)&&(str_len<17)){
+							var result = getResult(value);
+							check(result);
+							pwdBox.attr("value",value);
+							//判断密码强弱程度
+							return true;
+						}
+						else{
+							firstMes.html("<i></i>输入8至16位，数字加字母的密码");
+							pwdErroDesc.show();
+							return false;
+						}
+					})
+				}
+				function getResult(value){
+					var str_len = value.length;
+					var i = 0;
+					if(value.match(/[a-z]/ig)) {
+						i++;
+					}
+					if(value.match(/[0-9]/ig)) {
+						i++;
+					}
+					if(value.match(/(.[^a-z0-9])/ig)) {
+						i++;
+					}
+					if(value.length < 7 && i > 0) {
+						i--;
+					}
+					return i;
+				}
+				function check(num) {
+					if(num == 0) {
+						//firstMes.html("<span style='color:#f00'>　密码太短了</span>");
+					} else if (num == 1) {
+						//firstMes.html("<span class='hover'>弱</span><span>中</span><span>强</span>");
+
+					} else if (num == 2) {
+						//firstMes.html("<span class='hover'>弱</span><span class='hover'>中</span><span>强</span>");
+					} else if (num == 3) {
+						//firstMes.html("<span class='hover'>弱</span><span class='hover'>中</span><span class='hover'>强</span>");
+					} else {
+						//firstMes.html("未知错误");
+					}
+				}
+			}
+			checkPwd();
+
+		}
+		formTest();
+	})
+
+
+</script>
+<script type="text/javascript" src="${webroot}${theme_dir}/media/js/jquery.mailAutoComplete-3.1.js"></script>
+<script type="text/javascript">
+
+</script>
+
+</body>
+</html>

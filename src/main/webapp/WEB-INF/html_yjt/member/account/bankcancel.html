@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html">
+<body>
+	<#assign nid="member"> <#include "../../include/header.html">
+	<style type="text/css">
+#div_errorbox .reg_error {
+	border: none;
+	background: none;
+	height: 40px;
+	line-height: 40px;
+	font-size: 16px;
+}
+</style>
+	<!-- #main start-->
+	<div id="main" class="clearfix">
+		<!-- .wrap950 开始-->
+		<div class="wrap950 ">
+			<!--左边的导航user_left 开始-->
+			<div class="user_left"><#include "../user_menu.html"></div>
+			<!--左边的导航user_left 结束-->
+
+			<!--右边的内容user_right 开始-->
+			<div class="user_right">
+				<div class="user_right_menu"><#assign
+					account_type="bankcancel"> <#include "account_menu.html"></div>
+				<!--右边的内容user_right_main 开始-->
+				<div class="user_right_main">
+					<!-- 内容开始 -->
+					<#if api_code='1'>
+					<!-- 汇付 -->
+					<#include "bankcancel_huifu.html"> <#elseif api_code='2'>
+					<!-- 易极付 -->
+					<#include "bankcancel_yjf.html"> <#elseif api_code='3'>
+					<!-- 双乾 -->
+					<#include "bankcancel_mmm.html"> </#if>
+					<!-- 内容结束 -->
+				</div>
+				<!--右边的内容user_right_main 结束-->
+			</div>
+			<!--右边的内容user_right 结束-->
+		</div>
+		<!-- .wrap950 结束-->
+	</div>
+
+
+	<div id="modal_dialog" style="display: none;" title="账户中心/解绑银行卡">
+		<div
+			style="background: #efefef; width: 80%; position: absolute; top: 0; left: 50%; margin-left: -40%; border-radius: 0 0 6px 6px;"
+			id="div_errorbox">
+			<div class="reg_error" id="dvErrorDesc" style="display: none;"></div>
+		</div>
+
+		<div class="pop-tb-con clearfix"
+			style="background: #fff; width: 450px; height: 360px;">
+			<div class="pop-tb-r" style="width: 290px;padding-top:30px;">
+				<form action="/member/account/bankcancel.html" id="form1_pay"
+					method="post">
+					<ul id="flow_num">
+						<li id="bankname"></li>
+						<li id="banktype"></li>
+						<li id="bankno"></li>
+						<!-- <li id="bankadr"></li> -->
+					</ul>
+					<p class="mar20" style="width: 450px; margin: 0 0 20px 0;">
+						图形验证码： <input style="width: 150px; height: 30px;" name="valicode"
+							id="imgCode" type="text" maxlength="4" /> <img
+							src="${request.getContextPath()}/validimg.html"
+							onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();"
+							style="text-align: center; height: 35px; cursor: pointer; float: right; margin-right: 100px;"
+							alt="点击换一个校验码" id="imVcode" style="cursor:pointer;" />
+					</p>
+					<p class="mar20" style="width: 450px; margin: 0 0 30px 0;">
+						手机验证码： <input name="validCodeee" id="messCode" type="text"
+							maxlength="6" style="width: 150px; height: 30px;"> <a
+							class="messCode_but" id="btnSendMsg"
+							style="text-align: center; width: 105px; cursor: pointer; margin-left: 20px; height: 30px; line-height: 30px; background-color: #DADADA; padding: 0 9px;">获取验证码</a>
+					</p>
+					<p style="width: 370px; font-size: 12px;">
+						<input type="hidden" id="codeUniqueId" name="codeUniqueId" /> <input
+							type="hidden" id="bankid" name="bankid" value="" /> <input
+							type="hidden" id="type" name="type" value="bankcancel" />
+					</p>
+				</form>
+				<p style="width: 370px; font-size: 12px;">注意：点击按钮表示您将确认解绑银行卡.</p>
+				<p class="mar20" style="width: 400px; text-align: center;">
+					<a class="btn" onClick="check_form()">确认解绑</a>
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- pop tb-->
+	<script type="text/javascript">
+		function opDialog(obj) {
+			var $obj = $(obj);
+			var bankid = $obj.attr("bankid");
+			var bankname = $obj.attr("bankname");
+			var bankno = $obj.attr("bankno");
+			var banktype = $obj.attr("banktype");
+			var bankadr = $obj.attr("bankadr");
+			var url = $obj.attr("url");
+			$("#bankname").html("开 户 银 行：" + bankname);
+			$("#banktype").html(
+					"类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型：" + banktype);
+			$("#bankno").html(
+					"卡&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：" + bankno);
+			$("#bankadr").html("所在地：" + bankadr);
+			$("#bankid").val(bankid);
+			jQuery("#modal_dialog").dialog({
+				autoOpen : false,
+				modal : true,
+				height : 250,
+				width : 450
+			});
+			jQuery("#modal_dialog").dialog("open");
+		}
+
+		// 解绑银行卡验证码获取
+		$("#btnSendMsg").click(function(){
+					if ($('#imgCode').val().trim() == '') {
+						$("#dvErrorDesc").html("<i></i>图形验证码不能为空");
+						$("#dvErrorDesc").show();
+						return false;
+					} else if (!$(this).hasClass('ok')) {
+						sendPhoneCode($('#messCode').val().trim(), $('#imgCode').val().trim());
+					}
+				
+				});
+
+		function sendPhoneCode(phone, valicode) {
+			$("#dvErrorDesc").hide();
+			var tim = 60, xt;
+			$.ajax({
+				"url" : "/member/account/getPhoneCode.html",
+				"type" : "post",
+				"cache" : "false",
+				"data" : {
+					'phone' : phone,
+					'valicode' : valicode
+				},
+				"dataType" : "json",
+				success : function(data) { 
+
+					if (data.data != "") {
+						$("#dvErrorDesc").html("<i></i>" + data.data);
+						$("#dvErrorDesc").show();
+						$('#imVcode').trigger('click');
+						return false;
+					} else {
+						$("#btnSendMsg").addClass('ok')
+								.css('cursor', 'no-drop');
+						xt = window.setInterval(function() {
+							if (tim < 1) {
+								window.clearInterval(xt);
+								$('#btnSendMsg').text('获取验证码')
+										.removeClass('ok').css('cursor',
+												'pointer');
+								$("#dvErrorDesc").hide();
+							} else {
+								$('#btnSendMsg').text(tim + '秒后重发');
+								tim--;
+							}
+						}, 1000);
+						$("#dvErrorDesc").html("<i></i>验证码发送成功，请注意查收");
+						$("#dvErrorDesc").show();
+						return false;
+					}
+				}
+
+			})
+		}
+
+		function check_form() {
+			if (/^\s*$/.test($("#code").val())) {
+				alert("请您填写校验码");
+				return;
+			}
+			$("#form1_pay").submit();
+		}
+	</script>
+	<!-- #main start-->
+	<#include "../../include/footer.html">

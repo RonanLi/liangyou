@@ -1,0 +1,581 @@
+<!DOCTYPE HTML>
+<html>
+<#macro trunct name>
+	<#assign length=name?length>
+	<#if length&gt;15>
+	<#else>
+		${name}
+	</#if>
+</#macro>
+<#assign nid="index" >
+<#include "include/resource.html">
+
+<#include "common/function.html">
+<#if param?exists>
+	<#assign isday=param.isday!"0">
+	<#assign type=param.type!"0">
+	<#assign apr=param.apr!"">
+	<#assign naccount=param.naccount!0>
+	<#assign naward=param.naward!0>
+	<#assign timeLimit=param.timeLimit!"0">
+	<#assign timeLimitDay=param.timeLimitDay!"0">
+	<#assign status = param.status!>
+</#if>
+
+<!--轮播图控制代码-->
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		$(".Roll_visual").hover(function() {
+			$("#btn_prev,#btn_next").fadeIn()
+		}, function() {
+			$("#btn_prev,#btn_next").fadeOut()
+		});
+
+		$dragBln = false;
+		$(function(){
+			var percent = 0;
+		function imgLoa(){
+			var images = new Array(), _percent = 100 / imgLoa.arguments.length;
+            for( var i = 0; i < imgLoa.arguments.length; i++ ){
+                images[i] = new Image();
+                images[i].src = imgLoa.arguments[i];
+                images[i].onload = function(){
+                    percent += _percent; 
+                    if( percent >= 90 ){
+	         		$(".Roll_image").touchSlider({
+							 	flexible : true,
+							 	speed : 200,
+							 	btn_prev : $("#btn_prev"),
+							 	btn_next : $("#btn_next"),
+							 	paging : $(".flicking_con a"),
+							 	counter : function(e) {
+							 		$(".flicking_con a").removeClass("on").eq(e.current - 1).addClass("on");
+							 	}
+							 });
+
+	                    }
+	                }
+	            }
+			}
+			imgLoa('/themes/soonmes_yjt/liangyou/imgs/sbanner7-min.jpg','/themes/soonmes_yjt/liangyou/imgs/sbanner1-min.jpg','/themes/soonmes_yjt/liangyou/imgs/sbanner3-min.jpg','/themes/soonmes_yjt/liangyou/imgs/sbanner5-min.jpg','/themes/soonmes_yjt/liangyou/imgs/sbanner6-min.jpg','/themes/soonmes_yjt/liangyou/imgs/sbanner4-min.jpg');
+
+		});
+
+
+		$(".Roll_image").bind("mousedown", function() {
+			$dragBln = false;
+		});
+
+		$(".Roll_image").bind("dragstart", function() {
+			$dragBln = true;
+		});
+
+		$(".Roll_image a").click(function() {
+			if ($dragBln) {
+				return false;
+			}
+		});
+
+		timer = setInterval(function() {
+			$("#btn_next").click();
+		}, 5000);
+
+		$(".Roll_visual").hover(function() {
+			clearInterval(timer);
+		}, function() {
+			timer = setInterval(function() {
+				$("#btn_next").click();
+			}, 5000);
+		});
+
+		$(".Roll_image").bind("touchstart", function() {
+			clearInterval(timer);
+		}).bind("touchend", function() {
+			timer = setInterval(function() {
+				$("#btn_next").click();
+			}, 5000);
+		});
+
+	});
+</script>
+<!--轮播图控制代码结束-->
+	<link rel="stylesheet" href="${webroot}${theme_dir}/media/css/mixlrn.css">
+<body class="index-body">
+	<#include "include/header.html">
+<style type="text/css">
+
+
+</style>
+	<div class="banner">
+
+		<div class="bannerBox">
+			<div id="login">
+				<div class="logTop">
+					<p class="logTit">累计成交总金额</p>
+					<h1>${borrowSum?string(",###.00")}</span> <b>元</b></h1>
+					<div class="topTxtBox">
+						<div class="topTxt">
+							<p>累计注册人数</p>
+							<p>${sumTender!0}人</p>
+						</div>
+						<div class="topTxt">
+							<p>为用户累计赚取</p>
+							<p>${borrowSumInterest?string(",###.00")}元</p>
+						</div>
+					</div>
+				</div>
+				<#if session_user?exists > 
+					<a href='${webroot}/member/index.html' class="zhuce">我的账户</a>
+        		<#else>
+        			<a href="${webroot}/user/register.html"class="zhuce">立即注册</a>
+        		</#if>
+			</div>
+		</div>
+
+		<!--轮播图-->
+
+		<div class="Roll_visual">
+			<div class="flicking_con" >
+			</div>
+			<div class="Roll_image" id="btnBig">
+				<ul>
+					<#if scrollPic?exists>
+						<#list scrollPic as item>
+							<li>
+								<a href="${item.url}">
+									<span style="background: url('${item.pic}') no-repeat scroll center top;"></span>
+								</a>
+							</li>
+						</#list>
+					</#if>
+				</ul>
+				<a href="javascript:;" id="btn_prev"></a> <a href="javascript:;" id="btn_next"></a>
+			</div>
+		</div>
+
+		<!--轮播图结束-->
+
+	</div>
+	<div class="content">
+
+		<!-- 累计成交总金额 -->
+		<div class=' investtop clearfix contentImg'style="background: #fff;">
+			<div>
+				<img src="themes/soonmes_yjt/liangyou/imgs/line1_new1.png" alt="图片无法显示"/>
+				<a href="http://www.jpgjjt.com/" target="_blank"><img src="themes/soonmes_yjt/liangyou/imgs/jingpeng.png" alt="图片无法显示"/></a>
+			</div>
+		</div>
+	</div>
+
+	<div class="main">
+
+		<div class="line line2">
+			<div style="height: 50px; overflow: hidden;margin-bottom:15px;">
+				<ul id="web-notice" style="width: 90%; float: left; height: 50px; line-height: 50px; background: url(${webroot}${theme_dir}/media/imgs/icon.png) no-repeat left center; text-indent: 50px;"></ul>
+				<a style="float: right; display: block; height: 50px; line-height: 50px;" href="/about/gywm.html?code=webNews&&notice" class="more">more&gt;&gt;</a>
+			</div>
+
+			<!-- 好礼专区 -->
+			<div class="line2Con">
+				<div class="line2Div line2Div1" style="background: url('${webroot}${theme_dir}/liangyou/imgs/tuijian.jpg') no-repeat center"></div>
+				<#if hotBorrowList?exists>
+					<#list hotBorrowList as item>
+						<#include "common/newborrow.html">
+					</#list>
+				</#if>
+			</div>
+			<!-- 好礼专区结束 -->
+
+			<!-- 优质专区 -->
+			<div class="line2Con">
+				<div class="line2Div line2Div1" style="background: url('${webroot}${theme_dir}/media/imgs/line2-1_new.jpg')no-repeat center"></div>
+				<#if newBorrowList?exists>
+					<#list newBorrowList as item>
+						<#include "common/newborrow.html">
+					</#list>
+				</#if>
+			</div>
+			<!-- 优质专区结束  -->
+
+		</div>
+
+		<!--<div class="line line3">敬请期待</div>-->
+
+		<div class="line line4">
+			<p class="pTitle">优选项目</p>
+			<ul>
+				<li>
+					<#if indexHot1??>
+						<a href="${webroot}/invest/detail.html?borrowid=${indexHot1.id?c}" style="background: url('${webroot}${theme_dir}/media/imgs/line4-1.jpg')no-repeat center -30px">
+							<h1>项目名称</h1>
+							<h2>${indexHot1.name}</h2>
+							<h3>
+								<!--${indexHot1.apr}%-->
+								<!--加息活动修改-->
+								<#if indexHot1.isday==1&&indexHot1.timeLimitDay==30&&("20161212"?date("yyyyMMdd") lt indexHot1.addtime?date) && (indexHot1.addtime?date lt "20170401"?date("yyyyMMdd"))>${indexHot1.apr-1}%<b style="color:#dfa151;">+1%</b>
+								<#elseif indexHot1.isday==0&&indexHot1.timeLimit==1&&("20161212"?date("yyyyMMdd") lt indexHot1.addtime?date) && (indexHot1.addtime?date lt "20170401"?date("yyyyMMdd"))>${indexHot1.apr-1}%<b style="color:#dfa151;">+1%</b>
+								<#elseif indexHot1.isday==0&&indexHot1.timeLimit==2&&("20161220"?date("yyyyMMdd") lt indexHot1.addtime?date) && (indexHot1.addtime?date lt "20170401"?date("yyyyMMdd"))>${indexHot1.apr-1}%<b style="color:#dfa151;">+1%</b>
+								<#elseif indexHot1.isday==0&&indexHot1.timeLimit==3&&("20161212"?date("yyyyMMdd") lt indexHot1.addtime?date) && (indexHot1.addtime?date lt "20170401"?date("yyyyMMdd"))>${indexHot1.apr-1}%<b style="color:#dfa151;">+1%</b>
+									<#else>${indexHot1.apr}%
+								</#if>
+								<!--加息活动修改结束-->
+							</h3>
+							<p>
+								项目期限<span><#if indexHot1.isday??&&indexHot1.isday==1> ${indexHot1.timeLimitDay!0}天<#else> ${(indexHot1.timeLimit)?default("0")}个月 </#if></span>
+							</p>
+							<p>
+								项目进度
+								<span style="color: green">${(indexHot1.accountYes/indexHot1.account*100)}%</span>
+							</p>
+							<#if indexHot1.status==1&&(indexHot1.accountYes lt indexHot1.account ) >
+								<b href="${webroot}/invest/detail.html?borrowid=${indexHot1.id?c}" class="line4Btn" style="background: #cccc99">立即投资</b>
+							<#elseif indexHot1.status==1&&(indexHot1.accountYes gt indexHot1.account || indexHot1.accountYes==indexHot1.account) >
+								<b href="" class="line4Btn">复审中</b>
+							<#elseif indexHot1.status==2>
+								<b href="" class="line4Btn">初审失败</b>
+							<#elseif indexHot1.status==3>
+								<b href="" class="line4Btn">复审通过</b>
+							<#elseif indexHot1.status==4>
+								<b href="" class="line4Btn">复审失败</b>
+							<#elseif indexHot1.status==5 || indexHot1.status==-1>
+								<b href="" class="line4Btn">用户取消</b>
+							<#elseif indexHot1.status==6>
+								<b href="" class="line4Btn">还款中</b>
+							<#elseif indexHot1.status==8>
+								<b href="" class="line4Btn">已结束</b>
+							<#else>
+								<b href="" class="line4Btn">即将发布</b>
+							</#if>
+						</a>
+					</#if>
+				</li>
+				<li>
+					<#if indexHot2??>
+						<a href="${webroot}/invest/detail.html?borrowid=${indexHot2.id?c}" style="background: url('${webroot}${theme_dir}/media/imgs/line4-4.jpg')no-repeat center -30px">
+							<!-- <a href="javascript:return false;" style="background: url('${webroot}${theme_dir}/media/imgs/line4-2.jpg')"> -->
+							<h1>项目名称</h1>
+							<h2 style="color: #c28328">${indexHot2.name}</h2>
+							<h3 style="color: #e7bc71;">
+								<!--${indexHot2.apr}%-->
+								<!--加息活动修改-->
+								<#if indexHot2.isday==1&&indexHot2.timeLimitDay==30&&("20161212"?date("yyyyMMdd") lt indexHot2.addtime?date) && (indexHot2.addtime?date lt "20170401"?date("yyyyMMdd"))>${indexHot2.apr-1}%<b style="color:#dfa151;">+1%</b>
+								<#elseif indexHot2.isday==0&&indexHot2.timeLimit==1&&("20161212"?date("yyyyMMdd") lt indexHot2.addtime?date) && (indexHot2.addtime?date lt "20170401"?date("yyyyMMdd"))>${indexHot2.apr-1}%<b style="color:#dfa151;">+1%</b>
+								<#elseif indexHot2.isday==0&&indexHot2.timeLimit==2&&("20161220"?date("yyyyMMdd") lt indexHot2.addtime?date) && (indexHot2.addtime?date lt "20170401"?date("yyyyMMdd"))>${indexHot2.apr-1}%<b style="color:#dfa151;">+1%</b>
+								<#elseif indexHot2.isday==0&&indexHot2.timeLimit==3&&("20161212"?date("yyyyMMdd") lt indexHot2.addtime?date) && (indexHot2.addtime?date lt "20170401"?date("yyyyMMdd"))>${indexHot2.apr-1}%<b style="color:#dfa151;">+1%</b>
+									<#else>${indexHot2.apr}%
+								</#if>
+								<!--加息活动修改结束-->
+							</h3>
+							<p>
+								项目期限<span> <#if indexHot2.isday??&&indexHot2.isday==1> ${indexHot2.timeLimitDay!0}天 <#else> ${(indexHot2.timeLimit)?default("0")}个月 </#if> </span>
+							</p>
+							<p>
+								项目进度
+								<span style="color: green">${(indexHot2.accountYes/indexHot2.account*100)}%</span>
+							</p>
+							<#if indexHot2.status==1&&(indexHot2.accountYes lt indexHot2.account ) >
+								<b href="${webroot}/invest/detail.html?borrowid=${indexHot2.id?c}" class="line4Btn" style="background:#e7bc71">立即投资</b>
+							<#elseif indexHot2.status==1&&(indexHot2.accountYes gt indexHot2.account || indexHot2.accountYes==indexHot2.account) >
+								<b href="" class="line4Btn">复审中</b>
+							<#elseif indexHot2.status==2>
+								<b href="" class="line4Btn">初审失败</b>
+							<#elseif indexHot2.status==3>
+								<b href="" class="line4Btn">复审通过</b>
+							<#elseif indexHot2.status==4>
+								<b href="" class="line4Btn">复审失败</b>
+							<#elseif indexHot2.status==5 || indexHot2.status==-1>
+								<b href="" class="line4Btn">用户取消</b>
+							<#elseif indexHot2.status==6>
+								<b href="" class="line4Btn">还款中</b>
+							<#elseif indexHot2.status==8>
+								<b href="" class="line4Btn">已结束</b>
+							<#else>
+								<b href="" class="line4Btn">即将发布</b>
+							</#if>
+						</a>
+					</#if>
+				</li>
+				<li>
+					<#if indexHot3??>
+						<a href="${webroot}/invest/detail.html?borrowid=${indexHot3.id?c}" style="background: url('${webroot}${theme_dir}/media/imgs/line4-3.jpg') no-repeat center -30px;">
+							<h1>项目名称</h1>
+							<h2 style="color: #3b5e86">${indexHot3.name}</h2>
+							<h3 style="color: #9bb2cc;">
+								<!--${indexHot3.apr}%-->
+								<!--加息活动修改-->
+								<#if indexHot3.isday==1&&indexHot3.timeLimitDay==30&&("20161212"?date("yyyyMMdd") lt indexHot3.addtime?date) && (indexHot3.addtime?date lt "20170401"?date("yyyyMMdd"))>${indexHot3.apr-1}%<b style="color:#dfa151;">+1%</b>
+								<#elseif indexHot3.isday==0&&indexHot3.timeLimit==1&&("20161212"?date("yyyyMMdd") lt indexHot3.addtime?date) && (indexHot3.addtime?date lt "20170401"?date("yyyyMMdd"))>${indexHot3.apr-1}%<b style="color:#dfa151;">+1%</b>
+								<#elseif indexHot3.isday==0&&indexHot3.timeLimit==2&&("20161220"?date("yyyyMMdd") lt indexHot3.addtime?date) && (indexHot3.addtime?date lt "20170401"?date("yyyyMMdd"))>${indexHot3.apr-1}%<b style="color:#dfa151;">+1%</b>
+								<#elseif indexHot3.isday==0&&indexHot3.timeLimit==3&&("20161212"?date("yyyyMMdd") lt indexHot3.addtime?date) && (indexHot3.addtime?date lt "20170401"?date("yyyyMMdd"))>${indexHot3.apr-1}%<b style="color:#dfa151;">+1%</b>
+									<#else>${indexHot3.apr}%
+								</#if>
+								<!--加息活动修改结束-->
+							</h3>
+							<p>
+								项目期限<span> <#if indexHot3.isday??&&indexHot3.isday==1> ${indexHot3.timeLimitDay!0}天 <#else> ${(indexHot3.timeLimit)?default("0")}个月 </#if> </span>
+							</p>
+							<p>
+								项目进度
+								<span style="color: green">${(indexHot3.accountYes/indexHot3.account*100)}%</span>
+							</p>
+							<#if indexHot3.status==1&&(indexHot3.accountYes lt indexHot3.account ) >
+								<b href="${webroot}/invest/detail.html?borrowid=${indexHot3.id?c}" class="line4Btn" style="background: #9bb2cc">立即投资</b>
+							<#elseif indexHot3.status==1&&(indexHot3.accountYes gt indexHot3.account || indexHot3.accountYes==indexHot3.account) >
+								<b href="" class="line4Btn">复审中</b> <#elseif indexHot3.status==2> <b href="" class="line4Btn">初审失败</b>
+							<#elseif indexHot3.status==3>
+								<b href="" class="line4Btn">复审通过</b>
+							<#elseif indexHot3.status==4>
+								<b href="" class="line4Btn">复审失败</b>
+							<#elseif indexHot3.status==5 || indexHot3.status==-1>
+								<b href="" class="line4Btn">用户取消</b>
+							<#elseif indexHot3.status==6>
+								<b href="" class="line4Btn">还款中</b>
+							<#elseif indexHot3.status==8>
+								<b href="" class="line4Btn">已结束</b>
+							<#else>
+								<b href="" class="line4Btn">即将发布</b>
+							</#if>
+						</a>
+					</#if>
+				</li>
+				<li style="padding: 0px;">
+					<#if indexHot4??>
+						<a href="${webroot}/invest/detail.html?borrowid=${indexHot4.id?c}" style="background: url('${webroot}${theme_dir}/media/imgs/line4-2.jpg')no-repeat center -30px">
+							<!-- <a href="javascript:return false;" style="background: url('${webroot}${theme_dir}/media/imgs/line4-2.jpg')"> -->
+							<h1>项目名称</h1>
+							<h2 style="color: #954f1b">${indexHot4.name}</h2>
+							<h3 style="color: #edac7c; ">
+								<!--${indexHot4.apr}%-->
+								<!--加息活动修改-->
+								<#if indexHot4.isday==1&&indexHot4.timeLimitDay==30&&("20161212"?date("yyyyMMdd") lt indexHot4.addtime?date) && (indexHot4.addtime?date lt "20170401"?date("yyyyMMdd"))>${indexHot4.apr-1}%<b style="color:#dfa151;">+1%</b>
+								<#elseif indexHot4.isday==0&&indexHot4.timeLimit==1&&("20161212"?date("yyyyMMdd") lt indexHot4.addtime?date) && (indexHot4.addtime?date lt "20170401"?date("yyyyMMdd"))>${indexHot4.apr-1}%<b style="color:#dfa151;">+1%</b>
+								<#elseif indexHot4.isday==0&&indexHot4.timeLimit==2&&("20161220"?date("yyyyMMdd") lt indexHot4.addtime?date) && (indexHot4.addtime?date lt "20170401"?date("yyyyMMdd"))>${indexHot4.apr-1}%<b style="color:#dfa151;">+1%</b>
+								<#elseif indexHot4.isday==0&&indexHot4.timeLimit==3&&("20161212"?date("yyyyMMdd") lt indexHot4.addtime?date) && (indexHot4.addtime?date lt "20170401"?date("yyyyMMdd"))>${indexHot4.apr-1}%<b style="color:#dfa151;">+1%</b>
+									<#else>${indexHot4.apr}%
+								</#if>
+								<!--加息活动修改结束-->
+							</h3>
+							<p>
+								项目期限<span> <#if indexHot4.isday??&&indexHot4.isday==1> ${indexHot4.timeLimitDay!0}天 <#else> ${(indexHot4.timeLimit)?default("0")}个月 </#if> </span>
+							</p>
+							<p>
+								项目进度
+								<span style="color: green">${(indexHot4.accountYes/indexHot4.account*100)}%</span>
+							</p>
+							<#if indexHot4.status==1&&(indexHot4.accountYes lt indexHot4.account ) >
+								<b href="${webroot}/invest/detail.html?borrowid=${indexHot4.id?c}" class="line4Btn">立即投资</b>
+							<#elseif indexHot4.status==1&&(indexHot4.accountYes gt indexHot4.account || indexHot4.accountYes==indexHot4.account) >
+								<b href="" class="line4Btn">复审中</b>
+							<#elseif indexHot4.status==2>
+								<b href="" class="line4Btn">初审失败</b>
+							<#elseif indexHot4.status==3>
+								<b href="" class="line4Btn">复审通过</b>
+							<#elseif indexHot4.status==4>
+								<b href="" class="line4Btn">复审失败</b>
+							<#elseif indexHot4.status==5 || indexHot4.status==-1>
+								<b href="" class="line4Btn">用户取消</b>
+							<#elseif indexHot4.status==6>
+								<b href="" class="line4Btn">还款中</b>
+							<#elseif indexHot4.status==8>
+								<b href="" class="line4Btn">已结束</b>
+							<#else>
+								<b href="" class="line4Btn">即将发布</b>
+							</#if>
+						</a>
+					</#if>
+				</li>
+
+			</ul>
+		</div>
+
+		<div class="line" style="margin-bottom:16px;">
+			<p class="pTitle">投资列表</p>
+			<div class="NewListM">
+				<div class="type-content bid">
+
+				<#include "./common/macro_invest.html">
+				<#if borrowList?exists>
+					<#list borrowList as item>
+						<@indexListItem item=item />
+					</#list>
+					<div class="clearfix"></div>
+				<#else>
+					<div align="center">没有信息</div>
+				</#if>
+				<div class="moreVC"><a href="/invest/index.html?status=11" class="uhTF" ">查看更多投资项目</a></div>
+			</div>
+			</div>
+		</div>
+
+ 		<div class="line line5" style="padding: 15px 0px 40px 0px;">
+			<div class="line5Tab"><span class="on">媒体报道</span><span>网站公告</span></div>
+			<!-- 媒体报道  -->
+			<div class="newsList s">
+				<ul>
+					<#if (mtbdList?exists) && (mtbdList?size > 0)> 
+						<#list mtbdList as item>
+							<li>
+								<a href="/article/detail.html?code=mtbd&id=${item.id}">
+									<img src="${item.litpic}" alt="图片无法显示"/> 
+									<div class="newsText">
+										<h1><#if item.name?length lte 30>${item.name}<#else>${item.name[0..30]}...</#if></h1>
+										<p><#if item.summary?length lte 45>${item.summary}<#else>${item.summary[0..45]}...</#if></p>
+									</div> 
+									<div class="newsTime">${item.publish?string("yyyy-MM-dd")}</div>
+								</a>
+							</li>
+						</#list> 
+					<#else>
+						<div align="center">没有信息</div>
+					</#if>
+				</ul>						
+				<div class="moreVC"><a href="/about/gywm.html?code=webNews" class="uhTF">更多媒体报道</a></div>
+			</div>
+			
+ 			<!-- 网站公告 -->
+			<div class="newsList">
+				<ul class="wzgg">
+					<#if (webNoticeList?exists) && (webNoticeList?size > 0)> 
+						<#list webNoticeList as item>
+							<li>
+								<a href="/article/detail.html?code=web-notice&id=${item.id}"> 
+									<div class="newsText">
+										<h1><#if item.name?length lte 30>${item.name}<#else>${item.name[0..30]}...</#if></h1>
+										<p><#if item.summary?length lte 55>${item.summary}<#else>${item.summary[0..55]}...</#if></p>
+									</div>
+									<div class="newsTime"><#if item.publish??>${item.publish?string("yyyy-MM-dd")}</#if></div>
+								</a>
+							</li>
+						</#list> 
+					<#else>
+						<div align="center">没有信息</div>
+					</#if>
+				</ul>
+				<div class="moreVC"><a href="/about/gywm.html?code=webNews&&notice" class="uhTF">更多网站公告</a></div>
+			</div> 
+		</div>
+	</div>
+
+	<!-- 合作伙伴 -->
+	
+	<div class="line line6" style="background:none;width:100%;">
+		<p class="pTitle">合作伙伴</p>
+		<div style="background:#fff;margin:auto;">
+		<ul style="width:1200px;margin:auto;">
+			<li><a href="${webroot}/article/list.html?code=hzhb" class="partner1"></a></li>
+			<li><a href="${webroot}/article/list.html?code=hzhb" class="partner2"></a></li>
+			<li><a href="${webroot}/article/list.html?code=hzhb" class="partner3"></a></li>
+			<li><a href="${webroot}/article/list.html?code=hzhb" class="partner4"></a></li>
+			<li><a href="${webroot}/article/list.html?code=hzhb" class="partner5"></a></li>
+			<li><a href="${webroot}/article/list.html?code=hzhb" class="partner6"></a></li>
+			<li><a href="${webroot}/article/list.html?code=hzhb" class="partner7"></a></li>
+			<li><a href="${webroot}/article/list.html?code=hzhb" class="partner8"></a></li>
+			<li><a href="${webroot}/article/list.html?code=hzhb" class="partner9"></a></li>
+			<li><a href="${webroot}/article/list.html?code=hzhb" class="partner10"></a></li>
+			<li><a href="${webroot}/article/list.html?code=hzhb" class="partner11"></a></li>
+			<li><a href="${webroot}/article/list.html?code=hzhb" class="partner12"></a></li>
+			<li><a href="${webroot}/article/list.html?code=hzhb" class="partner13"></a></li>
+			<li><a href="${webroot}/article/list.html?code=hzhb" class="partner14"></a></li>
+			<li><a href="${webroot}/article/list.html?code=hzhb" class="partner15"></a></li>
+			<li><a href="${webroot}/article/list.html?code=hzhb" class="partner16"></a></li>
+			<li><a href="${webroot}/article/list.html?code=hzhb" class="partner17"></a></li>
+			<li><a href="${webroot}/article/list.html?code=hzhb" class="partner18"></a></li>
+		</ul>
+		</div>
+	</div>
+
+
+	<#include "include/footer.html">
+
+</body>
+<script type="text/javascript">
+	$('.type-content.bid ul').each(function(index) {
+		if (index % 3 == 2) {
+			$(this).css({
+				margin : 0
+			});
+		}
+		if (index >= 6) {
+			$(this).remove();
+		}
+	});
+	$(".progressbar").each(function() {
+		$(this)[0].style.backgroundPosition = '-' + parseInt($(this).text().replace("%", "")) * 54 + 'px 0px';
+	});
+</script>
+<script type="text/javascript">
+	$(".sucbox").slideFn({
+		isTop : true,
+		slideTimer : "3000"
+	});
+	function showRemainTime() {
+		var endtimes = $(".endtime");
+		endtimes.each(function() {
+			RemainTime($(this));
+		});
+	}
+	showRemainTime();
+	setInterval("showRemainTime()", 1000);
+
+	function RemainTime(t) {
+		var iDay, iHour, iMinute, iSecond, account;
+		var sDay = "", sTime = "";
+		var at = "data-time"
+		var iTime = t.attr(at);
+		if (iTime >= 0) {
+			iDay = parseInt(iTime / 24 / 3600);
+			iHour = parseInt((iTime / 3600) % 24);
+			iMinute = parseInt((iTime / 60) % 60);
+			iSecond = parseInt(iTime % 60);
+			if (iDay > 0) {
+				sDay = iDay + "天";
+			}
+			sTime = sDay + iHour + "时" + iMinute + "分" + iSecond + "秒";
+			if (iTime == 0) {
+				sTime = "<span style='color:green'>时间到了！</span>";
+			}
+			t.attr(at, iTime - 1);
+		} else {
+			sTime = "<span style='color:red'>此标已过期！</span>";
+		}
+		t.html(sTime);
+	}
+</script>
+<script type="text/javascript">
+	$('.fade-slidebox').bannerPlay({
+		bannerItem : '.fade-content li', //切换的轮播图片
+		changeBtnItem : '.fade-ul li', //切换按钮
+		playStyle : 'slide', //播放模式：淡入淡出/滑动:fade/slide
+		slideDirection : 'horizonal', //滑动模式-滑动方向:horizonal/vertical
+		easing : 'easeInOutExpo', //动画方式:推荐 easeOutCubic/easeInOutExpo。
+		fadeSpeed : 1000, //淡入淡出-图片淡入淡出的速度-毫秒
+		slideSpeed : 500, //滑动模式-图片左右滑动的速度-毫秒
+		autoPlayInterval : 4000
+	//图片切换间隔-毫秒
+
+	});
+
+	$('.notice').listScroll({
+		scrollList : '#web-notice',
+		direction : 'vertical',
+		speed : 400,
+		autoPlay : true,
+		autoPlayInterval : 4
+	});
+
+	$('#lisk').css('cursor', 'pointer').click(function() {
+		window.location.href = "/Safety.html";
+	});
+	for(var i=0;i<$('#btnBig li').length;i++){
+		$('.flicking_con').append("<a href='#'></a>")
+	}
+
+</script>
+<script type="text/javascript">
+$(".line5Tab > span").click(function () {
+	$(".line5Tab > span").eq($(this).index()).addClass('on').siblings().removeClass('on');
+    $(".newsList").hide().eq($(this).index()).show();
+})
+</script>
+</html>

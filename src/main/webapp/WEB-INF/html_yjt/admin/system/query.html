@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#if queryType??&& queryType=="payPwd">
+                    	<#assign moduleName="修改后台用户支付密码">
+                    <#else>
+                    	<#assign moduleName="修改后台用户密码">
+                    </#if>
+                    
+                        <#include "banner.html">
+                        <div id="main" class="clearfix">
+							<#if user??>
+								<#if queryType == "payPwd">
+								<form method="post" action="modifyAdminPwd.html" onSubmit="return check_repwd();">
+										 <div class="title" style="height:30px; line-height:30px; padding-left:25px;">用户名： ${user.username!}</div>
+										<div class="title" style="height:30px; line-height:30px; padding-left:25px;">邮&nbsp;&nbsp;&nbsp;箱： ${user.email!}</div>
+										<p class="clearfix" style="height:30px; line-height:30px; padding-left:25px;">
+											<label>新支付密码：</label>
+											<span><input type="password" name="newpassword" id="newpassword" style="width:120px;" size="20" tabindex="2" class="login_input" maxlength="20"/></span>
+											<b></b>
+										</p>
+										<p class="clearfix" style="height:30px; line-height:30px;">
+											<label >确认支付密码：</label>
+											<span><input type="password" name="newpassword1" id="newpassword1" style="width:120px;" size="20" tabindex="2" class="login_input" maxlength="20"/></span>
+											<b></b>
+										</p>
+										<input type="hidden"  name="userId" value="${user.userId?c}" />
+										<input type="hidden"  name="type" value="update" />
+										<input type="hidden"  name="queryType" value="${queryType}" />
+										<input type="submit" value="确认修改"  style="width:77px; height:30px; margin-left:74px; margin-top:5px;"/>
+									</form>	
+								<#else>
+									<form method="post" action="modifyAdminPwd.html" onSubmit="return check_repwd();">
+										 <div class="title" style="height:30px; line-height:30px; padding-left:25px;">用户名： ${user.username!}</div>
+										<div class="title" style="height:30px; line-height:30px; padding-left:25px;">邮&nbsp;&nbsp;&nbsp;箱： ${user.email!}</div>
+										<p class="clearfix" style="height:30px; line-height:30px; padding-left:25px;">
+											<label>新密码：</label>
+											<span><input type="password" name="newpassword" id="newpassword" style="width:120px;" size="20" tabindex="2" class="login_input" maxlength="20"/></span>
+											<b></b>
+										</p>
+										<p class="clearfix" style="height:30px; line-height:30px;">
+											<label >确认新密码：</label>
+											<span><input type="password" name="newpassword1" id="newpassword1" style="width:120px;" size="20" tabindex="2" class="login_input" maxlength="20"/></span>
+											<b></b>
+										</p>
+										<input type="hidden"  name="userId" value="${user.userId?c}" />
+										<input type="hidden"  name="type" value="update" />
+										<input type="submit" value="确认修改"  style="width:77px; height:30px; margin-left:74px; margin-top:5px;"/>
+									</form>	
+								</#if>
+							
+							<#else>
+	                            	<form method="post" action="queryAdminUser.html" >
+	                                	输入用户名：<input type="text" name="username" size="15" />
+	                                	<input type="hidden"  name="type" value="query" />
+	                                	<input type="hidden"  name="queryType" value="${queryType}" />
+	                                	<input type="submit" value="查询" />
+									</form>	
+	                           
+                            </#if>
+                            
+                  </div>
+            </td>
+        </tr>
+        <script>
+		        function check_repwd(){
+		      	  var pwd =document.getElementById("newpassword").value;
+		      	  var newpwd =document.getElementById("newpassword1").value; 
+		      	  var pass_reg = /^(?![0-9A-Za-z]+$)[0-9A-Za-z~!@#$%^&*()]{10,}$/ ;
+		          if (pwd==""){
+		              alert("新密码不能为空！");
+		              return false;
+		          }else if (pwd !=newpwd){
+		              alert("两次输入的密码不一致！");
+		              document.getElementById("newpassword").value="";
+		          	document.getElementById("newpassword1").value="";
+		              return false;
+		          }else if(!pass_reg.exec(pwd)){
+		          	alert("密码必须包含数字、字母、特殊字符【~!@#$%^&*()】，长度不少于10位");
+		          	document.getElementById("newpassword").value="";
+		          	document.getElementById("newpassword1").value="";
+		              return false;
+		          }
+		          return true;
+		
+		     	}
+				</script>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+<div class="msgClass">
+    ${rsmsg!""}
+</div>
+</body>
+</html>
+<#include "../jsPage.html">

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html">
+<body>
+	<#assign nid="member"> <#include "../../include/header.html">
+	<!--header-end-->
+	<!--用户中心的主栏目 开始-->
+	<div id="main" class="clearfix" style="margin-top:10px;">
+		<div class="wrap950 " style="margin-top:0">
+			<!--左边的导航 开始-->
+			<div class="user_left">
+            	<#assign mid="m_invest" >
+				<#include "../user_menu.html"></div>
+			<!--左边的导航 结束-->
+
+			<!--右边的内容 开始-->
+			<div class="user_right">
+				<div class="user_right_menu">
+					<#include "myagent_menu.html"></div>
+				<div class="user_right_main">
+					<table  border="0"  cellspacing="1" class="table table-striped  table-condensed" style="width:100%">
+						  <form cur="" method="post">
+							<tr class="head" >
+						        <td>类型</td>
+								<td>操作积分</td>
+								<td>总积分</td>
+								<td>消费积分</td>
+								<td>备注</td>
+								 <td>时间</td>
+							</tr>
+							<#import "../../common/function.html" as func>  
+							<#if list?? && list?size gt 0>
+							<#list list as item>
+							<tr>
+							    <td>${item.userCreditType.name!}</td>
+								<td>${item.operateValue}</td>
+								<td>${item.value}</td>
+								<td>${item.expenseValue}</td>
+								<td>${item.remark}</td>
+								<td>${item.addtime?string("yyyy-MM-dd")}</td>
+							</tr>
+							</#list>
+							<tr>
+								<td colspan="8" class="page">
+									<div align="center">
+										<#import "../../common/page.html" as pager>  
+					         	 		<@pager.pagination page=page url="/member/usercredit.html" map=param style="style1"  /> 
+									</div>
+								</td>
+							</tr>
+						<#else>
+								<tr>
+								<td colspan="8" class="page"><div align="center">无数据</div></td>
+								</tr>
+						</#if>
+						</form>	
+					</table>
+				</div>
+			</div>
+			<!--右边的内容 结束-->
+		</div>
+	</div>
+	<!--用户中心的主栏目 结束-->
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/modal.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/tab.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/alert.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/transition.js"></script>
+	<#include "../../include/footer.html">
+</body>
+</html>

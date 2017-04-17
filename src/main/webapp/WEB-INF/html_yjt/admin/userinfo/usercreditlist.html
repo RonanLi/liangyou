@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+<body>
+	<table class="mc">
+		<tr>
+			<td class="mc-l">
+				<!--左侧导航---{-->
+				<div id="navPanelContainer">
+					<div class="system-logo cd"></div>
+					<!--管理员信息---{-->
+					<#include "../adminInfo.html">
+					<!--管理员信息---}-->
+					<div class="nav-wrap"><#include "left.html"></div>
+				</div> <!--左侧导航---}-->
+			</td>
+			<td class="mc-m">
+				<div class="navToggle"></div>
+			</td>
+			<td class="mc-r">
+				<!--顶部导航---{--> <#include "../topNav.html"> <!--顶部导航---}--> <!--面包屑导航---{-->
+				<#assign moduleName="用户积分管理"> <#include "banner.html"> <!--面包屑导航---}-->
+<!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+                            
+                             
+                                <form action="${request.getContextPath()}/admin/userinfo/usercreditlist.html" method="post">
+                                <div class="toolbor-module search">
+                                	 <div style="height:22px;line-height:22px;float:left;margin-left: 10px;">用户名：</div>
+                                    <input type="text" name="username" id="username" value="${name!''}" class="search-value">
+                                    <input type="submit" value="搜索"  class="input-button" >
+                                </div>
+                                </form>
+                            </div>
+                            <!--工具栏--}-->
+				<div id="main" class="clearfix">
+					<#if list??>
+					<table class="data-list">
+						<tr class="header">
+							<td>用户ID</td>
+							<td>用户名称</td>
+							<td>总积分</td>
+							<td>可用积分</td>
+							<td>消费积分</td>
+							<td>投资积分</td>
+							<td>借款积分</td>
+							<td>赠送积分</td>
+							<td>添加时间</td>
+							<td>操作</td>
+						</tr>
+						<#list list as item>
+						<tr class="s">
+							<td><#if item.user.userId??>${item.user.userId!}<#else></#if></td>
+							<td><#if item.user.username??>${item.user.username!}<#else></#if></td>
+							<td><#if item.value??>${item.value!}<#else></#if></td>							
+							<td><#if item.validValue??>${item.validValue!}<#else></#if></td>
+							<td><#if item.expenseValue??>${item.expenseValue!}<#else></#if></td>
+							<td><#if item.tenderValue??>${item.tenderValue!}<#else></#if></td>
+							<td><#if item.borrowValue??>${item.borrowValue!}<#else></#if></td>
+							<td><#if item.giftValue??>${item.giftValue!}<#else></#if></td>
+							<td><#if item.addtime??>${item.addtime!}<#else></#if></td>
+							<td>
+                                <a class="un" href="editusercredit.html?id=${item.id!0}">修改</a>
+                                <a class="un" href="usercreditdetail.html?userId=${item.user.userId!0}">查看明细</a>
+                            </td>
+						</tr>
+						</#list>
+					</table>
+
+					<#else>暂无</#if>
+`
+<!--翻页系统--{-->     
+						<div class="container"><#import "../../common/page.html" as
+							pager> <@pager.pagination page=page
+							url="/admin/userinfo/usercreditlist.html" map=param style="style1"
+							/></div>
+					
+						<!--翻页系统--}-->
+					<!--底部工具栏--{-->
+					<div id="bottomToolbar" class="clearfix">
+						<div class="other-tool">
+							<dl class="refresh-data">
+								<dt class="refresh-data-icon"></dt>
+								<dd>
+									<a href="javascript:void(0);" class="refresh-page">刷新数据</a>
+								</dd>
+							</dl>
+						</div>
+
+					</div>
+					<!--底部工具栏--}-->
+				</div>
+
+			</td>
+		</tr>
+		<tr>
+			<!--尾部--{-->
+			<td colspan="3" class="mc-b"><#include "../foot.html"></td>
+			<!--尾部--}-->
+		</tr>
+	</table>
+
+</body>
+</html>
+<#include "../jsPage.html">

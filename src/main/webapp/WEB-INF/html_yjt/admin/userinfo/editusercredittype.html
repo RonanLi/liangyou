@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="修改积分类型">
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+                                <div class="toolbor-module search">
+                                    <input type="button" class="input-button return" value="返回" onclick="history.go(-1)">
+                                </div>
+                            </div>
+                            <!--工具栏--}-->
+
+                            <div id="main" class="w850 clearfix">
+                            <form action="${request.getContextPath()}/admin/userinfo/updateusercredittype.html" method="post">
+                            <input type="hidden" value="0" name="updatetype">
+                                       <div class="hidden customer-info"  id="user_info_menu_1">
+                                            <ul class="title-v">
+                                                <li>
+                                                    <div class="title">类型名称：</div>
+                                                    <div class="v">
+                                                        <#if userCreditType??>${userCreditType.name!}</#if>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">是否启用：</div>
+                                                    <div class="v">
+                                                    <#if userCreditType??>
+                                                    	<#if userCreditType.status==1>
+                                                    	<input type="radio" name="status" value="1" checked="checked">启用
+                                                        <input type="radio" name="status" value="0">不启用
+                                                        <#else>
+                                                        <input type="radio" name="status" value="1">启用
+                                                        <input type="radio" name="status" value="0" checked="checked">不启用
+                                                        </#if>
+                                                    </#if>
+                                                    </div>
+                                                </li>
+                                                <#if userCreditType?? && (userCreditType.nid == 'borrow_success' || userCreditType.nid == 'invest_success' )>
+                                                <li>
+                                                    <div class="title">积分派送类型：</div>
+                                                    <div class="v">
+                                                    	<#if userCreditType.creditManagerStatus==0>
+                                                        <input type="radio" name="creditManagerStatus" value="0" checked="checked">不启用
+                                                        <input type="radio" name="creditManagerStatus" value="1">全部派送
+                                                        <input type="radio" name="creditManagerStatus" value="2">按月派送
+                                                    <#elseif userCreditType.creditManagerStatus==1>
+                                                    	<input type="radio" name="creditManagerStatus" value="0">不启用
+                                                    	<input type="radio" name="creditManagerStatus" value="1" checked="checked">全部派送
+                                                        <input type="radio" name="creditManagerStatus" value="2">按月派送
+                                                    <#else>
+                                                    	<input type="radio" name="creditManagerStatus" value="0">不启用
+                                                    	<input type="radio" name="creditManagerStatus" value="1">全部派送
+                                                        <input type="radio" name="creditManagerStatus" value="2" checked="checked">按月派送
+                                                    </#if>
+                                                    </div>
+                                                </li>
+                                                <#else>
+                                                	<input type="hidden" name=""creditManagerStatus"" value="0" />
+                                                </#if>
+                                                <#if userCreditType?? && (userCreditType.type == 'gift' || userCreditType.type == 'bbs')>
+                                                <li>
+                                                    <div class="title">增减积分：</div>
+                                                    <div class="v">
+                                                    	<#if userCreditType??><input type="hidden" id="valu" value="${userCreditType.value!}">
+                                                        <input type="text" name="value" value="${userCreditType.value!}" id="value"> </#if>
+                                                    </div>
+                                                </li>
+                                                <input type="hidden" name="valueRate" value="1" />
+                                                <#else>
+                                                <li>
+                                                    <div class="title">比例：</div>
+                                                    <div class="v">
+                                                        <#if userCreditType??><input type="hidden" id="valueRat" value="${userCreditType.valueRate!}">
+                                                        <input type="text" name="valueRate" value="${(userCreditType.valueRate!)?string("##.####")}" id="valueRate"></#if>
+														<span>*将操作金额转换为赠送积分的比例</span>
+                                                    </div>
+                                                </li>
+                                                <input type="hidden" name="value" value="1" />
+                                                </#if>
+                                                <li>
+                                                    <div class="title">转化率：</div>
+                                                    <div class="v">
+                                                    	<#if userCreditType??><input type="hidden" id="validRat" value="${userCreditType.validRate!}">
+                                                    	<input type="text" name="validRate" value="${userCreditType.validRate!}" id="validRate"></#if>
+	                                                    <span>*将赠送积分转换为可用积分的比例</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">四舍五入的比例值：</div>
+                                                    <div class="v">
+                                                    	<#if userCreditType??><input type="hidden" id="decimalManage" value="${userCreditType.decimalManager!}">
+                                                    	<input type="text" name="decimalManager" value="${userCreditType.decimalManager!}" id="decimalManager"></#if>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">添加时间：</div>
+                                                    <div class="v">
+                                                       <#if userCreditType??> ${userCreditType.addtime?string('yyyy-MM-dd HH:mm:ss')}</#if>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    <div id="bottomToolbar" class="clearfix">
+                                        <#if userCreditType??><input type="hidden" value="${userCreditType.id?c}" name="id" /></#if>
+                                        <input type="submit" name="submit" class="input-button post" value="提交">
+                                        <input type="reset" name="reset" class="input-button reset" value="重置">
+                                    </div>
+                                </form>
+
+
+
+                            </div>
+                            <script type="text/javascript">
+                                change_menu_tab("user_info_menu");
+                            </script>
+
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+
+    </body>
+</html>
+<#include "../jsPage.html">
+    <script>
+        $(function(){
+            $(".customer-info").eq(0).removeClass("hidden");
+            $("#value").change(function(){
+        		var number = $(this).val();
+            	if(parseInt(number)!=number){
+            		alert("请输入整数");
+            		$(this).val($("#valu").val());
+            	}
+        	})
+            $("#valueRate").change(function(){
+            	var number = $(this).val();
+            	if($(this).val()>1||$(this).val()<0||isNaN(number)){
+            		alert("请输入不大于1的正数");
+            		$(this).val($("#valueRat").val());
+            	}
+        	})
+            $("#validRate").change(function(){
+            	var number = $(this).val();
+            	if($(this).val()>1||$(this).val()<0||isNaN(number)){
+            		alert("请输入不大于1的正数");
+            		$(this).val($("#validRat").val());
+            	}
+        	})
+            $("#decimalManager").change(function(){
+            	var number = $(this).val();
+            	if($(this).val()>1||$(this).val()<0||isNaN(number)){
+            		alert("请输入不大于1的正数");
+            		$(this).val($("#decimalManage").val());
+            	}
+        	})
+        });
+    </script>
+

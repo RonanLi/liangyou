@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="修改模板">
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+                                <div class="toolbor-module search">
+                                    <input type="button" class="input-button return" value="返回" onclick="location.href='bindTemplate.html'">
+                                </div>
+                            </div>
+                            <!--工具栏--}-->
+
+                            <div id="main" class="clearfix">
+                                <form name="form1" method="post" action="" onsubmit="return check_form();" enctype="multipart/form-data" >
+                                    <div class="valBox w750">
+                                        <div class="top">
+                                            <strong>绑定模板</strong>
+                                        </div>
+                                        <div class="val clearfix">
+                                            <ul> 
+                                            	<li>
+                                                    <div class="title">序号：</div>
+                                                    <div class="v">
+                                                        <label>${msgOperateType.id}</label>  
+                                                    </div>
+                                                </li>  
+                                            	<li>
+                                                    <div class="title">业务名称：</div>
+                                                    <div class="v">
+                                                        <label><#if msgOperateType.msgOperate??>${msgOperateType.msgOperate.name!'-'}<#else>-</#if></label>  
+                                                    </div>
+                                                </li>                                         
+                                                <li>
+                                                    <div class="title">类型名称：</div>
+                                                    <div class="v">
+                                                        <label><#if msgOperateType.msgType??>${msgOperateType.msgType.name!'-'}<#else>-</#if></label>  
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">模板：</div>
+                                                    <div class="v">
+                                                          <#if templateList?? && templateList?size gt 0 >
+                                                          	<select name="templateId">
+                                                          	<#list templateList as item>
+                                                          		<#if msgOperateType.msgTemplate?? && msgOperateType.msgTemplate.id==item.id>
+                                                          			<option value="${item.id}" selected="selected">${item.name}
+                                                          			<#else>
+                                                          			<option value="${item.id}" >${item.name}
+                                                          		</#if>
+                                                          		
+                                                          	</#list>
+                                                          	</select>
+                                                          <#else>
+                                                          	<a href="/admin/msg/addTemplate.html">【<#if msgOperateType.msgType??>${msgOperateType.msgType.name!'-'}<#else>-</#if>】模板暂未添加，点击添加</a>
+                                                          </#if>
+                                                    </div>
+                                                </li>
+                                                                                            
+                                            </ul>
+                                            <div class="other">
+                                                <input type="hidden"  name="actionType" value="modify" />
+                                                
+                                                <input type="submit"  name="reset" value="绑定" class="input-button confirm"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                            </div>
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+<div class="msgClass">
+                                                                    ${rsmsg!""}
+                                                                </div>
+    </body>
+</html>
+<#include "../jsPage.html">

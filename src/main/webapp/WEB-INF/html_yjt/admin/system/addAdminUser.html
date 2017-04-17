@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+<body>
+<table class="mc">
+<tr>
+<td class="mc-l">
+    <!--左侧导航---{-->
+    <div id="navPanelContainer">
+        <div class="system-logo cd"></div>
+        <!--管理员信息---{-->
+        <#include "../adminInfo.html">
+            <!--管理员信息---}-->
+            <div class="nav-wrap">
+                <#include "left.html">
+            </div>
+    </div>
+    <!--左侧导航---}-->
+</td>
+<td class="mc-m">
+    <div class="navToggle"></div>
+</td>
+<td class="mc-r">
+<!--顶部导航---{-->
+<#include "../topNav.html">
+<!--顶部导航---}-->
+
+<!--面包屑导航---{-->
+<#assign moduleName="添加管理员">
+<#include "banner.html">
+<!--面包屑导航---}-->
+<style>
+  .reg-table{width:980px;}
+  .reg-l-title{width:120px; text-align:right; float:left;}
+  .reg-l-input{width:620px; float:left;}
+  ul.reg-table li{ padding-top:10px; padding-bottom:10px;}
+  a.btn-action{width:133px; height:30px; text-align:center; line-height:30px; display:block; background:#ccc; color:#666; margin-left:122px;}
+</style>
+
+<form action="" method="post" name="formUser" onKeyDown="if(event.keyCode==13) this.submit();" id="reg_sub" onSubmit="testForm()">
+		<div class="clearfix content">
+			<div class="box">
+               <!--  <img src="${webroot}${theme_dir}/images/buzhou-zc.jpg" class="mt15"> -->
+				<div class="reg-boxbg clearfix">
+					<ul class="reg-table">
+						<li class="clearfix">
+							<div class="reg-l-title">用户名：</div>
+							<div class="reg-l-input username">
+                                <input id="username" name="username" type="text" size="22" maxlength="60" value="" tabindex=1><span style="padding-left:5px;"><b class="userb"><img src="${webroot}${theme_dir}/images/tipimg-b.png" alt="">请输入4-15位英文,数字</b></span>
+							</div>
+                        </li>
+						<li class="clearfix">
+							<div class="reg-l-title">密码：</div>
+							<div class="reg-l-input password">
+								<input id="firstpwd" name="password" type="password" size="22"
+									maxlength="60" value="" tabindex=2>
+									<span>  <b class="firstpwdb"> <img src="${webroot}${theme_dir}/images/tipimg-b.png" alt="">密码必须包含数字、字母、特殊字符【~!@#$%^&*()】，长度不少于10位! </b></span>
+							</div>
+                        </li>
+						<li class="clearfix">
+							<div class="reg-l-title">确认密码：</div>
+							<div class="reg-l-input password">
+								<input id="checkpwd" name="confirm_password"
+									type="password" size="22" maxlength="60" value="" tabindex=3>
+								<span> <b class="checkpwdb"><img src="${webroot}${theme_dir}/images/tipimg-b.png" alt="">请重复输入上面的密码</b></span>
+							</div>
+                        </li>
+						<!--<li class="clearfix">
+							<div class="reg-l-title">Email：</div>
+							<div class="reg-l-input email">
+								<input id="customTest" name="email" type="text" size="22"
+									maxlength="60" value="" tabindex=4>
+									<span> <b class="emailb"><img src="${webroot}${theme_dir}/images/tipimg-b.png" alt="">请输入正确的常用邮箱地址</b></span>
+							</div>
+                        </li>-->
+						<li class="clearfix">
+							<div class="reg-l-title">真实姓名：</div>
+							<div class="reg-l-input realname" style="float:left; width:134px;">
+								<input id="relname" name="realname" type="text" size="22"
+									maxlength="60" value="" tabindex=5>
+							</div>
+							<div class="reg-l-tips" id="realname_notice" style="float:left;padding-left:8px;">
+                                <b class="nameb"><img src="${webroot}${theme_dir}/images/tipimg-b.png" alt="">请输入您的真实姓名</b>
+							</div>
+                        </li>
+                         <li class="clearfix" style="height:22px;">
+                       	<div class="reg-l-title">用户类型：</div>
+                       			<select id="sel" name="typeId">
+                       			 <option value="2" selected="selected">请选择用户类型</option>
+                       			<#list  userTypeList as tyitem>
+                       				<#if tyitem.typeId != 2>
+                                   		<option value="${tyitem.typeId!}">${tyitem.name}</option>
+                                   </#if>
+                                </#list>
+								
+								</select>
+						</li>
+                       <li class="clearfix" style="height:22px;padding-top:10px">
+							<div class="reg-l-title">验证码：</div>
+							<div class="c" >
+								<input name="valicode" type="text" size="11" maxlength="5"  tabindex=6  style="float:left;"/>&nbsp;<img src="${request.getContextPath()}/validimg.html" alt="点击刷新" onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();" align="absmiddle" style="cursor:pointer; display:inline-block;zoom:1;*display:inline; *float:none; height:30px;" />
+							</div>
+						</li>
+						<li class="reg-li clearfix" >
+                            <a class="formbtn float_left btn-action" id="zhuce">确认添加</a>
+                            <input type="hidden" name="actionType"  value="register" />
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<script type="text/javascript">
+        function testForm(){
+            $("#zhuce").click(function(){
+
+//                var emImg = $(".emailb").find("img").attr("src");
+                var nameImg = $(".nameb").find("img").attr("src");
+                var userImg = $(".userb").find("img").attr("src");
+                var pwdImg = $(".firstpwdb").find("img").attr("src");
+                var pwdcheck = $(".checkpwdb").find("img").attr("src");
+                var testReg = "tipimg-g.png";
+
+//                alert((emImg.indexOf(testReg))+(nameImg.indexOf(testReg))+(userImg.indexOf(testReg))+(pwdImg.indexOf(testReg))+(pwdcheck.indexOf(testReg)))
+                if($.browser.msie&&($.browser.version == "6.0")&&!$.support.style)
+                {
+                    /*if((emImg.indexOf(testReg))+(nameImg.indexOf(testReg))+(userImg.indexOf(testReg))+(pwdImg.indexOf(testReg))+(pwdcheck.indexOf(testReg))>214)
+                    {
+                            $("#reg_sub").submit();
+                    }
+                    else{
+                        return false;
+                    }*/
+					$("#reg_sub").submit();
+                }
+                else{
+                   /* if((emImg.indexOf(testReg))+(nameImg.indexOf(testReg))+(userImg.indexOf(testReg))+(pwdImg.indexOf(testReg))+(pwdcheck.indexOf(testReg))>114)
+                    {
+                            $("#reg_sub").submit();
+                    }
+                    else{
+                        return false;
+                    }*/
+					$("#reg_sub").submit();
+                }
+            });
+        }
+        testForm();
+	</script>
+    <script type="text/javascript">
+    (function($){
+        $.fn.mailAutoComplete = function(options){
+            var defaults = {
+                boxClass: "mailListBox", //外部box样式
+                listClass: "mailListDefault", //默认的列表样式
+                focusClass: "mailListFocus", //列表选样式中
+                markCalss: "mailListHlignt", //高亮样式
+                zIndex: 1,
+                autoClass: true, //是否使用插件自带class样式
+//                mailArr: ["qq.com","gmail.com","126.com","163.com","hotmail.com","yahoo.com","yahoo.com.cn","live.com","sohu.com","sina.com","263.com","tom.com"], //邮件数组
+                textHint: false, //文字提示的自动显示与隐藏
+                hintText: "",
+                focusColor: "#333",
+                blurColor: "#999"
+            };
+            var settings = $.extend({}, defaults, options || {});
+            //页面装载CSS样式
+            if(settings.autoClass && $("#mailListAppendCss").size() === 0){
+                $('<style id="mailListAppendCss" type="text/css">.mailListBox{border:1px solid #369; background:#fff; font:12px/20px Arial;}.mailListDefault{padding:0 5px;cursor:pointer;white-space:nowrap;}.mailListFocus{padding:0 5px;cursor:pointer;white-space:nowrap;background:#369;color:white;}.mailListHlignt{color:red;}.mailListFocus .mailListHlignt{color:#fff;}</style>').appendTo($("head"));
+            }
+            var cb = settings.boxClass, cl = settings.listClass, cf = settings.focusClass, cm = settings.markCalss; //插件的class变量
+            var z = settings.zIndex,
+//					newArr = mailArr = settings.mailArr,
+					hint = settings.textHint,
+					text = settings.hintText,
+					fc = settings.focusColor,
+					bc = settings.blurColor;
+            //创建邮件内部列表内容
+            /*$.createHtml = function(str, arr, cur){
+                var mailHtml = "";
+                if($.isArray(arr)){
+                    $.each(arr, function(i, n){
+                        if(i === cur){
+                            mailHtml += '<div class="mailHover '+cf+'" id="mailList_'+i+'"><span class="'+cm+'">'+str+'</span>@'+arr[i]+'</div>';
+                        }else{
+                            mailHtml += '<div class="mailHover '+cl+'" id="mailList_'+i+'"><span class="'+cm+'">'+str+'</span>@'+arr[i]+'</div>';
+                        }
+                    });
+                }
+                return mailHtml;
+            };*/
+            //一些全局变量
+            var index = -1, s;
+            $(this).each(function(){
+                var that = $(this), i = $(".justForJs").size();
+                if(i > 0){ //只绑定一个文本框
+                    return;
+                }
+                var w = that.outerWidth(), h = that.outerHeight(); //获取当前对象（即文本框）的宽高
+                //样式的初始化
+                that.wrap('<span style="display:inline-block;position:relative;"></span>')
+                        .before('<div id="mailListBox_'+i+'" class="justForJs '+cb+'" style="min-width:'+w+'px;_width:'+w+'px;position:absolute;left:0; display:none;top:'+h+'px;z-index:'+z+';"></div>');
+                var x = $("#mailListBox_" + i), liveValue; //列表框对象
+                that.focus(function(){
+                    //父标签的层级
+                    $(this).css("color", fc).parent().css("z-index", z);
+                    var bMes = $(".emailb");
+                    bMes.text("");
+                    //提示文字的显示与隐藏
+                    if(hint && text){
+                        var focus_v = $.trim($(this).val());
+                        if(focus_v === text){
+                            $(this).val("");
+                        }
+                    }
+                    //键盘事件
+                    /*$(this).unbind("keydown");
+                    $(this).keydown(function(e){
+                        x.css("left",0);
+                        if(e.keyCode ==13)
+                            e.preventDefault();
+                        var $this=$(this)
+
+                        setTimeout(function(){
+                            s = v = $.trim($this.val());
+                            if(/@/.test(v)){
+                                s = v.replace(/@.*!/, "");
+                            }
+                            if(v.length > 0){
+                                //如果按键是上下键
+                                if(e.keyCode === 38){
+                                    //向上
+                                    if(index <= 0){
+                                        index = newArr.length;
+                                    }
+                                    index--;
+                                }else if(e.keyCode === 40){
+                                    //向下
+                                    if(index >= newArr.length - 1){
+                                        index = -1;
+                                    }
+                                    index++;
+                                }else if(e.keyCode === 13){
+                                    //回车
+                                    if(index > -1 && index < newArr.length){
+                                        //如果当前有激活列表
+                                        $this.val($("#mailList_"+index).text());
+                                        x.css("display","none")
+                                    }
+                                    e.preventDefault()
+                                }else{
+                                    if(/@/.test(v)){
+                                        index = -1;
+                                        //获得@后面的值
+                                        //s = v.replace(/@.*!/, "");
+                                        //创建新匹配数组
+                                        var site = v.replace(/.*@/, "");
+                                        newArr = $.map(mailArr, function(n){
+                                            var reg = new RegExp(site);
+                                            if(reg.test(n)){
+                                                return n;
+                                            }
+                                        });
+                                    }else{
+                                        newArr = mailArr;
+                                    }
+                                }
+                                x.html($.createHtml(s, newArr, index)).css("display", "block");
+                                if(e.keyCode === 13){
+                                    //回车
+                                    if(index > -1 && index < newArr.length){
+                                        //如果当前有激活列表
+                                        x.css("display", "none");
+                                        //e.preventDefault()
+                                    }
+                                }
+                            }else{
+                                x.css("display", "none");
+                            }
+                        },0)
+
+                    }).blur(function(){
+
+                                var lastVal = that.val();
+                                var repTest = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+                                if(!repTest.test(lastVal))
+                                {
+                                    bMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>邮箱格式不正确")
+                                }
+                              /!*  else{
+                                    //验证是否存在customTest
+                                    $.get("/user/checkEmail.html?id="+Math.random(),{ email:$("#customTest").val() },function(result){
+
+                                        if(result==true)
+                                        {
+                                            bMes.html("<img src='${webroot}${theme_dir}/images/tipimg-g.png'>可以使用");
+                                            return true;
+                                        }else{
+                                            bMes.html("<img src='${webroot}${theme_dir}/images/tipimg-r.png'>此邮箱已经存在");
+                                            return false;
+                                        }
+                                    });
+                                    that.attr("value",lastVal);
+                                    bMes.text("");
+                                }*!/
+                                if(hint && text){
+                                    var blur_v = $.trim($(this).val());
+                                    if(blur_v === ""){
+                                        //$(this).val(text);
+                                        bMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入正确邮箱地址")
+                                    }
+                                }
+                                x.css("left", "-9999em");
+                                $(this).css("color", bc).unbind("keydown").prev("#mailListBox_0").css("display","none");
+
+                            });*/
+                    //鼠标经过列表项事件
+                    //鼠标经过
+                    $(".mailHover").live("mouseover", function(){
+                        index = Number($(this).attr("id").split("_")[1]);
+                        liveValue = $("#mailList_"+index).text();
+                        x.children("." + cf).removeClass(cf).addClass(cl);
+                        $(this).addClass(cf).removeClass(cl);
+                    });
+                });
+                x.bind("mousedown", function(){
+                    that.val(liveValue);
+                });
+            });
+        };
+    })(jQuery);
+    function formTest(){
+   /*     $("#customTest").mailAutoComplete({
+            boxClass: "out_box",
+            listClass: "list_box",
+            focusClass: "focus_box",
+            markCalss: "mark_box",
+            autoClass: false,
+            textHint: true,
+            hintText: "请输入正确邮箱地址"
+        });//实例化
+*/
+        function nameTest(larlen){
+            var nameBox = $("#relname");
+            var nameMes = $(".nameb");
+            var str;
+            var reg = /^[\u0391-\uFFE5]+$/;
+            nameBox.focus(function(){
+                nameMes.text("");
+            }).blur(function(){
+                        str = nameBox.val();
+                        if(str.length<larlen)
+                        {
+                            if(!reg.test(str)){
+                                nameMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入正确中文姓名");
+                                return false;
+                            }
+                            else{
+                                nameMes.html("<img src='${webroot}${theme_dir}/images/tipimg-g.png'>可以注册");
+                                nameBox.attr("value",str);
+                                return true;
+                            }
+                        }
+                        else{
+                            nameMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>名字格式不正确");
+                            return false;
+                        }
+                    })
+        }
+        nameTest(16);//名字最长不超过16个汉字
+
+        function str_length(val) {
+            var len = 0;
+            var a = val.split("");
+            for (var i=0;i<a.length;i++) {
+                if (a[i].charCodeAt(0)<299) {
+                    len++;
+                } else {
+                    len+=2;
+                }
+            }
+            return len;
+        }//判断中文为2个字符，英文为一个
+
+        function userName(){
+            var userBox = $("#username");
+            var userMes = $(".userb");
+            var reg = /^([a-zA-Z0-9_]){2,15}$/;
+            var str;
+            userBox.focus(function(){
+                userMes.text("");
+            }).blur(function(){
+                        str = userBox.val();
+                        var str_len = str_length(str);
+                        if(str =="")
+                        {
+                            userMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入4-15位英文,数字");
+                            return false;
+                        }
+                        else if(str_len<4)
+                        {
+                            userMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>用户名必须大于4个数字");
+                            return false;
+                        }
+                        else if(str_len>15)
+                        {
+                            userMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>用户名必须小于15个数字");
+                            return false;
+                        }
+                        else if(reg.exec(str)){
+                            //判断是否存在
+                            $.get("/user/checkUsername.html?id="+Math.random(), {username: $("#username").val() },function (result){
+
+                                if(result==true){
+                                    userMes.html("<img src='${webroot}${theme_dir}/images/tipimg-g.png'>可以注册");
+                                    return true;
+                                }
+                                else{
+                                    userMes.html("<img src='${webroot}${theme_dir}/images/tipimg-r.png'>用户名已经存在");
+                                    return false;
+                                }
+                            });
+
+                            userBox.attr("value",str);
+                            return true;
+                        }
+                        else{
+                            userMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入4-12位英文,数字");
+                            return false;
+                        }
+                    })
+        }
+        userName();
+
+        function checkPwd(){
+            var pwdBox = $("#firstpwd");
+            var firstMes = $(".firstpwdb");
+            var checkBox = $("#checkpwd");
+            var checkMes = $(".checkpwdb");
+			
+			pwdBox.focus(function(){
+                firstMes.text("");
+                passwordTest();
+            }).blur(function(){
+                        var value = pwdBox.val();
+                        var cvalue = checkBox.val();
+						var pwdtestVal = getPwdResult(value);;
+                        var str_len = value.length;
+                       if((str_len>7)&&(str_len<17)){
+							if(pwdtestVal==0)
+							{
+								firstMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入包含数字、字母、特殊字符【~!@#$%^&*()】，长度不少于10位!");
+								return false;
+							}else if(cvalue !="" && cvalue !=value){
+								checkMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>确认密码不一致");
+	                            return false;
+							}
+							else{
+								firstMes.html("<img src='${webroot}${theme_dir}/images/tipimg-g.png'>可以注册");
+								return true;
+							}
+                        }else{
+                            firstMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入包含数字、字母、特殊字符【~!@#$%^&*()】，长度不少于10位!");
+                            return false;
+                        }
+                    });
+            checkBox.focus(function(){
+                checkMes.text("");
+            }).blur(function(){
+                        var str = pwdBox.val();
+                        var checkStr = checkBox.val();
+                        var checkpwd =getPwdResult(checkStr);
+                        if(checkStr=="")
+                        {
+                            checkMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入包含数字、字母、特殊字符【~!@#$%^&*()】，长度不少于10位!");
+                            return false;
+                        }else if(checkStr.length<7){
+                        	checkMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入包含数字、字母、特殊字符【~!@#$%^&*()】，长度不少于10位!");
+                        	return false;
+                        }
+                        else if(checkStr!=str){
+                            checkMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>两次输入的密码不一致");
+                            return false;
+                        }else if(checkpwd ==0){
+                        	checkMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入包含数字、字母、特殊字符【~!@#$%^&*()】，长度不少于10位!");
+                        	return false;
+                        }
+                        else{
+                        	firstMes.html("<img src='${webroot}${theme_dir}/images/tipimg-g.png'>可以注册");
+                            checkMes.html("<img src='${webroot}${theme_dir}/images/tipimg-g.png'>可以注册");
+                            return true;
+                        }
+                    });
+
+            
+            function passwordTest() {
+                pwdBox.keyup(function(){
+                    var value = pwdBox.val();
+                    var str_len = value.length;
+                    if((str_len>9)&&(str_len<17)){
+                        var result = getPwdResult(value);
+                        //判断密码强弱程度
+                        if(result == 0){
+                        	firstMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入包含数字、字母、特殊字符【~!@#$%^&*()】，长度不少于10位!");
+                        	return false
+                        }else{
+	                        return true;
+                        }
+                    }
+                    else{
+                        firstMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入包含数字、字母、特殊字符【~!@#$%^&*()】，长度不少于10位!");
+                        return false;
+                    }
+                })
+            }
+            function getResult(value){
+            	
+            	
+                var str_len = value.length;
+                var i = 0;
+                if(value.match(/[a-z]/ig)) {
+                    i++;
+                }
+                if(value.match(/[0-9]/ig)) {
+                    i++;
+                }
+                if(value.match(/(.[^a-z0-9])/ig)) {
+                    i++;
+                }
+                if(value.length < 7 && i > 0) {
+                    i--;
+                }
+                return i;
+            }
+            function getPwdResult(value){
+            	var pass_reg = /^(?![0-9A-Za-z]+$)[0-9A-Za-z~!@#$%^&*()]{10,}$/
+         		if(!pass_reg.exec(value)){
+         			return 0;
+         		}else{
+         			return 1;
+         		}
+            }
+        }
+        checkPwd();
+    }
+    formTest();
+    </script>
+
+
+
+</td>
+</tr>
+<tr>
+    <!--尾部--{-->
+    <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+    <!--尾部--}-->
+</tr>
+</table>
+
+</body>
+</html>
+<#include "../jsPage.html">

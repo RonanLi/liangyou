@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>账户信息</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  
+  <body>
+	<div class="module_add">
+		<h3 class="view_h2">用户信息：</h3>
+		<div class="module_border">
+			<div class="s">用户名:</div>
+			<div class="h">
+				<#if user??>${user.username!"-"}</#if>
+			</div>	
+			<div class="s">真实姓名:</div>
+			<div class="h">
+				<#if user??>${user.realname!"-"}</#if>
+			</div>			
+		</div>
+		<h3 class="view_h2">易极付账户信息：</h3>
+		<div class="module_border">
+			<div class="s">账户余额:</div>
+			<div class="h">
+				<#if yjfAccount??>${yjfAccount.balance!"-"}&nbsp;元<#else>-&nbsp;元</#if>
+			</div>
+			<div class="s">冻结金额:</div>
+			<div class="h">
+				<#if yjfAccount??>${yjfAccount.freezeAmount!"-"}&nbsp;元<#else>-&nbsp;元</#if>
+			</div>
+			<!--  
+			<div class="s">信用额度:</div>
+			<div class="h">
+				<#if yjfAccount??>${yjfAccount.creditAmount!"-"}<#else>-</#if>
+			</div>
+			<div class="s">可用信用额度:</div>
+			<div class="h">
+				<#if yjfAccount??>${yjfAccount.creditBalance!"-"}<#else>-</#if>
+			</div>
+			<div class="s">冻结信用额度:</div>
+			<div class="h">
+				<#if yjfAccount??>${yjfAccount.freezeAmount!"-"}<#else>-</#if>
+			</div>
+			-->
+		</div>		
+		<h3 class="view_h2">平台账户信息：</h3>
+		<div class="module_border">
+			<div class="s">账户总额:</div>
+			<div class="h">
+				<#if user??>${user.account.total!"-"}&nbsp;元</#if>
+			</div>
+			<div class="s">可用余额:</div>
+			<div class="h">
+				<#if user??>${user.account.useMoney!"-"}&nbsp;元</#if>
+			</div>	
+			<div class="s">冻结金额:</div>
+			<div class="h">
+				<#if user??>${user.account.noUseMoney!"-"}&nbsp;元</#if>
+			</div>
+			<div class="s">待收金额:</div>
+			<div class="h">
+				<#if user??>${user.account.collection!"-"}&nbsp;元</#if>
+			</div>	
+			<div class="s">待还金额:</div>
+			<div class="h">
+				<#if user??>${user.account.repay!"-"}&nbsp;元</#if>
+			</div>
+			<!-- 
+			<div class="s">信用额度:</div>
+			<div class="h">
+				<#if user??>${user.userAmount.credit!"-"}</#if>
+			</div>	
+			<div class="s">可用信用额度:</div>
+			<div class="h">
+				<#if user??>${user.userAmount.creditUse!"-"}</#if>
+			</div>	
+			<div class="s">冻结信用额度:</div>
+			<div class="h">
+				<#if user??>${user.userAmount.creditNouse!"-"}</#if>
+			</div>
+			 -->					 
+		</div>
+		<h3 class="view_h2">账户对比结果：差额=平台可用余额-易极付可用余额</h3>
+		<div class="module_border">
+			<div class="s">差额：</div>
+			<div class="h">
+				<#if yjfAccount?? && yjfAccount.balance?? &&  yjfAccount.freezeAmount?? && user??>				
+					${user.account.useMoney-yjfAccount.balance?number}&nbsp;元
+				<#else>
+					--
+				</#if>
+			</div>
+		</div>		
+	</div>
+  </body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html">
+<body>
+	<#assign mid="m_info" >
+	<#assign nid="member"> 
+	<#include "../../include/header.html">
+	<!--header-end-->
+	<!--用户中心的主栏目 开始-->
+    <div class="container-bg"> 
+	<div id="main" class="clearfix" >
+		<div class="wrap950 " style="margin-top:0">
+			<!--左边的导航 开始-->
+			<div class="user_left">
+			<#include "../user_menu.html"></div>
+			<!--左边的导航 结束-->
+
+			<!--右边的内容 开始-->
+			<div class="user_right">
+
+				<div class="user_right_menu">
+					<#assign userinfo_type="email">
+					<#include "identify_menu.html">
+				</div>
+				<div class="user_right_main">
+                
+				<form action="updateEmailWithCode.html" method="post">
+                <div class="user_right_border">
+									<div class="l">请输入新的邮箱：</div>
+									<div class="c">
+										<input type="text" name="email" id ="email"  /> <input type="button" value="获取验证码" class="btn-action" onclick="getEmailCode();"  />*请到新邮箱查看邮件，获取验证码  
+									</div>
+								</div>
+                                <div class="user_right_border">
+									<div class="l">请输入邮箱验证码：</div>
+									<div class="c">
+										<input type="text" name="emailCode"  />
+									</div>
+								</div>
+                                 <div class="user_right_border">
+									<div class="l"></div>
+									<div class="c">
+										<input type="submit"  class="btn-action" name="submit" value="确认修改"  />
+									</div>
+								</div>
+			            
+					 
+				</form>
+				<div class="user_right_foot alert">
+				 * 温馨提示：我们将对所有的信息进行保密
+				</div>
+				</div>
+			</div>
+			<!--右边的内容 结束-->
+			<script type="text/javascript">
+			function getEmailCode() { 
+				 if($("#email").val()){
+					 
+				 }
+				 $.ajax({
+			         type: "post",//使用get方法访问后台
+			         dataType: "json",//返回json格式的数据
+			         url: "/member/identify/getEmailCode.html",//要访问的后台地址
+			         data: "email=" + $("#email").val(),//要发送的数据
+			         success: function(msg){//msg为返回的数据，在这里做数据绑定
+			        	 var data = msg.data;
+				         if(data){
+				        	alert(data);
+				         }else{
+				        	 alert("返回信息错误！！");
+				         }
+			         },
+			         error:function(){
+			        	 alert("请求超时，请您联系客服！！");
+			         }
+			     });
+			} 
+			</script>
+		</div>
+	</div>
+    </div>
+	<!--用户中心的主栏目 结束-->
+	<script
+		src="${request.getContextPath()}/themes/soonmes/media/js/modal.js"></script>
+	<script
+		src="${request.getContextPath()}/themes/soonmes/media/js/tab.js"></script>
+	<script
+		src="${request.getContextPath()}/themes/soonmes/media/js/alert.js"></script>
+	<script
+		src="${request.getContextPath()}/themes/soonmes/media/js/transition.js"></script>
+		<script type="text/javascript" src="${request.getContextPath()}/themes/soonmes/media/js/area.js"></script>
+	<#include "../../include/footer.html">
+</body>
+</html>

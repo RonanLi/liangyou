@@ -1,0 +1,132 @@
+<div class="user_right_main">
+					<form action="${webroot}/member/identify/apiRealname.html" name="form1" id="reg_sub" method="post" onsubmit="return check_form();" enctype="multipart/form-data">
+					<div class="user_right_border">
+						<div class="l">用户名：</div>
+						<div class="c">
+							<#if user?exists&&user.username?exists>${user.username}</#if>
+						</div>
+					</div>
+					
+					 <div class="user_right_border">
+						<div class="l">真实姓名：</div>
+						<div class="c">
+							<input  name="realname" id="realname" value="<#if user?exists&&user.realname?exists>${user.realname}</#if>" />
+						</div>
+						<div class="zhenshi"><font color="#FF0000">*</font> </div>
+					</div> 
+					<div class="user_right_border">
+						<div class="l">证件类别：</div>
+						<div class="c">
+							<#if user?exists&&user.cardType?exists>
+								<@linkage name="cardType" id="card_type" nid="card_type" default=user.cardType></@linkage>
+							<#else>
+								<@linkage name="cardType" id="card_type" nid="card_type" default="1616"></@linkage>
+							</#if> 
+							<font color="#FF0000">*</font> 
+						</div>
+					</div>
+					
+					<div class="user_right_border">
+						<div class="l">证件号码：</div>
+						<div class="c">
+							<input onblur="checkCardId(this)" id="card_id" type="text" name="cardId" value="<#if user?exists&&user.cardId?exists>${user.cardId}</#if>" />  
+							
+						</div>
+						<div class="card"><font color="#FF0000">*【身份证号码中含X的必须为大写】</font> </div>
+					</div>
+					<div class="user_right_border">
+			<div class="l" style="font-weight:bold; float:left;">验证码：</div>
+			<div class="c" >
+				<input id="validCode_check" type="text" size="11" maxlength="5"   name="validCode" tabindex="3"  style="float:left;"/>&nbsp;<img src="${request.getContextPath()}/validimg.html" alt="点击刷新" onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();" align="absmiddle"  style="cursor:pointer; display:inline-block;zoom:1;*display:inline; *float:none;" />
+			</div>
+			<div class="yanzhen"></div>
+		</div>
+					<div class="user_right_border">
+						<div class="e"></div>
+						<div class="c">
+							<input type="submit"  class="btn-action" name="name"  id="name" value="确认提交" size="30" />
+						</div>
+					</div>
+					</form>
+				<div class="user_right_foot alert">
+				 * 温馨提示：我们将对所有的信息进行保密
+				</div>
+		<!-- 身份证号码校验 -->
+	<script type="text/javascript">
+    var nameStatus = 0;
+	var cardStatus = 0;
+
+	function check_name(){
+		$("#realname").blur(function(){
+			var zs = $(".zhenshi");
+			var name=$("#realname");
+         	var str=name.val();
+         	if(str==""){
+         		zs.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入真实姓名");
+				userStatus = 0;
+         		 return false;
+         	}else{
+         		zs.html("<img src='${webroot}${theme_dir}/images/tipimg-g.png'>");
+				userStatus = 1;
+                return true;
+         	}
+         })
+	}
+	check_name();
+	
+	function check_card(){
+		$("#card_id").blur(function(){
+			var shenfen = $(".card");
+			var card=$("#card_id");
+			var cardTest=/(^\d{15}$)|(^\d{17}([0-9]|X)$)/;
+         	var str=card.val();
+         	if(str==""){
+         		shenfen.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入身份证号");
+				cardStatus = 0;
+         		 return false;
+         	}
+         	if(!cardTest.test(str)){
+         		shenfen.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>输入的身份证号长度不对，或者号码不符合规定！\n15位号码应全为数字，18位号码末位可以为数字或X。");
+				cardStatus = 0;
+         		 return false;
+         	}else{
+         		shenfen.html("<img src='${webroot}${theme_dir}/images/tipimg-g.png'>");
+				cardStatus = 1;
+                return true;
+         	}
+         })
+	}
+	check_card();
+	
+	$("#name").click(function(){
+		var valicode_val = $("#validCode_check").val();
+		var check_form = userStatus*cardStatus;
+		if(check_form==1)
+		{
+			if(valicode_val=="")
+			{
+				alert("请输入验证码");
+			}
+			else{
+				$("#reg_sub").submit();
+					$(this).unbind().click(function() {
+						$("#reg_msg").html("请勿重复提交！");
+				});
+			}
+		}
+		else{
+			return false;
+		}
+	});
+	var errormsg = "${errormsg!}";
+	var msg = "${msg!}";
+	$(function(){
+		if(msg.length!=0){
+		   alertContent("提示",msg, 200, 100);
+		}
+		if(errormsg.length!=0){
+			   alertContent("提示",errormsg, 200, 100);
+		}
+	});
+	</script>	
+				</div>

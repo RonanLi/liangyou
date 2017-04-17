@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="收件箱">
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+                                <div class="toolbor-module search">
+                                   <!--   <a href="addTemplate.html" class="input-button" style="line-height:24px;">+新增模板</a>-->
+                                </div>
+                            </div>
+                            <!--工具栏--}-->
+
+			<div id="main" class="clearfix">
+				<!--右边的内容 开始-->	
+				<div class="user_right">
+					<div class="alert alert-info"> <a class="close" data-dismiss="alert">x</a>
+						<#if !errormsg?exists>
+							如果要送管理员发送信息，请输入发件人gkadmin
+						<#else>
+							<span style="color:red">${errormsg}</span>
+						</#if>
+					</div> 
+					<div class="user_right_menu">
+					<#assign msg_type="box" >
+						<#include "msg_menu.html"> 
+					</div>
+					<div class="user_right_main">
+						<form method="post" name="trans_send" onsubmit="return check_send();" action="" >
+							<div class="user_right_border">
+								<div class="l">发件人：</div>
+								<div class="c">${session_user.username!}</div>
+							</div>
+							
+							<div class="user_right_border">
+								<div class="l">收件人：</div>
+								<div class="c"><input type="text" name="receiveUser.username" <#if sendType?exists&&sendType=="report">value="admin" readonly<#else>value=""</#if>  /></div>
+							</div>
+							<#if sendType?exists&&sendType=="forward">
+								<#assign title="[转发]:">
+							<#elseif sendType?exists&&sendType=="report">
+								<#assign title="[举报]:">
+							<#else>
+								<#assign title="">
+							</#if>
+							<div class="user_right_border">
+								<div class="l">标题：</div>
+								<div class="c"><input type="text" name="name" value="${title?default("")} <#if msg?exists>${msg.sentUsername!}</#if>" /></div>
+							</div>
+							<div class="user_right_border">
+								<div class="l">内容：</div>
+								<div class="c">
+									<textarea name="content" rows="7" cols="50"><#if msg?exists>${msg.content?default("")}[以上是原始内容]</#if></textarea>
+								</div>
+							</div>
+							<div class="user_right_border">
+								<div class="l">验证码：</div>
+								<div class="c">
+									<input name="valicode" type="text" size="11" maxlength="5"  tabindex="3"/>&nbsp;<img src="${request.getContextPath()}/validimg.html" alt="点击刷新" 
+									onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();" 
+									align="absmiddle" style="cursor:pointer" />
+									
+								</div>
+							</div>
+							<#--
+							<div class="user_right_border">
+								<div class="l"></div>
+								<div class="c"><input name="sented" type="checkbox" value="1" /></div><div class="c">保存到发件箱</div>
+							</div>-->
+							<div class="user_right_border">
+								<div class="l"></div>
+								<div class="c">
+									<input type="submit"  class="btn-action"   value="确认提交" size="30" /> 
+									<input type="hidden"  name="type" value="add"  /> 
+								</div>
+							</div>
+						</form>
+					</div>
+			 	 </div>
+				<!--右边的内容 结束-->
+					
+			</div>
+
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+<script type="text/javascript">
+function check_send(){
+	 var frm = document.forms['trans_send'];
+	 var receiveUser = frm.elements['receiveUser.username'].value;
+	 var name = frm.elements['name'].value;
+	 var content = frm.elements['content'].value;
+	 var valicode = frm.elements['valicode'].value;
+	 var errMsg = "";
+	 if(/^\s*$/.test(receiveUser)){
+		 errMsg +="收件人不能为空！！\n";
+		}
+	 if(/^\s*$/.test(name)){
+		 errMsg +="标题不能为空！！\n";
+		}
+	 if(/^\s*$/.test(content)){
+		 errMsg +="内容不能为空！！\n";
+		}
+	 if(/^\s*$/.test(valicode)){
+		 errMsg +="验证码不能为空！！\n";
+		}
+	 
+	 if(/^\s*$/.test(errMsg)){
+		 return true;
+	 }else{
+		 alert(errMsg);
+		return false;
+    }
+}
+</script>
+    </body>
+</html>
+<#include "../jsPage.html">

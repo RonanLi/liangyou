@@ -1,0 +1,6 @@
+<div>消息类型：</div>
+<ul class="listTab clearfix">
+    <li <#if msg_type?exists&&msg_type=="box">class="cur"</#if> ><a href="${request.getContextPath()}/member/myAccount/inbox.html" data-val="5">收件箱</a></li>
+    <li <#if msg_type?exists&&msg_type=="sents">class="cur"</#if> ><a href="${request.getContextPath()}/member/myAccount/hasSend.html" data-val="5">已发送</a></li>
+    <li <#if msg_type?exists&&msg_type=="send">class="cur"</#if> ><a href="${request.getContextPath()}/member/myAccount/sendMsg.html" data-val="5">发信息</a></li>
+</ul>

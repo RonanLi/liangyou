@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh_Hans_CN" class="indexPage" data-area="indexPage">
+<head><#include "_head.html" /><#include "../common/function.html" /></head>
+<body class="paused">
+    <!-- Whether the user is logged in  -->
+    <input type="hidden" id="usersession" data-ssion="${usersession}">
+    <!-- Whether the user is logged in  end-->
+    <!-- common module -->
+    <section class="mob-con" id="MobileR">
+        <div class="mob-cen"><i></i><div>请使用手机竖屏查看</div></div>
+    </section>
+    <section class="tooltips" id="tooltips"><div></div></section>
+    <div id="loading_money" class="l_pageLoading"><div class="ropimg"><img src="${webroot}${theme_dir}/media/wap/img/logovertical.png" /></div></div>
+    <section id="backtotop" class="O backtotop T"></section>
+    <!-- common module end-->
+    <article class="PageContainer">
+        <header role="header" class="headerindex R">
+            <div class="inerheader R">
+                <a href="index.html" class="headerlogoa F">
+                    <img src="${webroot}${theme_dir}/media/wap/img/logosloganB.svg"/>
+                </a>
+                <div class="navBtn" id="circleLines">
+                    <div class="thrlines T" >
+                        <div class="lines T l1"></div>
+                        <div class="lines T l2"></div>
+                        <div class="lines T l3"></div>
+                    </div>
+                    <div class="navmask" id="maskLayout"></div>
+                </div>
+                <div class="orimasNav d-n">
+                    <nav class="navPageinde">
+                        <ul>
+                            <li id="LoGIN"><a href="aggregationPage.html?router=login">马上登录</a></li>
+                            <li id="MyACCOUNT"><a href="Innerpage.html">我的账户</a></li>
+                            <!-- <li><a href="activity.html">最新活动</a></li> -->
+                            <li><a href="listbids.html">出借项目列表</a></li>
+                            <li><a href="security.html">安全保障</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div  class="inermain">
+                <div class="scrollb"><i class="O"></i></div>
+                <div class="wordsofwelcome ani" id="uipintro">金和所获得<br>京朋集团一亿元投资控股</div>
+            </div>
+        </header>
+        <main role="main" class="floralHaHa">
+            <section class="growingNumbers">
+                <!--<div class="dinfo">平台累计成交总金额<div class="O"><i id="numberaniamte">58,294,032.00</i></div></div>-->
+                <div class="dinfo">平台累计成交总金额<div class="O"><i id="numberaniamte">${borrowSum?string(",##0.00#")!}</i></div></div>
+            </section>
+            <section class="bidslayout">
+                <h2 class="titleIndex">精选产品</h2>
+                <div class="divider-wrap"><div></div></div>
+                <div class="des-bids">
+                    <p>这是系统为您自动列出的优质项目，免费使用我们的体验标或者操作具体项目无风险</p>
+                </div>
+                <div class="bidcards R">
+                    <div class="carousel">
+                        <#if borrowList?exists>
+                            <#list borrowList as item>
+                                <div class="carousel-cell slide${item_index}">
+                                    <div class="transForm">
+                                        <div class="flip front">
+                                            <#if item.type == 115><div class="subtit">免费体验</div></#if>
+                                            <div class="inner">
+                                                <strong class="strbid R">
+                                                    <#if item.isday==1&&item.timeLimitDay==30&&("20161212"?date("yyyyMMdd") lt item.addtime?date) && (item.addtime?date lt "20170228"?date("yyyyMMdd"))><span>${item.apr-1}%</span><i class="xep">+1%</i>
+                                                    <#elseif item.isday==0&&item.timeLimit==1&&("20161212"?date("yyyyMMdd") lt item.addtime?date) && (item.addtime?date lt "20170228"?date("yyyyMMdd"))><span>${item.apr-1}%</span><i class="xep">+1%</i>
+                                                    <#elseif item.isday==0&&item.timeLimit==2&&("20161212"?date("yyyyMMdd") lt item.addtime?date) && (item.addtime?date lt "20170228"?date("yyyyMMdd"))><span>${item.apr-1}%</span><i class="xep">+1%</i>
+                                                    <#elseif item.isday==0&&item.timeLimit==3&&("20161212"?date("yyyyMMdd") lt item.addtime?date) && (item.addtime?date lt "20170228"?date("yyyyMMdd"))><span>${item.apr-1}%</span><i class="xep">+1%</i>
+                                                    <#else><span>${item.apr}%</span>
+                                                    </#if>
+                                                    <em>年化收益率</em>
+                                                </strong>
+                                                <div class="frn-t">
+                                                    <h4 class="titlebid">${item.name}</h4>
+                                                    <div class="inpfo">
+                                                        <em class="t_divd">
+                                                            满标金额:
+                                                            <#if item.account gt 10000>
+                                                                <i>${format5(item.account)}</i>万元
+                                                            <#else>
+                                                                <i>${ceil(item.account!0)}</i>元
+                                                            </#if>
+                                                        </em>
+                                                        <em class="t_divd">
+                                                            投标期限:<#if item.isday??&&item.isday==1><i>${item.timeLimitDay!0}</i>天<#elseif item.type==101>满标即还<#else><i>${(item.timeLimit)?default("0")}</i>个月</#if>
+                                                        </em>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flip back">
+                                            <div class="inner">
+                                                <div class="Epcharts" data-percent="${(item.accountYes/item.account)*100}"><span class="percent">${(item.accountYes/item.account)*100}%</span><a href="/wap/bid_details.html?id=${item.id}" class="btnLjtb">查看详情</a></div>
+                                                <div class="infobids">
+                                                    <div class="iner">
+                                                        已投金额：
+                                                        <strong>
+                                                            ${format5(item.accountYes)}/${format5(item.account)}(万元)
+                                                        </strong>
+                                                    </div>
+                                                    <div class="iner">
+                                                        状态：<strong><@showIndexTenderButton borrow=item /></strong>
+                                                    </div>
+                                                    <div class="iner">
+                                                        还款方式：<strong>一次性还本付息</strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </#list>
+                        </#if>
+                        <!--<div class="carousel-cell slide1">
+                            <div class="transForm">
+                                <div class="flip front">
+                                    <div class="subtit">免费体验</div>
+                                    <div class="inner">
+                                        <strong class="strbid R"><span>6.9%</span><em>年化收益率</em></strong>
+                                        <div class="frn-t">
+                                            <h4 class="titlebid">企业经营借款，水电站高回报项目</h4>
+                                            <div class="inpfo">
+                                                <em class="t_divd">满标金额:<i>80</i>万元</em><em class="t_divd">投标期限:<i>30</i>天</em>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flip back">
+                                    <div class="inner">
+                                        <div class="Epcharts" data-percent="86"><span class="percent">86%</span><a href="javascript:alert('跳转到具体详情页...');" class="btnLjtb">立即投标</a></div>
+                                        <div class="infobids">
+                                            <div class="iner">
+                                                已投金额：<strong>20.3/80(万元)</strong>
+                                            </div>
+                                            <div class="iner">
+                                                状态：<strong>初审未通过</strong>
+                                            </div>
+                                            <div class="iner">
+                                                还款方式：<strong>一次性还本付息</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      <div class="carousel-cell slide2">
+                        <div class="transForm">
+                              <div class="flip front">
+                                  <div class="subtit">新手专享</div>
+                                  <div class="inner">
+                                        <strong class="strbid R"><span>11.9%</span><em>年化收益率</em></strong>
+                                        <div class="frn-t">
+                                          <h4 class="titlebid">企业经营借款，水电站高回报项目</h4>
+                                          <div class="inpfo">
+                                              <em class="t_divd">满标金额:<i>80</i>万元</em><em class="t_divd">投标期限:<i>30</i>天</em>
+                                          </div>
+                                        </div>
+                                  </div>
+                              </div>
+                              <div class="flip back">
+                                  <div class="inner">
+                                        <div class="Epcharts" data-percent="57"><span class="percent">57%</span><a href="javascript:alert('跳转到具体详情页...');" class="btnLjtb">立即投标</a></div>
+                                        <div class="infobids">
+                                            <div class="iner">
+                                                已投金额：<strong>20.3/80(万元)</strong>
+                                            </div>
+                                            <div class="iner">
+                                                状态：<strong>初审未通过</strong>
+                                            </div>
+                                            <div class="iner">
+                                                还款方式：<strong>一次性还本付息</strong>
+                                            </div>
+                                        </div>
+                                  </div>
+                              </div>
+                        </div>
+                      </div>
+                      <div class="carousel-cell slide3">
+                        <div class="transForm">
+                              <div class="flip front">
+                                  &lt;!&ndash; <div class="subtit">免费体验</div> &ndash;&gt;
+                                  <div class="inner">
+                                        <strong class="strbid R"><span>10%</span><em>年化收益率</em></strong>
+                                        <div class="frn-t">
+                                          <h4 class="titlebid">企业经营借款，水电站高回报项目</h4>
+                                          <div class="inpfo">
+                                              <em class="t_divd">满标金额:<i>80</i>万元</em><em class="t_divd">投标期限:<i>30</i>天</em>
+                                          </div>
+                                        </div>
+                                  </div>
+                              </div>
+                              <div class="flip back">
+                                  <div class="inner">
+                                        <div class="Epcharts" data-percent="36"><span class="percent">36%</span><a href="javascript:alert('跳转到具体详情页...');" class="btnLjtb">立即投标</a></div>
+                                        <div class="infobids">
+                                            <div class="iner">
+                                                已投金额：<strong>20.3/80(万元)</strong>
+                                            </div>
+                                            <div class="iner">
+                                                状态：<strong>初审未通过</strong>
+                                            </div>
+                                            <div class="iner">
+                                                还款方式：<strong>一次性还本付息</strong>
+                                            </div>
+                                        </div>
+                                  </div>
+                              </div>
+                        </div>
+                      </div>
+                      <div class="carousel-cell slide4">
+                        <div class="transForm">
+                              <div class="flip front">
+                                  &lt;!&ndash; <div class="subtit">免费体验</div> &ndash;&gt;
+                                  <div class="inner">
+                                        <strong class="strbid R"><span>13.9%</span><em>年化收益率</em></strong>
+                                        <div class="frn-t">
+                                          <h4 class="titlebid">企业经营借款，水电站高回报项目</h4>
+                                          <div class="inpfo">
+                                              <em class="t_divd">满标金额:<i>80</i>万元</em><em class="t_divd">投标期限:<i>30</i>天</em>
+                                          </div>
+                                        </div>
+                                  </div>
+                              </div>
+                              <div class="flip back">
+                                  <div class="inner">
+                                        <div class="Epcharts" data-percent="16"><span class="percent">16%</span><a href="javascript:alert('跳转到具体详情页...');" class="btnLjtb">立即投标</a></div>
+                                        <div class="infobids">
+                                            <div class="iner">
+                                                已投金额：<strong>20.3/80(万元)</strong>
+                                            </div>
+                                            <div class="iner">
+                                                状态：<strong>初审未通过</strong>
+                                            </div>
+                                            <div class="iner">
+                                                还款方式：<strong>一次性还本付息</strong>
+                                            </div>
+                                        </div>
+                                  </div>
+                              </div>
+                        </div>
+                      </div>-->
+                      <div class="carousel-cell slide5">
+                        <div class="transForm disable">
+                              <div class="flip front">
+                                  <div class="inner O" id="loadmorelists">查看更多</div>
+                              </div>
+                              <div class="flip back">
+                                  <div class="inner">backend5</div>
+                              </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </section>
+            <section class="howtogetstarted">
+                <h2 class="R"><span id="o0o">加入金和所，开启你的投融资生涯</span></h2>
+                <ul class="linesThreeStart">
+                    <li class="F"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="64px" height="64px" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve" class="svgami"><g><path fill="none" stroke="#000000" stroke-width="2" stroke-linejoin="bevel" stroke-miterlimit="10" d="M13,33L25,45L49,21" style="stroke-dasharray: 51, 53; stroke-dashoffset: 51;"/></g><path fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" width="62" height="62" d="M1 1 L63 1 L63 63 L1 63 Z" style="stroke-dasharray: 248, 250; stroke-dashoffset: 248;"/></svg><div class="riif">注册账户<p>金和所是中国供应链金融先驱，专注于供应链金融。我们致力于在健全的风险管控体系基础上，为企业及出借者长期提供专业、可靠、值得信赖的金融服务。赶快加入我们，让你优先享受中国互联网金融带来的红利。</p></div></li>
+                    <li class="F"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svgami" version="1.1" id="Layer_1" x="0px" y="0px" width="64px" height="64px" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve"><path fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M1,21c0,20,31,38,31,38s31-18,31-38  c0-8.285-6-16-15-16c-8.285,0-16,5.715-16,14c0-8.285-7.715-14-16-14C7,5,1,12.715,1,21z" style="stroke-dasharray: 198, 200; stroke-dashoffset: 198;"/></svg><div class="riif">精准出借<p>金和所依靠强大的云计算资源来驱动我们的互联网金融大数据，实时为出借者和企业提供最精准可靠的投融资信息。同时所有项目均由金和所风控部和风审会进行严格审核。一个优质项目的诞生，要经过8道审核工序，37层严格筛选，层层剥离风险敞口。</p></div></li>
+                    <li class="F"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svgami" version="1.0" id="Layer_1" x="0px" y="0px" width="64px" height="64px" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve"> <path fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" width="62" height="32" d="M1 16 L63 16 L63 48 L1 48 Z" style="stroke-dasharray: 188, 190; stroke-dashoffset: 188;"/> <path fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M10,44c0-2.762-2.238-5-5-5V25c2.762,0,5-2.238,5-5  h44c0,2.762,2.238,5,5,5v14c-2.762,0-5,2.238-5,5H10z" style="stroke-dasharray: 148, 150; stroke-dashoffset: 148;"/> <path fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M24,32A8,8 0,1,1 40,32A8,8 0,1,1 24,32" style="stroke-dasharray: 51, 53; stroke-dashoffset: 51;"/></svg><div class="riif">坐享收益<p>金和所将始终坚持以资金透明、银行监管、专业第三方支付、行业自律、收益最大化为原则来给出借者及中小微企业提供最优质、最安全的服务。</p></div></li>
+                </ul>
+                <div class="customerService R">
+                    <h2 class="R O">杰出的客户服务团队</h2>
+                    <div class="R">金和所创立之初就始终以用户的最终价值为依归，专注于投融资利益的最大化。我们的蓬勃发展离不开平台内出借者和企业长期的建议和反馈。<a href="tel:4009005591"><i class="O phone"></i>400-900-5591</a><a href="mailto:service@jinhefax.cn"><i class="O mail"></i>service@jinhefax.cn</a>
+                    </div>
+                </div>
+            </section>
+            <section class="partners">
+                <h2 class="R"><span>强强联合，为广大出借者保驾护航</span></h2>
+                <div class="gray-brand">
+                    <img src="${webroot}${theme_dir}/media/wap/img/brands.jpg" />
+                </div>
+            </section>
+            <section class="manyPJoinus R">
+                <div class="infoletters">目前已经有超过四万人注册并使用了我们的产品，我们和阿里云、双乾支付合作，保证您资金和数据的绝对安全。<a href="aggregationPage.html?router=register" class="reggo O">马上注册</a></div>
+            </section>
+            <section class="whereweare">
+                <div class="wq_address" >
+                    <h2 class="R">联系我们</h2>
+                    <div>
+                        <h3>北京运营中心</h3>
+                        <p class="innerP-P">地址：北京市朝阳北三环东路28号易亨大厦809室</p>
+                        <p class="innerP-P">邮编：100013</p>
+                        <p class="innerP-P">客服QQ：1518168981</p>
+                        <p class="innerP-P">工作时间：周一至周日9:00-20:00</p>
+                    </div>
+                </div>
+                <img style="width:100%;display:block;" src="${webroot}${theme_dir}/media/wap/img/maphere.jpg"/>
+            </section>
+        </main>
+        <footer class="f-Copyright ftb">
+            <div class="footer-linkHelp">
+               <a href="aboutus.html" >关于我们</a><span class="divideLine"></span><a href="newguidance.html">新手指导</a><span class="divideLine"></span><a href="protocols.html">用户协议</a>
+            </div>
+            <div class="footer-smword">©2017 金和所. 版权所有.</div>
+        </footer>
+    </article>
+<section class="_ad_banner d-n" style="display: none;">
+    <div class="ad_carousel">
+      <div class="xr_qxe">
+        <a href="http://m.jinhefax.com/wap/activity_jnh.html"><img src="${webroot}${theme_dir}/media/wap/img/activity_banners/bac5.jpg?v=230" /></a>
+        <a href="javascript:void(0);" class="clo_img_banad O"></a>
+      </div>
+    </div>
+</section>
+<#macro showIndexTenderButton borrow>
+  <#assign nowTime=dateformat("now") >
+  <#if borrow.status==0>等待初审
+  <#elseif borrow.status==1&&(borrow.accountYes lt borrow.account ) >
+      <a class="tb-action-gray" style="cursor: default;">立即投标</a>
+  <#elseif borrow.status==1&&(borrow.accountYes gt borrow.account || borrow.accountYes==borrow.account) >
+      <a  class="tb-action-gray" style="cursor: default;">审核中</a>
+  <#elseif borrow.status==2>
+      <a  class="tb-action-gray" style="cursor: default;">初审失败</a>
+  <#elseif borrow.status==3>
+      <a  class="tb-action-gray" style="cursor: default;">复审通过</a>
+  <#elseif borrow.status==5||borrow.status==-1>
+      <a  class="tb-action-gray" style="cursor: default;">用户取消</a>
+  <#elseif borrow.status==4>
+      <a  class="tb-action-gray" style="cursor: default;">复审失败</a>
+  <#elseif borrow.status==6>
+      <a  class="tb-action-gray" style="cursor: default;">还款中</a>
+  <#elseif borrow.status==7>
+      <a  class="tb-action-gray" style="cursor: default;">还款中</a>
+  <#elseif borrow.status==8>
+      <a  class="tb-action-gray" style="cursor: default;">已还款</a>
+  <#else>
+      <a  class="tb-action-gray" style="cursor: default;">用户取消</a>
+  </#if>
+</#macro>
+<script src="${webroot}${theme_dir}/media/wap/js/process.js" type="text/javascript"></script>
+<script src="${webroot}${theme_dir}/media/wap/js/fy-slide.js" type="text/javascript"></script>
+<script src="${webroot}${theme_dir}/media/wap/js/easypiechart.min.js" type="text/javascript"></script>
+<script src="${webroot}${theme_dir}/media/wap/js/jhs-base-wap.js" type="text/javascript"></script>
+</body>
+</html>

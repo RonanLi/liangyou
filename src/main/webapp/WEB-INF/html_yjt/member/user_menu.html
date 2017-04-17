@@ -1,0 +1,71 @@
+
+<div class="user_menus">
+
+    
+
+    <h1 class="title1">我的账号</h1>
+    <ul>
+        <li><a href="${webroot}/member/index.html">账户详情</a></li>
+        <#-- <#if user?? && user.channel?? && user.channelCode?? && user.channel == user.channelCode>
+            <li><a href="${webroot}/member/channelUserSum.html">渠道详情</a></li>
+        </#if> -->
+    	<li><a href="${webroot}/member/account/log.html">资金记录</a></li>
+    	<li><a href="${webroot}/member/account/bank.html">银行账户</a></li>
+        <li><a href="${webroot}/member/account/newrecharge.html">充值提现</a></li>
+     
+    </ul>
+    <h1 class="title3">奖励管理</h1>
+    <ul>
+        <li><a href="${webroot}/lottery/myPirze.html">我的奖品</a></li>
+        <!-- 体验金功能下架 edit by gy 2016-12-30 16:21:26 -->
+        <!--<li><a href="${webroot}/experienceMoney/myExperienceMoney.html">我的体验金</a></li>-->
+        <li><a href="${webroot}/member/shareReward.html">分享送好礼</a></li>
+    </ul>
+    <h1 class="title2">理财管理</h1>
+    <ul>
+        <li><a href="${webroot}/member/invest/tendering.html">招标中项目</a></li>
+        <li><a href="${webroot}/member/invest/hasTender.html">借出明细</a></li>
+        <li><a href="${webroot}/member/invest/notCollect.html">未收款明细</a></li>
+        <li><a href="${webroot}/member/invest/hasCollect.html">已收款明细</a></li>
+        <!--  <li><a href="${webroot}/member/security/myAutoInvest.html">自动投标设置</a></li>-->
+        <!-- <li><a href="${webroot}/member/invest/assignmentList.html">债权转让</a></li> -->  
+    </ul>
+    <h1 class="title3">借款管理</h1>
+    <ul>
+        <li><a href="${webroot}/member/borrow/borrowing.html">正在招标的借款</a></li>
+        <li><a href="${webroot}/member/borrow/repaying.html">正在还款的借款</a></li>
+        <li><a href="${webroot}/member/borrow/repaid.html">已经还款的借款</a></li>
+        <!-- 
+        <li><a href="${webroot}/member/borrow/limitapp.html">授信额度</a></li>
+         -->
+        
+    </ul>
+
+    <h1 class="title4">基本设置</h1>
+    <ul>
+        <li><a href="${webroot}/member/userinfo/userinfo.html">个人资料</a></li>
+         <#-- <li><a href="${webroot}/member/friend/invite.html">好友管理</a></li>  -->
+        <!-- <li><a href="${webroot}/member/identify/avatar.html">头像更新</a></li>-->
+        <li><a href="${webroot}/member/apiRealname.html">认证中心</a></li>
+        <li><a href="${webroot}/member/security/userpwd.html">安全中心</a></li>
+    </ul>
+	
+    
+    
+    
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var x = window.location.pathname;
+        $('.user_menus a').each(function () {
+            if ($(this).attr('href') == x) {
+                $(this).addClass("two");
+            }
+        });
+        
+    });
+
+</script>
+    
+</div>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html">
+<body>
+	<#assign nid="member"> 
+	<#include "../../include/header.html">
+	<!--header-end-->
+	<!--用户中心的主栏目 开始-->
+	<div id="main" class="clearfix" >
+		<div class="wrap950 " style="margin-top:0">
+			<!--左边的导航 开始-->
+			<div class="user_left">
+			<#assign mid="m_identify" >
+			<#include "../user_menu.html"></div>
+			<!--左边的导航 结束-->
+
+			<!--右边的内容 开始-->
+			<div class="user_right">
+				<#if msg?exists>
+				<div id="msg24">
+					<p class="ok">${msg}</p>
+				</div>
+				<#else> <#if errormsg?exists>
+				<div id="msg25">
+					<p class="error">${errormsg}</p>
+				</div>
+				</#if> </#if>
+				<div class="user_right_menu">
+					<#assign userinfo_type="realname">
+					<#include "identify_menu.html"></div>
+				<div class="user_right_main">
+				<#if user?exists&&user.realStatus?exists&&user.realStatus==2>
+					<div class="user_help alert">实名初审正在审核中!</div>
+		        <#elseif user?exists&&user.realStatus?exists&& (user.realStatus==1 || user.realStatus==3)>
+					<div class="user_help alert" style="text-align: left;">恭喜您已经通过了【实名初审】，您的信息已经提交到易极付进行【提现实名认证】（易极付1-2天），此操作能确保您的提现和账户安全，详情请登录易极付。</div>
+					<div class="user_right_border" style="background: #E8EEE5">
+						<div class="l">用户名：</div>
+						<div class="c">${user.username!}</div>
+					</div>
+					<div class="user_right_border" style="background: #E8EEE5">
+						<div class="l">真实姓名：</div>
+						<div class="c">${user.realname[0..0]!}****</div>
+					</div>
+		
+					<div class="user_right_border" style="background: #E8EEE5">
+						<div class="l">性 别 ：</div>
+						<div class="c"><#if user?exists&&user.sex?exists&&user.sex=="1">男<#else>女</#if> </div>
+					</div>
+		
+					<div class="user_right_border" style="background: #E8EEE5">
+						<div class="l">民 族：</div>
+						<div class="c">
+						<#if user.nation??>${user.nation.name}<#else>-</#if></div>
+					</div>
+		
+					<div class="user_right_border" style="background: #E8EEE5">
+						<div class="l">出生日期：</div>
+						<div class="c">${user.birthday!}</div>
+					</div>
+		
+					<div class="user_right_border" style="background: #E8EEE5">
+						<div class="l">证件类别：</div>
+						<div class="c">
+						<#if user?exists&&user.cardType?exists>
+							<@linkage name="cardType" plantext=true default=user.cardType></@linkage>
+						<#else>
+							-
+						</#if> 
+						</div>
+					</div>
+		
+					<div class="user_right_border" style="background: #E8EEE5">
+						<div class="l">证件号码：</div>
+						<div class="c"><#if user??&&user.cardId??>${user.cardId[0..13]!}****<#else>-</#if></div>
+					</div>
+		
+					<div class="user_right_border" style="background: #E8EEE5">
+						<div class="l">籍贯：</div>
+						<div class="c"><#if user??&&user.province??&user.province.name??>${(user.province.name)!} </#if>
+						<#if user??&&user.city??&user.city.name??>${(user.city.name)!} </#if>
+						<#if user??&&user.area??&user.area.name??>${(user.area.name)!}</#if> </div>
+					</div>
+					<!--  
+					<div class="user_right_border" style="background: #E8EEE5">
+						<div class="l">身份证图片：</div>
+						<div class="c">
+							<a href="${request.getContextPath()}${user.card_pic1!}" target="_blank">正面</a> | 
+							<a href="${request.getContextPath()}${user.card_pic2!}" target="_blank">反面</a>
+						</div>
+					</div>
+					-->
+				<#else>
+					<form action="${webroot}/member/apiRealname.html" name="form1" method="post" onsubmit="return check_form();" enctype="multipart/form-data">
+					<div class="user_help alert" style="text-align: left;">注意：请认真填写以下的内容，进行【实名初审】。【实名初审】成功会即时把您的个人信息提交到易极付做【提现实名认证】（易极分付）;【提现实名认证】是绑定银行卡和提现的重要步骤，为了您的资金安全，请您如实填写您的个人信息 </div>
+					<div class="user_right_border">
+						<div class="l">用户名：</div>
+						<div class="c">
+							<#if user?exists&&user.username?exists>${user.username}</#if>
+						</div>
+					</div>
+					
+					 <div class="user_right_border">
+						<div class="l">真实姓名：</div>
+						<div class="c">
+							<input  name="realname"  value="<#if user?exists&&user.realname?exists>${user.realname}</#if>" /><font color="#FF0000">*</font> 
+						</div>
+					</div> 
+					
+					<div class="user_right_border">
+						<div class="l">性 别 ：</div>
+						<div class="c">
+							<#assign sex=true>
+							<#if (user?exists&&user.sex?exists&&user.sex=="2") >
+								<#assign sex=false>
+							</#if>
+							<input type="radio" name="sex" value="1" <#if sex==true> checked="checked"</#if>   />男
+			                   <input type="radio" name="sex" value="2" <#if sex==false> checked="checked"</#if>  />女
+							<font color="#FF0000">*</font> 
+						</div>
+					</div>
+					
+					<div class="user_right_border">
+						<div class="l">民 族：</div>
+						<div class="c">
+							<#if user?exists&&user.nation?exists>
+								<@linkage name="nation" id="nation" nid="nation" default=user.nation.id! noselect="请选择"></@linkage>
+							<#else>
+								<@linkage name="nation" id="nation" nid="nation" noselect="请选择"></@linkage>
+							</#if> 
+							<font color="#FF0000">*</font> 
+						</div>
+					</div>
+					
+					<div class="user_right_border">
+						<div class="l">出生日期：</div>
+						<div class="c">
+							<input type="text" id="birthday" name="birthday" value="<#if user?exists&&user.birthday?exists>${user.birthday}</#if>" onclick="change_picktime()" />  <font color="#FF0000">*</font> 
+						</div>
+					</div>
+					
+					<div class="user_right_border">
+						<div class="l">身份证到期时间：</div>
+						<div class="c">
+							<input type="text" id="cardOff" name="cardOff" value="<#if user?exists&&user.cardOff?exists>${user.cardOff}</#if>" />  
+							<font color="#FF0000">*</font> 
+						</div>
+						<font>格式如下：2013-07-13；长期请您直接输入"长期",不能包含空字符</font> 
+					</div>
+					
+					<div class="user_right_border">
+						<div class="l">证件类别：</div>
+						<div class="c">
+							<#if user?exists&&user.cardType?exists>
+								<@linkage name="cardType" id="card_type" nid="card_type" default=user.cardType></@linkage>
+							<#else>
+								<@linkage name="cardType" id="card_type" nid="card_type" default="1616"></@linkage>
+							</#if> 
+							<font color="#FF0000">*</font> 
+						</div>
+					</div>
+					
+					<div class="user_right_border">
+						<div class="l">证件号码：</div>
+						<div class="c">
+							<input onblur="checkCardId(this)" id="card_id" type="text" name="cardId" value="<#if user?exists&&user.cardId?exists>${user.cardId}</#if>" />  
+							<font color="#FF0000">*【身份证号码中含X的必须为大写】</font> 
+						</div>
+					</div>
+					
+					<div class="user_right_border">
+						<div class="l">籍贯：</div>
+						<div class="c">
+			                <#if user?exists&&user.province?exists>
+			                		<@region name="province" id="province" value=user.province.id! pid="0"></@region>&nbsp;
+			                	<#else>
+			                		<@region name="province" id="province" pid="0"></@region>&nbsp;
+			                	</#if>
+								
+								<#if user?exists&&user.province?exists>
+									<#if user.city?exists>
+										<@region name="city" id="city" value=user.city.id! pid=user.province.id!></@region>&nbsp;
+									<#else>
+										<@region name="city" id="city" pid="0"></@region>&nbsp;
+									</#if>
+			                	<#else>
+			                		<@region name="city" id="city" pid="-1"></@region>&nbsp;
+			                	</#if>
+								
+								<#if user?exists&&user.city?exists>
+									<#if user.area?exists>
+										<@region name="area" id="area" value=user.area.id! pid=user.city.id!></@region>&nbsp;
+									<#else>
+										<@region name="area" id="area" pid=user.city></@region>&nbsp;
+									</#if>
+			                	<#else>
+			                		<@region name="area" id="area" pid="-1"></@region>&nbsp;
+			                	</#if>
+			                	<font color="#FF0000">*</font> 
+						</div>
+					</div>
+					
+					<div class="user_right_border">
+						<div class="l">身份证正面上传：</div>
+						<div class="c">
+							<input type="file" name="cardPic1" size="20" class="input_border"/>
+							<font color="#FF0000">*</font>
+			            </div>
+					</div>
+							
+				<div class="user_right_border">
+						<div class="l">身份证背面上传：</div>
+						<div class="c">
+							<input type="file" name="cardPic2" size="20" class="input_border"/>
+							<font color="#FF0000">*</font> 
+						</div>
+					</div>
+					<div class="user_right_border">
+			<div class="l" style="font-weight:bold; float:left;">验证码：</div>
+			<div class="c" >
+				<input name="validCode" id="validCode_check" type="text" size="11" maxlength="5"  tabindex="3"  style="float:left;"/>&nbsp;<img src="${request.getContextPath()}/validimg.html" alt="点击刷新" onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();" align="absmiddle" style="cursor:pointer; display:inline-block;zoom:1;*display:inline; *float:none;" />
+			</div>
+		</div>
+					<div class="user_right_border">
+						<div class="e"></div>
+						<div class="c">
+							<input type="submit"  class="btn-action" name="name"  value="确认提交" size="30" />
+						</div>
+					</div>
+					<input type="hidden" name="type" value="1" />
+					</form>
+				</#if>
+				<div class="user_right_foot alert">
+				 * 温馨提示：我们将对所有的信息进行保密
+				</div>
+		<!-- 身份证号码校验 -->
+	<script type="text/javascript">
+	
+	function isIdCardNo(num,birthday) {
+		
+	    //身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X。       
+	    if (!(/(^\d{15}$)|(^\d{17}([0-9]|X)$)/.test(num))) {    
+	        alert('输入的身份证号长度不对，或者号码不符合规定！\n15位号码应全为数字，18位号码末位可以为数字或X。');             
+	        return false;        
+	    } //校验位按照ISO 7064:1983.MOD 11-2的规定生成，X可以认为是数字10。
+	    return true;
+	}
+	</script>		
+				<script>
+			function check_form(){
+
+				 var frm = document.forms['form1'];
+				 
+                 var card_pic1 = (frm.elements['cardPic1'].value);
+                 var card_pic2 = (frm.elements['cardPic2'].value);
+                 
+				 var realname = frm.elements['realname'].value;
+				 var birthday = frm.elements['birthday'].value;
+				 var cardType = frm.elements['cardType'].value;
+				 var card_id = frm.elements['cardId'].value;
+				 var area = frm.elements['area'].value;
+				 var cardOff =frm.elements['cardOff'].value;
+				 var validCode_check = frm.elements['validCode_check'].value;
+				 
+				 var errorMsg = '';
+				  if (realname.length == 0 ) {
+						errorMsg += '* 真实姓名不能为空' + '\n';
+					  }
+					  if (birthday.length == 0 ) {
+						birthday += '* 生日不能为空' + '\n';
+					  }
+					  if (card_id.length == 0 ) {
+						errorMsg += '* 证件号码不能为空' + '\n';
+					  }
+					  if (area.length == 0 ) {
+						errorMsg += '* 请填写籍贯' + '\n';
+					  }
+					  if (validCode_check.length == 0 ) {
+						errorMsg += '* 请填写验证码' + '\n';
+					  }
+					  if(/^\s*$/.test(birthday)){
+						  errorMsg += '*请填写出生日期' + '\n';
+					  }
+					  if(!/^[1-9]{1}[0-9]{3}-[0-9]{2}-[0-9]{2}$/.test(birthday)){
+						  errorMsg += '* 请填写出生日期格式如下：2019-05-14，您填写的格式错误' + '\n';
+					  }
+					  
+					  if(/^\s*$/.test(cardOff)){
+						  errorMsg += '* 请填写身份证到期时间' + '\n';
+					  }
+					  if(!(/^[1-9]{1}[0-9]{3}-[0-9]{2}-[0-9]{2}$/.test(cardOff) || cardOff=='长期')){
+						  errorMsg += '* 请填写身份证到期时间格式如下：2019-05-14或长期，您填写的格式错误' + '\n';
+					  }
+	                  var pos1 = card_pic1.lastIndexOf(".");
+	                  var lastname1 = card_pic1.substring(pos1,card_pic1.length);
+
+	                  var pos2 = card_pic2.lastIndexOf(".");
+	                  var lastname2 = card_pic2.substring(pos2,card_pic2.length);
+
+	                  if (!(lastname1.toLowerCase()==".jpg" || lastname1.toLowerCase()==".gif" || lastname2.toLowerCase()==".png" ))
+	                  {
+	                      errorMsg += "*您上传的身份证正面上传文件类型必须为.jpg, .gif或者.png类型" + '\n';
+	                  }
+
+	                  if (!(lastname2.toLowerCase()==".jpg" || lastname2.toLowerCase()==".gif" || lastname2.toLowerCase()==".png" ))
+	                  {
+	                      errorMsg += "*您上传的身份证背面上传文件类型必须为.jpg, .gif或者.png类型" + '\n';
+	                  }
+	                  var reg3 = /(^\d{15}$)|(^\d{17}(\d|X)$)/;
+					  if( !( reg3.test(card_id))){
+						  errorMsg += "证件格式错误，请您重新填写";
+					  }
+					  if (errorMsg.length > 0){
+						alert(errorMsg); return false;
+					  }
+				  //一代、二代身份证号码校验
+				  if(cardType=='1616'||cardType=='1615'){					
+					  if(!isIdCardNo(card_id,birthday)){
+						  return false;
+					  }
+				  }
+			}
+		</script>
+				
+				</div>
+			</div>
+			<!--右边的内容 结束-->
+		</div>
+	</div>
+	
+
+	<!--用户中心的主栏目 结束-->
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/modal.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/tab.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/alert.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/transition.js"></script>
+		<script type="text/javascript" src="${request.getContextPath()}${theme_dir}/media/js/area.js"></script>
+	<#include "../../include/footer.html">
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<#assign nid="index" >
+<#include "../include/resource.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/liangyou/activety/css/activety.css" type="text/css" />
+<style>
+    .containW{position:relative;background: #fff;width:100%;}
+    .yun{margin:auto;overflow: hidden;}
+    .yun>img{float:left;width:100%;}
+    .gift5Fix, .gift5Fix1{ position: fixed; width: 120px; height: 120px; top: 50%; right: 10%; background: url(/themes/soonmes_yjt/liangyou/activety/imgs/Month_btn.png)no-repeat center; cursor: pointer;background-size: 100% 100%;}
+    #footer-blank{height:0px !important;}
+    .monthBtn{position: absolute;width:16%;height:45px;line-height:45px;left:46.2%;top:69.2%;border-radius: 10px; box-shadow: 0 6px 0 #064b7d;background:#2c94bf;color:#fff;text-align:center;font-weight:bold; z-index: 9999;}
+</style>
+<body>
+<#include "../include/header.html">
+    <div class="containW">
+        <div class="yun">
+            <img src="/themes/soonmes_yjt/liangyou/activety/imgs/Month_01.png" alt="重新加载">
+            <img src="/themes/soonmes_yjt/liangyou/activety/imgs/Month_02.png" alt="重新加载">
+            <img src="/themes/soonmes_yjt/liangyou/activety/imgs/Month_03.png" alt="重新加载">
+            <img src="/themes/soonmes_yjt/liangyou/activety/imgs/Month_04.png" alt="重新加载">
+            <img src="/themes/soonmes_yjt/liangyou/activety/imgs/Month_05.png" alt="重新加载">
+        </div>
+        <a class="monthBtn" href="/invest/index.html?status=11">立即投资</a>
+    </div>
+    <b class="gift5Fix"></b>
+
+</body>
+<#include "../include/footer.html">
+    <script src="${webroot}${theme_dir}/liangyou/activety/js/activety.js"></script>
+    <script>
+        $(function () {
+            window.phone = {
+                ui:{
+                    isMobile:function(){
+                        return isMobile = {
+                            Android: function() {
+                                return navigator.userAgent.match(/Android/i);
+                            },
+                            wechat: function() {
+                                return navigator.userAgent.match(/MicroMessenger/i);
+                            },
+                            BlackBerry: function() {
+                                return navigator.userAgent.match(/BlackBerry/i);
+                            },
+                            iOS: function() {
+                                return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+                            },
+                            Opera: function() {
+                                return navigator.userAgent.match(/Opera Mini/i);
+                            },
+                            Windows: function() {
+                                return navigator.userAgent.match(/IEMobile/i);
+                            },
+                            any: function() {
+                                return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows() || isMobile.wechat());
+                            }
+                        }
+                    },
+                    gUrlp:function(ll){
+                        return decodeURIComponent((new RegExp('[?|&]' + ll + '=' + '([^&;]+?)(&|#|;|$)', "ig").exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
+                    }
+                }
+            };
+            if( phone.ui.isMobile().any() == null ){
+            }else if( navigator.userAgent.indexOf('WindowsWechat') >= 0 ){
+                alert('请使用手机打开，获得更好的浏览体验！');
+                return false;
+            }else{
+                $('.gift5Fix').addClass('gift5Fix1').css('height','45px');
+                $('.top,.lheader').hide();
+                $('.yun').html('<img class="monthB" src="/themes/soonmes_yjt/liangyou/activety/imgs/Month_p1.png" alt="重新加载">'
+                        +'<img src="/themes/soonmes_yjt/liangyou/activety/imgs/Month_p2.png" alt="重新加载">'
+                        +'<img src="/themes/soonmes_yjt/liangyou/activety/imgs/Month_p3.png" alt="重新加载">'
+                        +'<img src="/themes/soonmes_yjt/liangyou/activety/imgs/Month_p4.png" alt="重新加载">'
+                        +'<img src="/themes/soonmes_yjt/liangyou/activety/imgs/Month_p5.png" alt="重新加载">'
+                        +'<img src="/themes/soonmes_yjt/liangyou/activety/imgs/Month_p6.png" alt="重新加载">')
+                $('.monthBtn').attr('href','/wap/listbids.html').css({'width':'34%','height':'1.8rem','line-height':'1.8rem','left':'3%','top':'52.8%','border-radius':'0.4rem','box-shadow':'0 0.3rem 0 #064b7d'})
+            }
+        })
+    </script>
+</html>
+

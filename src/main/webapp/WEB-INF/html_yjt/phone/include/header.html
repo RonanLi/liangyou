@@ -1,0 +1,154 @@
+ <div id="head"> 
+  <div class="header">
+    <div class="clearfix" id="head-info">
+       <div class="float_left">
+           <b class="icon wl-icon"></b><a href="${webroot}/index.html" style="color:#f0ebe0;">首页</a>
+           <b class="icon tel-icon"></b>服务热线：${fuwutel}
+       </div>
+       <div class="float_right">
+        <#if session_user?exists >    
+          <div class="show-log"><a href="${webroot}/member/index.html">欢迎您：${session_user.username!}</a>
+          <span class='head-log'>
+            <a href='${webroot}/member/index.html' class="headlog-pic"><img src='${webroot}/imgurl.html?userid=${session_user.userId?c}&size=middle' /></a>
+            <a href='${webroot}/member/index.html'>我的账户</a>
+            <a href='${webroot}/member/userinfo/userinfo.html'>个人信息</a>
+            <a href='${webroot}/member/account/log.html'>资金记录</a>
+            <a href='${request.getContextPath()}/member/account/newrecharge.html'>我要充值</a>
+            <a href='${request.getContextPath()}/member/account/newcash.html'>我要提现</a>
+          </span>
+        </div>
+          <b class="icon"></b><a href="${webroot}/user/logout.html" class="fr-a">退出</a>
+          <b class="icon"></b><a href="${webroot}/member/message/box.html"  class="fr-a"><i class="icon"></i>消息（${unRead?default(0)}）</a>
+          <#--<b class="icon"></b><a href="#" class="fr-a">论坛</a>-->
+          <b class="icon"></b><a href="${webroot}/phoneInit.html" class="fr-a">手机端下载</a>
+        <#else>
+        <b class="icon"></b><a href="${webroot}/user/login.html" class="fr-a">您还没有登录</a>
+        <#--<b class="icon"></b><a href="#" class="fr-a">论坛</a>-->
+        <b class="icon"></b><a href="#" class="fr-a">手机端下载</a>
+      </#if>
+    </div>
+   </div> 
+  </div>
+
+  <div class="clearfix"  id="head-content">
+      <div class="logo">
+          <a href="/">
+              <img src="${webroot}${theme_dir}/images/logo.png" alt="">
+          </a>
+      </div>
+      <div  id="nav-wrap">
+        <div id="nav">
+
+
+      <ul class="clearfix navul">
+        <#--<li class=" <#if (nid?exists&&nid=='index')> hover2 <#else></#if> "> <a href=" ${webroot}/index.html" class="nav_bg">首页</a>
+          <div class="submenu hide">
+            <span class="icon jiantou"></span>
+              <a href="${request.getContextPath()}/article/list.html?code=gywm">公司简介</a>
+               <a href="${webroot}/article/list.html?code=web-notice">网站公告</a>
+              <a href="${webroot}/article/list.html?code=webCost">网站资费</a>
+              <a href="${webroot}/tools/interest.html">网贷计算器</a>
+            
+          </div>
+        </li>-->
+        <li class=" <#if (nid?exists&&nid=='invest')> hover2 <#else></#if>"> <a href="${webroot}/invest/index.html?status=1" class="nav_bg">我要理财</a>
+          <div class="submenu hide">
+            <span class="icon jiantou"></span>
+<!--          <li><a href="${request.getContextPath()}/article/list.html?code=howToInvest">如何投资</a></li> 
+             <a href="${request.getContextPath()}/invest/introduceInvest.html">如何投资</a>-->
+             <a href="${request.getContextPath()}/invest/index.html?status=1" >招标中的借款标</a>
+             <a href="${request.getContextPath()}/invest/index.html?status=10" >还款中的借款标</a>
+             <a href="${request.getContextPath()}/invest/index.html?status=8" >已还款的借款标</a>
+          
+          </div>
+        </li>
+        <li class=" <#if (nid?exists&&nid=='borrow')> hover2 <#else></#if>"> <a  href="${webroot}/borrow/index.html">我要借款</a>
+          <div class="submenu clearfix hide">
+            <span class="icon jiantou"></span>
+              <#--<a href="${request.getContextPath()}/borrow/index.html" >如何借款</a>
+             <a href="${request.getContextPath()}/borrow/loan.html?t=vouch" >发布借款</a>
+             <a href="${webroot}/borrow/loan.html?t=labor">发布工薪信用标</a>
+              <a href="${webroot}/borrow/loan.html?t=netbussiness">发布网商信用标</a> 
+              <a href="${webroot}/borrow/loan.html?t=student">发布学业信用标</a>
+              <a href="${webroot}/borrow/loan.html?t=shopbusiness">发布经营信用标</a>
+              
+              <a href="${request.getContextPath()}/borrow/loan.html?t=miaobiao" >发布秒还标</a>
+              <a href="${request.getContextPath()}/borrow/loan.html?t=fast" >发布抵押标</a>
+              <a href="${request.getContextPath()}/borrow/loan.html?t=flow" >发布流转标</a>
+              <a href="${request.getContextPath()}/borrow/loan.html?t=jin" >发布净值标</a>
+              <a href="${request.getContextPath()}/borrow/loan.html?t=month" >发布信用标</a>
+              <a href="${request.getContextPath()}/borrow/loan.html?t=flow" >发布流转标</a>
+              <a href="${request.getContextPath()}/borrow/loan.html?t=vouch" >发布担保标</a>-->
+              
+          </div>
+        </li>
+        <li class=" <#if (nid?exists&&nid=='member')> hover2 <#else></#if>"> <a  href="${webroot}/member/index.html">我的账户</a> 
+          <div class="submenu hide">
+            <span class="icon jiantou"></span>
+              <a href="${request.getContextPath()}/member/index.html" >我的账户</a>
+              <!--<a href="${request.getContextPath()}/member/friend/myfriend.html" >我的好友</a>-->
+              <a href="${request.getContextPath()}/member/vip.html" >vip申请</a>
+              <a href="${request.getContextPath()}/member/account/newrecharge.html" >账户充值</a>
+              <a href="${request.getContextPath()}/member/account/newcash.html" >账户提现</a>
+              <a href="${request.getContextPath()}/member/borrow/repaying.html" >我要还款</a>
+           
+          </div>
+       </li>
+       
+       
+        <li><a  href="http://www.80dhl.com/forums/list.page">社区论坛</a>
+            <div class="submenu hide">
+            </div>
+        </li>
+
+         <li class=" <#if (nid?exists&&nid=='zixun')> hover2 <#else></#if>"> <a href="${webroot}/article/list.html?code=gsjj">关于我们</a>
+          <div class="submenu hide">
+            <span class="icon jiantou"></span>
+              <a href="${request.getContextPath()}/article/list.html?code=gsjj">公司简介</a>
+              <a href="${request.getContextPath()}/article/list.html?code=xszn">新手指南</a>
+               <a href="${request.getContextPath()}/article/list.html?code=questiontxt">常见问题</a>
+              <a href="${request.getContextPath()}/article/list.html?code=safe">安全保障</a>
+              <a href="${webroot}/article/list.html?code=contect">联系我们</a>
+              <a href="${request.getContextPath()}/article/showWrrants.html?code=serve" >担保机构</a>
+              
+              <#--<a href="${webroot}/article/list.html?code=web-notice">网站公告</a>
+              <a href="${webroot}/article/list.html?code=hyxw">行业新闻</a>
+              <a href="${webroot}/article/list.html?code=webCost">网站资费</a>
+              <a href="${webroot}/article/list.html?code=flsm">法律声明</a>
+              <a href="${webroot}/tools/interest.html">网贷计算器</a>
+              <a href="${webroot}/siteMap.html">网站地图</a>-->
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <#if session_user??>
+    <div class="hdreg-btn"><a href="${webroot}/user/logout.html" class="head_login-after">退出登录</a></div>
+    <#else>
+    <div class="hdreg-btn">
+      <a href="${webroot}/user/login.html" class="ic">登录</a>
+      <a href="${webroot}/user/register.html" class="ic">注册</a>
+    </div>
+     </#if>
+
+
+  </div>
+  
+</div>
+</div>
+<script>
+  function head_login(){
+    $(".show-log").mouseover( function () {
+        $(this).css("background-color","424242")
+        $(".head-log").css("display","block");
+          
+    
+        })
+    $(".show-log").mouseleave(function () {
+            $(this).css("background-color","none")
+            $(".head-log").css("display","none")
+        })
+    
+}
+head_login();
+</script>

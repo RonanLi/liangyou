@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 ">
+<#assign webroot=request.getContextPath()>
+<#assign nid="member" >
+<#include "../../include/resource.html">
+<#include "../../common/function.html">
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+
+<body>
+
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="rightDiv">
+                <h1><span>投资充值</span></h1>
+                <div class="recharge">
+                    <div class="reminder">*温馨提示：网上银行充值过程中请耐心等待，充值成功返回金和所，充值金额才能打入您的账号<br><span>建议使用IE8及以上浏览器</span></div>
+                    <form method="post" id="Fwoo1x" name="form1" target="_blank" >
+                        <div class="fromBox">
+                            <div class="boxTxt" >真实姓名：</div>
+                            <div class="boxIpt">${user.realname[0..0]!""}***</div>
+                        </div>
+                        <div class="fromType">
+                            <h1>充值方式：</h1>
+                            <div class="input"><input type="radio" name="type"  id="type"  onclick="changeRecharge(this)" checked="checked" value="1" class="teachs_sd" /> 网上充值</div>
+                            <div class="input"><input type="radio" name="type"  id="type"  onclick="changeRecharge(this)" value="8" class="teach_sd" /> 汇款充值<a id="teach_sd" href="http://www.jinhefax.com/article/detail.html?code=web-notice&id=149">(教程)</a></div>
+                        </div>
+                        <div id="returnpay">
+                            <div class="fromBox">
+                                <div class="boxTxt" >充值金额：</div>
+                                <div class="boxIpt"><input type="text" name="money" id= "money"  class="input_border" value="" size="10" onkeyup="clearNoNum(this)"/>&nbsp;&nbsp; 元 <span class="tip"></span> </div>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">验证码：</div>
+                            <div class="boxIpt" ><input name="valicode" id="invalwW" type="text" size="11" maxlength="5"  tabindex="3"/>&nbsp;&nbsp; <img src="${request.getContextPath()}/validimg.html" alt="点击刷新" onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();" align="absmiddle" style="cursor:pointer; display:inline-block;zoom:1;*display:inline; *float:none;" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">&nbsp;</div>
+                            <div class="boxIpt"><input type="button" class="btn-action" target="_blank"  name="name"  value="确认支付" size="30" id="goincharge"/></div>
+                            <p class="showErroR">
+                                <img src="/themes/soonmes_yjt/images/tipimg-y.png"/>
+                                <span></span>
+                            </p>
+                        </div>
+                    </form>
+                    <div class="notes">金和所禁止信用卡套现、虚假交易等行为，已经发现将给予处罚，包括但不限于:限制说款，冻结账户，永久停止服务，并可能影响信用等级。</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<#include "../../include/footer.html">
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"></script>
+<script type="text/javascript">
+
+        function changeRecharge(obj){
+            $this = $(obj);
+            $("#money").val("");
+            var type = $this.val();
+            if(type==='1'){//线上充值
+                $("#off_line_recharge").hide();
+                $("#off_line_recharge2").hide();
+            }else if(type==='2'){//线下充值
+                $("#off_line_recharge").show();
+                $("#off_line_recharge2").hide();
+            }else{
+                $("#off_line_recharge2").show();
+                $("#off_line_recharge").hide();
+            }
+        }
+        var val=$('input:radio[name="type"]:checked').val();
+        if(val==='1'){//线上充值
+            $("#off_line_recharge").hide();
+            $("#off_line_recharge2").hide();
+        }else if(val == '2'){//线下充值
+            $("#off_line_recharge").show();
+            $("#off_line_recharge2").hide();
+        }else{
+            $("#off_line_recharge2").show();
+        }
+
+
+        $('#goincharge').click(function(){
+            var remitMoney = ${remitMoney!"5000"};
+            clearNoNum();
+            if( $('#money').val().trim() == ''){
+                $('.showErroR').show().find('span').text('请输入充值金额');
+                return false;
+            }else if( $('#invalwW').val().trim() == ''){
+                $('.showErroR').show().find('span').text('请输入验证码');
+                return false;
+            }else if( isNaN($('#money').val().trim()) ){
+                $('.showErroR').show().find('span').text('请输入正确的充值金额【数字】');
+                return false;
+            }else if( parseInt( $('#money').val().trim() ) <  remitMoney && $('input[value="8"]').is(':checked') ){
+                $('.showErroR').show().find('span').text('汇款充值金额不能低于'+ remitMoney +'元');
+                return false;
+            }else if( parseInt( $('#money').val().trim() ) < 10 ){
+                $('.showErroR').show().find('span').text('网上充值金额不能低于10元');
+                return false;
+            }else{
+                $.ajax({
+                    url: '/member/account/newrecharge.html',
+                    type: 'POST',
+                    data: $('#Fwoo1x').serialize(),
+                    success:function(msg){
+                        var x = document.createElement('html');
+                        x.innerHTML = msg;
+                        var errorMSG = $(x).find('#error_zl').text();
+                        if( $(x).find('title').text().indexOf('跳转') >= 0 ){
+                            $('.showErroR').hide();
+                            $('body').append( $(x).find('form') );
+                            document.getElementById("frm1").submit();
+                        }else{
+                            $('.showErroR').show().find('span').text(errorMSG);
+                            return false;
+                        }
+                    }
+                });
+
+            }
+        });
+
+
+        $(function(){
+            if($('.teach_sd').is(':checked')){
+                $('#teach_sd').css('display','inline-block');
+            }
+
+            $('.teachs_sd').click(function(){
+                $('#teach_sd').hide();
+            });
+
+            $('.teach_sd').click(function(){
+                $('#teach_sd').css('display','inline-block');
+            });
+        });
+
+
+    </script>
+</html>

@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html>
+<#include "../include/resource.html">
+<body>
+<#assign nid="invest">
+
+<!--header-end-->
+<div class="container-bg">
+    <div id="main" class="clearfix investdetail" style="font-family:'微软雅黑'; color:#666;">
+        <p class="guide" style="font-size: 30px; line-height50px; text-align: center;">
+          	  发标预览
+        </p>
+    <#include "../common/function.html">
+   <#assign borrow=perviewBorrow>
+        <div class="box-detail clearfix">
+            <div class="box-info clearfix  second-border">
+                <div class="box-info-user second-border-user">
+                    <img class="user-photo" src="${webroot}/imgurl.html?userid=${user.userId?c}&size=middle"/>
+                    <p style="border-bottom:1px dashed #ddd; text-align:center;">
+                        <a href="/user/show.html?user_id=1">${user.username}</a>
+                    </p>
+                    <p style="margin-top:3px;">
+                        <span class="pullleft">信用积分：</span>${user.credit.value}&nbsp;
+                    </p>
+                    <p style="margin-top:3px;" class="clearfix">
+                        <span class="pullleft">信用等级：</span>
+                        <#assign creditRank=user.credit.findCreditRank()>
+                        <img class="rank" src="${request.getContextPath()}/data/images/credit/${creditRank.pic}" title="${user.credit.value}" />
+                    </p>
+                    ${user.province.name}
+                    <p style="margin-top:3px;"><span class="pullleft">用户籍贯：</span>${(user.province.name)!""} ${(user.city.name)!""} &nbsp;</p>
+                    <p style="margin-top:3px;"><span class="pullleft">注册时间：</span>${user.addtime?string('yyyy-MM-dd')}</p>
+                    <div class="info_a" style="margin-top:3px;">
+                        <ul>
+                            <#if user??>
+                                <li style="width:204px;">
+                                    <div class="credit_pic_card_<#if (user.realStatus?exists)&&user.realStatus==1>1<#else>0</#if>" title="<#if (user.realStatus?exists)&&user.realStatus==1>实名已认证<#else>未实名认证</#if>"></div>
+                                    <div class="credit_pic_phone_<#if (user.phoneStatus?exists)&&user.phoneStatus==1>1<#else>0</#if>" title="<#if (user.phoneStatus?exists)&&user.phoneStatus==1>手机已认证<#else>手机未认证</#if>"></div>
+                                    <div class="credit_pic_email_<#if (user.emailStatus?exists)&&user.emailStatus==1>1<#else>0</#if>" title="<#if (user.emailStatus?exists)&&user.emailStatus==1>邮箱已认证<#else>邮箱未认证</#if>"></div>
+                                    <div class="credit_pic_video_<#if (user.videostatus?exists)&&user.videoStatus==1>1<#else>0</#if>" title="<#if (user.videoStatus?exists)&&user.videoStatus==1>视频已认证<#else>视频未认证</#if>"></div>
+                                    <div class="credit_pic_vip_<#if user.vipStatus?exists&&user.vipStatus==1>1<#else>0</#if>" title="<#if user.vipStatus?exists&&user.vip_status==1>VIP<#else>普通会员</#if>"></div>
+                                    <div class="credit_pic_scene_<#if (user.sceneStatus?exists)&&user.sceneStatus==1>1<#else>0</#if>" title="<#if (user.sceneStatus?exists)&&user.sceneStatus==1>已通过现场认证<#else>未通过现场认证</#if>"></div>
+                                </li>
+                            </#if>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="box-info-detail">
+                    <div class="p-title">
+                        <h2 class="clearfix" style="padding-bottom:5px; padding-top:5px;">
+                            <span style="float: left; margin-right: 5px; font-size:20px; font-family:微软雅黑; font-weight:bold; line-height:38px; color:#000;">借款标题：<font color="#da0800">${borrow.name}</font></span>
+        
+                            <#include "../common/function.html">
+                                <@showBorrowIcon item=borrow/>
+                        </h2>
+                    </div>
+                    <ul class="clearfix">
+                        <li>借款金额：￥<strong style="color:#0054FF">${borrow.account}元</strong>
+                        </li>
+                        <!--<li>还需借款：￥<strong style="color:#da0800">20000元</strong>
+                        </li>-->
+                        <li>年利率：<strong style="color:#0054FF">${borrow.apr}%</strong>(月利率：${borrow.apr/12}%)</li>
+        
+                        <li>还款方式：<#if borrow.isday??&&borrow.isday==1>到期全额还款<#elseif
+                                borrow.type==101>系统自动还款<#elseif borrow.type==110>一次性还款
+                            <#elseif borrow.style??&&borrow.style=="2">一次性还款<#elseif borrow.style??&&borrow.style=="3">每月还息到期还本<#else>按月分期还款</#if>
+                        </li>
+                        <li>投资奖励：<#if borrow.award??&&borrow.award==0>	没有奖励
+                                <#elseif borrow.award??&&borrow.award==1>
+                                ${(borrow.partAccount)!0}%奖励
+                                <#elseif borrow.award??&&borrow.award==2>
+                                    ￥${(borrow.funds)!0}元奖励
+                                    <#else>
+                                </#if>
+                        </li>
+                        <li><#if borrow.type!=110>借款期限<#else>流转周期</#if>：<#if borrow.isday??&&borrow.isday==1>${borrow.timeLimitDay!0}天<#elseif borrow.type==101>满标即还<#else>${(borrow.timeLimit)!0}月</#if>
+                        </li>
+        
+                        <li style="clear:both;border-bottom: 1px dashed #D1D1D1;background:none; height:1px; width:710px;" ></li>
+        
+                        <li>
+                            投标数量：${borrow.tenderTimes!}笔 ，共${borrow.accountYes}元
+        
+                        </li>
+                        <li>
+                            总金额:￥${borrow.accountYes}元
+                        </li>
+                        <li>
+                            <span class="floatl">投标进度：${borrow.accountYes/borrow.account*100}%</span>
+                            <div class="rate_bg floatl" style="margin-top: 7px;">
+                                <div class="rate_tiao" style="width: ${borrow.accountYes/borrow.account*100}%"> </div>
+                            </div>
+                            <div class="floatl" style="margin-top:2px;margin-left:5px;*display:inline;">
+          
+                            </div>
+                        </li>
+                        <li>
+                            剩余金额:￥${(borrow.account-borrow.accountYes)?string("##.##")}元
+                        </li>
+                        <li>最小投标额：<#if borrow.lowestAccount??&&borrow.lowestAccount gt 0>${borrow.lowestAccount}<#else>无限制</#if></li>
+                        <!--<li>
+                            交易类型：在线交易
+                        </li>-->
+                        <li>最大投标额：<#if borrow.mostAccount??&&borrow.mostAccount gt 0>${borrow.mostAccount}<#else>无限制</#if></li>
+                        <#--<li>剩余时间：<#if borrow.status==1><span class="endtime" data-time="${dateformat(borrow.verifyTime?string("yyyy-MM-dd HH:mm:ss"), borrow.validTime )?c}"></span><#else>已结束</#if>-->
+                        <li>剩余时间：<span class="endtime" >无限制</span>
+                        </li>
+                        <li>
+                            <#if borrow.verifyTime??>审核时间：${borrow.verifyTime}
+                                <#else>开始时间：${borrow.addtime?string('yyyy-MM-dd HH:mm:ss')}
+                            </#if>
+                        </li>
+                    </ul>
+                    <style>
+                        .box-info-detail-ac a{cursor:pointer}
+                    </style>
+                    <div class="box-info-detail-ac">
+                         <@showTenderButton borrow=borrow />
+                    </div>
+        
+                </div><!--投标项目-->
+            </div>
+        </div><!--标内容-->
+        
+        
+        <div id="detail-tab">
+            <ul id="tab" class="list-tab clearfix mt10">
+                <li class="active"><a href="###" data-toggle="tab">借款详情</a></li>
+                <li><a href="###" data-toggle="tab">投标记录</a></li>
+                <li><a href="###" data-toggle="tab">账户详情</a></li>
+                <li><a href="###" data-toggle="tab">还款信用</a></li>
+                <li><a href="###" data-toggle="tab">个人资料</a></li>
+                <li><a href="###" data-toggle="tab">资料审核</a></li>
+                <li><a href="###" data-toggle="tab">票据资料审核</a></li>
+            </ul>
+        <div id="myTabContent" class="tab-content">
+            <div class="list-tab-con tab-pane " id="jkxq" style="display:block">
+            
+                <div>
+                    <p>
+                        ${borrow.content!}
+                    </p>
+                    <p>
+                        <br />
+                    </p>
+                </div>
+            
+            </div>
+        <!--借款详情-->
+            <div class="list-tab-con tab-pane   second-tabcontent" id="tbinfo">
+                <style>
+                    .list-page{padding-top:25px;padding-left:48px;}
+                    .list-page a{ width:20px; height:18px; line-height:18px; text-align:center; border:2px solid #666666;
+                        margin:3px 5px; display:inline-block;*zoom:1;*display:inline;cursor:pointer;}
+                    .list-page a.prev,.list-page a.next{ width:40px; height:18px; line-height:18px;}
+                    .list-page a.current{ border:2px solid #d23434;}
+                </style>
+                <ul class="clearfix" id="tbjlbox">
+                    <li class="clearfix">
+                        <dl>
+                            <dd class="d1"><strong>序号</strong></dd><dd class="d3"><strong>投标人</strong></dd><dd class="d3"><strong>投标金额</strong><dd class="d3"><strong>有效金额</strong></dd><dd class="d1"><strong>奖励</strong></dd><dd class="d5"><strong>投标时间</strong></dd>
+                        </dl>
+                    </li>
+                </ul>
+                <div class="list-page">
+            
+                </div>
+                <#if award??&&award==0>
+                    <#assign awardText="没有">
+                        <#elseif award??&&award==1>
+                            <#assign awardText=(borrow.partAccount)!0+"%奖励" >
+                                <#elseif award??&&award==2>
+                                    <#assign awardText="￥"+(borrow.funds)!0+"元奖励" >
+                                        <#else>
+                                            <#assign awardText="没有">
+                </#if>
+                <script type="text/javascript">
+                    Date.prototype.format = function(format){
+                        var o = {
+                            "M+" : this.getMonth()+1, //month
+                            "d+" : this.getDate(), //day
+                            "h+" : this.getHours(), //hour
+                            "m+" : this.getMinutes(), //minute
+                            "s+" : this.getSeconds(), //second
+                            "q+" : Math.floor((this.getMonth()+3)/3), //quarter
+                            "S" : this.getMilliseconds() //millisecond
+                        }
+                        if(/(y+)/.test(format))
+                            format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+                        for(var k in o)
+                            if(new RegExp("("+ k +")").test(format))
+                                format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] :("00"+ o[k]).substr((""+ o[k]).length));
+                        return format;
+                    }
+                    function format(pnumber,decimals){
+                        if (isNaN(pnumber)) { return 0};
+                        if (pnumber=='') { return 0};
+                        var snum = new String(pnumber);
+                        var sec = snum.split('.');
+                        var whole = parseFloat(sec[0]);
+                        var result = '';
+                        if(sec.length > 1){
+                            var dec = new String(sec[1]);
+                            dec = String(parseFloat(sec[1])/Math.pow(10,(dec.length - decimals)));
+                            dec = String(whole + Math.round(parseFloat(dec))/Math.pow(10,decimals));
+                            var dot = dec.indexOf('.');
+                            if(dot == -1){
+                                dec += '.';
+                                dot = dec.indexOf('.');
+                            }
+                            while(dec.length <= dot + decimals) { dec += '0'; }
+                            result = dec;
+                        } else{
+                            var dot;
+                            var dec = new String(whole);
+                            dec += '.';
+                            dot = dec.indexOf('.');
+                            while(dec.length <= dot + decimals) { dec += '0'; }
+                            result = dec;
+                        }
+                        return result;
+                    }
+                    jQuery.extend({
+                        detailTenderPage:function(options) {
+                            var defaults = {
+                                param: {},
+                                currentPage:1,
+                                url:"",
+                                callback:{}
+                            };
+                            var opts = $.extend(defaults, options);
+                            opts.param.page=defaults.currentPage;
+                            $.get(defaults.url,defaults.param,defaults.callback);
+                        }
+                    });
+                    var pageTotal=-1;
+                    var title='<li class="clearfix"><dl><dd class="d1"><strong>序号</strong></dd><dd class="d3"><strong>投标人</strong></dd><dd class="d3"><strong>投标金额</strong><dd class="d3"><strong>有效金额</strong></dd><dd class="d1"><strong>奖励</strong></dd><dd class="d5"><strong>投标时间</strong></dd></dl></li>';
+                    function showTenderList(pagenum){
+                        $.detailTenderPage({
+                            param:{borrowid:${borrow.id}},
+                            currentPage:pagenum,
+                            url:'detailTenderForJson.html',
+                            callback:function(result){
+                                var databox = $("#tbjlbox");
+                                var strs="";
+                                var strlenght = result.data.list.length;
+                                if(pageTotal<0){
+                                    pageTotal = result.data.page.pages;//分页数
+                                    var nav="";
+                                    for(var i=0;i<pageTotal;i++){
+                                        nav=nav+"<a onclick=\"showTenderList("+(i+1)+")\">"+(i+1)+"</a>";
+                                    }
+                                    $(".list-page").html(nav);
+                                    var oA = $(".list-page a");
+                                    $(oA[0]).addClass("current").siblings().removeClass("current");
+                                    oA.click(function(){
+                                        var i = oA.index(this);
+                                        $(oA[i]).addClass("current").siblings().removeClass("current");
+                                        showTenderList(i+1);
+                                    })
+                                }
+                                for(var i = 0; i<strlenght; i++){                                	
+                                    strs+="<li>"+"<dl>"+
+                                            "<dd class='d1'>"+(result.data.page.pernum*(result.data.page.currentPage-1)+i+1)+"</dd>"+
+                                            "<dd class='d3'>"+result.data.list[i].user.username+"</dd>"+
+                                            "<dd class='d3'>"+format(result.data.list[i].money,2)+"</dd>"+
+                                            "<dd class='d3'>"+format(result.data.list[i].account,2)+"</dd>"+
+                                    		<#if borrow.award??&&borrow.award==0>
+                                            	"<dd class='d1'>没有</dd>"+
+                                            <#elseif borrow.award??&&borrow.award==1>
+                                            	"<dd class='d1'>${(borrow.partAccount)!0}%</dd>"+
+                                            <#elseif borrow.award??&&borrow.award==2>
+                                            	"<dd class='d1'>￥"+format((${(borrow.funds?c)!0}*result.data.list[i].account/${borrow.account?c}),2)+"元</dd>"+
+                                            <#else>
+                                            </#if>                                         
+                                            "<dd class='d5'>"+new Date(result.data.list[i].addtime).format("yyyy-MM-dd hh:mm:ss")+"</dd>"+
+                                            "</dl>"+"</li>"
+                                }
+                                databox.html(title+strs);
+                            }
+                        });
+            
+                    }
+            
+                    showTenderList(1);
+                </script>
+                <#if tenderlist?exists> <#list tenderlist as item>
+                    <#if item_index lt 100>
+                        <ul class="clearfix">
+                            <li class="clearfix">
+                                <dl>
+                                    <dd class="d1">${item_index+1}</dd>
+                                    <dd class="d3"><#if item.username?exists>
+                                        <a href="${request.getContextPath()}/user/show.html?user_id=${item.user_id}">${item.username}</a></#if></dd>
+                                    <dd class="d3">￥${item.money!}</dd>
+                                    <dd class="d3">￥${item.account!}</dd>
+                                    <dd class="d1">投资奖励：${borrow.award}<#if borrow.award??&&borrow.award==0>	没有奖励
+                                <#elseif borrow.award??&&borrow.award==1>
+                                ${(borrow.partAccount)!0}%奖励
+                                <#elseif borrow.award??&&borrow.award==2>
+                                    ￥${(borrow.funds)!0}元奖励
+                                    <#else>
+                                </#if>
+                        </dd>
+                                    <dd class="d5">${item.addtime?string("yyyy-MM-dd HH:mm:ss")}</dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </#if>
+                </#list> </#if>
+            </div>
+        <!--投标记录-->
+            <div class="list-tab-con tab-pane " id="zhxq">
+            	<#if borrow?? && borrow.status!=8>
+            	   <#if borrow.openAccount==1>          	
+	                <ul class="clearfix">
+	                    <li>借入总额：￥${(summary.borrowTotal)!0}</li>
+	                    <li>借出总额：￥${(summary.investTotal)!0}</li>
+	                    <li>充值总额：￥${(summary.rechargeTotal)!0}</li>
+	                    <li>提现总额：￥${(summary.cashTotal)!0}</li>
+	                    <li>待还总额：￥${(summary.borrowTotal)!0+(summary.borrowInterest)!0}</li>
+	                    <li>待收总额：￥${(summary.investTotal)!0+(summary.investInterest)!0}</li>
+	                </ul>
+	               <#else>
+	                <ul class="clearfix">
+	               <li>借款人未选择公开账户信息!</li>
+	               </ul>
+	                </#if>
+	               <#else>
+	               <ul class="clearfix">
+	               <li>借款已还清,信息不再显示!</li>
+	               </ul>
+                </#if>
+                <p class="text-red">
+                <div class="alert alert-error in">
+                    注：公开的账户资金详情在标的借款全部还清后将自动不再公开显示.
+                </div></p>
+            </div>
+            
+        <!--账户详情-->
+            <div class="list-tab-con tab-pane " id="hkxy">
+            <#if borrow?? && borrow.openBorrow==1>
+                <ul class="clearfix">
+                    <li>借款 ${(summary.borrowTimes)!0} 次成功</li>
+                    <li> <#if flow??>${flow?size}<#else>0</#if> 次流标</li>
+                    <li> ${summary.waitRepayTimes!0} 笔待还款</li>
+                    <li> ${summary.hadRepayCount!0} 笔已成功还款 </li>
+                    <li> <#if earlyList??>${flow?size}<#else>0</#if>  笔提前还款</li>
+                    <li> <#if lateList??>${flow?size}<#else>0</#if>  笔迟还款</li>
+                    <#--
+                    <li> ${overdueRepaymentList!0} 笔30天之内的逾期还款</li>
+                    <li> ${overdueRepaymentsList!0} 笔超过30天的逾期还款</li>
+                    <li> ${overdueNoRepaymentsList!0} 笔逾期未还款</li>
+                    -->
+                </ul>
+                 <#else>
+	              <ul class="clearfix">
+	              	<li>借款人未选择公开借款信息</li>
+	              </ul>
+                </#if>
+            </div>
+        <!--还款信用-->
+        
+            <div class="list-tab-con tab-pane " id="grxx">
+            <#if borrow?? && borrow.openCredit=1>
+                <ul class="clearfix">
+                    <li>性别：<#if user.sex??><#if	 user.sex=="1">男<#else>女</#if><#else>-</#if></li>
+                  
+                    <li>婚姻状况：<#if user.userinfo??&&user.userinfo.marry??>${attestationType(user.userinfo.marry,"name")}</#if></li>
+                    <li>居住地：<#if user??&&user.city??>${user.city.name!}</#if></li>
+                    <li>出生年月：<#if user.birthday??><#if user.birthday?length lt 7>${user.birthday}<#else>${user.birthday[0..6]}</#if></#if></li>
+                    <li>文化程度：<#if user.userinfo??&&user.userinfo.education??>${attestationType(user.userinfo.education,"name")}<#else>-</#if></li>
+                    <li>职业：<#if user.userinfo??&&user.userinfo.companyOffice??>${attestationType(user.userinfo.companyOffice,"name")}<#else>-</#if></li>
+              </ul>
+              <#else>
+              <ul class="clearfix">
+              	<li>借款人未选择公开还款信用数据</li>
+              </ul>
+              </#if>  
+            </div>
+        <!--个人资料-->
+        
+            <div class="list-tab-con tab-pane  second-tabcontent" id="zlsh">
+                <ul class="clearfix">
+                    <li class="clearfix">
+                        <dl>
+                            <dd class="d1"><strong>序号</strong></dd><dd class="d2"><strong>资料类型</strong></dd><dd class="d3"><strong>资料说明</strong></dd><dd class="d4"><strong>积分</strong></dd><dd class="d5"><strong>状态</strong></dd><dd class="d6"><strong>审核时间</strong></dd>
+                        </dl>
+                    </li>
+                </ul>
+                <#if user.attestations?exists><#list user.attestations as item>
+            <ul class="clearfix">
+                <li class="clearfix">
+                    <dl>
+                        <dd class="d1">${item.id}</dd>
+						<dd class="d2">${(item.attestationType.name)?default("-")}</dd>
+						<dd class="d3">${(item.name)?default("-")}</dd>
+						<dd class="d4">${item.jifen!}</dd>
+                        <dd class="d5">	<#if item.status==0> 未审核
+                            <#elseif item.status=2>	审核失败
+                                <#else>	已审核
+                        </#if></dd>
+                        <dd class="d6"><#if item.verifyTime??>${item.verifyTime?string('yyyy-MM-dd HH:mm:ss')}<#else>-</#if></dd>
+                    </dl>
+                </li>
+
+            </ul>
+        </#list> </#if>
+            </div>
+        <!--票据资料审核-->
+         <div class="list-tab-con tab-pane  second-tabcontent" id="zlsh">                
+                <#if user.attestations?exists>
+                         <div class="clearfix">
+                              <#list user.attestations as item>
+                             	<div class="float_left ml10">
+                                     <p>${item.name!'未命名'}</p>
+                                     <a rel="group" href="/${item.pic!}" title="${item.content!'未命名'}"><img alt="" src="/${item.pic!}" width="100"></a>
+                                 </div>
+                             </#list>
+                         </div>          		
+        		</#if>
+            </div>
+        </div>
+        <!-- id="myTabContent" tab切换 -->
+        
+        </div>
+        
+    </div>
+<!--main end-->
+
+<div id="modal_dialog" style="display: none;" title="${borrow.name}">
+    <div class="pop-tb-con clearfix" style="background:#fff;">
+        <div class="pop-tb-l">
+            <ul>
+                <li>借款人：${user.username}</li>
+                <li>借款金额：<strong>￥${borrow.account} 元</strong></li>
+                <li>借款年利率: ${borrow.apr} %</li>
+                <li>已经完成：${borrow.accountYes/borrow.account} %</li>
+                <li>还需借款: ￥${borrow.account-borrow.accountYes}</li>
+                <li>借款期限: <#if
+                        borrow.isday??&&borrow.isday==1>${borrow.timeLimitDay!0}天<#else>${(borrow.timeLimit)?default("0")}月</#if></li>
+                <li>还款方式: <#if borrow.isday??&&borrow.isday==1>到期全额还款<#elseif
+                        borrow.type==101>系统自动还款<#elseif borrow.type==110>一次性还款
+                    <#elseif borrow.style??&&borrow.style=="2">一次性还款<#else>按月分期还款</#if>  </li>
+            </ul>
+        </div>
+       <#assign account=user.account >
+        <div class="pop-tb-r">
+            <form action="/borrow/tender.html"
+                  name="form1" method="post" >
+                <ul id="flow_num">
+                    <li>您的可用余额：${session_user.account.useMoney}元 <a
+                            href="/member/account/newrecharge.html">我要充值</a>
+                    </li>
+
+                    <#if borrow.type==110>
+                        <li>最小流转单位：${borrow.flowMoney} 元
+                        <li>已认购：${borrow.accountYes/borrow.flowMoney}份&nbsp;&nbsp;
+                            还剩：<b class="max">${(borrow.account-borrow.accountYes)/borrow.flowMoney}</b>份</li>
+                        <li>购买份数：
+                            <input class="less" value="-" type="button">
+                            <input type="text"  class="nums" id="flow_count" name="tenderCount" value="1" size="5">
+                            <input class="add" value="+" type="button">
+                        </li>
+                        <#else>
+                            <li>最多投标总额：<#if borrow.mostAccount??&&borrow.mostAccount gt 0>${borrow.mostAccount}<#else>无限制</#if></li>
+                            <li>投标金额: <input type="text" id="money" name="money"
+                                             size="11" onKeyUp="value=value.replace(/[^0-9.]/g,'')">元
+                                <input type="button" onClick="inputAll(${(borrow.lowestAccount?c)!0},${(borrow.mostAccount?c)!0},${(session_user.account.useMoney)?c!0});"
+                                       value="自动填入全部金额" /></li>
+                    </#if>
+                    <li>支付密码:<#if !session_user??> <a href="###" id="login_btn"> <font color="red">请先登陆</font> </a> <#elseif
+                            session_user.paypassword?exists> <input type="password"
+                                                                    name="paypwd" size="11" tabindex="2" /> <#else> <a
+                            href="${request.getContextPath()}/member/security/paypwd.html"
+                            target="_blank"> <font color="red">请先设一个支付支付密码</font> </a>
+                    </#if></li>
+                    <#if borrow.pwd??&&borrow.pwd!=""><li>定向标密码：<input type="text" size="11" name="pwd" id="pwd"></li></#if>
+                </ul>
+                <p class="mar20">
+                   <#if borrow.type==110>
+                         <input type="submit" class="btn" value="确认投标" style="line-height:13px; height:28px;">
+                        <#else>
+                           <a class="btn" onClick="return check_form( ${(borrow.lowestAccount?c)!0},<#if borrow.mostAccount?? && borrow.mostAccount gt 0>${borrow.mostAccount?c}<#else>${borrow.account?c}</#if>,${(session_user.account.useMoney)?c!0})">确认投标</a>
+                    </#if>
+                <p>
+                <p>
+                <input type="hidden" name="id"
+                       value="${((borrow.id)?default(0))?c}" />注意：点击按钮表示您将确认投标金额并同意支付.
+                </p>
+            </form>
+        </div>
+    </div>
+    <!-- pop tb-->
+</div>
+</div>
+<!-- modal -->
+<script type="text/javascript">
+
+        jQuery( "#modal_dialog" ).dialog({ autoOpen: false , modal: true ,height: 410,width:760 });
+			jQuery('#invest_dialog').click(function(){
+			jQuery( "#modal_dialog" ).dialog( "open" );
+		 });
+
+		/*jQuery( "#login_dialog" ).dialog({ autoOpen: false , modal: true ,height: 240,width:220 });
+		jQuery('#login_btn').click(function(){
+			jQuery( "#login_dialog" ).dialog( "open" );
+		});*/
+    function check_form(lowest,most,use_money){
+		 var frm = document.forms['form1'];
+		 var account = frm.elements['money'].value;
+		 var pwdVal = frm.elements['paypwd'].value;
+		 //var valicode = frm.elements['valicode'].value;
+		
+		 if (account==""){
+		 	alert("投标金额不能为空");
+			return false;
+		 }else if (account>use_money ){
+		 	alert("您的可用余额小于您的投标额，要投标请先充值。");
+			return false;
+		}else if (account>most && most>0){
+		 	alert("投标金额不能大于最大限额"+most+"元");
+			return false;
+		 }else if(account<lowest && lowest>0){
+			alert("投标金额不能低于最小限额"+lowest+"元");
+			return false;
+		 }else if(pwdVal=="")
+		 {
+			alert("支付密码不能为空");
+			return false;
+		 }
+		  /* if (valicode==""){
+		 	alert("验证码不能为空");
+			return false;
+		 }*/
+		if(confirm('确定要投标'+account+'元，确定了将不能取消')){
+			frm.submit();
+			return true;
+		}else{
+			return false;
+		}
+		 
+	}
+
+    function inputAll(lowest,most,use_money){
+
+        if(most==0){
+
+            jQuery("#money").val(use_money);
+        }else if(use_money>most){
+            jQuery("#money").val(most);
+        }else{
+            jQuery("#money").val(use_money);
+        }
+
+    }
+
+    function changeNum(){
+        function  getNum(obj0){
+            var inputBox = $(".nums",obj0);
+            inputBox.blur(function(){
+                inputNum  = parseInt(inputBox.attr("value"));
+                var maxNum = parseInt($(".max",obj0).text());
+                if(!isNaN(inputNum))
+                {
+                    if(inputNum>maxNum)
+                    {
+                        inputBox.attr("value",maxNum);
+                    }
+                    else{
+                        inputBox.attr("value",inputNum);
+                    }
+                }else{
+                    inputBox.attr("value",1);
+                }
+            })
+
+        }
+        function add(obj1){//增加
+            var addObj = $(".add",obj1);
+            addObj.click(function(){
+                var num = $(".nums",obj1).attr("value");
+                var maxNum =($(".max",obj1).text());
+			    maxNum = maxNum.split(",");
+			    maxNum = parseInt(maxNum[0]+maxNum[1]);
+                num++;
+                if(num>maxNum)
+                    return false;//获取当前的对象的 最大分数  判断是否大于，大于剩下的分数 就不在增加
+                $(".nums",obj1).attr("value",num);
+            })
+        }
+        function less(obj2){ //减少
+            var lessObj = $(".less",obj2);
+            lessObj.click(function(){
+                var num = $(".nums",obj2).attr("value");
+                num--;
+                if(num<1)
+                {
+                    return false;
+                }//获取当前的对象的最小值  判断是否小于0，小于0 就不在减少
+                $(".nums",obj2).attr("value",num);
+            })
+
+        }
+        var flow_input=$("#flow_num");
+        add(flow_input); //对当前form下面的 增加分数 进行操作
+        less(flow_input);//对当前form下面的 减少分数 进行操作
+        getNum(flow_input);
+
+    }
+    changeNum();
+</script>
+<#if isBlackFriend??&&isBlackFriend==1 >
+    <script>
+        alert('本标借款者已存在您的好友黑名单中，请谨慎投资!');
+    </script>
+</#if>
+<script type="text/javascript"
+		src="${request.getContextPath()}${theme_dir}/media/js/jquery.fancybox-1.3.1.pack.js"></script>
+	<link rel="stylesheet" type="text/css" href="${request.getContextPath()}${theme_dir}/media/css/fancybox.css">	
+	<script type="text/javascript">
+		$(function(){			
+			$("a[rel=group]").fancybox({
+				'titlePosition' : 'over',
+				'cyclic'        : true,
+				'titleFormat'	: function(title, currentArray, currentIndex, currentOpts) {
+							return '<span id="fancybox-title-over">' + (currentIndex + 1) + ' / ' + currentArray.length + (title.length ? ' &nbsp; ' + title : '') + '</span>';
+				}
+			});
+		});
+	</script>
+	<!-- 借款详情里  图片展示，点击放大 -->
+	<script type="text/javascript">
+	$(function(){
+		   var Imgbox=$("#jkxq")
+		   var Oimg=$("img",Imgbox)
+		   Oimg.each(function(){  	   
+			   $(this).wrap("<a rel='group'></a>");
+			   var Imgsrc=$(this).attr("src");
+			   var Ahref=$(this).parent().attr("href",Imgsrc).addClass("obja");			   
+			   var ImgAtl = $(this).attr("alt");
+			   //$(".obja").text(ImgAtl);
+			   })
+			var oA = $(".obja");
+			oA.each(function(){
+				Imgbox.append($(this));
+			});
+		
+		$("a[rel=group]").fancybox({
+			'titlePosition' : 'over',
+			'cyclic'        : true,
+			'titleFormat'	: function(title, currentArray, currentIndex, currentOpts) {
+						return '<span id="fancybox-title-over">' + (currentIndex + 1) + ' / ' + currentArray.length + (title.length ? ' &nbsp; ' + title : '') + 	'</span>';
+			}
+		});
+	})
+	</script>
+
+</body>
+</html>

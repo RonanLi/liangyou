@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<#include "../include/resource.html">
+<style type="text/css">
+tbody td{
+font-size: 11px;
+}
+</style>
+<body>
+	<#assign mid="m_info" >
+	<#assign nid="member3"> 
+	<#include "../include/header.html">
+	<!--header-end-->
+	<!--用户中心的主栏目 开始-->
+    <div class="container-bg">
+	<div id="main" class="clearfix" style="margin-top:0px;">
+		<div class="wrap950 " style="margin-top:0">
+			<!--左边的导航 开始-->
+			<div class="user_left">
+				<#include "user_menu.html"></div>
+			<!--左边的导航 结束-->
+
+			<!--右边的内容 开始-->
+			<div class="user_right">
+				<#if msg?exists>
+				<div id="msg24">
+					<p class="ok">${msg}</p>
+				</div>
+				<#else> <#if errormsg?exists>
+				<div id="msg25">
+					<p class="error">${errormsg}</p>
+				</div>
+				</#if> </#if>
+				<div class="user_right_menu">
+					<#assign auto_type="list" >
+					<#include "auto_menu.html">
+				</div>
+				<!--自动投标 开始-->
+				<div class="user_right_main" >
+					<div class="user_help alert">
+					1、自动投标最多允许添加1个规则<br />
+					2、当判断到有符合条件的规则时即为您自动投标，而后续的规则则不予采用。 
+					</div>
+					<table  border="0"  cellspacing="1" class="table table-striped  table-condensed" >
+			  		<form action="" method="post">
+						<tr class="head" >
+							<!-- <td>排序</td> -->
+							<td>是否启用</td>
+							<td>投标类型</td>
+							<td>投标额度</td>
+							<td>利率范围</td>
+							<td>借款期限</td>
+							<td>还款方式</td>
+		                    <td>投标种类</td>
+		                    <td>操作</td>
+						</tr>
+						<#if auto??>
+						<#list auto as item>
+							<tr>
+							<!-- <td>${item_index+1}</td> -->
+							<td><#if item.status??&&item.status==1>启用<#else>不启用</#if></td>
+							<td>按金额投标</td>
+							<td>￥${(item.tenderAccount!0)?c}</td>
+							<td><#if item.aprStatus?exists&&item.aprStatus==1>
+									${item.aprFirst!}%~${item.aprLast!}%
+								<#else>
+									不启用
+								</#if>
+							</td>
+							<td>
+								<#if item.timelimitStatus?exists&&item.timelimitStatus==1>
+									${item.timelimitMonthFirst!}~${item.timelimitMonthLast!}月标/${item.timelimitDayFirst!}~${item.timelimitDayLast!}天标
+								<#else>
+									不启用
+								</#if>
+							</td>
+<pre id="showStyle" style="display: none; width: 200px;height: 50px;"><#--为了格式好看先这样 -->
+凡是符合如下还款方式的标，自动投标：
+<#if item.borrowStyleStatus??&&item.borrowStyleStatus==1>
+<#if item.borrowStyle??>
+	<#assign  style = item.borrowStyle  />
+	<#assign  styles = style?split(",")     />
+</#if>
+<#if styles??&&styles[0]=='0'>
+一、按月分期还款</#if>
+<#if styles??&&styles[1]=='2'>
+二、一次性还款</#if>
+<#if styles??&&styles[2]=='3'>
+三、每月还息到期还本</#if>
+<#else>
+	不启用
+</#if>
+</pre>
+							<td>
+								<a href="javascript:void(0);" onclick='alert($("#showStyle").html());'>查看详细</a>
+							</td>
+							
+<#if item.borrowType??>
+	<#assign  type = item.borrowType  />
+	<#assign  types = type?split(",")     />
+</#if>
+<pre style="display: none;" id="showType"><#if item.borrowType??&&types??>
+凡是符合如下的标种，自动投标：
+<#if types[0]=='108' >担保标</#if><!-- 
+<#if types[1]=='109' >网商信用标</#if>
+<#if types[2]=='112' >经营信用标</#if>
+<#if types[3]=='111' >学业信用标</#if>
+<#if types[4]=='104' >净值标</#if>
+<#if types[5]=='101' >秒还标</#if> -->
+<#else>不启用</#if></pre>
+							<td>
+							<a href="javascript:void(0);" onclick='alert($("#showType").html());'>查看详细</a>
+							</td>
+							<td>
+								<a href="goAutoInvest.html?id=${(item.id!0)?c}">修改</a> 
+								<a href="#" onclick="javascript:if(confirm('你确定要删除此自动投标吗？')){location.href='deleteMyAutoInvest.html?id=${item.id!}'}">删除</a>
+							</td>
+						</tr>
+						</#list>
+						</#if>
+					</form>	
+					</table>
+				</div>
+			</div>
+			<!--右边的内容 结束-->
+		</div>
+	</div>
+    </div>
+	<!--用户中心的主栏目 结束-->
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/modal.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/tab.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/alert.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/transition.js"></script>
+	<#include "../include/footer.html">
+</body>
+</html>

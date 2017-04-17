@@ -1,0 +1,16 @@
+<div id="viewTop">
+    <ul id="topNav">
+    
+        <#if auth_purview??>
+            <#list auth_purview as item>
+            	<#if item.level==1>
+                <li><a data-topnav="${item.url}" href="${webroot}${item.url}?purview_id=${item.id}">${item.name}</a></li>
+                </#if>
+            </#list>
+        </#if>
+    </ul>
+    <div class="user-info">
+        <a class="index-page" href="${webroot}/index.html" target="_blank">网站前台</a>
+        <a class="logout" href="${webroot}/admin/logout.html">退出</a>
+    </div>
+</div>

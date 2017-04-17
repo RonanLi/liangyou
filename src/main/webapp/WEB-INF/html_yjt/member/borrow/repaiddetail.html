@@ -1,0 +1,12 @@
+<tr>
+								<td title="${item.name!}">
+								<a style="color:red;" href="/invest/detail.html?borrowid=${(item.borrow.id)?c}" target="_blank">
+								<#if item.borrow.name?length lt 9>${item.borrow.name}<#else>${item.borrow.name[0..8]}...</#if></a></td>
+								<td style="color:red;">${item.repaymentYestime?string("yyyy-MM-dd HH:mm:ss")}</td>
+								<td style="color:red;">￥${func.format2(total)}</td>
+								<td style="color:red;">￥${func.format2(prioInterest)}</td>
+								<td style="color:red;">${item.lateDays!0}天/￥${func.format2(item.lateInterest!0)}</td>
+								<td style="color:red;">${prioDay!0}天/￥${func.format2(extraPay!0)}</td>
+								<td style="color:red;"><#if item.status==0 && item.webstatus==0>待还款<#elseif item.status==2 && item.webstatus==3>网站先垫付<#elseif item.status==1>已还款<#else>还款中</#if></td>
+								
+							</tr>

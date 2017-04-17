@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>查看汇付认证信息</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link href="${request.getContextPath()}/themes/admin/admin.css" rel="stylesheet" type="text/css" />
+  </head>
+  
+  <body>
+	<div class="module_add" style="padding-top: 20px;">
+	<h3 class="view_h2">个人信息：</h3>
+		<div class="module_border">
+			<div class="s">用户名:</div>
+			<div class="h">
+				<#if user??>${user.username!"-"}</#if>
+			 </div>
+			 <div class="s">真实姓名:</div>
+			<div class="h">
+				<#if user??>${user.realname!"-"}</#if>
+			 </div>
+		</div>
+		<h3 class="view_h2">平台实名认证信息：</h3>
+		<div class="module_border">
+			<div class="s" >认证状态:</div>
+			<div class="h">
+				  <#if user.realStatus??&& ( user.realStatus==1 || user.realStatus==3)>
+				  	<font color="#009900">审核通过</font>
+				  <#elseif user.realStatus==2>
+				  	<font color="#f00">等待审核</font>
+				  <#elseif user.realStatus==4>
+				  	<font color="#f00">未通过</font>
+                   <#else>
+                   		暂未申请
+                   </#if>
+             </div>			 
+		</div>
+		<h3 class="view_h2">汇付实名认证信息：</h3>
+		<div class="module_border">
+			<#if result??>
+			<div class="s">认证状态:</div>
+				<div class="h">
+					${result.remark!"-"}
+				 </div>
+			 <div class="s">备注:</div>
+				<div class="h">
+					${result.message!"-"}${result.msg!"-"}
+			 	</div>
+			 <#else>
+				<div class="s">系统提醒：</div>
+				<div class="h">
+					<font color="red">易极付账号不存在！</font>
+				 </div>
+			</#if>
+		</div>		
+	</div>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+<div class="nav-oneself">
+    <div class="nav-visitors-item">
+        	<h1>投资借贷数据</h1>
+		    <ul class="visitors-block">
+		      <li><a class="v" href="/admin/statistics/borrowRiskList.html" data-nav="/admin/statistics/borrowRiskList.html">账户安全保障金情况分析表</a></li>
+		      <li><a class="v" href="/admin/statistics/manageFeeList.html" data-nav="/admin/statistics/manageFeeList.html">借款管理费情况分析表</a></li>
+		   	 <#-- <li><a class="v" href="/admin/statistics/lateRepayCustomList.html" data-nav="/admin/statistics/lateRepayCustomList.html">逾期还款客户统计表</a></li>
+		   	   <li><a class="v" href="/admin/statistics/lateNoRepayCustomList.html" data-nav="/admin/statistics/lateNoRepayCustomList.html">逾期未还客户统计表</a></li>-->
+		    </ul>
+    </div>
+</div>
+<script type="text/javascript">
+$(function(){
+	function panduan(){
+		$('.visitors-block li a').each(function(){
+			if($($(this))[0].href==String(window.location)){
+	            $(this).parents('.nav-visitors-item').addClass("active");
+	            $(this).addClass('current');
+	        }
+			else{}
+		})
+	}
+					panduan();
+})
+</script>

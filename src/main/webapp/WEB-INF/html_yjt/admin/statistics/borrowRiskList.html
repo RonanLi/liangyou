@@ -1,0 +1,111 @@
+<#-- v1.8.0.4_u4 TGPROJECT-371 	qinjun 2014-07-22 -->
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="账户安全保障金情况分析表">
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+                                <div class="toolbor-module search">
+                                <input type="button" onclick="exportxls()" value="导出列表" class="input-button export-btn"/>
+                                </div>
+                            </div>
+                            <!--工具栏--}-->
+
+                            <div id="main" class="clearfix">
+                                <form action="" method="post">
+                                    <table class="data-list">
+                                        <tr class="header">
+                                            <td>ID</td>
+                                            <td>借款标题</td>
+                                            <td>用户名</td>  
+                                            <td>客户姓名</td>
+                                            <td>地区</td>
+                                            <td>行业</td>
+                                            <td>手机</td>
+                                            <td>贷款金额</td>
+                                            <td>账户安全保障金比例</td>
+                                            <td>账户安全保障金额</td>
+                                        </tr>
+                                        <#list list as item>
+                                            <tr class="s">
+                                                <td>${item.id!0}</td>
+                                                <td>${item.name!}</td>
+                                                <td>${item.user.username}</td>
+                                                <td>${item.user.realname}</td>
+                                                <#assign provinceStr = item.user.userinfo.getProvinceStr()>
+                                                <td>${provinceStr}</td>
+                                                 <#assign companyIndustryStr = item.user.userinfo.getCompanyIndustryStr()>
+                                                <td>${companyIndustryStr}</td>
+                                                <td>${item.user.phone}</td>
+                                                <td>${item.account}</td>
+                                                <td><#if item.borrowFee??>${(item.borrowFee.riskreserve)?string("0.######")}<#else>-</#if></td>
+                                                <td><#if item.borrowFee??><#assign riskreserveFee = item.getRiskreserveFeeStr()>
+                                                	${riskreserveFee!0}
+                                                <#else>-</#if></td>
+                                            </tr>
+                                        </#list>
+                                    </table>
+                                </form>
+
+                                <!--底部工具栏--{-->
+                                <div id="bottomToolbar" class="clearfix">
+                                    <div class="other-tool">
+                                        <dl class="refresh-data">
+                                            <dt class="refresh-data-icon"></dt>
+                                            <dd><a href="javascript:void(0);" class="refresh-page">刷新数据</a></dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                                <!--底部工具栏--}-->
+                                 <!--翻页系统--{-->
+                                    <div class="container">
+                                        <#import "../../common/page.html" as pager>
+                                            <@pager.pagination page=page url="${pageUrl}" map=param style="style1" />
+                                    </div>
+                                    <!--翻页系统--}-->
+                            </div>
+
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+    <script type="text/javascript">
+    function exportxls(){
+      location.href="/admin/statistics/borrowRiskList.html?type=export";
+    }
+    </script>
+    </body>
+</html>
+<#include "../jsPage.html">

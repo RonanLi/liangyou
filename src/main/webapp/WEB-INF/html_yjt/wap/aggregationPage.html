@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh_Hans_CN" data-area="log">
+<head><#include "_head.html" /></head>
+<body class="paused">
+    <!-- Whether the user is logged in  -->
+    <input type="hidden" id="usersession" data-ssion="${usersession}">
+    <!-- Whether the user is logged in  end-->
+    <!-- common module -->
+    <section class="mob-con" id="MobileR">
+        <div class="mob-cen"><i></i><div>请使用手机竖屏查看</div></div>
+    </section>
+    <section class="tooltips" id="tooltips"><div></div></section>
+    <div id="loading_money" class="l_pageLoading"><div class="child-loading">正在加载数据...</div></div>
+    <!-- common module end-->
+    <article class="container">
+        <!-- 登陆注册找回密码部分 -->
+        <section class="layoutCenter loginout d-n">
+            <div class="innerCenter">
+                <img src="${webroot}${theme_dir}/media/wap/img/logovertical.png" alt="金和所logo" class="logoimg"/>
+                <div class="dockerLog">
+                    <div class="pAd F">
+                        <div class="insertarea">
+                            <div class="lineouter">
+                                <input type="tel" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="请输入手机号码" class="userphone" maxlength="11" />
+                                <span class="linefocus"></span>
+                            </div>
+                        </div>
+                        <div class="icon username O svg">
+                            <svg class="svg-icon" viewBox="0 0 20 20">
+                                <path d="M0,20 a10,8 0 0,1 20,0z M10,0 a4,4 0 0,1 0,8 a4,4 0 0,1 0,-8"></path>
+                          </svg>
+                        </div>
+                    </div>
+                    <div class="pAd F">
+                        <div class="insertarea">
+                            <div class="lineouter">
+                                <input type="password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" class="userpassword" placeholder="请输入登录密码"/>
+                                <span class="linefocus"></span>
+                            </div>
+                        </div>
+                        <div class="icon username O svg">
+                            <svg class="svg-icon" viewBox="0 0 20 20">
+                                <path d="M0,20 20,20 20,8 0,8z M10,13 10,16z M4,8 a6,8 0 0,1 12,0"></path>
+                          </svg>
+                        </div>
+                    </div>
+                    <div class="info-submit">
+                        <button class="btn R Plusprocess BTNlogin">登录</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 登陆注册找回密码部分 end-->
+        <!-- 个人主页 -->
+        <section class="personalDataPage d-n">
+            <!-- 登录成功。。。。现在是用户个人主页！ -->
+        </section>
+        <!-- 个人主页 end-->
+    </article>
+    <footer class="f-Copyright">
+        <div class="footer-linkHelp">
+            <div class="linksO0">
+                <a href="aboutus.html" >关于我们</a><span class="divideLine"></span><a href="newguidance.html">新手指导</a><span class="divideLine"></span><a href="protocols.html">用户协议</a><span class="divideLine"></span><a href="security.html">安全保障</a>
+            </div>
+            <a href="javascript:void(0);" class="lOg btn-logConvert">立即注册</a><span class="divideLine"></span><a href="javascript:void(0);" class="lOg btn-logConvert">重置密码</a><span class="divideLine"></span><a href="index.html" class="lOg">返回首页</a>
+        </div>
+        <div class="footer-smword">©2017 金和所. 版权所有.</div>
+    </footer>
+<script src="${webroot}${theme_dir}/media/wap/js/process.js" type="text/javascript"></script>
+<script src="${webroot}${theme_dir}/media/wap/js/jhs-base-wap.js" type="text/javascript"></script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<#include "../include/resource.html"> 
+<body>
+<#include "../include/header.html">
+<div id="container">
+  	<div class="count-number">
+		<ul class="cf">
+			<li>
+				<span class="name">累计完成融资金额</span>
+				<span class="number">${borrowSum!}</span>
+			</li>
+			<li>
+				<span class="name">已还金额</span>
+				<span class="number">${repayed!}</span>
+			</li>
+			<li>
+				<span class="name">为投资人带来预期收益</span>
+				<span class="number">${sumInterest!}</span>
+			</li>
+			<li>
+				<span class="name">已发放收益</span>
+				<span class="number">${borrowSumInterest!}</span>
+			</li>
+		</ul>
+  	</div>
+  	<div class="count-charts">
+  		<h1>优聚投融资成交走势</h1>
+  		<div class="trend"></div>
+  		<div class="distribute"></div>
+  		<div class="cf"></div>
+  	</div>
+</div>
+<#include "../include/footer.html"> 
+</body>
+<script type="text/javascript" src="${theme_dir}/media/js/highcharts.js"></script>
+<script type="text/javascript">
+	$(function () {
+		var date = new Date();
+		var year = date.getFullYear(),
+			month = date.getMonth() + 1;
+	    $('.trend').highcharts({
+	        chart: {
+	            type: 'column'
+	        },
+	        title: {
+	            text: '融资成交走势（近六个月）',
+	            align:'left',
+				style: {
+					color: '#333',
+					fontSize: '16px',
+					fontFamily: 'Microsoft YaHei'
+				},
+				x: 30,
+				y: 20
+	        },
+	        xAxis: {
+	            categories: [
+	            	year + '-' + (month - 5),
+	            	year + '-' + (month - 4),
+	            	year + '-' + (month - 3),
+	            	year + '-' + (month - 2),
+	            	year + '-' + (month - 1),
+	            	year + '-' + (month - 0)
+	            ],
+				lineWidth: 0,
+				tickLength: 0,
+	            labels: {
+	            	style: {
+	            		color: '#666',
+						fontSize: '12px',
+						fontFamily: 'Arial'
+	            	}
+	            }
+	        },
+	        yAxis: {
+	            lineWidth: 0,
+	            title: {
+	            	text: ' '
+	            },
+	            labels: {
+	            	enabled: false
+	            },
+				gridLineWidth: 0,
+	        },
+	        tooltip: {
+	            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+	            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+	                '<td style="padding:0"><b>{point.y:1f}元</b></td></tr>',
+	            footerFormat: '</table>',
+	            shared: false,
+	            useHTML: true
+	        },
+	        plotOptions: {
+	            
+	        },
+	        series: [{
+	            name: '投资总金额',
+	            data: [${investSumMonth[5]}, ${investSumMonth[4]}, ${investSumMonth[3]}, ${investSumMonth[2]}, ${investSumMonth[1]}, ${investSumMonth[0]}],
+	            color: '#0697DA'
+	        }, {
+	            name: '债权转让总金额',
+	            data: [${assignmentMonth[5]}, ${assignmentMonth[4]}, ${assignmentMonth[3]}, ${assignmentMonth[2]}, ${assignmentMonth[1]}, ${assignmentMonth[0]}],
+	            color: '#FF7A04'
+	        }]
+	    });
+
+		$('.distribute').highcharts({
+		    chart: {
+		        plotBackgroundColor: null,
+		        plotBorderWidth: null,
+		        plotShadow: false
+		    },
+		    title: {
+		        text: '项目期限分布',
+		        align:'left',
+				style: {
+					color: '#333',
+					fontSize: '16px',
+					fontFamily: 'Microsoft YaHei'
+				},
+				x: 50,
+				y: 20
+		    },
+		    tooltip: {
+		    	headerFormat: ' ',
+			    pointFormat: '<span style="color:{point.color}">{point.name}</span><br>{series.name}: <b>{point.percentage:.1f}%</b>'
+		    },
+		    plotOptions: {
+		        pie: {
+		            cursor: 'pointer',
+		            dataLabels: {
+		                enabled: false
+		            },
+		            showInLegend: true
+		        }
+		    },
+		    series: [{
+		        type: 'pie',
+		        name: '此类借款所占比例',
+		        data: [
+		            {
+		                name: '1-3个月',
+		                y: ${borrowCountofQuarter[0]}/${borrowCountofQuarter[4]},
+		                color: '#8085E9'
+		            },{
+		                name: '3-6个月',
+		                y: ${borrowCountofQuarter[1]}/${borrowCountofQuarter[4]},
+		                color: '#90ED7D'
+		            },{
+		                name: '6-9个月',
+		                y: ${borrowCountofQuarter[2]}/${borrowCountofQuarter[4]},
+		                color: '#7CB5EC'
+		            },{
+		                name: '9-12个月',
+		                y: ${borrowCountofQuarter[3]}/${borrowCountofQuarter[4]},
+		                color: '#F7A35C'
+		            }
+		        ]
+		    }]
+		});
+	});				
+</script>
+</html>

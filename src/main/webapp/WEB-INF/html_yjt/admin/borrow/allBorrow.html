@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+<body>
+<table class="mc">
+    <tr>
+        <td class="mc-l">
+            <!--左侧导航---{-->
+            <div id="navPanelContainer">
+                <div class="system-logo cd"></div>
+                <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                <!--管理员信息---}-->
+                <div class="nav-wrap">
+                    <#include "left.html">
+                </div>
+            </div>
+            <!--左侧导航---}-->
+        </td>
+        <td class="mc-m">
+            <div class="navToggle"></div>
+        </td>
+        <td class="mc-r">
+            <!--顶部导航---{-->
+            <#include "../topNav.html">
+            <!--顶部导航---}-->
+
+            <!--面包屑导航---{-->
+            <#assign moduleName="我要贷款">
+            <#include "banner.html">
+            <!--面包屑导航---}-->
+
+            <!--工具栏--{-->
+            <div id="toolbar" class="clearfix">
+                <#if param??&&param.status??>
+                    <#assign status=(param.get("status"))?number >
+                        <#else>
+                            <#assign status=-1>
+                </#if>
+                <div class="toolbor-module search">
+                    <input type="button" value="搜索"  class="input-button" onclick="sousuo();">
+                </div>
+                <#if showRecommend?? && showRecommend==1>
+				<div class="toolbor-module search">
+                    <div style="height:22px;line-height:22px;float:left;">推荐标：</div>                   
+                    <div class="select-box" id="recommendStatus">
+                        <div class="tag-select">全部</div>
+                        <ul class="tag-options">
+                            <li data-value="" >全部</li>
+                            <li data-value="1" >是</li>
+                            <li data-value="0" >否</li>                             
+                        </ul>
+                    </div>                  
+                </div>
+                </#if>
+                <#if showStatus?? && showStatus==1>
+                <div class="toolbor-module search">
+                    <div style="height:22px;line-height:22px;float:left;">状态：</div>
+                   
+                    <div class="select-box" id="status">
+                        <div class="tag-select">全部</div>
+                        <ul class="tag-options">
+                            <li data-value="" >全部</li>
+                            <li data-value="0" >等待初审</li>
+                            <li data-value="1" >初审通过</li>
+                            <li data-value="2" >等待复审</li>
+                            <li data-value="3" >复审通过</li>
+                            <li data-value="4" >复审未通过</li>
+                            <li data-value="59" >用户取消</li>
+                            <li data-value="6" >放款成功</li>
+                            <li data-value="7" >部分还款</li>
+                            <li data-value="8" >还款成功</li>
+                        </ul>
+                    </div>
+                  
+                </div>
+                 </#if>
+                <div class="toolbor-module search">
+                    <div style="height:22px;line-height:22px;float:left;">类型：</div>
+                   <div class="select-box" id="type">
+                        <div class="tag-select">全部</div>
+                        <ul class="tag-options">
+                           <li data-value="">全  部</li>
+                           <li data-value="101">秒还标</li>
+                           <li data-value="102">信用标</li>
+                           <li data-value="103">抵押标</li>
+                           <li data-value="104">净值标</li>
+                           <li data-value="105">担保标</li>
+                           <li data-value="110">流转标</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- <div class="toolbor-module search">
+                    <div style="height:22px;line-height:22px;float:left;">时间：</div>
+                    <input class="_search-value" name="dotime1" id="dotime1" value="" size="15" onclick="change_picktime()"/>
+                    <div style="height:22px;line-height:22px;float:left;margin:0 8px;"> 到 </div>
+                    <input class="_search-value" name="dotime2" id="dotime2"  value=""  size="15" onclick="change_picktime()"/>
+                </div>-->
+
+                <div class="toolbor-module search">
+                 <div style="height:22px;line-height:22px;float:left;">用户名：</div>
+                    <input type="text" name="username" id="username" value="请输入用户名" class="search-value">
+                </div>
+
+                    
+            </div>
+            <!--工具栏--}-->
+
+            <div id="main" class="clearfix">
+                <form action="" method="post">
+                    <table class="data-list">
+                        <tr class="header">
+                            <td>ID</td>
+                            <td>用户名称</td>
+                            <td>用户积分</td>
+                            <td>借款标题</td>
+                            <td>借款金额</td>
+                            <td>最小认购单位</td>
+                            <td>利率</td>
+                            <td>借款期限</td>
+                            <td>发布时间</td>
+                            <#-- <td>投标记录</td> -->
+                            <td>状态</td>
+                            <td>操作</td>
+                        </tr>
+                        <#import "../../common/function.html" as func>
+                            <#list list as item>
+                                <tr class="s">
+                                    <td>${(item.id!)?c}</td>
+                                    <td>
+                                        <a href="javascript:void(0)" onclick='alertPop("用户详细信息查看","url:get?${request.getContextPath()}/admin/attestation/viewUserInfo.html?userId=${item.user.userId!}",500,230,"true","","true","text")'>
+                                            ${item.user.username!}
+                                        </a>
+                                    </td>
+                                    <td>${item.credit_jifen!0}分</td>
+                                    <td title="${item.name}" class="tal">
+                                        <span style="color:#FF0000">【<@func.borrowTypeName item=item />】</span>
+                                        <a href="${request.getContextPath()}/invest/detail.html?borrowid=${item.id?c}" target="_blank">${item.name!}</a>
+                                    </td>
+                                    <td>${item.account!0}元</td>
+                                    <#if item.type==110>
+                                        <td>${item.flowMoney!0}元</td>
+                                        <#else><td>-</td>
+                                    </#if>
+
+                                    <td>${item.apr!}%</td>
+                                    <td><#if item.isday==1>${item.timeLimitDay!"-"}天<#else>${item.timeLimit!"-"}个月</#if></td>
+                                    <td>${item.addtime?string("yyyy-MM-dd HH:mm:ss")!}</td>
+                                    <#assign status=item.status!(-1)>
+                                        <td><#if item.account==item.accountYes>
+                                        		<#if item.status==1>
+                                        			<#if item.type==110>
+                                        				流转中
+    												<#else>
+                                        				满标待审
+                                        			</#if>
+                                        		<#else>
+                                        		<@func.statusTypeName status=item.status item=item/></#if><#else><@func.statusTypeName status=item.status item=item />
+                                        	</#if></td>
+                                        <td>
+                                            <#if item.type==110>
+                                                <#if status==0>
+                                                    <#if operateLimit?? &&operateLimit[1]='1' ><a class="un" href="${request.getContextPath()}/admin/borrow/verifyBorrow.html?id=${item.id?c}">审核</a></#if>
+                                                <#elseif item.account==item.accountYes>
+                                                	<#if status==1&&item.type==110>
+                                                    	<a class="un" href="#" onClick="javascript:if(confirm('该流转标确定要停止流转吗?停止流转后将不可进行投标')) location.href='stopflow.html?id=${item.id?c}'">停止流转</a>
+                                                    </#if>
+                                                </#if>
+                                            </#if>
+											
+                                            <#if item.type!=110>
+                                                <#if status==0 || (status==1&&item.account==item.accountYes)>
+                                                      <#if operateLimit?? && operateLimit[1]='1' > <a class="un" href="${request.getContextPath()}/admin/borrow/verifyBorrow.html?id=${item.id?c}">审核</a></#if>
+                                                </#if>
+                                                <#if status==1 && item.account!=item.accountYes>
+                                                   <#if operateLimit?? && operateLimit[2]='1' ><a href="javascript:;" class="un" onClick="javascript:if(confirm('注意：该操作会退还投资人的所有投资额<如果有人投资>，点击【确定】代表你确定撤回此标，该过程不可逆。')) location.href='cancelBorrow.html?id=${item.id?c}'">撤回</a></#if>
+                                                </#if></#if>
+                                         	<#if item.isAssignment!=1><#if operateLimit?? && operateLimit[0]='1' ><a class="un" href="${request.getContextPath()}/admin/borrow/viewBorrow.html?id=${item.id?c}" >查看</a></#if><#else>--</#if>
+                                            <#if showRecommend?? && showRecommend==1>
+	                                            <#if item.recommendStatus?? && item.recommendStatus==1>
+	                                            	<a class="un" href="#" onClick="javascript:if(confirm('确定取消推荐?')) location.href='${request.getContextPath()}/admin/borrow/recommend.html?type=cancel&id=${item.id?c}'">取消推荐</a>
+	                                            <#else>
+	                                            	<a class="un" href="#" onClick="javascript:if(confirm('确定设置为推荐标?')) location.href='${request.getContextPath()}/admin/borrow/recommend.html?type=recommend&id=${item.id?c}'">推荐</a>
+	                                            </#if>
+	                                        </#if>
+											  <#if item.isAssignment !=1 && item.type !=110 && item.status ==1 && item.accountYes gt 0.5*item.account >
+	                                           <a href="javascript:void(0);" 
+															onclick='alertPop("结标提示","url:get?/admin/borrow/viewEndBorrow.html?borrowid=${item.id}",500,400,"true","","true","text");'>截标</a>
+	                        
+	                                        	</#if>
+                                        </td>
+                                </tr>
+                            </#list>
+                    </table>
+                </form>
+
+                <!--底部工具栏--{-->
+                <div id="bottomToolbar" class="clearfix">
+                    <div class="other-tool">
+                        <dl class="refresh-data">
+                            <dt class="refresh-data-icon"></dt>
+                            <dd><a href="javascript:void(0);" class="refresh-page">刷新数据</a></dd>
+                        </dl>
+                    </div>
+
+                    <!--翻页系统--{-->
+                    <div class="container">
+                        <#import "../../common/page.html" as pager>
+                            <@pager.pagination page=page url="${pageUrl}" map=param style="style1" />
+                    </div>
+                    <!--翻页系统--}-->
+                </div>
+                <!--底部工具栏--}-->
+
+                <script>
+                    var urls = '?search=true';
+                    function sousuo(){
+                        var sou = "";
+                        var username = $("#username").val();
+                        if (username!=null&&username!=""&&username!="undefine"&&username!="请输入用户名"){
+                            sou += "&username="+username;
+                        }
+                        var dotime1 = $("#dotime1").val();
+                        var dotime2 = $("#dotime2").val();
+                        var account_type = $("#account_type").val();
+
+                        if (dotime1!=null){
+                            sou += "&dotime1="+dotime1;
+                        }
+                        if (dotime2!=null){
+                            sou += "&dotime2="+dotime2;
+                        }
+                        var type = $("#type").find(".open-selected").attr("data-value");
+                        if(type!=null&&type!=""&&type!="undefine"){
+                        	sou += "&type="+type;
+                        }
+                        var status = $("#status").find(".open-selected").attr("data-value");
+                        if (status!=null&&status!=""&&status!="undefine"){
+                            sou += "&status="+status;
+                        }
+                        var recommendStatus = $("#recommendStatus").find(".open-selected").attr("data-value");
+                        if (recommendStatus!=null&&status!=""&&recommendStatus!="undefine"){
+                            sou += "&recommendStatus="+recommendStatus;
+                        }
+                        var url=urls+sou
+                        location.href=url;
+                    }
+                </script>
+            </div>
+
+        </td>
+    </tr>
+    <tr>
+        <!--尾部--{-->
+        <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+        <!--尾部--}-->
+    </tr>
+</table>
+</body>
+</html>
+<#include "../jsPage.html">

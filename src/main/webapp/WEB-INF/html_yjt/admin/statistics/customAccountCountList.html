@@ -1,0 +1,110 @@
+<#-- v1.8.0.4_u4 TGPROJECT-371 	qinjun 2014-07-22 -->
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="客户账户资金情况统计">
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+                                <div class="toolbor-module search">
+                                <input type="button" onclick="exportxls()" value="导出列表" class="input-button export-btn"/>
+                                </div>
+                            </div>
+                            <!--工具栏--}-->
+
+                            <div id="main" class="clearfix">
+                                <form action="" method="post">
+                                    <table class="data-list">
+                                        <tr class="header">
+                                            <td>ID</td>
+                                            <td>用户名</td>  
+                                            <td>客户姓名</td>
+                                            <td>经办客户经理</td>
+                                            <td>还款日期</td>
+                                            <td>应还本金</td>
+                                            <td>应还利息</td>
+                                            <td>实还本金</td>
+                                            <td>实还利息</td>
+                                            <td>余额</td>
+                                             <td>可用余额</td>  
+                                        </tr>
+                                        <#list list as item>
+                                            <tr class="s">
+                                                <td>${item.id!0}</td>
+                                               
+                                                <td>${item.borrow.user.username}</td>
+                                                <td>${item.borrow.user.realname}</td>
+                                                <td><#if item.borrow.user.inviteUser??>${item.borrow.user.inviteUser.inviteUser.username}<#else>-</#if></td>
+                                                <td>${item.repaymentYestime}</td>
+                                                <td>${item.capital}</td>
+                                                <td>${item.interest}</td>
+                                                <td>${item.repaymentYescapital}</td>
+                                                <td>${item.repaymentYesinterest}</td>
+                                                <td>${item.borrow.user.account.remainderMoney}</td>
+                                                <td>${item.borrow.user.account.useMoney}</td>
+                                            </tr>
+                                        </#list>
+                                    </table>
+                                </form>
+
+                                <!--底部工具栏--{-->
+                                <div id="bottomToolbar" class="clearfix">
+                                    <div class="other-tool">
+                                        <dl class="refresh-data">
+                                            <dt class="refresh-data-icon"></dt>
+                                            <dd><a href="javascript:void(0);" class="refresh-page">刷新数据</a></dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                                <!--底部工具栏--}-->
+                                 <!--翻页系统--{-->
+                                    <div class="container">
+                                        <#import "../../common/page.html" as pager>
+                                            <@pager.pagination page=page url="${pageUrl}" map=param style="style1" />
+                                    </div>
+                                    <!--翻页系统--}-->
+                            </div>
+
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+    <script type="text/javascript">
+    function exportxls(){
+      location.href="customAccountCountList.html?type=export";
+    }
+    </script>
+    </body>
+</html>
+<#include "../jsPage.html">

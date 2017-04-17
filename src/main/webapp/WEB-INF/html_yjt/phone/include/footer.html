@@ -1,0 +1,134 @@
+
+<div class="footbg">
+  <div class="footer">
+    <div class="float_left">
+      <p>
+      	<a href="/article/list.html?code=gywm">公司简介</a>  
+      	<a href="/article/list.html?code=xszn">新手指南</a>  
+      	<a href="/article/list.html?code=safe">安全保障</a>  
+      	<a href="/article/list.html?code=zcfg">政策法规</a>  
+      	<a href="/article/list.html?code=hyxw">行业新闻</a>  
+      	<a href="/article/list.html?code=contect">联系我们</a>
+      	<a href="/siteMap.html">网站地图</a>
+      </p>
+      <p style="yq_lj">
+        <span>友情链接：
+        	<#if (scrollPic?exists)&&(scrollPic?size>0)>
+	    		<#list linksPic as item>
+	    			<a href="${item.url}" target="_blank">${item.name}</a>
+	    		</#list>
+    		</#if>
+        </span>
+      </p>
+      <p>Copyright Reserved @2014   德益网   |   <a href = "http://www.miibeian.gov.cn/">湘ICP备11003858号</a>  九互联城  版权所有</p>
+    </div>
+    <script type="text/javascript" src="${webroot}${theme_dir}/media/js/layer.js"></script> 
+    <div class="float_right" style="position: relative;">
+      <a href="http://weibo.com/80dhlcom" class="icon icon-sina"  target="_blank"></a>
+      <a href="#" class="icon icon-wx" id="pop_up"></a>
+      <a href="http://wpa.qq.com/msgrd?v=3&uin=4008068600&site=qq&menu=yes" target="_blank" class="icon icon-kf"></a>
+      <div style="position: absolute;left: 105px;top: 38px;" id="weixin" class="hide"><img src="${webroot}${theme_dir}/images/weixin.jpg" alt="" width="98px;"></div>
+    </div>
+   
+    
+  
+    <script>
+       $( ".icon-wx" ).mouseover(function() {
+		  $( "#weixin" ).addClass("show");
+		});
+		$( ".icon-wx" ).mouseout(function() {
+		  $( "#weixin" ).removeClass("show");
+		});
+    </script>
+    <div class="clear"></div>
+    <#--<div class="friends ">
+      友情链接：
+    </div>-->
+    <div class="footimg">
+		<script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fd51d828c0177515c41a92f899f691644' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				<script>
+				  //(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				  //(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				  //m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+				  //})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+				  //ga('create', 'UA-51180807-1', '80dhl.com');
+				  //ga('send', 'pageview');
+				</script>
+
+      <a href="#" class="icon footicon1"></a>
+      <a href="#" class="icon footicon2"></a>
+      <a href="#" class="icon footicon3"></a>
+      <a href="#" class="icon footicon4"></a>
+    </div>
+    
+  </div>
+</div>
+<script type="text/javascript">
+	function DY_scroll(wraper, prev, next, img, speed, or) {
+		var wraper = $(wraper);
+		var prev = $(prev);
+		var next = $(next);
+		var img = $(img).find('ul');
+		var w = img.find('li').outerWidth(true);
+		var s = speed;
+		next.click(function () {
+			img.animate({ 'margin-left': -w}, function () {
+				img.find('li').eq(0).appendTo(img);
+				img.css({ 'margin-left': 0 });
+			});
+		});
+		prev.click(function () {
+			img.find('li:last').prependTo(img);
+			img.css({ 'margin-left': -w});
+			img.animate({ 'margin-left': 0 });
+		});
+		if (or == true) {
+			ad = setInterval(function () { next.click(); }, s * 1000);
+			wraper.hover(function () { clearInterval(ad); }, function () { ad = setInterval(function () { next.click(); }, s * 1000); });
+	
+		}
+	}
+	DY_scroll('.img-scroll', '.prev', '.next', '.img-list', 3, true); // true为自动播放，不加此参数或false就默认不自动
+</script>
+<div id=floatTools class=float0831>
+  <div class=floatL><a style="display: block" id=aFloatTools_Show class=btnOpen 
+title=查看在线客服 
+onclick="javascript:jQuery('#divFloatToolsView').animate({width: 'show', opacity: 'show'}, 'normal',function(){ jQuery('#divFloatToolsView').show();kf_setCookie('RightFloatShown', 0, '', '/', 'www.istudy.com.cn'); });jQuery('#aFloatTools_Show').attr('style','display:none');jQuery('#aFloatTools_Hide').attr('style','display:block');" 
+href="javascript:void(0);">展开</a> <a id=aFloatTools_Hide class=btnCtn style="display:none;"
+title=关闭在线客服 
+onclick="javascript:jQuery('#divFloatToolsView').animate({width: 'hide', opacity: 'hide'}, 'normal',function(){jQuery('#divFloatToolsView').hide();kf_setCookie('RightFloatShown', 1, '', '/', 'www.istudy.com.cn'); });jQuery('#aFloatTools_Show').attr('style','display:block');jQuery('#aFloatTools_Hide').attr('style','display:none');" 
+href="javascript:void(0);">收缩</a> </div>
+  <div id=divFloatToolsView class=floatR style="display:none">
+    <div class=tp></div>
+    <div class=cn>
+      <ul>
+        <li class=top>
+          <H3 class=titZx>服务热线<br/><span style="color:#2297C3">${fuwutel}</span></H3>
+        </li>   
+        <#list allkefu as kefu>
+         <#if kefu.qq?exists>
+         <li style="text-align:left;"><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=${kefu.qq}&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:${kefu.qq}:45">&nbsp;&nbsp;${kefu.realname!}</a></li>
+         </#if>
+        </#list>  
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="${webroot}${theme_dir}/media/js/kefu.js"></script> 
+<script type="text/javascript">
+	$(".fade-slidebox").fadeSlide();//全屏淡入淡出渐变
+   $(".bannerimg").across({childContent:".innerbanner",childLi:".innerbanner li",isTab:false});
+    $(".jk-liucheng").across({childContent:".lc-btn",childLi:".lc-btn a",isTab:false});
+	$("#web-notice").ajaxDate({pageRow:"5"});
+	$("#investtxt").ajaxDate({code:"investtxt",pageRow:"3"});
+	$("#questiontxt").ajaxDate({code:"questiontxt",pageRow:"5"});
+	$("#bbstxt").ajaxDate({code:"bbstxt",pageRow:"3"});	
+	$("#hyxw").ajaxDate({code:"hyxw",pageRow:"5"});	
+    $("#nav").nav({isTab:true,childLi:".navul li",childContent:".submenu",isTab:false});
+    $("#articleul").ajaxDate({code:"web-notice",pageRow:"5"});
+    $("#artichyxw").ajaxDate({code:"hyxw",pageRow:"5"});	
+</script> 

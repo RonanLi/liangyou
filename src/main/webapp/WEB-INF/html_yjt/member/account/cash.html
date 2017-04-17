@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html">
+<body>
+	<#assign nid="member"> 
+	<#include "../../include/header.html">
+	<link href="${request.getContextPath()}/media/css/modal.css" rel="stylesheet" type="text/css" />
+	<!-- #main start-->
+	<div id="main" class="clearfix">
+		<!-- .wrap950 开始-->
+		<div class="wrap950 ">
+			<!--左边的导航user_left 开始-->
+			<div class="user_left">
+				<#include "../user_menu.html">
+			</div>
+			<!--左边的导航user_left 结束-->
+
+			<!--右边的内容user_right 开始-->
+			<div class="user_right">
+				<div class="user_right_menu">
+					<#assign account_type="cash">
+					<#include "account_menu.html">
+				</div>
+				<!--右边的内容user_right_main 开始-->
+				<div class="user_right_main">
+					
+					<!-- 内容开始 -->
+					<form action="" method="post">
+					<#if api_code=='1'> <!-- 汇付 -->
+						<#include "cash_huifu.html">
+					<#elseif api_code=='2'><!-- 易极付 -->
+						<#include "cash_yjf.html">
+					<#elseif api_code=='3'><!-- 双乾 -->
+						<#include "cash_mmm.html">
+					</#if>
+						
+					</form>	
+                    <div align="center" class="pt10 pb10">
+                    <#import "../../common/page.html" as pager>  
+                    <@pager.pagination page=page url="/member/account/cash.html" map=param style="style1"  />
+                    </div>  
+					<!-- 内容结束 -->
+				</div>
+				<!--右边的内容user_right_main 结束-->
+			</div>
+			<!--右边的内容user_right 结束-->
+		</div>
+		<!-- .wrap950 结束-->
+	</div>
+	<!-- #main start-->
+	<#include "../../include/footer.html">

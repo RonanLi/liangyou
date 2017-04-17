@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html"> 
+
+<body>
+<#assign nid="member">
+<#include "../../include/header.html">
+<!--header-end-->
+<link href="${request.getContextPath()}/media/css/modal.css" rel="stylesheet" type="text/css" />
+<!--用户中心的主栏目 开始-->
+<div class="container-bg"> 
+<div id="main" class="clearfix" >
+<div class="wrap950 " style="margin-top:0">
+	<!--左边的导航 开始-->
+	<div class="user_left">
+		<#include "../user_menu.html">
+	</div>
+	<!--左边的导航 结束-->
+	
+	<!--右边的内容 开始-->	
+	<div class="user_right">
+		<div class="user_right_menu">
+			<#assign backUrl="box.html" >
+			<#if type?exists&&type=="sents">
+				<#assign msg_type="sents" >
+				<#assign backUrl="sent.html" >
+			<#else>
+				<#assign msg_type="box" >
+				<#assign backUrl="box.html" >
+			</#if>
+			<#include "msg_menu.html"> 
+		</div>
+		
+		<div class="user_right_main">
+			 <form method="post" action="send.html" >
+			 <#if type?exists&&type=="sent">
+			 	<div class="user_right_border"  style="background-color:#FCF4EA ">
+					<div class="l">标题：</div>
+					<div class="c">${msg.name!}</div>
+				</div>
+				<div class="user_right_border"  style="background-color:#FCF4EA ">
+					<div class="l">发件人：</div>
+					<div class="c">${msg.receiveUser.username!}</div>
+				</div>
+				<div class="user_right_border"  style="background-color:#FCF4EA ">
+					<div class="l">发送时间：</div>
+					<div class="c">${msg.addtime?string('yyyy-MM-dd HH:mm:ss')}</div>
+				</div>
+				<div class="user_right_border"  style="background-color:#FCF4EA ">
+					<div class="l">发送内容：</div>
+					<div class="c">${msg.content!}</div>
+				</div>
+			 <#else>
+			 	<div class="user_right_border" style="background-color:#FCF4EA ">
+					<div class="l">标题：</div>
+					<div class="c">${msg.name!}</div>
+				</div>
+				<div class="user_right_border" style="background-color:#FCF4EA ">
+					<div class="l">收件人：</div>
+					<div class="c" style=" color: red">
+						<strong>${msg.receiveUser.username!}</strong>
+					</div>
+				</div>
+				<div class="user_right_border" style="background-color:#FCF4EA">
+					<div class="l">发件人：</div>
+		            <div class="c" style="color:red">
+						<#if msg.sentUser.userId==1>金和所<#else>${msg.sentUser.username}</#if>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<#--<a href="${request.getContextPath()}/user/show.html?user_id=${msg.sentUser.userId?c}" target="_blank">查看发件人信息</a> -->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					</div>
+				</div>
+				<div class="user_right_border" style="background-color:#FCF4EA">
+					<div class="l">发送时间：</div>
+					<div class="c">${msg.addtime?string('yyyy-MM-dd HH:mm:ss')}</div>
+				</div>
+				<div class="user_right_border" style="background-color:#FCF4EA">
+					<div class="l">内容：</div>
+					<div class="c" style="width:75%;height:100px">${msg.content!}</div>
+				</div>
+				<div class="user_right_border" style="background-color:#FCF4EA ">
+					<div class="l">回复：</div>
+					<div class="c" style="height:160px;">
+						<textarea name="repContent" rows="7" cols="50" style="margin-top:5px;"></textarea>             
+					</div>
+				</div>
+				<div class="user_right_border" style="background-color:#FCF4EA">
+					<div class="c" style="margin-bottom:20px;">
+						<input type="submit"  class="btn-action"  value="提交" style="margin-top:15px;margin-left:50px;width:120px;height:30px;" />
+						<input type="hidden" name="id" value="${msg.id?c}" />
+						<input type="hidden" name="type" value="reply" />
+						
+						<input type="button" onclick="javascript:location.href='${backUrl}'" value="返回"  class="btn-action" style="margin-left:50px;width:120px;height:30px;"/> 
+            			<input type="button" value="转发" onclick="javascript:location.href='send.html?sendType=forward&id=${msg.id?c}'"  class="btn-action"style="margin-left:50px;width:120px;height:30px;"/>
+            			<input type="button" value="删除" onclick="javascript:location.href='set.html?type=3&ids=${msg.id?c},'"  class="btn-action"style="margin-left:50px;width:120px;height:30px;"/>
+						 <#--  <input type="button" value="举报" onclick="javascript:location.href='send.html?sendType=report&id=${msg.id?c}'"  class="btn-action"/>-->
+					</div>
+				</div>
+			</#if>
+			</form>
+			
+			
+		</div>
+		
+ 	 </div>
+	<!--右边的内容 结束-->
+	</div>
+</div>
+</div>
+<script type="text/javascript" src="${request.getContextPath()}${theme_dir}/media/js/tipswindown.js"></script>
+<link href="${request.getContextPath()}${theme_dir}/media/css/tipswindown.css" rel="stylesheet" type="text/css" />
+<#include "../../include/footer.html"> 
+</body>
+</html>

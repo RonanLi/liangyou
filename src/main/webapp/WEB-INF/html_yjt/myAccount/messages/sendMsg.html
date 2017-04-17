@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 ">
+<#assign webroot=request.getContextPath()>
+<#assign nid="member" >
+<#include "../../include/resource.html">
+<#include "../../common/function.html">
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+<body>
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="userRightMenu">
+                <#include "messageMenu.html">
+            </div>
+            <div class="rightDiv">
+                <div class="sendMsg">
+                    <#if !errormsg?exists>
+                        <#else><div class="reminder"> ${errormsg}</div>
+                    </#if>
+                    <form method="post" name="trans_send" onsubmit="return check_send();" action="" >
+
+                        <div class="fromBox">
+                            <div class="boxTxt">发件人：</div>
+                            <div class="boxIpt">${session_user.username!}</div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">收件人：</div>
+                            <div class="boxIpt"><input type="text" name="receiveUser.username" <#if sendType?exists&&sendType=="report">value="admin" readonly<#else>value=""</#if> /></div>
+                        </div>
+
+                        <div class="fromBox">
+                            <#if sendType?exists&&sendType=="forward"> <#assign title="[转发]:">
+                                <#elseif sendType?exists&&sendType=="report"> <#assign title="[举报]:">
+                                    <#else> <#assign title="">
+                            </#if>
+                            <div class="boxTxt">标题：</div>
+                            <div class="boxIpt"><input type="text" name="name" value="${title?default('')} <#if msg?exists>${msg.sentUsername!}</#if>" /></div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">内容：</div>
+                            <div class="boxIpt">
+                                <textarea name="content" rows="7" cols="35"><#if msg?exists>${msg.content?default("")}[以上是原始内容]</#if></textarea>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">验证码：</div>
+                            <div class="boxIpt">
+                                <input name="valicode" type="text" size="11" maxlength="5"  tabindex="3" style="width:177px;"/>&nbsp;
+                                <img src="${request.getContextPath()}/validimg.html" alt="点击刷新"/>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">&nbsp;</div>
+                            <div class="boxIpt">
+                                <input type="submit"  class="btn-action"   value="确认提交" size="30"/>
+                                <input type="hidden"  name="type" value="add"  />
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<#include "../../include/footer.html">
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"> </script>
+<script type="text/javascript">
+    function check_send(){
+        var frm = document.forms['trans_send'];
+        var receiveUser = frm.elements['receiveUser.username'].value;
+        var name = frm.elements['name'].value;
+        var content = frm.elements['content'].value;
+        var valicode = frm.elements['valicode'].value;
+        var errMsg = "";
+        if(/^\s*$/.test(receiveUser)){ errMsg += "收件人不能为空 ！！\n"; }
+        if(/^\s*$/.test(name)){ errMsg += "标题不能为空 ！！\n"; }
+        if(/^\s*$/.test(content)){ errMsg += "内容不能为空 ！！\n"; }
+        if(/^\s*$/.test(valicode)){ errMsg += "验证码不能为空 ！！\n"; }
+        if(/^\s*$/.test(errMsg)){ return true; }
+        else { alert(errMsg); return false; }
+    }
+</script>
+</html>

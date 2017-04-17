@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                <!--顶部导航---}-->
+ 				<div id="main" class="w750 clearfix">
+                   <style>
+						.tree{ width:19%; float:left;}	
+						.float_right{float:left;width:81%;}					
+					</style>
+					<div class="tree" >	
+						<ul id="tree" class="ztree"></ul>				
+					</div>
+					
+					<form id="add_form" method="post" action="/admin/msg/add.html"  enctype="multipart/form-data"  style="display: none;" >
+					<div class="float_right">						
+						<div class="valBox">
+                            <div class="top">
+                                <strong>新增业务操作</strong>
+                            </div>
+                            <div class="clearfix">
+                                <ul class="title-v edit">
+                                    <li>
+                                        <div class="title">节点名称：</div>
+                                        <div class="v">
+                                          <input type="text" name="name" id="add_name">
+                                         </div>
+                                    </li>
+                                    <li>
+                                        <div class="title">节点编码：</div>
+                                        <div class="v">
+                                          <input type="text" name="code" id="add_code">
+                                         </div>
+                                    </li>
+                                    <li>
+                                        <div class="title">父节点名称：</div>
+                                        <div class="v">
+                                         <input type="text" name="add_parent" id="add_parent" disabled="disabled">
+                                         </div>
+                                    </li>
+                                     <li>
+                                        <div class="title">排序：</div>
+                                        <div class="v">
+                                         	<input type="text" name="srot" id="add_sort" onkeyup="value=value.replace(/[^0-9]/g,'')">
+                                         </div>
+                                    </li> 
+                                     <li>
+                                        <div class="title">信息类型：</div>
+                                        <div class="v" id="add_type_div">
+                                         	
+                                         </div>
+                                    </li>
+                                     <li>
+                                        <div class="title">备注：</div>
+                                        <div class="v">
+                                         	<input type="text" name="remark" id="add_remark">
+                                         </div>
+                                    </li>  
+                                     <li>
+                                        <div class="title">启用：</div>
+                                        <div class="v">
+                                         	是<input type="radio" name="isuse" id="add_isuse" checked="checked" value="1">否<input type="radio" name="isuse" value="0"><br>
+                                         </div>
+                                          
+                                    </li>
+                                    <div class="other">
+                                      	<input type="submit" name="btn_add"  value="新增" class="input-button confirm">
+										<input type="hidden" name="actionType"  value="add">
+										<input type="hidden"  name="pid" id="add_pid" value="" >
+                                     </div>                       
+                                </ul>
+                            </div>													
+						
+                        </div><!-- 截止 -->
+					</div>
+					</form>
+					<form id="mod_form" method="post" action="/admin/msg/modify.html"  enctype="multipart/form-data"  >
+					<div class="float_right">						
+						<div class="valBox">
+                            <div class="top">
+                                <strong>节点信息</strong>
+                            </div>
+                            <div class="clearfix">
+                                <ul class="title-v edit">
+                                    <li>
+                                        <div class="title">节点名称：</div>
+                                        <div class="v">
+                                          <input type="text" name="name" id="mod_name" value="<#if msgOperate??>${msgOperate.name!''}</#if>">
+                                         </div>
+                                    </li>
+                                    <li>
+                                        <div class="title">节点编码：</div>
+                                        <div class="v">
+                                          <input type="text" name="code" id="mod_code"  value="<#if msgOperate??>${msgOperate.code!''}</#if>">
+                                         </div>
+                                    </li>
+                                    <li>
+                                        <div class="title">父节点名称：</div>
+                                        <div class="v">
+                                         <input type="text" name="mod_parent" id="mod_parent_name" disabled="disabled" value="<#if msgOperate?? && msgOperate.parent??>${msgOperate.parent.name!''}</#if>">
+                                         </div>
+                                    </li>
+                                     <li>
+                                        <div class="title">排序：</div>
+                                        <div class="v">
+                                         	<input type="text" name="srot" id="mod_sort" onkeyup="value=value.replace(/[^0-9]/g,'')" value="<#if msgOperate?? >${msgOperate.sort!''}</#if>">
+                                         </div>
+                                    </li> 
+                                     <li>
+                                        <div class="title">信息类型：</div>
+                                        <div class="v" id="mod_type_div">
+                                         	<#if allType??>
+                                         		<#list allType as item>
+                                         			<#assign flag=0>
+                                         			<#if msgOperate.msgOperateTypes?? >
+                                         				<#list msgOperate.msgOperateTypes as obj>
+                                         				
+                                         					<#if  obj.msgType.id == item.id>
+                                         						<input type="checkbox" checked="checked" name="mod_types" value="${item.id!''}">${item.name!''}
+                                         						<#assign flag=1>
+                                         					</#if>
+                                         				</#list>
+                                         				
+                                         			</#if>
+                                         			<#if flag==0>
+                                         				<input type="checkbox" name="mod_types" value="${item.id!''}">${item.name!''}
+                                         			</#if>
+                                         		</#list>
+                                         	</#if>
+                                         </div>
+                                    </li>
+                                     <li>
+                                        <div class="title">备注：</div>
+                                        <div class="v">
+                                         	<input type="text" name="remark" id="mod_remark" value="<#if msgOperate?? >${msgOperate.remark!''}</#if>">
+                                         </div>
+                                    </li>  
+                                     <li>
+                                        <div class="title">启用：</div>
+                                        <div class="v">
+                                         <#if msgOperate?? && msgOperate.isuse==1>
+                                        	 是<input type="radio"  name="isuse" id="mod_isuse" checked="checked" value="1">
+                                          	否<input type="radio" name="isuse" value="0">
+                                         <#else>
+                                       	 	 是<input type="radio"  name="isuse" id="mod_isuse"  value="1">
+                                          	否<input type="radio" name="isuse" checked="checked" value="0">
+                                         </#if>
+                                         </div>
+                                        
+                                    </li>
+                                    <div class="other">
+                                      	<input type="submit" name="btn_mod"  value="修改" class="input-button confirm">
+										<input type="hidden" name="actionType" value="mod">
+										<input type="hidden"  name="id" id="mod_id" value="<#if msgOperate??>${msgOperate.id!''}</#if>" >
+										<input type="hidden"  name="pid" id="mod_pid" value="<#if msgOperate?? && msgOperate.parent?? >${msgOperate.parent.id!''}</#if>" >
+                                     </div>                       
+                                </ul>
+                            </div>													
+						
+                        </div><!-- 截止 -->
+					</div>
+					</form>
+				</div>
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>	
+    </body>
+    <SCRIPT type="text/javascript">
+		var zTree;
+		var demoIframe;
+		var setting = {
+				view: {
+					addHoverDom: addHoverDom,  //新增图标的添加事件
+					dblClickExpand: false     //双加展开父节点
+				},
+				edit: {
+					enable: true,			//是否允许编辑  false时候   rename 与remove都不显示
+					removeTitle: "点击删除",	//删除图标的提示
+					showRenameBtn: false,	//重命名的 图标
+					showRemoveBtn: setRemoveBtn		//删除的图标
+				},
+				data: {
+					simpleData: {
+						enable: true
+					}
+				},
+				callback: {					
+					beforeRemove	: beforeRemove,		//删除之前的事件			
+					onDblClick		: onDblClick		//双击事件
+				}
+			};
+		//控制删除图标显示
+		function setRemoveBtn(treeId, treeNode){
+			return treeNode.id!=1;
+		}
+		function beforeRemove(treeId, treeNode) {	
+			if(treeNode.id==1){
+				alert("不能删除根节点！");
+				return false;
+			}
+			if( confirm("确认删除 节点 【" + treeNode.name + "】 吗？")){
+				$.ajax({ url: "/admin/msg/del.html?id="+treeNode.id, success: function(res){
+					if('success'==res.excuteCode){
+						alert("删除成功！");
+					}
+			     }});
+			}else{
+				return false;
+			}
+		}
+		//移动鼠标显示新增图标
+		function addHoverDom(treeId, treeNode) {
+			var sObj = $("#" + treeNode.tId + "_span");
+			if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
+			
+			var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+				+ "' title='点击新增'></span>";
+			sObj.after(addStr);
+			var add_btn = $("#addBtn_"+treeNode.tId);			
+			if (add_btn) {
+				//图标单击事件
+				add_btn.bind("click", function(){				
+					//$("#show_form").hide();
+					$("#mod_form").hide();				
+					$("#add_form").show();
+					
+					$("#add_pid").val(treeNode.id);
+					$("#add_parent").val(treeNode.name);
+					//获取类型信息
+					$.ajax({ url: "/admin/msg/getTypeListJson.html", success: function(res){
+						if(res){
+							$("#add_type_div").html('');
+							for(var i=0;i<res.length;i++){
+								$("#add_type_div").append("<input type=\"checkbox\" name=\"add_types\" value=\""+res[i].id+"\">"+res[i].name);
+							}
+						}
+						
+		    		}});
+					//return false;
+				});
+			}
+			
+		};
+		
+		function selectAll() {
+			var zTree = $.fn.zTree.getZTreeObj("tree");
+			zTree.setting.edit.editNameSelectAll =  $("#selectAll").attr("checked");
+		}
+		
+		
+		//加载树
+		function getTreeData(){
+			$.ajax({ url: "/admin/msg/getTreeData.html", success: function(res){					
+				$.fn.zTree.init($("#tree"), setting, res);
+				$("#selectAll").bind("click", selectAll);	        
+		     }});
+		}
+		//点击查看节点信息
+		function onDblClick(event, treeId, treeNode){
+			location.href="/admin/msg/modify.html?id="+treeNode.id;
+			$("#add_form").hide();
+			$("#mod_form").show();
+			//$("#show_form").hide();
+			//填充数据
+			$.ajax({ url: "/admin/msg/show.html?id="+treeNode.id, success: function(res){					
+				if(res) {
+					var operate = res.operate;
+					$("#mod_name").val(operate.name);
+					//alert(operate.parent.id);
+					if(operate.parent){
+						$("#mod_parent_name").val(operate.parent.name);
+						$("#mod_pid").val(operate.parent.id);
+						
+					}else{
+						$("#mod_parent_name").val("--");
+					}
+					
+					$("#mod_sort").val(operate.sort);
+					var typeList = res.typeList;
+					var allType = null;
+					//获取类型信息
+					$.ajax({ url: "/admin/msg/getTypeList.html",  async: false,success: function(res){						
+						allType=res;
+		    		}});
+					if(typeList){
+						$("#mod_type_div").html('');
+						
+						for(var i=0;i<allType.length;i++){
+							var flag = true;
+							for(var j=0;j<typeList.length;j++){	
+								
+								if(typeList[j].id==allType[i].id){
+									$("#mod_type_div").append("<input type=\"checkbox\" checked=\"checked\" name=\"mod_types\" value=\""+allType[i].id+"\">"+allType[i].name);
+									flag = false;
+									break;
+								}
+							}
+							if(flag){
+								$("#mod_type_div").append("<input type=\"checkbox\"  name=\"mod_types\" value=\""+allType[i].id+"\">"+allType[i].name);
+							}
+						}
+					}
+					
+					$("#mod_remark").val(operate.remark);
+					if(operate.isuse==1){
+						$("#mod_isuse").val('1');
+					}else{
+						$("#mod_isuse").val('0');
+					}
+					$("#mod_id").val(operate.id);
+					
+				}     
+		     }});
+		}
+		
+		getTreeData();
+	</SCRIPT>
+	
+		<style type="text/css">
+			.ztree li span.button.add {margin-left:2px; margin-right: -1px; background-position:-144px 0; vertical-align:top; *vertical-align:middle}
+		</style>
+    
+</html>
+<#include "../jsPage.html">

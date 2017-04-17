@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<#include "include/resource.html">
+<body>
+<#assign nid="member">
+<#include "include/header.html">
+<script type="text/javascript">
+    if( navigator.userAgent.match(/mobile/i) ){
+        //$('html').css('opacity',0);
+        if( document.referrer.indexOf('wap') > 0 ){
+            window.location.replace('/wap/aggregationPage.html?router=login');
+        }
+    }
+</script>
+<div class="container-bg">
+  <div id="main" class="clearfix">
+    <div class="box" style="background: url('${theme_dir}/media/bg/msgBg.jpg') center top no-repeat;background-size: 980px auto;">
+      <div class="box-con">
+        <p class="reg-pro"> 系统提示信息 </p>
+        <div align="center" > <br>
+          <br>
+          <span  id="error_zl">${rsmsg!""}</span><br><!-- szl 修改跳转 -->
+          <br>
+          ${backurl!"/"}<br>
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script> 
+var url = '${request.getContextPath()}/login.html';
+var content = '返回上一页';
+
+if (url == ""){
+	document.getElementById('msg_content').innerHTML = "<a href='javascript:history.go(-1)'>"+content+"</a>";
+}else{
+	document.getElementById('msg_content').innerHTML = "<a href='"+url+"'>"+content+"</a>";
+}
+setInterval("testTime()",3000); 
+function testTime() { 
+		if (url == ""){
+			history.go(-1);
+		}else{
+        location.href = url; //#设定跳转的链接地址
+		}
+} 
+
+
+//v1.8.0.4_u1 TGPROJECT-210 lx start
+function sendActiveEmail(obj){
+	var email = obj;	
+	var repTest = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+	if(!repTest.test(email))
+	{
+		alert('邮箱格式不正确');
+    }else{
+		$(function(){
+			$.ajax({
+				"url": "/user/sendActiveEmail.html",
+				"type": "post",
+				"cache": "false",
+				"data": {'email':email},
+				"dataType": "json",
+				"error": function(){
+				},
+				"success": function(data){
+					if(data != null){
+					alert(data.data);
+					if(data.codeUniqueId == undefined || data.codeUniqueId==''){
+					}else{
+						 $("#codeUniqueId").val(data.codeUniqueId);
+					}
+				}
+			   }
+			});
+		});
+	}
+}
+//v1.8.0.4_u1 TGPROJECT-210 lx end
+</script>
+<#include "include/footer.html"> 
+</body>
+</html>

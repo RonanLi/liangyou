@@ -1,0 +1,11 @@
+<div>资料类型：</div>
+<ul class="listTab clearfix personal">
+    <li <#if userinfo_type?exists&&userinfo_type=="userinfo">class="cur"</#if> ><a href="${request.getContextPath()}/member/myAccount/basicData.html"data-val="4-2">基本资料</a></li>
+    <li <#if userinfo_type?exists&&userinfo_type=="building">class="cur"</#if> ><a href="${request.getContextPath()}/member/myAccount/houseData.html"data-val="4-2">房产资料</a></li>
+    <li <#if userinfo_type?exists&&userinfo_type=="company">class="cur"</#if> ><a href="${request.getContextPath()}/member/myAccount/unitData.html"data-val="4-2">单位资料</a></li>
+    <li <#if userinfo_type?exists&&userinfo_type=="firm">class="cur"</#if> ><a href="${request.getContextPath()}/member/myAccount/privateOwner.html"data-val="4-2">私营业主</a></li>
+    <li <#if userinfo_type?exists&&userinfo_type=="finance">class="cur"</#if> ><a href="${request.getContextPath()}/member/myAccount/finance.html"data-val="4-2">财务状况</a></li>
+    <li <#if userinfo_type?exists&&userinfo_type=="contact">class="cur"</#if> ><a href="${request.getContextPath()}/member/myAccount/contact.html"data-val="4-2">联系方式</a></li>
+    <li <#if userinfo_type?exists&&userinfo_type=="mate">class="cur"</#if> ><a href="${request.getContextPath()}/member/myAccount/spouse.html"data-val="4-2">配偶资料</a></li>
+    <li <#if userinfo_type?exists&&userinfo_type=="education">class="cur"</#if> ><a href="${request.getContextPath()}/member/myAccount/education.html"data-val="4-2">教育背景</a></li>
+</ul>

@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <#include "../common/res.html">
+        </head>
+
+<body>
+
+<input type="hidden" id="_msgtype" name="msgtype" value="news"/>
+<ul class="tab">
+    <li class="cur">图片消息</li>
+    <li>文本消息</li>
+</ul>
+
+<div class="on tabMsg">
+    <h2>请选择 图片消息</h2>
+    <table class="fm-table">
+        <thead>
+        <tr>
+            <td>图文编号</td>
+            <td>路径</td>
+            <td>标题</td>
+        </tr>
+        </thead>
+        <tbody>
+        <!--TODO 图文参数尚未添加-->
+        <#list textList as row>
+            <#if row_index %2 == 0> <tr>
+                <#else> <tr style="background-color:#f9f9f9;">
+            </#if>
+            <td style="width:20px;"><input type="radio" value="${row.graphicId}" name="checkname"/></td>
+            <td>${row.picpath!}</td>
+            <td>${row.title!}</td>
+            </tr>
+        </#list>
+        </tbody>
+    </table>
+</div>
+
+<div class="tabMsg">
+    <h2>请选择 文本消息</h2>
+    <table class="fm-table">
+        <thead>
+        <tr>
+            <td>文本消息</td>
+            <td>文本编号</td>
+            <td>描述</td>
+        </tr>
+        </thead>
+        <tbody>
+        <!--TODO 文本参数尚未添加-->
+        <#list textList as row>
+            <#if row_index %2 == 0> <tr>
+                <#else> <tr style="background-color:#f9f9f9;">
+            </#if>
+            <td><input value="${row.content}" type="checkbox" name="radioname"/></td>
+            <td>${row.id!}</td>
+            <td>${row.content!}</td>
+            </tr>
+        </#list>
+        </tbody>
+    </table>
+</div>
+<#include "../common/footer.html">
+</body>
+</html>
+

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 ">
+<#assign webroot=request.getContextPath()>
+<#assign nid="member" >
+<#include "../../include/resource.html">
+<#include "../../common/function.html">
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+
+<body>
+
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="userRightMenu">
+                <#include "personalCenterMenu.html">
+            </div>
+            <div class="rightDiv">
+                <div class="unitData">
+                    <div class="reminder">请填写你个人的最近的单位资料</div>
+                    <form action="" name="form1" method="post" >
+                        <div class="fromBox">
+                            <div class="boxTxt">单位名称：</div>
+                            <div class="boxIpt">
+                                <input type="text" size="25" name="companyName" maxlength="20" value="<#if info?exists&&info.companyName?exists>${info.companyName}</#if>" />
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">单位性质：</div>
+                            <div class="boxIpt">
+                                <#if info?exists&&info.companyType?exists>
+                                    <@linkage name="companyType" id="company_type" nid="user_company_type" default=info.companyType></@linkage>
+                                <#else>
+                                    <@linkage name="companyType" id="company_type" nid="user_company_type"></@linkage>
+                                </#if>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">单位行业：</div>
+                            <div class="boxIpt">
+                                <#if info?exists&&info.companyIndustry?exists>
+                                    <@linkage name="companyIndustry" id="company_industry" nid="user_company_industry" default=info.companyIndustry></@linkage>
+                                <#else>
+                                    <@linkage name="companyIndustry" id="company_industry" nid="user_company_industry"></@linkage>
+                                </#if>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">工作级别：</div>
+                            <div class="boxIpt">
+                                <#if info?exists&&info.companyJibie?exists>
+                                    <@linkage name="companyJibie" id="company_jibie" nid="user_company_jibie" default=info.companyJibie></@linkage>
+                                <#else>
+                                    <@linkage name="companyJibie" id="company_jibie" nid="user_company_jibie"></@linkage>
+                                </#if>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">职 位：</div>
+                            <div class="boxIpt">
+                                <#if info?exists&&info.companyOffice?exists>
+                                    <@linkage name="companyOffice" id="company_office" nid="user_company_office" default=info.companyOffice></@linkage>
+                                <#else>
+                                    <@linkage name="companyOffice" id="company_office" nid="user_company_office"></@linkage>
+                                </#if>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">服务时间：</div>
+                            <div class="boxIpt">
+                                <input type="text" size="25" name="companyWorktime1" value="<#if info?exists&&info.companyWorktime1?exists>${info.companyWorktime1?string('yyyy-MM-dd')}</#if>" onclick="change_picktime()" />--<input type="text" size="25" name="companyWorktime2" value="<#if info?exists&&info.companyWorktime2?exists>${info.companyWorktime2?string('yyyy-MM-dd')}</#if>" onclick="change_picktime()" />
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">工作年限：</div>
+                            <div class="boxIpt">
+                                <#if info?exists&&info.companyWorkyear?exists>
+                                    <@linkage name="companyWorkyear" id="company_workyear" nid="user_company_workyear" default=info.companyWorkyear></@linkage>
+                                <#else>
+                                    <@linkage name="companyWorkyear" id="company_workyear" nid="user_company_workyear"></@linkage>
+                                </#if>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">工作电话：</div>
+                            <div class="boxIpt"><input type="text" size="25" name="companyTel" maxlength="20"  value="<#if info?exists&&info.companyTel?exists>${info.companyTel}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">公司地址：</div>
+                            <div class="boxIpt"><input type="text" size="25" maxlength="20" name="companyAddress" value="<#if info?exists&&info.companyAddress?exists>${info.companyAddress}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">公司网站：</div>
+                            <div class="boxIpt"><input type="text" size="25" name="companyWeburl"  maxlength="20" value="<#if info?exists&&info.companyWeburl?exists>${info.companyWeburl}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">备注说明：</div>
+                            <div class="boxIpt"><textarea maxlength="100" cols="35" rows="6" name="companyReamrk"><#if info?exists&&info.companyReamrk?exists>${info.companyReamrk}</#if></textarea> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">&nbsp;</div>
+                            <div class="boxIpt"><input type="submit" class="btn-action" value="确认提交" size="30" /></div>
+                        </div>
+                        <input type="hidden" name="type" value="company" />
+                    </form>
+                    <div class="notes"> * 温馨提示：我们将对所有的信息进行保密</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<#include "../../include/footer.html">
+    <script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"> </script>
+</html>

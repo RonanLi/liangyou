@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="客户银行卡管理">
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+                                <div class="toolbor-module">
+                                    <input type="button" class="input-button return" value="返回" onclick="location.href='cashbank.html'">
+                                </div>
+                            </div>
+                            <!--工具栏--}-->
+
+                            <div id="main" class="clearfix">
+                                <form name="form1" method="post" action="addbank.html">
+						<div class="module_title">
+							<strong>客户银行卡管理</strong>
+						</div>
+						<div class="module_border">
+							<div class="l">用户Id：</div>
+							<div class="c">
+								<input type="text" name="user_id">
+							</div>
+						</div>
+						<div class="module_border">
+							<div class="l">开户银行：</div>
+							<div class="c">
+                        	<#if drawBankList??>
+							<select name="drawBank">
+								<#list drawBankList as obj>
+									<option name="drawBank" value="${obj.id}">${obj.memo}
+								</#list>
+							</select>
+							</#if>
+							</div>
+						</div>
+						<div class="module_border">
+							<div class="l">开户行名称：</div>
+							<div class="c">
+								<input type="text" name="branch" value=""  />
+							</div>
+						</div>
+						<div class="module_border">
+							<div class="l">银行账号：</div>
+							<div class="c">
+								<input type="text" name="account" value=""  />
+							</div>
+						</div>
+						<div class="module_border">
+							<div class="l">银行卡归属地：</div>
+							<div class="c">
+								<#if accountBank?exists&&accountBank.province?exists>
+			                		<@region name="province" id="province" value=accountBank.province pid="0"></@region>&nbsp;
+			                	<#else>
+			                		<@region name="province" id="province" pid="0"></@region>&nbsp;
+			                	</#if>
+								
+								<#if accountBank?exists&&accountBank.province?exists>
+									<#if accountBank.city?exists>
+										<@region name="city" id="city" value=accountBank.city pid=accountBank.province></@region>&nbsp;
+									<#else>
+										<@region name="city" id="city" pid=accountBank.province></@region>&nbsp;
+									</#if>
+			                	<#else>
+			                		<@region name="city" id="city" pid="-1"></@region>&nbsp;
+			                	</#if>
+								
+								<#if accountBank?exists&&accountBank.city?exists>
+									<#if accountBank.area?exists>
+										<@region name="area" id="area" value=accountBank.area pid=accountBank.city></@region>&nbsp;
+									<#else>
+										<@region name="area" id="area" pid=accountBank.city></@region>&nbsp;
+									</#if>
+			                	<#else>
+			                		<@region name="area" id="area" pid="-1"></@region>&nbsp;
+			                	</#if>
+							</div>
+						</div>
+						<div class="module_submit">
+						<input type="hidden" value="add" name="actionType">
+						<input type="submit" name="submit" value="新增" />
+						</div>
+					</form>
+
+                            </div>
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+
+    </body>
+    <div class="msgClass">${rsmsg!""}</div>
+</html>
+<script type="text/javascript" src="${request.getContextPath()}${theme_dir}/media/js/area.js"></script>
+<#include "../jsPage.html">

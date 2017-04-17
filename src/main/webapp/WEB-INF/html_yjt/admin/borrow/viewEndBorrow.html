@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>viewEndBorrow.html</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+  </head>
+  <body>
+  <div class="module_add">
+	<form name="form1" method="post" action="endborrow.html" >
+	
+	<div class="module_border">
+		<div class="l">借款人用户名:</div>
+		<div class="c">
+		 <label><span><#if borrow??>${borrow.user.username!}<#else>--</#if></span></label>
+		</div>
+	</div>
+	
+	<div class="module_border" >
+		<div class="l">借款人真实姓名：</div>
+		<div class="c">
+			<span><#if borrow??>${borrow.user.realname!}<#else>--</#if></span>
+		</div>
+	</div>
+	
+	<div class="module_border" >
+		<div class="l">手机号：</div>
+		<div class="c">
+			<span><#if borrow??>${borrow.user.phone!}<#else>--</#if></span>
+		</div>
+	</div>
+	
+	<div class="module_border" >
+		<div class="l">标名称：</div>
+		<div class="c">
+			<span><#if borrow??>${borrow.name}<#else>--</#if></span>
+		</div>
+	</div>
+	
+	<div class="module_border" >
+		<div class="l">预计借款金额：</div>
+		<div class="c">
+			<span><#if borrow??>${borrow.account}<#else>--</#if></span>
+		</div>
+	</div>
+	
+	<div class="module_border" >
+		<div class="l">已筹集金额：</div>
+		<div class="c">
+			<span><#if borrow??>${borrow.accountYes}<#else>--</#if></span>
+		</div>
+	</div>
+	<div class="module_border" >
+		<div class="l">最低筹集金额：</div>
+		<div class="c">
+			<span><#if borrow??>${borrow.borrowProperty.lowestMoney}<#else>--</#if></span>
+		</div>
+	</div>
+
+	<div class="module_border" >
+		<div class="l">实际应还金额：</div>
+		<div class="c">
+			<span><#if repayaccount??>${repayaccount}<#else>--</#if></span>
+		</div>
+	</div>
+	
+	
+	<div class="module_border" >
+		<div class="l">验证码:</div>
+		<div class="c">
+			<input class="yzm" name="validCode" type="text" size="11" maxlength="5"  tabindex="3"/>&nbsp;<img class="yzm-img" src="${webroot}/validimg.html" alt="点击刷新" onClick="this.src='${webroot}/validimg.html?t=' + Math.random();" align="absmiddle" style="cursor:pointer" />
+	看不清请点击</div>
+	</div>
+
+	<div class="module_submit jpl" >
+	    <input type="hidden" value="${borrow.id}" name="id"/>
+		<input type="submit"  name="reset" value="确认结标" class="input-button"/>
+	</div>
+	</form>
+</div>
+
+  </body>
+</html>

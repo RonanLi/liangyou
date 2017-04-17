@@ -1,0 +1,186 @@
+<style type="text/css">
+.footer .posi.Fik:hover .hImg{ -webkit-transform: translateX(50px); transform: translateX(50px); }
+.calc{width:54px;padding:5px ;background:none;background-color:#878d8e;color:#fff;text-align:center;line-height: 20px;letter-spacing: 2px;}
+.calc:hover{background:#e7bb70;}
+iframe[src="about:blank"][allowtransparency="true"]{ visibility:hidden !important; top:10% !important; }
+.footImg{width:400px;margin:auto;overflow:hidden;}
+.footImg>a{float:left;width:90px;margin-right:10px;}
+</style>
+<!-- 使用cookie来计算高度让footer置底:begin -->
+<!-- 此处请勿作任何修改，包括脚本的位置 -->
+<script src="${theme_dir}/media/js/jquery.cookie-1.4.1.js"></script>
+<script type="text/javascript">
+function footerBlankHeight(){var allEleHeight=0;$('#footer-blank').prevAll('div').each(function(){if($(this).is(':visible') && $(this).css('position')!='absolute'&&$(this).css('position')!='fixed'){allEleHeight+=$(this).outerHeight(true)}});if(allEleHeight<justAllEleHeight){var footerBlankHeight=justAllEleHeight-allEleHeight;$('#footer-blank').css({height:footerBlankHeight})}else{$('#footer-blank').remove()}}document.write('<div id="footer-blank"></div>');if($.cookie('footerHeight')){var justAllEleHeight=$(window).height()-$.cookie('footerHeight');footerBlankHeight()}
+</script>
+<!-- 使用cookie来计算高度让footer置底:end -->
+<!-- 此处请勿作任何修改，包括脚本的位置 -->
+
+
+<div class="footbg" id="footer">
+  	<div class="footer">
+	  <div class='footleft'>
+		<div class='footfirst'>
+		    <ul>
+			   <li><a href='/about/gywm.html?code=introduce'>关于我们</a></li>
+			   <li><a href='/about/gywm.html?code=webNews'>媒体报道</a></li>
+			   <li><a href='/about/gywm.html?code=webNews&&notice'>网站公告</a></li>
+			   <li><a href='/about/xszd.html?code=newGuide'>新手指导</a></li>
+			   <li><a href='/about/gywm.html?code=joinus'>加入我们</a></li>
+			   <li><a href='http://www.jpgjjt.com'>京朋集团</a></li>
+			</ul>
+		</div>
+		<div style="clear:both;height:0;display:block;"></div>
+		<div class='footsecond'>
+		    <ul>
+			 
+			  <li class="chat posi" style="width:134px;">
+    			<a href="javascript:void(0);">官方微信</a>
+    			<div class="hImg">
+        			<img src="${webroot}${theme_dir}/media/bg/weixin-icon.jpg">
+    			</div>
+			  </li>
+			  <li class='sina length' style='width:123px;'><a href='http://weibo.com/5617191103/profile?topnav=1&wvr=6 ' target="_blank">新浪微博</a></li>
+
+              <li class="qq posi Fik" style="width:134px;margin-left:36px;">
+                 <a href="javascript:void(0);">投资交流群</a>
+                 <div class="hImg">
+                     <img src="${webroot}${theme_dir}/media/bg/qq_qun.jpg">
+                 </div>
+              </li>
+			
+			   <!-- <li class='kefu length' style='width:110px;'><a id = "" onclick="javascript:window.open('http://crm2.qq.com/page/portalpage/wpa.php?uin=4009005591&f=1&ty=1&aty=0&a=&from=6', '_blank', 'height=544, width=644,toolbar=no,scrollbars=no,menubar=no,status=no');return false;">在线客服</a></li> -->
+			  
+			</ul>
+		</div>
+		<div style="clear:both;height:0;display:block;"></div>
+		<div class='footsecond'>
+		    <ul>
+			  <ul class="clearfix">
+            	 <#list linksPic as item>
+	                <li>
+	                <a href="${item.url}" target="_blank">${item.name!}</a>
+	                </li>
+                </#list> 
+            </ul>
+			</ul>
+		</div>
+	   </div>
+	   <div class='footright'>	
+        <p class='c400'>${fuwutel}</p>
+		<p class='tel'>客服热线时间：（9:00—18:00）</p>
+		<p class='kemail'>客服邮箱：service@jinhefax.cn</p>
+		<p class='gemail'>商务拓展：bd@jinhefax.cn</p>
+		</div>  
+  	</div>
+
+	
+	<!-- 底部修改图标 20161021 by lrn-->
+	<p class="copyright">
+		<span style="display: block;padding-top: 8px;"></span>
+ 		${copyright}&nbsp;&nbsp;${beian}
+	</p>
+	
+	<div class="footImg">
+	<script src="//static.anquan.org/static/outer/js/aq_auth.js"></script>
+		<a href="http://webscan.360.cn/index/checkwebsite/url/jinhefax.com" target="_blank"><img src="${webroot}${theme_dir}/media/css/images/foot_360.jpg"width="90"/></a>
+		<a href="http://ec.eqixin.com/?sn=QX6002210916111476955156" target="_blank"><img src="${webroot}${theme_dir}/media/css/images/foot_credit.jpg"width="90"/></a>
+		<a key ="5808846eefbfb014d6e66084"  logo_type="business"  href="http://v.pinpaibao.com.cn/authenticate/cert/?site=www.jinhefax.com&at=business" target="_blank"><img style="vertical-align:middle;dsiplay:block;" src="//static.anquan.org/static/outer/image/hy_83x30.png?id=localhost"/></a>
+		<a  href="http://si.trustutn.org/info?sn=550161114000546023082&certType=4" target="_blank"><img src="${webroot}${theme_dir}/media/css/images/foot_renzheng.jpg"/></a>
+	</div>
+
+<!-- 客服窗口:begin -->
+<!-- <div class="online-service cf">
+    <div class="list-service">
+        <h1>在线客服</h1>
+        <ul>
+        	<li>
+                    <a id = "" onclick="javascript:window.open('http://crm2.qq.com/page/portalpage/wpa.php?uin=4009005591&f=1&ty=1&aty=0&a=&from=6', '_blank', 'height=544, width=644,toolbar=no,scrollbars=no,menubar=no,status=no');return false;">客服</a>
+            </li>
+            <--#list allkefu as item>
+            <--#if item.qq??>
+                <li>
+                </li>
+            </--#if>
+            </--#list>
+        </ul>
+        <div class="arrow-right"></div>
+    </div>
+</div> -->
+<a href="/tools/interest.html" target="_blank" title="贷款计算器" class="calc calcDif" style="background: #e7bb70 url(/themes/soonmes_yjt/media/bg/icon-fix.png) no-repeat; top:220px;"></a>
+
+<!-- 添加返回顶部按钮 by liruonan 20160902 -->
+
+<a href="#top"  title="返回顶部" class="calc" style="top:400px;">返回顶部</a>
+<!-- 新增新手指南 -->
+<a href="${webroot}/activity/activityCenter.html"  title="活动合集" class="calc" style="top:340px;">活动专区</a>
+<a href="http://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzgwMDA0MzA1OV80NjI2MjNfODAwMDQzMDU5XzJf" target="_blank"  title="在线客服" class="calc" id="zxKFd" style="top:280px;">在线客服</a>
+<!-- 客服窗口:end -->
+</div>
+<script type="text/javascript" src="${webroot}${theme_dir}/media/js/common.js"></script>
+<script type="text/javascript" src="${webroot}${theme_dir}/media/js/layer.js"></script>
+<script type="text/javascript" src="${webroot}${theme_dir}/media/js/kefu.js"></script>
+<script type="text/javascript">
+    //第一次访问本站，cookie中没有footer的高度值，在footer加载之后改变footer-blank的高度
+    if(!$.cookie('footerHeight')) {
+        var justAllEleHeight = $(window).height() - $('#footer').outerHeight(true);
+        footerBlankHeight();
+    }
+
+    // 把footer的高度写入cookie--此方法不可修改或删除
+    $.cookie('footerHeight',$('#footer').outerHeight(true),{expires: 30});
+
+    // 判断客服qq是否在线(需要qq号开通了'QQ通讯组件'才能判断 http://shang.qq.com)<br>
+    // 只能判断电脑qq是否在线
+    var online = new Array();
+</script>
+<!-- <script src="http://webpresence.qq.com/getonline?Type=2&<#list allkefu as item><#if item.qq??>${item.qq!}:</#if></#list>"></script>-->
+<script type="text/javascript">
+	function DY_scroll(wraper, prev, next, img, speed, or) {
+		var wraper = $(wraper);
+		var prev = $(prev);
+		var next = $(next);
+		var img = $(img).find('ul');
+		var w = img.find('li').outerWidth(true);
+		var s = speed;
+		next.click(function () {
+			img.animate({ 'margin-left': -w}, function () {
+				img.find('li').eq(0).appendTo(img);
+				img.css({ 'margin-left': 0 });
+			});
+		});
+		prev.click(function () {
+			img.find('li:last').prependTo(img);
+			img.css({ 'margin-left': -w});
+			img.animate({ 'margin-left': 0 });
+		});
+		if (or == true) {
+			ad = setInterval(function () { next.click(); }, s * 1000);
+			wraper.hover(function () { clearInterval(ad); }, function () { ad = setInterval(function () { next.click(); }, s * 3000); });
+		}
+	}
+	DY_scroll('.img-scroll', '.prev', '.next', '.img-list', 3, true); // true为自动播放，不加此参数或false就默认不自动
+</script>
+<script>
+	jQuery('#pop_up').click(function(){
+	jQuery('#modal_dialog1').dialog({autoOpen:false, modal: true ,resizable: false,height: 350,width:310 });
+	jQuery('#modal_dialog1').dialog('open');
+	jQuery('.ui-draggable .ui-dialog-titlebar').css("background","none")
+	jQuery('.ui-dialog .ui-dialog-title').css("font-size","14px")
+  	jQuery('.ui-dialog p').css("font-size","14px")
+	jQuery('.ui-dialog .ui-dialog-title').css("color","#999")});
+</script>
+<script type="text/javascript">
+    if (!String.prototype.trim) String.prototype.trim = function(){return this.replace(/^\s+|\s+$/gm,'')}
+   $(".bannerimg").across({childContent:".innerbanner",childLi:".innerbanner li",isTab:false});
+	$(".jk-liucheng").across({childContent:".lc-btn",childLi:".lc-btn a",isTab:false});
+	$("#web-notice").ajaxDate({pageRow:"5"});
+	$("#investtxt").ajaxDate({code:"investtxt",pageRow:"3"});
+	$("#questiontxt").ajaxDate({code:"questiontxt",pageRow:"5"});
+	$("#bbstxt").ajaxDate({code:"bbstxt",pageRow:"3"});
+	$("#hyxw").ajaxDate({code:"hyxw",pageRow:"5"});
+	$("#nav").nav({isTab:true,childLi:".navul li",childContent:".submenu",isTab:false});
+	$("#articleul").ajaxDate({code:"web-notice",pageRow:"5"});
+	$("#artichyxw").ajaxDate({code:"hyxw",pageRow:"5"});
+    $('a[href="http://www.wangdaiclub.com/"]').parent().css('width','100px');
+</script>
+<script src="${webroot}${theme_dir}/media/js/Zl.js" type="text/javascript"></script>

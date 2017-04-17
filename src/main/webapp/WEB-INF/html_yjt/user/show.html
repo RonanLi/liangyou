@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<#include "../include/resource.html"> 
+<body>
+    <#assign nid="zixun">
+	<#include "../include/header.html">
+	<!--header-end-->
+	<link href="${request.getContextPath()}${theme_dir}/media/css/modal.css" rel="stylesheet"
+		type="text/css" />
+	<link href="${request.getContextPath()}${theme_dir}/media/css/tipswindown.css" rel="stylesheet"
+		type="text/css" />
+
+	<div id="main" class="clearfix">
+		<ul id="tab" class="list-tab clearfix">
+			<li class="active"><a href="###" data-toggle="tab">个人信息</a>
+			</li>
+			<#--
+			<li><a href="###" data-toggle="tab">借款列表</a>
+			</li>
+			<li><a href="###" data-toggle="tab">投资记录</a>
+			</li>-->
+		</ul>
+
+		<div id="myTabContent" class="tab-content">
+
+			<!--个人信息-->
+			<div class="list-tab-con tab-pane active" id="grxx">
+
+				<div class="box-detail-u clearfix">
+					<div class="box-info-u clearfix">
+						<#include "../include/userbox.html">
+						<#include "../common/function.html">
+						<div class="box-info-detail-u">
+							<br>
+							<div class="alert">
+								<span>个人资料</span>
+							</div>
+							<ul class="clearfix">
+								<li>性 别：<#if u?exists&&u.sex?exists&&u.sex=="1">男<#else>女</#if></li>
+								<li>年 龄：<#if u.birthday?exists>${(dateformat(u.birthday,'age'))!("-")}岁</#if></li>
+								<li>婚姻状况：<#if info??&&info.marry??><@linkage plantext=true default=info.marry></@linkage></#if></li>
+								<li>文化程度：<#if info??&&info.education??><@linkage plantext=true default=info.education></@linkage></#if></li>
+								<li>每月收入：<#if info??&&info.income??><@linkage plantext=true default=info.income></@linkage></#if></li>
+								<li>社 保：<#if info??&&info.shebao??><@linkage plantext=true default=info.shebao></@linkage></#if></li>
+								<li>住房条件：<#if info??&&info.housing??><@linkage plantext=true default=info.housing></@linkage></#if></li>
+								<li>是否购车：<#if info??&&info.car??><@linkage plantext=true default=info.car></@linkage></#if></li>
+								<li>是否逾期：--</li>
+							</ul>
+
+							<div class="alert">
+								<span>还款信用</span>
+							</div>
+							<ul class="clearfix">
+								<li>借款<#if summary??>${summary.borrowTimes}<#else>0</#if>次成功</li>
+								<li><#if summary??>${summary.borrowTimes}<#else>0</#if> 次流标</li>
+								<li><#if summary??>${summary.borrowTimes}<#else>0</#if> 笔待还款</li>
+								<li><#if summary??>${summary.borrowTimes}<#else>0</#if> 笔已成功还款</li>
+								<li><#if summary??>${summary.borrowTimes}<#else>0</#if>笔提前还款</li>
+								<li><#if summary??>${summary.borrowTimes}<#else>0</#if> 笔迟还款</li>
+								<!--  
+								<li>0 笔30天之内的逾期还款</li>
+								<li>0 笔超过30天的逾期还款</li>
+								<li>0 笔逾期未还款</li>
+								-->
+							</ul>
+
+							<div class="alert">
+								<span>资料审核</span>
+							</div>
+							<table border="0" cellspacing="0" width="100%" class="tab1">
+								<tr>
+									<td>资料标题</td>
+									<td>资料类型</td>
+									<td>内容说明</td>
+									<!--  
+									<td>上传时间</td>																		
+									<td>审核时间</td>
+									<td>审核说明</td>
+									-->
+									<td>积分</td>
+									<td>状态</td>									
+								</tr>
+								<#list  attestations as item>
+								<tr>
+									<td>${subString(item.name!'未命名',10)}</td>
+									<td>${(item.attestationType.name)?default("-")}</td>
+									
+									<td><#if item.content?? &&  item.content?length gt 15>${item.content[0..15]!'-'}...<#elseif item.content??>${item.content}<#else>-</#if></td>
+									<!-- 
+									<td><#if item.addtime??>${item.addtime?string('yyyy-MM-dd')}<#else>-</#if></td>
+									<td><#if item.verifyTime??>${item.verifyTime?string('yyyy-MM-dd')}<#else>-</#if></td>
+									<td><#if item.verifyRemark?? && item.verifyRemark?length gt 11>${item.verifyRemark[0..10]}<#elseif item.verifyRemark??>${item.verifyRemark}<#else>-</#if></td>
+									 -->
+									<td>${(item.jifen)?default("0")} 分</td>
+									<td>
+										<#if item.status==0>
+											未审核
+										<#elseif item.status=2>
+											等待审核
+										<#elseif item.status=1>
+											已审核
+										<#else>
+											审核失败
+										</#if>
+									</td>									
+								</tr>
+								</#list>
+								
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!--借款列表-->
+			<div class="list-tab-con tab-pane" id="jklb">
+
+
+				<div class="box-detail-u clearfix">
+					<div class="box-info-u clearfix">
+						<#include "../include/userbox.html">
+						<#include "../common/function.html">
+						<div class="box-info-detail-u">
+							<br>
+							<div class="alert">
+								<span>借款记录</span>
+							</div>
+							<div>
+							
+								<table border="0" cellspacing="0" width="100%" class="tab1">
+									<tr>
+										<td>借款项目</td>
+										<td>还款日期</td>	
+										<td>借款本金</td>								
+										<td>借款利息</td>
+										<td>管理费</td>
+										<td>进度</td>	
+										<td>状态</td>											
+									</tr>
+								
+									<#if (borrowList?exists)&&(borrowList?size>0)>
+	                                 <#list borrowList as item>	                                
+							          <tr>
+										<td>${item.name!'-'}</td>
+										<td>${getRepaytime(item)}</td>									
+										<td>${item.account!0}</td>
+										<td>${item.repaymentAccount-item.account}</td>
+										<td>${(item.repaymentAccount-item.account)*0.1}</td>
+										<td>
+											<div class="rate_bg floatl" align="left">
+											<div class="rate_tiao" style=" width:${item.accountYes/item.account*100}%"></div>
+											</div><span class="floatl">${item.accountYes/item.account*100}%</span>
+										</td>
+										<td><#if item.status==0>发布审批中<#elseif item.status==1><#if item.accountYes?exists&&item.accountYes==item.account><#if item.type==110 >满标审核中<#else>认购已满标</#if><#else>正在募集</#if><#elseif item.status==2>审核失败<#elseif item.status==3>已满标<#elseif item.status==4>满标审核失败<#elseif item.status==5>撤回<#elseif item.status==6||item.status==7>还款中</#if></td>
+																				
+										</tr>										   
+									</#list>
+									
+									</#if>	
+								</table>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+
+			</div>
+			
+			<!--投资记录-->
+			<div class="list-tab-con tab-pane" id="tzjl">
+				<div class="box-detail-u clearfix">
+					<div class="box-info-u clearfix">
+						<#include "../include/userbox.html">
+
+						<div class="box-info-detail-u">
+							<br>
+							<div class="alert">
+								<span>投资记录</span>
+							</div>
+							<div>
+							
+								<table border="0" cellspacing="0" width="100%" class="tab1">
+									<tr class="head" >
+										<td>借款标题</td>
+										<td>应收日期</td>
+										<td>借款者</td>
+										<td>第几期/总期数</td>
+										<td>收款总额</td>
+										<td>应收本金</td>
+										<td>应收利息</td>
+					                    <td>管理费</td>
+					                    <td>实得利息</td>
+										<td>逾期利息</td>
+										<td>逾期天数</td>
+										<td>状态</td>
+									</tr>
+									<#if (investList?exists)&&(investList?size>0)>
+	                                 <#list investList as item>	                                
+							          <tr>
+											<td>${item.borrowTender.borrow.name}</a></td>
+											<td>${item.repayTime?string('yyyy-MM-dd HH:mm:ss')!}</td>
+											<td><#if item.borrowTender??>${item.borrowTender.borrow.user.username}</#if></td>
+											<td>${item.period+1}/${item.borrowTender.borrow.timeLimit}</td>
+											<td>￥${item.repayAccount}</td>
+											<td>￥${item.capital}</td>
+											<td>￥${item.interest}</td>
+						                    <td>￥${item.interest*0.1}</td>
+						                    <td>￥${item.interest-item.interest*0.1}</td>
+											<td>￥${item.lateInterest}</td>
+											<td>${item.lateDays}天</td>
+											<td><font color="#FF0000"><#if item.status??&&item.status==1>已还<#else>未还</#if></font></td>
+																	
+										</tr>										   
+									</#list>
+									
+									</#if>	
+										
+								</table>
+							</div>
+							
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="${request.getContextPath()}${theme_dir}/media/js/modal.js"></script>
+	<script src="${request.getContextPath()}${theme_dir}/media/js/tab.js"></script>
+	<script src="${request.getContextPath()}${theme_dir}/media/js/transition.js"></script>
+	<script src="${request.getContextPath()}${theme_dir}/media/js/tipswindown.js"></script>
+	<div class="footer">
+		<#include "../include/footer.html"> 
+	</div>
+</body>
+</html>

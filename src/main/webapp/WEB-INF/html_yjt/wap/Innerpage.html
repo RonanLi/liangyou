@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="zh_Hans_CN" class="userinfo fT" data-area="userinfo">
+<head><#include "_head.html" /><#include "../common/function.html" /></head>
+<body class="paused" data-messages="${resultFlag!}" data-exp="<#if em?? && em.receiveStatus == 0>true<#else>false</#if>" data-urls="/wap/bid_details.html?id=${experienceBorrowId!}" onresize="document.activeElement.scrollIntoView(true);"> <!-- add by gy exp：是否弹窗   urls：体验标详情链接 -->
+    <!-- Whether the user is logged in  -->
+    <input type="hidden" id="usersession" data-ssion="${usersession}">
+    <!-- Whether the user is logged in  end-->
+    <!-- common module -->
+    <section class="mob-con" id="MobileR">
+        <div class="mob-cen"><i></i><div>请使用手机竖屏查看</div></div>
+    </section>
+    <section class="tooltips" id="tooltips"><div></div></section>
+    <div id="loading_money" class="l_pageLoading"><div class="child-loading">正在计算..</div></div>
+    <div class="loadDataCircles"><div class="bg"><div class="circLe"></div><br/>努力加载中</div> </div>
+    <section id="backtotop" class="O backtotop T"></section>
+    <!-- common module end-->
+    <article class="hey">
+        <header class="fixheader">
+          <div class="R">
+             <a href="javascript:void(0);" class="goback O inerbacklistener">返回</a>
+            <span class="logo" id="pagetitle">个人主页</span>
+            <!-- <a href="javascript:void(0);" class="Tlines O" id="NAVPersonalPage"><span class="iconbar"></span><span class="iconbar"></span><span class="iconbar"></span></a> -->
+          </div>
+        </header>
+        <main class="listBids infOPage T R" role="main">
+          <!-- start 个人主页功能 -->
+          <section class="_0iNdexpage d-n">
+            <figure class="page-index R">
+                <div class="avatars-info">
+                  <div class="imgs R O">
+                    <img src="${webroot}${theme_dir}/media/wap/img/<#if user?? && user.sex?? && user.sex == '2'>female_default.png<#else>male_default.png</#if>" class="avatar" alt="用户头像"/>
+                    <!-- 【默认】男头像 ${webroot}${theme_dir}/media/wap/img/male_default.png || ${webroot}${theme_dir}/media/wap/img/female_default.png-->
+                    <figcaption class="avatarINF">
+                        <div class="lines-Info"><strong>金和所账户：</strong>${user.phone!}</div>
+                        <!-- ${mmmIndex_url!}  -->
+                        <div class="lines-Info"><strong>乾多多账户：</strong><a href="https://my.moneymoremore.com"><#if user.apiId??&&user.apiId??>[${user.apiUsercustId}]</#if></a></div>
+                        <div class="btn-info"><a href="javascript:void(0);" class="onCL" id="rEcharge">充值</a><a href="javascript:void(0);" class="onCL" id="cAshOut">提现</a></div>
+                    </figcaption>
+                    <!-- <div class="status-top-right F">
+                        <a href="logout.html" class="logout O">退出</a>
+                        <a href="Innerpage.html?router=noTice" class="message O T">${unRead?default(0)}条新消息</a>
+                    </div> -->
+                  </div>
+                </div>
+            </figure>
+            <article class="layout-cof">
+                <div class="innerBox">
+                    <p class="innerTit">可用余额</p>
+                    <b class="innerNum">
+                      <#if summary?? && summary.accountUseMoney??>
+                          <#if (summary.accountUseMoney!0) lt 0.01>￥0
+                              <#else>￥${ceil(summary.accountUseMoney!0)}
+                          </#if>
+                      </#if>
+                  </b>
+                </div>
+                <div class="innerBox">
+                  <p class="innerTit">已收利息</p>
+                  <b class="innerNum">
+                      <#if summary?? && summary.hasCollectInterestTotal??>
+                          <#if (summary.hasCollectInterestTotal!0) lt 0.01>￥0元
+                              <#else>￥${ceil(summary.hasCollectInterestTotal!0)}
+                          </#if>
+                      </#if>
+                  </b>
+              </div>
+            </article>
+            <article class="layout-cof">
+                <a href="/wap/Innerpage.html?router=oPtions" class="iconBox">
+                    <i class="iconImg"></i>
+                    <p>账户设置</p>
+                </a>
+                <a href="/wap/Innerpage.html?router=noTice" class="iconBox">
+                    <i class="iconImg"></i>
+                    <p>系统通知</p>
+                </a>
+                <a href="/wap/Innerpage.html?router=fBmanager" class="iconBox">
+                    <i class="iconImg"></i>
+                    <p>出借管理</p>
+                </a>
+                <a href="/wap/Innerpage.html?router=rEcodequery" class="iconBox">
+                    <i class="iconImg"></i>
+                    <p>资金记录</p>
+                </a>
+            </article>
+            <article class="layout-cof">
+              <div class="outerbox">
+                <h3 class="R">账户详情</h3>
+                <div class="OpwDetails F">
+                    <p class="inerWor"><em>账户总额</em></p>
+                    <p class="inerWor"><em>冻结总额</em></p>
+                </div>
+                <div class="OpwDetails F">
+                    <p class="inerWor">
+                        <i class="ica">
+                            <#if summary?? && summary.accountTotal??>
+                                ￥${ceil(summary.accountTotal)}
+                            </#if>
+                        </i>
+                    </p>
+                    <p class="inerWor">
+                        <i class="ica">
+                        <#if summary?? && summary.accountNoUseMoney??>
+                            <#if (summary.accountNoUseMoney!0) lt 0.01>￥0
+                                <#else>￥${ceil(summary.accountNoUseMoney!0)}
+                            </#if>
+                        </#if>
+                        </i>
+                    </p>
+                </div>
+                  <div class="OpwDetails F">
+                      <p class="inerWor"><em>待收总额</em></p>
+                      <p class="inerWor"><em>出借总额</em></p>
+                  </div>
+                  <div class="OpwDetails F">
+                      <p class="inerWor">
+                          <i class="ica">
+                              <#if summary?? && summary.collectTotal??>
+                                  <#if (summary.collectTotal!0) lt 0.01>￥0
+                                      <#else>￥${ceil(summary.collectTotal!0)}
+                                  </#if>
+                              </#if>
+                          </i>
+                      </p>
+                      <p class="inerWor">
+                          <i class="ica">
+                              <#if summary?? && summary.investTotal??>
+                                  <#if (summary.investTotal!0) lt 0.01>￥0
+                                      <#else>￥${ceil(summary.investTotal!0)}
+                                  </#if>
+                              </#if>
+                          </i>
+                      </p>
+                  </div>
+                  <div class="OpwDetails F">
+                      <p class="inerWor"><em>待收利息</em></p>
+                      <p class="inerWor"><em>已收总额</em></p>
+                  </div>
+                  <div class="OpwDetails F">
+                      <p class="inerWor">
+                          <i class="ica">
+                              <#if summary?? && summary.collectInterestTotal??>
+                                  <#if (summary.collectInterestTotal!0) lt 0.01>￥0
+                                      <#else>￥${ceil(summary.collectInterestTotal!0)}
+                                  </#if>
+                              </#if>
+                          </i>
+                      </p>
+                      <p class="inerWor">
+                          <i class="ica">
+                              <#if summary?? && summary.hasCollectTotal??>
+                                  <#if (summary.hasCollectTotal!0) lt 0.01>￥0
+                                      <#else>￥${ceil(summary.hasCollectTotal!0)}
+                                  </#if>
+                              </#if>
+                          </i>
+                      </p>
+                  </div>
+
+              </div>
+                <#if em??>
+                    <div style="display:none;" class="outerbox Ioxqe" data-use="<#if em.useStatus == 1>true<#else>false</#if>"> <!-- add by gy data-usew为true， 体验标已使用， false未使用 -->
+                        <h3 class="R">我的体验金(<#if em.useStatus == 2 || em.interestUseStatus == 2>已过期<#else><span id="Gexp">未</span>使用</#if>)</h3>
+                        <div class="OpwDetails F">
+                            <p class="inerWor">
+                                <em>体验金额：</em>
+                                <i class="ica">￥${em.experienceMoney!'0'}</i>
+                            </p>
+                        </div>
+                        <div class="OpwDetails F">
+                            <p class="inerWor">
+                                <em>体验金利息<span id="ij2">预期</span>收益：</em>
+                                <i class="ica"><#if em?? && em.useStatus != 2 && em.interestUseStatus != 2>5<#else>0</#if>元</i> <!-- 如果体验金使用状态未0 && 体验金利息使用状态未0, 则表示无收益可用, 显示为0 -->
+                            </p>
+                        </div>
+                        <#if em.useStatus == 0> <!-- 体验金使用状态为0, 表示体验金未使用, 则显示正常到期时间 -->
+                            <div class="OpwDetails F">
+                                <p class="inerWor">
+                                    <em>体验金使用有效期至：</em>
+                                    <i class="ica"><#if experienceMoneyDeadline??>${experienceMoneyDeadline[0..9]!}</#if></i>
+                                </p>
+                            </div>
+                        <#elseif em.useStatus == 2> <!-- 体验金使用状态为2, 表示体验金已过期, 则显示已过期 -->
+                            <div class="OpwDetails F">
+                                <p class="inerWor">
+                                    <em>体验金使用有效期至：</em>
+                                    <i class="ica">已过期</i>
+                                </p>
+                            </div>
+                        </#if>
+                        <#if em.useStatus == 1 && em.interestIncomeStatus == 1 && em.interestUseStatus == 0>
+                            <div class="OpwDetails F tyjlx">
+                                <p class="inerWor">
+                                    <em>体验金利息收益使用有效期至：</em>
+                                    <i class="ica">
+                                        <#if em.interestUseStatus == 0> <!-- 体验金已经使用 && 利息已经到账 && 利息没有使用  则显示到期时间 -->
+                                            <#if interestDeadline??>${interestDeadline[0..9]!}</#if>
+                                        <#elseif em.interestUseStatus == 1> <!-- 体验金已经使用 && 利息已经到账 && 利息已经使用  则显示已使用 -->
+                                            已使用
+                                        </#if>
+                                    </i>
+                                </p>
+                            </div>
+                        <#elseif em.interestUseStatus == 2> <!-- 体验金利息使用时间状态为2, 则表示利息已经到期, 不可使用 -->
+                            <div class="OpwDetails F tyjlx">
+                                <p class="inerWor">
+                                    <em>体验金利息收益使用有效期至：</em>
+                                    <i class="ica">已过期</i>
+                                </p>
+                            </div>
+                        </#if>
+                        <div class="tilb">
+                            <a href="javascript:void(0);" id="syxz">使用须知</a>
+                            <a href="javascript:void(0);" data-href="/wap/bid_details.html?id=${experienceBorrowId!}" id="hurrY" <#if em.useStatus == 2 || em.interestUseStatus == 2>class="disabled"</#if> >立即使用</a><!-- add by gy href为体验标详情链接 -->
+                            <!-- <a href="/wap/Innerpage.html?router=mYawards" id="ckSy">查看收益</a> -->
+                        </div>
+                    </div>
+                </#if>
+            </article>
+          </section>
+          <section class="_0rEcharge d-n" name="账户充值">
+              <div class="layout-sub">
+                  <div class="lay-rows">
+                      <!-- <div class="rows-title">标题什么的</div> -->
+                      <div class="rows-info F R w4">
+                          <div class="sub-rows-title">
+                              <label>真实姓名</label>
+                          </div>
+                          <div class="sub-rows-data">
+                              <input type="text" class="sr_input lettsp" value="<#if user.realname??>${user.realname[0..0]!''}***</#if>" disabled="disable" />
+                          </div>
+                          <div class="sub-rows-status">
+                            <i class="icon_zl O"></i>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="lay-rows">
+                      <div class="rows-title">充值方式</div>
+                      <div class="rows-info radio" id="pre_paid" data-d='{"text":"网银充值","nid":"1"}'>
+                          <label class="d-b radiolabel F check" for="recharge1">
+                            <div class="radiodiv">
+                                <p>网银充值</p>
+                            </div>
+                            <div class="radioselect">
+                              <input type="radio" class="radiosel" id="recharge1" value="1"/>
+                              <span class="O"></span>
+                            </div>
+                          </label>
+                          <label class="d-b radiolabel F" for="recharge2">
+                            <div class="radiodiv">
+                                <p>汇款充值</p>
+                            </div>
+                            <div class="radioselect">
+                              <input type="radio" class="radiosel" id="recharge2" value="8"/>
+                              <span class="O"></span>
+                            </div>
+                          </label>
+                      </div>
+                  </div>
+                  <div class="lay-rows margin-t">
+                      <!-- <div class="rows-title">标题什么的</div> -->
+                      <div class="rows-info F R w4">
+                          <div class="sub-rows-title">
+                              <label>充值金额</label>
+                          </div>
+                          <div class="sub-rows-data">
+                              <input type="text" maxlength="9" class="sr_input rechar_b_desq" value="" placeholder="输入金额" />
+                          </div>
+                          <div class="sub-rows-status">
+                            <i class="icon_zl O"></i>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="lay-rows margin-t v-x-code">
+                      <div class="rows-info F R w4">
+                          <div class="sub-rows-title">
+                              <label>验证码</label>
+                          </div>
+                          <div class="sub-rows-data R">
+                              <input type="tel" maxlength="6" class="sr_input" value="" placeholder="输入图形验证码" />
+                              <img class="updateimg" src=""/>
+                          </div>
+                          <div class="sub-rows-status">
+                            <i class="icon_zl O"></i>
+                          </div>
+                      </div>
+                  </div>
+                  <a href="javascript:void(0);" class="rowsbtn d-b margin-t" id="confirm_recharge">确认充值</a>
+                  <div class="margin-t tips">
+                      <ul>
+                        <li><i class="O"></i>我们禁止信用卡套现、虚假交易等恶意行为。我们会严格监控您的信用记录。一经查出，绝不姑息！</li>
+                        <li><i class="O"></i>充值过程中如果遇到任何问题，请拨打<a href="tel:4009005591">客服热线</a></li>
+                      </ul>
+                  </div>
+              </div>
+          </section>
+          <section class="_0cAshOut d-n" name="账户提现">
+              <div class="layout-sub">
+                  <div class="lay-rows">
+                      <!-- <div class="rows-title">标题什么的</div> -->
+                      <div class="rows-info F R w4">
+                          <div class="sub-rows-title">
+                              <label>真实姓名</label>
+                          </div>
+                          <div class="sub-rows-data">
+                              <input type="text" class="sr_input lettsp" value="<#if user.realname??>${user.realname[0..0]!''}***</#if>" disabled="disable" />
+                          </div>
+                          <div class="sub-rows-status">
+                            <i class="icon_zl O"></i>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="lay-rows  margin-t">
+                      <div class="rows-info F R w4">
+                          <div class="sub-rows-title">
+                              <label>账户余额</label>
+                          </div>
+                          <div class="sub-rows-data">
+                              <input type="text" class="sr_input" value="${ceil(account.total!0)}元" disabled="disable" />
+                          </div>
+                          <div class="sub-rows-status">
+                            <i class="icon_zl O"></i>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="lay-rows  margin-t">
+                      <div class="rows-info F R w4">
+                          <div class="sub-rows-title">
+                              <label>可用余额</label>
+                          </div>
+                          <div class="sub-rows-data">
+                              <input type="text" class="sr_input visi_balance" value="${ceil(account.useMoney!0)}元" disabled="disable" />
+                          </div>
+                          <div class="sub-rows-status">
+                            <i class="icon_zl O"></i>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="lay-rows margin-t">
+                      <div class="rows-info F R w4">
+                          <div class="sub-rows-title">
+                              <label>冻结总额</label>
+                          </div>
+                          <div class="sub-rows-data">
+                              <input type="text" class="sr_input" value="${ceil(account.noUseMoney!0)}元" disabled="disable" />
+                          </div>
+                          <div class="sub-rows-status">
+                            <i class="icon_zl O"></i>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="lay-rows margin-t">
+                      <div class="rows-title">选择银行卡</div>
+                      <div class="rows-info F R w4">
+                          <div class="sub-rows-title">
+                              <label>卡片信息</label>
+                          </div>
+                          <div class="sub-rows-data">
+                              <select class="select_rows" id="sele_cashout_byq">
+
+                                  <#list banklist as item>
+                                      <option value="${item.id}">
+                                          ${item.bankMmm.bankName!""}：
+                                          <#if item.account?length lt 10>
+                                              ${item.account}
+                                          <#else>
+                                              ${item.account?substring(0,4)}****${item.account?substring((item.account?length)-4,(item.account?length))}
+                                          </#if>
+                                      </option>
+                                  </#list>
+
+                                  <!--<option value="392">中国银行借记卡：1888****0112</option>
+                                  <option value="394">农业银行借记卡：1234****5555</option>
+                                  <option value="395">中国邮政储蓄银行借记卡：1257****7654</option>-->
+                              </select>
+                          </div>
+                          <div class="sub-rows-status">
+                            <i class="icon_zl O select"></i>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="lay-rows margin-t">
+                      <!-- <div class="rows-title">标题什么的</div> -->
+                      <div class="rows-info F R w4">
+                          <div class="sub-rows-title">
+                              <label>提现金额</label>
+                          </div>
+                          <div class="sub-rows-data">
+                              <input type="text" maxlength="9" class="sr_input o_txje_" value="" placeholder="输入金额" />
+                          </div>
+                          <div class="sub-rows-status">
+                            <i class="icon_zl O"></i>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="lay-rows margin-t v-x-code">
+                      <div class="rows-info F R w4">
+                          <div class="sub-rows-title">
+                              <label>验证码</label>
+                          </div>
+                          <div class="sub-rows-data R">
+                              <input type="tel" maxlength="6" class="sr_input" value="" placeholder="输入图形验证码" />
+                              <img class="updateimg" src=""/>
+                          </div>
+                          <div class="sub-rows-status">
+                            <i class="icon_zl O"></i>
+                          </div>
+                      </div>
+                  </div>
+                  <a href="javascript:void(0);" class="rowsbtn d-b margin-t" id="confirm_cashout">确认提现</a>
+                  <div class="margin-t tips">
+                      <ul>
+                        <li><i class="O"></i>我们禁止信用卡套现、虚假交易等恶意行为。我们会严格监控您的信用记录。一经查出，绝不姑息！</li>
+                        <li><i class="O"></i>请将您银行卡的开户名和网站上的真实姓名保持一致，否则无法提现</li>
+                        <li><i class="O"></i>提现过程中如果遇到任何问题，请拨打<a href="tel:4009005591">客服热线</a></li>
+                        <li><i class="O"></i>账户单日提现金额无上限</li>
+                      </ul>
+                  </div>
+              </div>
+          </section>
+          <section class="_0rEcodequery d-n R" name="记录查询">
+              <div class="subOne pop-out-T">
+                <div class="lay-rows margin-t" name="czjl">
+                    <div class="rows-info F R subnav">
+                        <div class="sub-rows-title re_charge">
+                            <i class="O"></i>
+                        </div>
+                        <div class="sub-rows-data">
+                            <span>充值记录</span>
+                        </div>
+                        <div class="sub-rows-status">
+                          <i class="icon_zl O select arrow"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="lay-rows margin-t" name="txjl">
+                    <div class="rows-info F R subnav">
+                        <div class="sub-rows-title re_cashout">
+                            <i class="O"></i>
+                        </div>
+                        <div class="sub-rows-data">
+                            <span>提现记录</span>
+                        </div>
+                        <div class="sub-rows-status">
+                          <i class="icon_zl O select arrow"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="lay-rows margin-t" name="zjjl">
+                    <div class="rows-title">查询账户资金的流向</div>
+                    <div class="rows-info F R subnav">
+                        <div class="sub-rows-title re_money">
+                            <i class="O"></i>
+                        </div>
+                        <div class="sub-rows-data">
+                            <span>资金记录</span>
+                        </div>
+                        <div class="sub-rows-status">
+                          <i class="icon_zl O select arrow"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="margin-t tips">
+                    <ul>
+                      <li><i class="O"></i>移动端网站暂不支持匹配时间段查询</li>
+                      <li><i class="O"></i>针对移动端网站的查询功能，系统将仅列出查询项当前最新的十条数据供用户查看。如想查看更多记录，请使用电脑访问桌面端网站&nbsp;www.jinhefax.com</li>
+                      <li><i class="O"></i>查询过程中如果遇到任何问题，请拨打<a href="tel:4009005591">客服热线</a></li>
+                    </ul>
+                </div>
+              </div>
+              <div class="subInfos pop-in-T d-n">
+                  <div class="layrows-child" name="re_charge" id="record__recharge">
+                      <h4 class="styleTitle R"><span>账户充值明细</span></h4>
+                      <table class="dataTablerecord">
+                          <colgroup>
+                            <col width="16%" />
+                            <col width="10%" />
+                            <col width="24%" />
+                            <col width="25%" />
+                            <col width="25%" />
+                          </colgroup>
+                          <tbody>
+                            <tr>
+                                <th>订单号</th>
+                                <th>类型</th>
+                                <th>金额</th>
+                                <th>时间</th>
+                                <th>状态</th>
+                            </tr>
+                          </tbody>
+                      </table>
+                      <!-- <div class="loadDOTS spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div> -->
+                  </div>
+                  <div class="layrows-child" name="re_cashout" id="record_cashout">
+                    <h4 class="styleTitle R"><span>账户提现明细</span></h4>
+                      <table class="dataTablerecord">
+                          <colgroup>
+                            <col width="30%" />
+                            <col width="20%" />
+                            <col width="30%" />
+                            <col width="20%" />
+                          </colgroup>
+                          <tbody>
+                            <tr>
+                                <th>提现卡号</th>
+                                <th>金额</th>
+                                <th>时间</th>
+                                <th>状态</th>
+                            </tr>
+
+                          </tbody>
+                      </table>
+
+                  </div>
+                  <div class="layrows-child" name="re_money" id="record_moneyMor">
+                      <h4 class="styleTitle R"><span>账户资金明细</span></h4>
+                        <table class="dataTablerecord">
+                            <colgroup>
+                              <col width="30%" />
+                              <col width="20%" />
+                              <col width="30%" />
+                              <col width="20%" />
+                            </colgroup>
+                            <tbody>
+                              <tr>
+                                  <th>类型</th>
+                                  <th>操作金额</th>
+                                  <th>操作时间</th>
+                                  <th>交易方</th>
+                              </tr>
+                            </tbody>
+                        </table>
+
+                  </div>
+              </div>
+          </section>
+          <section class="_0fBmanager d-n R" name="出借/借款管理">
+              <div class="subOne pop-out-T">
+                <div class="lay-rows margin-t" name="tzgl">
+                    <div class="rows-info F R subnav">
+                        <div class="sub-rows-title m_tz">
+                            <i class="O"></i>
+                        </div>
+                        <div class="sub-rows-data">
+                            <span>出借管理</span>
+                        </div>
+                        <div class="sub-rows-status">
+                          <i class="icon_zl O select arrow"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="lay-rows margin-t" name="jkgl">
+                    <div class="rows-info F R subnav">
+                        <div class="sub-rows-title m_jk">
+                            <i class="O"></i>
+                        </div>
+                        <div class="sub-rows-data">
+                            <span>借款管理</span>
+                        </div>
+                        <div class="sub-rows-status">
+                          <i class="icon_zl O select arrow"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="margin-t tips">
+                    <ul>
+                      <li><i class="O"></i>移动端网站暂不支持匹配时间段查询</li>
+                      <li><i class="O"></i>针对移动端网站的查询功能，系统将仅列出查询项当前最新的十条数据供用户查看。如想查看更多记录，请使用电脑访问桌面端网站&nbsp;www.jinhefax.com</li>
+                      <li><i class="O"></i>查询过程中如果遇到任何问题，请拨打<a href="tel:4009005591">客服热线</a></li>
+                    </ul>
+                </div>
+              </div>
+              <div class="subInfos pop-in-T d-n">
+                  <div class="layrows-child" name="m_tz">
+                      <div class="tab-alternative F Threx" id="invest_edit_nav">
+                          <a href="javascript:void(0);" class="show">招标中项目</a><a href="javascript:void(0);" >未收款明细</a><a href="javascript:void(0);" >已收款明细</a>
+                      </div>
+                      <section class="tab-info-layout">
+                          <div class="layout-sub show bankfun">
+                              <table class="dataTablerecord">
+                                  <colgroup>
+                                    <col width="15%">
+                                    <col width="20%">
+                                    <col width="20%">
+                                    <col width="20%">
+                                    <col width="25%">
+                                  </colgroup>
+                                  <tbody>
+                                    <tr>
+                                        <th>标名</th>
+                                        <th>借款人</th>
+                                        <th>有效金额</th>
+                                        <th>投标时间</th>
+                                        <th>状态</th>
+                                    </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                          <div class="d-n margin-t bankfun">
+                            <table class="dataTablerecord">
+                                  <colgroup>
+                                    <col width="15%">
+                                    <col width="20%">
+                                    <col width="17%">
+                                    <col width="19%">
+                                    <col width="19%">
+                                  </colgroup>
+                                  <tbody>
+                                    <tr>
+                                        <th>标名</th>
+                                        <th>收款日期</th>
+                                        <th>借款人</th>
+                                        <th>本金</th>
+                                        <th>利息</th>
+                                    </tr>
+
+                                  </tbody>
+                              </table>
+                          </div>
+                          <div class="d-n margin-t bankfun">
+                            <table class="dataTablerecord">
+                                  <colgroup>
+                                    <col width="15%">
+                                    <col width="20%">
+                                    <col width="15%">
+                                    <col width="15%">
+                                    <col width="15%">
+                                    <col width="20%">
+                                  </colgroup>
+                                  <tbody>
+                                    <tr>
+                                        <th>标名</th>
+                                        <th>收款日期</th>
+                                        <th>借款人</th>
+                                        <th>本金</th>
+                                        <th>利息</th>
+                                        <th>状态</th>
+                                    </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                      </section>
+                  </div>
+                  <div class="layrows-child" name="m_jk">
+                      <div class="tab-alternative F" id="borrowmoney_edit_nav">
+                          <a href="javascript:void(0);" class="show">正在招标的借款</a><a href="javascript:void(0);" >正在还款的借款</a>
+                      </div>
+                      <section class="tab-info-layout">
+                          <div class="layout-sub show bankfun">
+                              <table class="dataTablerecord">
+                                  <colgroup>
+                                    <col width="25%">
+                                    <col width="20%">
+                                    <col width="15%">
+                                    <col width="15%">
+                                    <col width="25%">
+                                  </colgroup>
+                                  <tbody>
+                                    <tr>
+                                        <th>标名</th>
+                                        <th>金额</th>
+                                        <th>年利率</th>
+                                        <th>期限</th>
+                                        <th>状态</th>
+                                    </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                          <div class="d-n margin-t bankfun">
+                            <table class="dataTablerecord">
+                                  <colgroup>
+                                    <col width="15%">
+                                    <col width="15%">
+                                    <col width="15%">
+                                    <col width="15%">
+                                    <col width="25%">
+                                    <col width="15%">
+                                  </colgroup>
+                                  <tbody>
+                                    <tr>
+                                        <th>标名</th>
+                                        <th>金额</th>
+                                        <th>年利率</th>
+                                        <th>期限</th>
+                                        <th>应还款日期</th>
+                                        <th>状态</th>
+                                    </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                      </section>
+                  </div>
+              </div>
+          </section>
+          <section class="_0mYawards d-n R" name="我的奖品">
+              <div class="Present">
+                 您当前没有得到奖品。
+              </div>
+          </section>
+          <section class="_0oPtions d-n R" name="账户设置">
+            <div class="subOne pop-out-T">
+                <div class="lay-rows margin-t" >
+                    <!-- <div class="rows-title">个人资料</div> -->
+                    <div class="rows-info F R subnav">
+                        <div class="sub-rows-title">
+                            <i class="O"></i>
+                        </div>
+                        <div class="sub-rows-data">
+                            <span>个人资料</span>
+                        </div>
+                        <div class="sub-rows-status">
+                          <i class="icon_zl O select arrow"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="lay-rows margin-t" >
+                    <div class="rows-title">编辑、绑定银行卡</div>
+                    <div class="rows-info F R subnav">
+                        <div class="sub-rows-title cardbind">
+                            <i class="O"></i>
+                        </div>
+                        <div class="sub-rows-data">
+                            <span>银行卡</span>
+                        </div>
+                        <div class="sub-rows-status">
+                          <i class="icon_zl O select arrow"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="lay-rows margin-t" >
+                    <div class="rows-title">通过实名认证，您才可以享受我们的服务</div>
+                    <div class="rows-info F R subnav">
+                        <div class="sub-rows-title auth">
+                            <i class="O"></i>
+                        </div>
+                        <div class="sub-rows-data">
+                            <span>实名认证</span>
+                        </div>
+                        <div class="sub-rows-status">
+                          <i class="icon_zl O select arrow"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="lay-rows margin-t" >
+                    <div class="rows-title"><!-- 编辑绑定手机、 -->修改登录密码</div>
+                    <div class="rows-info F R subnav">
+                        <div class="sub-rows-title aq">
+                            <i class="O"></i>
+                        </div>
+                        <div class="sub-rows-data">
+                            <span>安全中心</span>
+                        </div>
+                        <div class="sub-rows-status">
+                          <i class="icon_zl O select arrow"></i>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="subInfos pop-in-T d-n">
+                  <div class="layrows-child" name="personaldata">
+                    <div class="O infoperson"></div>
+                    <p class="O">请使用电脑登录金和所官网(jinhefax.com)来操作个人资料。电脑端的访问路径为：我的账户&nbsp;>&nbsp;基本设置&nbsp;>&nbsp;个人资料。</p>
+                  </div>
+                  <div class="layrows-child" name="bankcard">
+                      <div class="tab-alternative F" id="bankcard_edit_nav">
+                          <a href="javascript:void(0);" class="show">新增绑定银行卡</a><!-- <span>/</span> --><a href="javascript:void(0);" id="numcaRds">我的银行卡</a>
+                      </div>
+                      <section class="tab-info-layout">
+                          <div class="layout-sub show bankfun">
+                              <div class="lay-rows">
+                                  <div class="rows-info F R w4">
+                                      <div class="sub-rows-title">
+                                          <label>开户银行</label>
+                                      </div>
+                                      <div class="sub-rows-data">
+                                          <select class="select_rows" id="bind_Xsel_bankcard">
+                                              <option value="select">选择银行</option>
+                                              <#list drawBankList as item>
+                                                  <option value="${item.bankCode}">${item.bankName}</option>
+                                              </#list>
+                                          </select>
+                                      </div>
+                                      <div class="sub-rows-status">
+                                        <i class="icon_zl O select"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="lay-rows margin-t">
+                                  <!-- <div class="rows-title">标题什么的</div> -->
+                                  <div class="rows-info F R w4">
+                                      <div class="sub-rows-title">
+                                          <label>银行卡号</label>
+                                      </div>
+                                      <div class="sub-rows-data">
+                                          <input type="tel" class="sr_input bind_cardNumB_er" value="" placeholder="输入银行卡号" />
+                                      </div>
+                                      <div class="sub-rows-status">
+                                        <i class="icon_zl O"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="lay-rows margin-t twocolumn">
+                                  <div class="rows-title">选择开户银行所在地(省、市)</div>
+                                  <div class="rows-info F R w4">
+                                      <div class="sub-rows-title">
+                                          <label>地理位置</label>
+                                      </div>
+                                      <div class="sub-rows-data">
+                                          <@mmmRegionBank name="province" id="bind_bankcard_provice" class="select_rows" pid="0"></@mmmRegionBank>
+                                          <select class="select_rows d-n" id="bind_bankcard_city"></select>
+                                  <!-- <select class="select_rows" id="bind_bankcard_provice">
+                                              <option value="0">新疆维吾尔自治区</option>
+                                              <option value="1">天津市</option>
+                                              <option value="2">内蒙古自治区</option>
+                                              <option value="2">山西省</option>
+                                          </select>
+                                          <select class="select_rows" id="bind_bankcard_city">
+                                              <option value="0">克孜勒苏柯尔克孜自治州</option>
+                                              <option value="1">天津市</option>
+                                              <option value="2" selected="selected">武汉市</option>
+                                              <option value="3">太原市</option>
+                                          </select>-->
+                                      </div>
+                                      <div class="sub-rows-status">
+                                        <i class="icon_zl O select double"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                              <a href="javascript:void(0);" class="rowsbtn d-b margin-t" id="bind_bankcard">立即绑定</a>
+                              <div class="margin-t tips">
+                                  <ul>
+                                    <li><i class="O"></i>我们禁止信用卡套现、虚假交易等恶意行为。我们会严格监控您的信用记录。一经查出，绝不姑息！</li>
+                                    <li><i class="O"></i>为了方便您更好的使用我们的充值、提现等服务。请仔细填写上述信息</li>
+                                    <li><i class="O"></i>操作过程中如果遇到任何问题，请拨打<a href="tel:4009005591">客服热线</a></li>
+                                  </ul>
+                              </div>
+                          </div>
+                          <div class="d-n margin-t bankfun">
+                              <h3 class="nocardnotice margin-t d-n">暂无已绑定的银行卡</h3>
+                              <!-- <div class="bindcardlists R" data-str='{"bankname":"中国农业银行借记卡","cardNumber":"6228480010532560611","address_create":"北京市，朝阳区","time_create":"2016-12-22 10:05","phonenumber":"13811866468","userid":"123456","bankid":"938"}'></div>
+                              <div class="bindcardlists R" data-str='{"bankname":"中国银行借记卡","cardNumber":"6228480010532562441","address_create":"北京市，东城区","time_create":"2016-10-12 09:45","phonenumber":"13011226468","userid":"123456","bankid":"938"}'></div>
+                              <div class="bindcardlists R" data-str='{"bankname":"中国邮政储蓄银行借记卡","cardNumber":"6222280010532569820","address_create":"北京市，丰台区","time_create":"2015-12-24 19:22","phonenumber":"13011228810","userid":"123456","bankid":"938"}'></div> -->
+                          </div>
+                      </section>
+                  </div>
+                  <div class="layrows-child" name="realnameauth">
+                      <div class="layout-sub">
+                          <div class="lay-rows">
+                              <div class="rows-info F R w4">
+                                  <div class="sub-rows-title">
+                                      <label>注册手机</label>
+                                  </div>
+                                  <div class="sub-rows-data">
+                                      <input type="text" id="real_reg_phone" class="sr_input" value="${user.phone}" disabled="disable">
+                                  </div>
+                                  <div class="sub-rows-status">
+                                    <i class="icon_zl O"></i>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="lay-rows margin-t">
+                              <div class="rows-title">此处请输入您身份证上的姓名</div>
+                              <div class="rows-info F R w4">
+                                  <div class="sub-rows-title">
+                                      <label>真实姓名</label>
+                                  </div>
+                                  <div class="sub-rows-data">
+                                      <input type="text" class="sr_input _realOpsname" value="${user.realname!''}" placeholder="输入您的真实姓名">
+                                  </div>
+                                  <div class="sub-rows-status">
+                                    <i class="icon_zl O"></i>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="lay-rows margin-t">
+                              <div class="rows-title">此处请输入您的身份证号码</div>
+                              <div class="rows-info F R w4">
+                                  <div class="sub-rows-title">
+                                      <label>证件号码</label>
+                                  </div>
+                                  <div class="sub-rows-data">
+                                      <input type="text" class="sr_input _realOpsnumber" value="${user.cardId!}" maxlength="18" placeholder="输入您的身份证号码">
+                                  </div>
+                                  <div class="sub-rows-status">
+                                    <i class="icon_zl O"></i>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="lay-rows margin-t v-x-code">
+                              <div class="rows-info F R w4">
+                                  <div class="sub-rows-title">
+                                      <label>验证码</label>
+                                  </div>
+                                  <div class="sub-rows-data R">
+                                      <input type="tel" maxlength="4" class="sr_input _realOppicco" value="" placeholder="输入图形验证码">
+                                      <img class="updateimg" src="">
+                                  </div>
+                                  <div class="sub-rows-status">
+                                    <i class="icon_zl O"></i>
+                                  </div>
+                              </div>
+                          </div>
+                          <a href="javascript:void(0);" class="rowsbtn d-b margin-t" data-status="<#if user?? && user.realStatus == 1>true<#else>false</#if>" id="confirm_aUthreal">认证审核</a>
+                          <!-- data-status false为未认证。true为已认证 -->
+                          <div class="margin-t tips">
+                              <ul>
+                                <li><i class="O"></i>我们禁止信用卡套现、虚假交易等恶意行为。我们会严格监控您的信用记录。一经查出，绝不姑息！</li>
+                                <li><i class="O"></i>您的实名认证信息将会被提交到第三方支付平台进行备案。您的私人数据将会被加密</li>
+                                <li><i class="O"></i>认证过程中如果遇到任何问题，请拨打<a href="tel:4009005591">客服热线</a></li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="layrows-child" name="securitycenter">
+                      <div class="tab-alternative F d-n" id="safeC_edit_nav">
+                          <a href="javascript:void(0);" class="show">登录密码修改</a><a href="javascript:void(0);" >变更绑定手机</a>
+                      </div>
+                      <section class="tab-info-layout">
+                          <div class="layout-sub bankfun">
+                              <div class="lay-rows margin-t">
+                                  <div class="rows-info F R w4">
+                                      <div class="sub-rows-title">
+                                          <label>原始密码</label>
+                                      </div>
+                                      <div class="sub-rows-data">
+                                          <input type="password" class="sr_input _originalpass" value="" placeholder="请输入原来的登录密码">
+                                      </div>
+                                      <div class="sub-rows-status">
+                                        <i class="icon_zl O"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="lay-rows margin-t">
+                                  <div class="rows-info F R w4">
+                                      <div class="sub-rows-title">
+                                          <label>新密码</label>
+                                      </div>
+                                      <div class="sub-rows-data">
+                                          <input type="password" class="sr_input _newpass" value="" placeholder="请输入一个新的登录密码">
+                                      </div>
+                                      <div class="sub-rows-status">
+                                        <i class="icon_zl O"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="lay-rows margin-t">
+                                  <div class="rows-info F R w4">
+                                      <div class="sub-rows-title">
+                                          <label>确认密码</label>
+                                      </div>
+                                      <div class="sub-rows-data">
+                                          <input type="password" class="sr_input _renewpass" value="" placeholder="重复输入新的密码" />
+                                      </div>
+                                      <div class="sub-rows-status">
+                                        <i class="icon_zl O"></i>
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <a href="javascript:void(0);" class="rowsbtn d-b margin-t" id="password_edit">提交修改</a>
+                              <div class="margin-t tips">
+                                  <ul>
+                                    <li><i class="O"></i>您的私人数据将会被加密</li>
+                                    <li><i class="O"></i>登录密码必须设置为字母开头,6~18位数字加字母的组合</li>
+                                    <li><i class="O"></i>操作过程中如果遇到任何问题，请拨打<a href="tel:4009005591">客服热线</a></li>
+                                  </ul>
+                              </div>
+                          </div>
+                          <div class="layout-sub d-n bankfun">
+                              <i style=" font-style: normal; padding: 0 4%; color: red; font-weight: bold;">此功能暂未开放！！！</i>
+                              <div class="lay-rows margin-t">
+                                  <div class="rows-title">请输入您的身份证号码</div>
+                                  <div class="rows-info F R w4">
+                                      <div class="sub-rows-title">
+                                          <label>证件号码</label>
+                                      </div>
+                                      <div class="sub-rows-data">
+                                          <input type="tel" class="sr_input" value="" placeholder="请输入身份证号码">
+                                      </div>
+                                      <div class="sub-rows-status">
+                                        <i class="icon_zl O"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="lay-rows margin-t">
+                                  <div class="rows-title">请输入身份证上的姓名</div>
+                                  <div class="rows-info F R w4">
+                                      <div class="sub-rows-title">
+                                          <label>真实姓名</label>
+                                      </div>
+                                      <div class="sub-rows-data">
+                                          <input type="tel" class="sr_input" value="" placeholder="请输入真实姓名">
+                                      </div>
+                                      <div class="sub-rows-status">
+                                        <i class="icon_zl O"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="lay-rows margin-t">
+                                  <div class="rows-info F R w4">
+                                      <div class="sub-rows-title">
+                                          <label>原手机号</label>
+                                      </div>
+                                      <div class="sub-rows-data">
+                                          <input type="tel" class="sr_input" value="" placeholder="请输入之前绑定的手机号码">
+                                      </div>
+                                      <div class="sub-rows-status">
+                                        <i class="icon_zl O"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="lay-rows margin-t">
+                                  <div class="rows-info F R w4">
+                                      <div class="sub-rows-title">
+                                          <label>新手机号</label>
+                                      </div>
+                                      <div class="sub-rows-data">
+                                          <input type="tel" class="sr_input" value="" placeholder="请输入新绑定的手机号码">
+                                      </div>
+                                      <div class="sub-rows-status">
+                                        <i class="icon_zl O"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="lay-rows margin-t v-x-code">
+                                  <div class="rows-info F R w4">
+                                      <div class="sub-rows-title">
+                                          <label>验证码</label>
+                                      </div>
+                                      <div class="sub-rows-data R">
+                                          <input type="tel" maxlength="4" class="sr_input " value="" placeholder="输入图形验证码" name="co2">
+                                          <img class="updateimg" src="">
+                                      </div>
+                                      <div class="sub-rows-status">
+                                        <i class="icon_zl O"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="lay-rows margin-t v-x-code">
+                                  <div class="rows-info F R w4">
+                                      <div class="sub-rows-title">
+                                          <label>验证码</label>
+                                      </div>
+                                      <div class="sub-rows-data R">
+                                          <input type="tel" maxlength="4" class="sr_input" value="" placeholder="输入手机验证码" >
+                                          <button class="btn_getvcode getphoneCd" name="co2">获取验证码</button>
+                                      </div>
+                                      <div class="sub-rows-status">
+                                        <i class="icon_zl O"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                              <a href="javascript:alert('暂未开放');" class="rowsbtn d-b margin-t" id="password_phoneUNMbEr">提交修改</a>
+                              <div class="margin-t tips">
+                                  <ul>
+                                    <li><i class="O"></i>您的个人数据将会被加密传输</li>
+                                    <li><i class="O"></i>请谨慎操作变更已绑定的手机号</li>
+                                    <li><i class="O"></i>操作过程中如果遇到任何问题，请拨打<a href="tel:4009005591">客服热线</a></li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </section>
+                  </div>
+              </div>
+          </section>
+          <section class="_0noTice d-n margin-t" name="系统消息" id="mess_AGES"></section>
+          <!-- end 个人主页功能 -->
+        </main>
+    </article>
+    <footer class="f-Copyright ftb T">
+        <div class="footer-linkHelp">
+           <a href="aboutus.html">关于我们</a><span class="divideLine"></span><a href="newguidance.html">新手指导</a><span class="divideLine"></span><a href="protocols.html">用户协议</a><span class="divideLine"></span><a href="security.html">安全保障</a>
+        </div>
+        <div class="footer-smword">©2017 金和所. 版权所有.</div>
+    </footer>
+    <section class="masknav">
+      <div class="d-n innermaskbind">
+        <h4>银行卡信息</h4>
+        <div class="innerTxt"></div>
+        <i class="O close" id="close_unbindcard">×</i>
+      </div>
+      <div class="rules_exp d-n">
+        <a href="javascript:void(0);" class="cloIxq">关闭</a>
+        <div class="rules">
+            <ol>
+                <li>体验金及其所产生的利息收益不支持提现，体验标到期后平台将收回本金，体验金所产生的利息收益将发至用户账户，这些产生的利息可用于购买平台任一定期理财产品（不含购买债权转让）；</li>
+                <li>体验金的使用有效期均为70天、体验金利息的使用有效期为15天；</li>
+                <li>本活动最终解释权归金和所所有，如有疑问，欢迎致电金和所<a href="tel:4009005591" style="text-decoration:underline;">客服热线</a>（工作时间：周一至周五9:00—18:00）。</li>
+            </ol>
+        </div>
+      </div>
+    </section>
+    <nav class="navper R">
+      <div class="navPagelist">
+          <h4 class="R O"><a href="index.html"><img src="${webroot}${theme_dir}/media/wap/img/navlogo.png" class="navPImglogo"/></a><div id="ack_nav_go" class="ack_nav_go"></div></h4>
+          <ul class="targets">
+              <li class="ts-dA O R index"><a href="index.html">首页</a></li>
+              <li class="ts-dA O R listmoney"><a href="listbids.html" class="onCL">出借项目列表</a></li>
+              <li class="ts-dA O R pPage active"><a href="Innerpage.html" class="onCL" id="iNdexpage">个人主页</a></li>
+              <li class="ts-dA O R recordlog"><a href="javascript:void(0);" name="rEcodequery" class="onCL" id="rEcodequery">资金流记录查询</a></li>
+              <li class="ts-dA O R F-Bmanager"><a href="javascript:void(0);" class="onCL" id="fBmanager" name="fBmanager">出借/借款管理</a></li>
+              <!-- <li class="ts-dA O R rewards"><a href="javascript:void(0);" class="onCL" name="mYawards" id="mYawards">我的奖励</a></li> -->
+              <li class="ts-dA O R options"><a href="javascript:void(0);" class="onCL" name="oPtions" id="oPtions">账户设置</a></li>
+              <li class="ts-dA O R notification new" data-messages="${unRead?default(0)}"><a href="javascript:void(0);" class="onCL" id="noTice" name="noTice">系统通知</a></li>
+              <!-- <li class="ts-dA O R invited"><a href="/invitateCode/myInvitateCode.html">邀请有礼</a></li> -->
+          </ul>
+          <div class="bottomcr">市场有风险，出借需谨慎<br/>@2016&nbsp;jinhefax.com</div>
+      </div>
+    </nav>
+<#include "_foot.html" />
+<script src="${webroot}${theme_dir}/media/wap/js/process.js" type="text/javascript"></script>
+<script src="${webroot}${theme_dir}/media/wap/js/fy-slide.js" type="text/javascript"></script>
+<script src="${webroot}${theme_dir}/media/wap/js/easypiechart.min.js" type="text/javascript"></script>
+</body>
+</html>

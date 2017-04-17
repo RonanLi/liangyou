@@ -1,0 +1,12 @@
+<ul class="list-tab clearfix">
+	<li <#if borrow_type?exists&&borrow_type=="unpublish">class="cur"</#if> ><a href="${webroot}/member/borrow/unpublish.html">尚未发布的借款</a></li>
+	<li <#if borrow_type?exists&&borrow_type=="showCancelBorrows">class="cur"</#if> ><a href="${webroot}/member/borrow/showCancelBorrows.html">撤回的借款</a></li>
+	<li <#if borrow_type?exists&&borrow_type=="borrowing">class="cur"</#if> ><a href="${webroot}/member/borrow/borrowing.html">正在招标的借款</a></li>
+	<li <#if borrow_type?exists&&borrow_type=="repaying"&&(!repay_status??)>class="cur"</#if> ><a href="${webroot}/member/borrow/repaying.html">正在还款的借款</a></li>
+	<li <#if borrow_type?exists&& (borrow_type=="repaid" || borrow_type=="repaydetail") ||( borrow_type =='repaying'&&repay_status??)>class="cur"</#if> ><a href="${webroot}/member/borrow/repaid.html">已经还款的借款</a></li>
+	<li <#if borrow_type?exists&&borrow_type=="allrepay">class="cur"</#if> ><a href="/member/borrow/allrepay.html?borrow_type=allrepay">还款明细总汇</a></li>
+	<!-- 
+	<li <#if borrow_type?exists&&borrow_type=="limitapp">class="cur"</#if> ><a href="${webroot}/member/borrow/limitapp.html">申请信用额度</a></li>
+	-->
+	
+</ul>

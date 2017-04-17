@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <#include "../common/res.html">
+        <#include "../common/header.html">
+            </head>
+
+<body class="bg">
+
+<div class="content">
+    <div class="block-nav">
+        <#include "../common/nav.html">
+    </div>
+
+    <div class="block-content" >
+        <div class="block-content-nav"><span class="title">自动回复</span></div>
+        <div class="block-content-description"><span> 自动回复消息管理 </span></div>
+        <div class="block-content-content">
+            <input onclick="window.location.href='${webroot}/wx/toMergeWeChatAutoReply.html'" class="btn topBtn" type="button" value="添 加"/>
+            <table class="fm-table">
+                <thead>
+                <tr>
+                    <td>关键词</td>
+                    <td>回复内容</td>
+                    <td>操作</td>
+                </tr>
+                </thead>
+                <tbody>
+                <#list list as row>
+                    <#if row_index %2 == 0>
+                        <tr>
+                            <#else>
+                        <tr class="even-tr">
+                    </#if>
+                    <td><input type="text" value="${row.keyWords!}" name="keyWord"></td>
+                    <td><input type="text" value="${row.content!}" name="content"></td>
+                    <td>
+                        <a href="${webroot}/wx/toMergeWeChatAutoReply.html?id=${row.id}">修改</a>
+                        <a href="javascript:void(0);" onclick="doDelete(${row.id})">删除</a>
+                    </td>
+                    </tr>
+                </#list>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="clearfloat"></div>
+</div>
+
+</body>
+<#include "../common/footer.html">
+
+<script type="text/javascript">
+    function doDelete(id){
+        if(confirm("确定删除?")){
+            window.location.href='${webroot}/wx/delWeChatAutoReply.html?id='+id;
+        }
+    }
+    </script>
+</html>

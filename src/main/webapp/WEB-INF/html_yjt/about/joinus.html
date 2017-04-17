@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<#assign nid="about" >
+<#include "../include/resource.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/about/css/abStyle.css" type="text/css" />
+<body>
+<style type="text/css">
+	body{ background: #f3f3f3; }
+	.bgOs{ background:#fdd853; padding:20px 0; }
+		.bgOs div,.outerns{ width:1200px; margin:0 auto; }
+		.bgOs img{ width: 100%; display: block; }
+		.outerns{ background: #fff; padding:10px; }
+		.obj{ background: #f5f5f5; padding:6px 12px; border-radius: 4px;}
+		.obj:nth-child(even){ background: #fff; }
+		.obj > h3{ cursor: pointer; position: relative; font-weight: 400; font-size: 18px; height: 42px; line-height: 42px; }
+		.ulinfo{ display: none; border-top: 1px solid #d8d6d6; padding:12px 0; font-size: 13.4px; }
+		.joinus ul.decimal, .decimal li{ list-style: decimal; }
+		.obj.show .ulinfo{ display: block; }
+		.obj h3 i{ position: absolute; right:1%; width: 18px; height: 18px; background: url(${webroot}${theme_dir}/media/imgs/arrbottom.png) no-repeat 50% 50%; top: 50%; margin-top: -10px; }
+		.obj.show h3 i{ background-image:url(${webroot}${theme_dir}/media/imgs/arrtop.png); }
+		.ulinfo h4{ padding-bottom: 4px; font-size: 15px; color:#757575; display: none; }
+		.decimal li{ margin-left: 32px; font-size: 14px; color: #757575; padding-bottom: 4px;}
+		.der li{ list-style: decimal; font-size: 14px; }
+		.infoseq{ width: 1200px; margin:0 auto 10px; background: #fff; padding-bottom: 20px; }
+		.infoseq img{ display: block; width: 100%; padding-top: 8px; }
+		.infoseq h1{ font-size: 18px; text-indent: -16px; padding-bottom: 8px; }
+		.abso{ margin-left: -16px; padding: 6px 10px 5px; background: #f19d00; font-weight: bold; display: inline-block; line-height: 1; border-radius: 3px; color: #fff; margin-bottom: 11px; }
+		.infoseq > h2{ text-align: center; font-weight: bold; font-size: 24px; padding: 2%; }
+		.FF:after{ content:'\20'; display: block; clear:both; }
+		.FF{ padding:0 4% 2%; }
+		.FF > div{ display: inline-block; float: left; width: 25%; }
+		.FF img{ width: 90px; height: 90px; margin:0 auto; }
+		.FF span i, .FF span{ display: block; text-align: center; font-size: 14px; line-height: 18px; }
+		.FF span i{ font-weight: bold; font-style: normal; margin-top:16px; margin-bottom: 6px; font-size: 16px; }
+		.i0i_Touch .bgOs div,.i0i_Touch .outerns{ width: 100%; }
+		.i0i_Touch .infoseq{ width: 100%; }
+		.i0i_Touch .abso,.i0i_Touch .infoseq h1{ font-size: 1.8rem; }
+		.i0i_Touch .infoseq h1{ margin-top: .4rem; }
+		.infoseq img.wqs{ width: 240px; display: block; margin:0 auto; }
+		.i0i_Touch .FF{ padding: 0; }
+		.i0i_Touch .FF > div{ width: 50%; margin-bottom: 2%; }
+		.i0i_Touch .FF span{ font-size: 12px; }
+		.i0i_Touch .FF span i{ font-size: 14px; }
+
+</style>
+<#include "../include/header.html">
+<!--header-end-->
+<div class="joinus">
+	<div class="bgOs"><div><img src="${webroot}${theme_dir}/media/imgs/joinus.jpg"/></div></div>
+	<div class="infoseq">
+		<h2>加入金和所四大理由</h2>
+		<div class="FF">
+			<div><img src="${webroot}${theme_dir}/media/imgs/q1.png"/><span><i>薪满益足，胜于你想！</i>五险福利、带薪休假<br/>健康关怀</span></div>
+			<div><img src="${webroot}${theme_dir}/media/imgs/q2.png"/><span><i>简单、平等互助的工作方式！</i>弱化层级、创意无限<br/>妙趣挡不住</span></div>
+			<div><img src="${webroot}${theme_dir}/media/imgs/q3.png"/><span><i>众多惊喜，等你嗨不停!</i>绩效奖、项目奖、年终奖<br/>活动经费、节日礼品<br/>应用尽有</span></div>
+			<div><img src="${webroot}${theme_dir}/media/imgs/q4.png"/><span><i>舞台够大，让你乐享挑战！</i>文娱活动多，展示你最美风采<br/>上班轻松，下班愉快<br/>这，才叫生活</span></div>
+		</div>
+		<img class="wqs" src="${webroot}${theme_dir}/media/imgs/ffd.png"/>
+	</div>
+	<div class="outerns">
+		<div class="obj show">
+			<h3>高级推广经理<i></i></h3>
+			<div class="ulinfo">
+				<h4>岗位职责：</h4>
+				<ul class="decimal">
+					<li>根据市场需要，建立互联网金融产品发展规划、产品设计、实施路线图；</li>
+					<li>熟悉互联网的运作模式及产品特征，对互联网产品发展趋势有敏锐的洞察力和创新意识；</li>
+					<li>策划互联网金融产品营销方案并组织、开展，确保达成产品的市场目标；</li>
+					<li>负责新渠道开发、管理和维护，各类网站资源合作的规划、开拓、执行；</li>
+					<li>研究运营数据和用户反馈，挖掘用户需求，调整运营策略，制订产品优化方案；找到运营问题并给出有创意和创新性的解决方案，以保证运营绩效的持续提升，并定期出具运营分析报告及改进意见；</li>
+					<li>负责产品技术，研发管理及进度把控，对产品质量负责；</li>
+					<li>负责跨部门协调和沟通，推动开发、测试、市场、服务等人员紧密合作达成产品目标；</li>
+					<li>运营管理培训、团队管理及人才梯队建设；</li>
+				</ul>
+			</div>
+		</div>
+		<div class="obj">
+			<h3>BD专员<i></i></h3>
+			<div class="ulinfo">
+				<h4>岗位职责：</h4>
+				<ul class="decimal">
+					<li>负责业务的资源合作洽谈、沟通谈判；</li>
+					<li>开展与互联网公司、银行、移动产品、大媒体平台、异业合作伙伴等各行业的合作挖掘；</li>
+					<li>渠道合作资源的协调争取、公司内部沟通配合、维护合作伙伴关系、协调解决合作中出现的各种问题，撰写项目合作策划方案；</li>
+				</ul>
+			</div>
+		</div>
+		<div class="obj">
+			<h3>理财经理<i></i></h3>
+			<div class="ulinfo">
+				<h4>岗位职责：</h4>
+				<ul class="decimal">
+					<li>根据公司经营发展战略方向，制定年度销售管理政策与计划方案；</li>
+					<li>带领团队以多种形式进行新客户开发、维护，充分保障完成年度、季度、月度销售各项任务指标；</li>
+					<li>具有良好的沟通能力和团队协作能力，与相关部门紧密配合，协调沟通；</li>
+					<li>根据一线工作了解到的客户反馈，向公司提出产品及流程优化建议；</li>
+					<li>领导交代的其他工作；</li>
+
+				</ul>
+			</div>
+		</div>
+		<div class="obj">
+			<h3>理财专员<i></i></h3>
+			<div class="ulinfo">
+				<h4>岗位职责：</h4>
+				<ul class="decimal">
+					<li>根据公司理财产品特点，以多种形式进行新客户开发，开拓中、高端客户；</li>
+					<li>对客户的综合理财需求分析，通过推介公司上线的产品，帮助客户实现理财目标，完成销售任务；</li>
+					<li>持续跟进服务，维护客户关系，提高客户忠诚度，通过老客户关系资源开发新客户；</li>
+					<li>与部门领导紧密配合，完成领导交给的其他工作；</li>
+				</ul>
+			</div>
+		</div>
+		<div class="obj">
+			<h3>运营经理<i></i></h3>
+			<div class="ulinfo">
+				<h4>岗位职责：</h4>
+				<ul class="decimal">
+					<li>负责互联网金融平台的运营，负责监控平台的各项运营数据，对相关的数据进行分析，并根据结果提出运营的改进方案；</li>
+					<li>负责平台功能策划、在线宣传推广、活动策划、渠道合作及日常运营，提高点击率与浏览量，达到用户拉新留存的目的；</li>
+					<li>根据实际情况调正产品线、促销方法、产品关键词，激活潜在客户，对平台业绩负责；</li>
+					<li>在运营过程中的监控数据分析，分析用户行为及需求，提合理化建议指导市场推广和产品销售方案；</li>
+				</ul>
+			</div>
+		</div>
+		<div class="obj">
+			<h3>客服专员<i></i></h3>
+			<div class="ulinfo">
+				<h4>岗位职责：</h4>
+				<ul class="decimal">
+					<li>了解客户需求，对其购买提供专业咨询； </li>
+					<li>客户受理和客户开通； </li>
+					<li>适当处理服务的故障和客户的投诉处理，控制消费者满意度的的跟踪及分析；</li>
+					<li>客户相关信息的录入管理，建立客户档案； </li>
+					<li>完成上级交给的其它事务性工作；</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<#include "../include/footer.html">
+</body>
+<script type="text/javascript" src="${webroot}${theme_dir}/about/js/abcommon.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.obj').on('click','h3',function(){ $(this).parent().toggleClass('show'); });
+	});
+</script>
+</html>
+

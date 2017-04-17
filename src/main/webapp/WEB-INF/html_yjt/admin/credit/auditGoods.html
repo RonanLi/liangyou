@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!-- v1.6.7.2 RDPROJECT-569 cx 2013-12-26 start -->
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                            <!--面包屑导航---}-->
+<div id="breadcrumbNav">
+    <div class="home-icon"></div>
+    <ul>
+        <li>客户管理</li>
+        <li class="v">商品兑换审核</li>
+    </ul>
+</div>
+                            <!--面包屑导航---}-->
+                            <div id="toolbar" class="clearfix">
+		                         <div class="toolbor-module">
+							        <input type="button" class="input-button return" value="返回" onclick="history.go(-1)">
+							    </div>
+                            </div>
+
+                            <div id="main" class="w750 clearfix">
+                                <form name="form1" method="post" action="/admin/credit/saveAuditGoods.html" enctype="multipart/form-data" >
+                                    <div class="valBox">
+                                        <div class="top">
+                                            <strong>商品兑换审核</strong>
+                                        </div>
+                                        <div class="clearfix">
+                                        <ul class="title-v edit">
+                                        <li>
+                                            <div class="title">用户名：</div>
+                                            <div class="v">${userCreditConvert.user.username!""}</div>
+                                        </li>    
+                                        <li>
+                                        	<div class="title">有效积分：</div>
+                                        	<div class="v">${userCreditConvert.user.userCredit.validValue!""}</div>
+                                        </li> 
+                                        <li>
+                                            <div class="title">兑换积分：</div>
+                                            <div class="v">${userCreditConvert.creditValue!""}</div>
+                                        </li>
+                                        <li>
+                                        	<div class="title">兑换商品数量：</div>
+                                            <div class="v">${userCreditConvert.convertNum!0}</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">兑换商品名称：</div>
+                                            <div class="v">${userCreditConvert.goods.name!""}</div>
+                                            <div class="v">
+                                            <#--v1.8.0.4_u1 TGPROJECT-274 lx start-->
+                                            <#if userCreditConvert.goods??&&userCreditConvert.goods.picList??>
+	                                                	<#list userCreditConvert.goods.picList as item>
+	                                                		<img src="${item.compressPicUrl!}" width="150px" height="150px">
+	                                                	</#list>
+	                                                	</#if>
+	                                                	<#--v1.8.0.4_u1 TGPROJECT-274 lx end-->
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="title">审核状态：</div>
+                                            <div class="v">
+												<label><input type="radio" checked="checked" value="1" name="status">审核通过</label>
+												<label><input type="radio" value="2" name="status">审核不通过</label>
+                                            </div>
+                                            <div class="other clearfix">
+						                        	<label for="">验证码：</label><input type="text" name="validCode" id="yzm" class="yzm"> <img src="${request.getContextPath()}/validimg.html" alt="点击刷新" 
+	   onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();" style="position:relative;top:13px;"   />
+						                        </div>
+                                        </li>
+                                        </ul>
+                                    </div>
+
+                            </div>
+
+                            <div id="bottomToolbar" class="clearfix">
+                                <input type="hidden"  name="id" value="${userCreditConvert.id}" />
+                                <input class="input-button post" type="submit" value="提交"  />
+                            </div>
+                            </form>
+                            </div>
+
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+
+    </body>
+</html>
+<#include "../jsPage.html">

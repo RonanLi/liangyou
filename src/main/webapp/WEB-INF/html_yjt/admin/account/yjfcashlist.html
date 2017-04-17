@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="易极付提现记录">
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+
+                                <div class="toolbor-module export">
+                                    <div style="height:22px;line-height:22px;float:left;color:red;margin-left:12px;"> 提现总额：${yjfCash.amounts}元 
+                                    </div>
+                                    <div style="height:22px;line-height:22px;float:left;color:red;margin-left:12px;"> 提现到账总额：${yjfCash.amountsIn}元 
+                                    </div>
+                                     <div style="height:22px;line-height:22px;float:left;color:red;margin-left:12px;"> 手续费：${yjfCash.charges}元 
+                                    </div>
+                                </div>
+                            </div>
+                            <!--工具栏--}-->
+
+                            <div id="main" class="clearfix">
+                                <form action="" method="post">
+                                    <table class="data-list" id="relist">
+                                        <tr class="header">
+                                            <td>流水号</td>
+                                            <td>取现总金额</td>
+                                             <td>到账金额</td>
+                                             <td>手续费</td>
+                                            <td>取现银行</td>
+                                            <td>取现时间</td>
+                                            <td>状态</td>
+                                        </tr>
+                                    </table>
+                                </form>
+
+                                <!--底部工具栏--{-->
+                                <div id="bottomToolbar" class="clearfix">
+                                    <div class="other-tool">
+                                        <dl class="refresh-data">
+                                            <dt class="refresh-data-icon"></dt>
+                                            <dd><a href="javascript:void(0);" class="refresh-page">刷新数据</a></dd>
+                                        </dl>
+                                    </div>
+
+                                    <!--翻页系统--{-->
+                                    <div class="container">
+										<#if page gt 1>
+											&nbsp;<a href="/admin/account/queryYjfCash.html?&userId=${user.userId?c}&page=1">首页</a>
+										<#else>
+											&nbsp;<span>首页</span>
+										</#if> 
+										<#if page lt 1 || page ==1 >
+											&nbsp;<span >上一页</span> 
+										<#else>
+											&nbsp;<a href="/admin/account/queryYjfCash.html?&userId=${user.userId?c}&page=${page-1}">上一页</a>
+										</#if>
+											&nbsp;<a href="/admin/account/queryYjfCash.html?&userId=${user.userId?c}&page=${page+1}">下一页</a>
+                                    </div>
+                                    <!--翻页系统--}-->
+                                </div>
+                                <!--底部工具栏--}-->
+                            </div>
+
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+    <script type="text/javascript">
+    	$(function(){
+    		<#if yjfCash??>
+	    		var infos = '${yjfCash.withdrawInfos!}';
+	    		var databox = $("#relist");
+	    		if(/^\s*$/.test(info)){
+	    			return;
+	    		}
+	    		var list =  eval(infos);
+	    		var str=databox.html();
+	    		for(var i = 0 ; i<list.length ; i++){
+	    			var info = list[i];
+	    			var status = info.status;
+	    			if(status == "SUBMIT_SETTLED"){
+	    				status = "已报清算";
+	    			}else if(status == "SUCCESS"){
+	    				status = "处理成功";
+	    			}else if(status == "FAILURE"){
+	    				status = "处理失败";
+	    			}else if(status == "CANCELED"){
+	    				status = "已撤销";
+	    			}else if(status == "CHARGED"){
+	    				status = "已收费";
+	    			}else if(status == "INITIAL"){
+	    				status ="初始";
+	    			}
+	    			str += "<tr><td>"+ ( info.accBizNo===undefined ?"--":info.accBizNo )+"</td>"+
+	    				"<td>"+info.amountIn+"</td>"+
+	    				"<td>"+info.amout+"</td>"+
+	    				"<td>"+info.charge+"</td>"+
+	    				"<td>"+info.bankName+"</td>"+
+	    				"<td>"+new Date(info.payTime).toLocaleString()+"</td>"+
+	    				"<td>"+status+"</td></tr>";
+	    		}
+	    		databox.html(str);
+    		</#if>
+    	});
+    
+    
+    </script>
+
+    </body>
+</html>
+<#include "../jsPage.html">

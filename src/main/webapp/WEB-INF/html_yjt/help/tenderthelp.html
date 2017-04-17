@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<#include "../include/resource.html"> 
+<body>
+<#include "../include/header.html">
+<link href="${request.getContextPath()}/themes/soonmes/media/css/modal.css" rel="stylesheet" type="text/css" /> 
+<link href="${request.getContextPath()}/themes/soonmes/media/css/about.css" rel="stylesheet" type="text/css" />
+
+<div class="container zx clearfix">
+    <img src="${webroot}${theme_dir}/images/zx-banner.jpg" alt="" class="mb15"> 
+    <div class="zx-left float_left">
+        <div class="zx-lt"></div>
+         <#include "left_menu.html">
+        <div class="zx-bt"></div>
+        <img src="${webroot}${theme_dir}/images/zx-left-kf.jpg" alt="" class="zx-kefuimg">
+    </div>
+
+    <div class="zx-righthelp float_right">
+        <div class="zx-righttitle clearfix">
+            <img src="${webroot}${theme_dir}/images/zx-rightli.jpg" alt="" class="ml10 float_left"><span class="float_left">当前位置：
+			<a id="ctl00_content_NavigationLink1_main" href="${webroot}/index.html" style=" color:#333; text-decoration:none;">义务贷（浙江得龙进出口有限公司）</a>	&gt;帮助&gt;
+			<a href="${request.getContextPath()}/help/tenderthelp.html?code=help" style="color:#333; text-decoration:none;">用户投标</a></span>
+		</div>
+		
+        <div class="zx-righttxt">
+			<div class="info" id="lxjs">
+         <h6>第一步：</h6><h7>用户点击我要理财，进入借款投标页面。</h7><br/>
+          <h3> &nbsp; </h3>
+         <div class="zx-righttitle clearfix">
+              <img src="${webroot}${theme_dir}/images/help/toubiao01.jpg" alt="" class="ml10 float_left" height=250/><br/>
+         </div><br>
+         <h6>第二步：</h6><h7>根据用户需求选择要投资的借款标，进入该标的投标页面。用户可以搜索需要的借款标，计算投资收益。</h7>
+          <h3> &nbsp; </h3>
+         <div class="zx-righttitle clearfix">
+             <img src="${webroot}${theme_dir}/images/help/toubiao02.jpg" alt="" class="ml10 float_left"  height=450/>
+         </div><br/>
+       
+         <h6>第三步：</h6><h7>用户可以查看详细的借款标信息：借款金额、借款期限、借款利率、还款方式、借款标的投标情况，借款用户信息、该标审核资料。确认后可以进行投标，进入该标的投标页面。</h7><br/>
+          <h3> &nbsp; </h3>
+         <div class="zx-righttitle clearfix">
+              <img src="${webroot}${theme_dir}/images/help/toubiao03.jpg" alt="" class="ml10 float_left" height=400/><br/>
+         </div><br>
+         <h6>第四步：</h6><h7>输入投资金额和支付密码，投资金额小于用户可用余额。第一次投标要设置支付密码，初始支付密码与用户登录密码相同。</h7>
+          <h3> &nbsp; </h3>
+         <div class="zx-righttitle clearfix">
+             <img src="${webroot}${theme_dir}/images/help/toubiao04.jpg" alt="" class="ml10 float_left"  height=350/>
+         </div><br/>
+         <h6>第五步：</h6><h7>投标完成后用户资金冻结，等该标满标复审通过后用户将冻结的投资资金转入借款标用户并开始计算利息。到还款日期，用户会收到借款本金和利息，并扣除10%的利息作为网站管理费。用户可在我的账号中点击收款中的项目进行查看。</h7>
+          <h3> &nbsp; </h3>
+         <div class="zx-righttitle clearfix">
+             <img src="${webroot}${theme_dir}/images/help/toubiao05.jpg" alt="" class="ml10 float_left"  height=150/>
+         </div><br/>
+          <h6>第六步：</h6><h7>用户添加设置自动投标信息，自动投标功能可以最大化利用用户剩余资金，增加收益。</h7><br/>
+            <h3> &nbsp; </h3>
+         <div class="zx-righttitle clearfix">
+              <img src="${webroot}${theme_dir}/images/help/ziliao09.jpg" alt="" class="ml10 float_left" width="700" /><br/>
+         </div><br>
+		
+			</div><!--info-->
+		</div><!--myTabContent-->
+	</div><!--right-->
+</div><!--cor_divtop-->
+
+
+<script src="${request.getContextPath()}/themes/soonmes/media/js/modal.js"></script>
+<script src="${request.getContextPath()}/themes/soonmes/media/js/tab.js"></script>
+<script src="${request.getContextPath()}/themes/soonmes/media/js/alert.js"></script>
+<#include "../include/footer.html"> 

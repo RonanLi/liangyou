@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<#include "../include/resource.html">
+<body>
+<#assign nid="zixun">
+<#include "../include/header.html">
+<style type="text/css">
+  .dbjg-list{ table-layout:fixed;}
+  .dbjg-list tr { height:35px;}
+  .dbjg-list tr.even{ background:#f5f5f5}
+  .dbjg-list tr.hover{ background:#EFF5FE}
+  .dbjg-list tr td{ line-height:35px; text-align:center; white-space: nowrap;overflow: hidden;text-overflow: ellipsis}
+</style>
+
+<div class="container-bg">
+<div class="zx clearfix">
+    <div class="zx-left float_left">
+        <div class="zx-lt">${psite.name!}</div>
+        <div class="zx-mt">
+            <#list sublist as item>
+                <#if item??&&item.url??&&((item.url)?length gt 0)>
+            	<a id="item${item_index+1}" href="${webroot}${item.url}">${item.name}</a>
+                <#else>
+                <a id="item${item_index+1}" href="${webroot}/article/list.html?code=${item.code}">${item.name}</a>
+                </#if>
+            </#list>
+        </div>
+    </div>
+
+    <div class="zx-right float_right wh-bg">
+		<div class="index-title">
+			<p style="width: 120px; line-height: 35px; background-color: #8CC785; text-align: center; color: #FFF; font-size: 16px;">担保机构</p>
+		</div>
+    <#if param?exists>
+       <#assign title = param.name!>
+    </#if> 
+        <div class="zx-righttxt">
+			<div class="info" id="lxjs">
+    			<form action="" method="get" class="clearfix">
+              <div style="float: right;margin: 0 30px 10px 0;">
+                  <select style="width:150px; height:25px; padding:2px; border-radius:0px;float: left;margin-right: 10px;" name="findType">
+                  	<option value="byName">担保机构名称</option>
+                  	<option value="byarea">担保机构所在区域</option>
+                  </select>
+                  <input type="hidden" name="code" value="serve">
+                  <input name="name" style="float: left;width:150px; height:20px; padding:2px; border-radius:0px;margin-right: 10px;" value="${title}" type="text"/>
+                  <input type="submit" style="float: left;padding:0px 15px;height: 26px;line-height: 26px;" value="搜索">
+              </div>
+          </form>
+
+			<table width="721" class="dbjg-list">
+              <tr style="background:#EFF5FE">
+                <th width="225">担保机构名称</th>
+                <th width="128">担保机构所在区域</th>
+                <th width="97">联系电话</th>
+                <th width="170">联系地址</th>
+                <th width="71">注册资本</th>
+              </tr>
+  
+              	<#list list as item>
+            	  	<tr>
+            		    <td width="225"><a  href="${webroot}/danBaoCompany.html?warrantId=${item.id}" class="danbaocompany" target="_black;"><#if item.name?length lt 17>${item.name}<#else>${item.name[0..16]}...</#if></a></td>
+            		    <td width="128">${item.area!}</td>
+            		    <td width="97">${item.phone!}</td>
+            		    <td width="170">${item.address!}</td>
+            		    <td width="71">${item.capital!}</td>
+            	   </tr>
+              </#list>
+            </table>
+
+			</div><!--info-->
+            <!--分页开始-->
+					<div style="line-height:26px; font-size:14px; text-align:left; width:600px;white-space:nowrap; margin-top:20px;float: right;">
+						<table class="list_table_page">
+							<#import "../common/page.html" as pager>  
+							<#assign url="/article/showWrrants.html?code=serve" />
+		         	 		<@pager.pagination page=page url=url map=param style="style1" />
+						</table>
+					</div>
+					<!--分页结束-->
+		</div><!--myTabContent-->
+	</div><!--right-->
+</div><!--cor_divtop-->
+</div>
+<script type="text/javascript">
+  $(function(){
+	 $(".dbjg-list tr:even").addClass("even");
+	 $(".dbjg-list tr").hover(function(){
+		 $(this).addClass("hover");
+	 },function(){
+	  $(this).removeClass("hover");	 
+	 });
+
+     $('.zx-mt a[href$="serve"]').addClass('pagehover');
+  });
+</script>
+
+<#include "../include/footer.html"> 

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+<body>
+<table class="mc">
+    <tr>
+        <td class="mc-l">
+            <!--左侧导航---{-->
+            <div id="navPanelContainer">
+                <div class="system-logo cd"></div>
+                <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                <!--管理员信息---}-->
+                <div class="nav-wrap">
+                    <#include "left.html">
+                </div>
+            </div>
+            <!--左侧导航---}-->
+        </td>
+        <td class="mc-m">
+            <div class="navToggle"></div>
+        </td>
+        <td class="mc-r">
+            <!--顶部导航---{-->
+            <#include "../topNav.html">
+            <!--顶部导航---}-->
+
+            <!--面包屑导航---{-->
+            <#assign moduleName="所有流程">
+            <#include "banner.html">
+            <!--面包屑导航---}-->
+
+			<div id="toolbar" class="clearfix">
+                 <div class="toolbor-module search">
+                      <input type="button" class="input-button return" value="返回" onclick="history.go(-1)">
+                 </div>
+            </div>
+            <div id="main" class="clearfix">
+                <form action="" method="post">
+                    <table class="data-list">
+                    <#if list??>
+                    	<tr class="header">
+                    		<td>操作顺序</td>
+                    		<td>名称</td>
+                            <td>类型</td>
+                            <td>操作用户类型</td>
+                            <td>添加此操作用户</td>
+                            <td>添加时间</td>
+                            <td>状态</td>
+                            <td>操作</td>
+                        </tr>
+                         <#list list as item>
+                         <tr>
+                         	<td>${item.sort}</td>
+                         	<td>${item.name}</td>
+                            <td>
+                             <#if item.operateType=="001">
+                             	初审流程
+                            <#elseif item.operateType=="002">
+                            	复审流程
+                            <#elseif item.operateType=="003">
+                            	信用额度流程
+                            <#elseif item.operateType=="004">
+                            	网站垫付流程
+                            <#elseif item.operateType=="005">
+                            	撤回流程
+                            <#else>
+                            	-
+                            </#if>
+                            </td>
+                            <td>${item.userType.name}</td>
+                            <td>${item.oprateUser.username}</td>
+                            <td>${item.addtime}</td>
+                            <td>
+                            	 <#if item.status==1>
+                             			启用
+                          		  <#elseif item.status==2>
+                            			停用
+                           		 </#if>
+                            </td>
+                             <td><a href="/admin/borrow/showFlowRule.html?id=${item.id}">修改</a></td>
+                         </tr>
+                          </#list>
+                    
+                    <#else>
+                        <tr class="header">
+                            <td>名称</td>
+                            <td>操作</td>
+                        </tr>
+                         <tr>
+                            <td>初审流程</td>
+                            <td><a href="allFlowRule.html?operateType=001">查看</a></td>
+                         </tr>
+                         <tr>
+                            <td>复审流程</td>
+                            <td><a href="allFlowRule.html?operateType=002">查看</a></td>
+                         </tr>
+                         <tr>
+                            <td>信用额度流程</td>
+                            <td><a href="allFlowRule.html?operateType=003">查看</a></td>
+                         </tr>
+                         <tr>
+                            <td>网站垫付流程</td>
+                            <td><a href="allFlowRule.html?operateType=004">查看</a></td>
+                         </tr>
+                         <tr>
+                            <td>撤回流程</td>
+                            <td><a href="allFlowRule.html?operateType=005">查看</a></td>
+                         </tr>
+                    </#if>     
+                    </table>
+                </form>
+        </td>
+    </tr>
+    <tr>
+        <!--尾部--{-->
+        <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+        <!--尾部--}-->
+    </tr>
+</table>
+</body>
+</html>
+<#include "../jsPage.html">

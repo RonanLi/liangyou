@@ -1,0 +1,83 @@
+<#macro indexListItem1 item>
+	<div class="announce-title">
+	  	<img src="${theme_dir}/images/5.jpg" />
+	  	<!---->
+	</div>
+	<div class="announce-pane">
+	 <p class="announce-top"><a href="${webroot}/invest/detail.html?borrowid=${item.id?c}" class="title"><#if item.name?length lt 60>${item.name}<#else>${item.name[0..60]}...</#if></a></p>
+	  	<div class="announce-panes">
+			<div class="announce-panes-img1"><span>金额<b>${item.viewMoney}元</b></span></div>	
+	  	</div>
+	   	<div class="announce-panes">
+			<div class="announce-panes-img2"><span>年化利率<b>${item.apr}%</b></span></div>
+		
+		</div>
+	    <div class="announce-panes">
+			<div class="announce-panes-img3"><span>期限<#assign starRank=item.user.credit.findStarRank()>
+				<#if item.isday??&&item.isday==1><b>${item.timeLimitDay!0}天</b>
+				<#elseif item.type==101><b>满标即还<b>
+				<#else><b>${(item.timeLimit)!0}个月</b></#if></span></div>		
+	  	</div>
+		<div class="announce-bottom">
+	      <div class='huank'>还款方式：
+      <span class="text-corange"> 
+      <#if item.isday??&&item.isday==1>一次性还款
+      <#elseif item.type==101>满标自动还款
+      <#elseif item.style='0'>等额本息还款
+      <#elseif item.style='2'>一次性还款
+      <#elseif item.style='3'>每月还息到期还本
+      <#else>按月分期还款</#if> </span>
+
+	      </div>
+		  <div class='time'>借款期限:
+            <#if item.isday??&&item.isday==1>：<b>${item.timeLimitDay!0}天</b>
+            <#elseif item.type==101><b>满标自动还款</b>
+            <#else><b>${(item.timeLimit)?default("0")}个月</b></#if></div>
+		  <div class="announce-progress-wrap">
+		 	<div class="progress-bar"><div style="width: ${ ((item.accountYes/item.account)*100)?int}%"></div></div>
+			<em>${ (item.accountYes/item.account)*100}%</em>
+	  	</div>
+		  <!--<div class="announce-progress-wrap">
+		 	<div class="progress-bar"><div style="width: ${ ((item.accountYes/item.account)*100)?int}%"></div></div>
+			<em>${ (item.accountYes/item.account)*100}%</em>
+	  	</div>-->
+		</div>
+	  	
+	</div>
+	
+	<@showIndexTenderButton borrow=item />
+</#macro>
+<#macro showIndexTenderButton borrow>
+	<#assign nowTime=dateformat("now") >
+<#-- 	<#assign startTime=dateformat(borrow.startTenderTime) > -->
+	<#if borrow.status==0>等待初审
+<#-- 	<#elseif startTime - nowTime gt 0> -->
+<#-- 		<a  class="tb-action-gray1" id="expect">敬请期待</a> -->
+	<#elseif borrow.status==1&&(borrow.accountYes lt borrow.account ) > 
+		<a href="${webroot}/invest/detail.html?borrowid=${borrow.id?c}" class="tb-action">立即投标</a>
+	<#elseif borrow.status==1&&(borrow.accountYes gt borrow.account || borrow.accountYes==borrow.account) > 
+		<#if borrow.type=110>
+		<a  class="tb-action-gray1	" style="cursor: default;">流转中</a>
+		<#else>
+		<a  class="tb-action-gray1	" style="cursor: default;">已满标</a>
+		</#if>
+	<#elseif borrow.status==2> 
+		<a  class="tb-action-gray1" style="cursor: default;">初审失败</a>
+	<#elseif borrow.status==3> 
+		<a  class="tb-action-gray1" style="cursor: default;">复审通过</a>
+	<#elseif borrow.status==5||borrow.status==-1> 
+		<a  class="tb-action-gray1" style="cursor: default;">用户取消</a>
+	<#elseif borrow.status==4> 
+		<a  class="tb-action-gray1" style="cursor: default;">复审失败</a>
+	<#elseif borrow.status==6> 
+		<a  class="tb-action-gray1" style="cursor: default;">还款中</a>
+	<#elseif borrow.status==7> 
+		<a  class="tb-action-gray1" style="cursor: default;">还款中</a>
+	<#elseif borrow.status==8 && borrow.type=110> 
+		<a  class="tb-action-gray1" style="cursor: default;">停止流转</a>
+	<#elseif borrow.status==8> 
+		<a  class="tb-action-gray1" style="cursor: default;">已还款</a>
+	<#else> 
+		<a  class="tb-action-gray1" style="cursor: default;">用户取消</a> 
+	</#if> 
+</#macro>

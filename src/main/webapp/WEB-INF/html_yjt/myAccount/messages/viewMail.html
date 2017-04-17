@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 ">
+<#assign webroot=request.getContextPath()>
+<#assign nid="member" >
+<#include "../../include/resource.html">
+<#include "../../common/function.html">
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+<body>
+
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="userRightMenu">
+                <#include "messageMenu.html">
+            </div>
+            <div class="rightDiv">
+                <div class="viewMail">
+                    <#assign backUrl="box.html" >
+                        <#if type?exists&&type=="sents"> <#assign msg_type="sents" > <#assign backUrl="hasSend.html" >
+                            <#else> <#assign msg_type="box" > <#assign backUrl="inbox.html" >
+                        </#if>
+
+                    <form method="post" action="sendMsg.html" >
+                        <#if type?exists&&type=="sent">
+                            <div class="fromBox">
+                                <div class="boxTxt">标题：</div>
+                                <div class="boxIpt">${msg.name!}</div>
+                            </div>
+                            <div class="fromBox">
+                                <div class="boxTxt">发件人：</div>
+                                <div class="boxIpt">${msg.receiveUser.username!}</div>
+                            </div>
+                            <div class="fromBox">
+                                <div class="boxTxt">发送时间：</div>
+                                <div class="boxIpt">${msg.addtime?string('yyyy-MM-dd HH:mm:ss')}</div>
+                            </div>
+                            <div class="fromBox">
+                                <div class="boxTxt">发送内容：</div>
+                                <div class="boxIpt">${msg.content!}</div>
+                            </div>
+                            <#else>
+                                <div class="fromBox">
+                                    <div class="boxTxt">标题：</div>
+                                    <div class="boxIpt">${msg.name!}</div>
+                                </div>
+                                <div class="fromBox">
+                                    <div class="boxTxt">收件人：</div>
+                                    <div class="boxIpt">
+                                        <strong>${msg.receiveUser.username!}</strong>
+                                    </div>
+                                </div>
+                                <div class="fromBox">
+                                    <div class="boxTxt">发件人：</div>
+                                    <div class="boxIpt">
+                                        <#if msg.sentUser.userId==1>金和所<#else>${msg.sentUser.username}</#if>
+                                    </div>
+                                </div>
+                                <div class="fromBox">
+                                    <div class="boxTxt">发送时间：</div>
+                                    <div class="boxIpt">${msg.addtime?string('yyyy-MM-dd HH:mm:ss')}</div>
+                                </div>
+                                <div class="fromBox">
+                                    <div class="boxTxt">内容：</div>
+                                    <div class="boxIpt">${msg.content!}</div>
+                                </div>
+                                <div class="fromBox">
+                                    <div class="boxTxt">回复：</div>
+                                    <div class="boxIpt">
+                                        <textarea name="repContent" rows="7" cols="35"></textarea>
+                                    </div>
+                                </div>
+                                <div class="fromBox">
+                                    <div class="messageBtn">
+                                        <input type="submit"  class="btn-action"  value="提交"/>
+                                        <input type="hidden" name="id" value="${msg.id?c}" />
+                                        <input type="hidden" name="type" value="reply" />
+                                        <input type="button" onclick="javascript:location.href='${backUrl}'" value="返回"  class="btn-action"/>
+                                        <input type="button" value="转发" onclick="javascript:location.href='sendMsg.html?sendType=forward&id=${msg.id?c}'"  class="btn-action"/>
+                                        <input type="button" value="删除" onclick="javascript:location.href='setMail.html?type=3&ids=${msg.id?c},'"  class="btn-action"/>
+                                    </div>
+                                </div>
+                        </#if>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<#include "../../include/footer.html">
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"> </script>
+<script type="text/javascript">
+function setMsg(type){
+    var str='';
+    $(":checkbox[name=ids][checked]").each(function () {
+        str = str+$(this).val()+","
+    });
+    if(str!=""){
+        location.href='${webroot}/member/myAccount/setMail.html?type='+type+'&ids='+str;
+    }
+}
+</script>
+</html>

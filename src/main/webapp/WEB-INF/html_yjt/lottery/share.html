@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 ">
+<#assign webroot=request.getContextPath()>
+<#assign nid="member" >
+
+<link rel="stylesheet" href="${webroot}${theme_dir}/media/css/mixlrn.css" type="text/css"/> 
+<#include "../include/resource.html">
+<#include "../common/function.html">
+<body>
+<#include "../include/header.html"> 
+<!--header-end--> 
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+    <div class="user_left">
+        <#include "../member/user_menu.html">
+    </div>
+    <div class="user_right">
+        <#if msg?exists><div id="msg24"><p class="ok"> ${msg} </p></div>
+        <#else><#if errormsg?exists><div id="msg25"><p class="error"> ${errormsg} </p></div></#if></#if>
+        <div class="shareBox">
+	        <div class="share">
+	        	<h1><span>好友投资我赚钱！</span></h1>
+	        	<a href="${webroot}/activity/gift4.html">我要邀请</a>
+	        </div>
+	        <p>邀请记录</p>
+	        <div class="share">
+	        	<div>
+	        		<p>成功邀请(人)</p>
+	        		<span>${people!}</span>
+	        	</div>
+	        	<div>
+	        		<p>待审核奖励(元)</p>
+	        		<span>${canReceiveMoney!}</span>
+	        	</div>
+	        	<div>
+	        		<p>已赚取奖励(元)</p>
+	        		<span>${receivedMoney!}</span>
+	        	</div>
+	        </div>
+        </div>
+    </div>
+</div>
+
+<#include "../include/footer.html">
+</body>
+</html>
+ 

@@ -1,0 +1,7 @@
+<div>项目状态：</div>
+<ul class="listTab clearfix">
+    <li <#if invest_type?exists&&invest_type=="tendering">class="cur"</#if>><a href="${webroot}/member/myAccount/tender.html"data-val="3">投标项</a></li>
+    <li <#if invest_type?exists&&invest_type=="hasTender">class="cur"</#if> ><a href="${webroot}/member/myAccount/lending.html"data-val="3">借出项</a></li>
+    <li <#if invest_type?exists&&invest_type=="notCollect">class="cur"</#if>><a href="${webroot}/member/myAccount/unpaid.html"data-val="3">未收款</a></li>
+    <li <#if invest_type?exists&&invest_type=="hasCollect">class="cur"</#if> ><a href="${webroot}/member/myAccount/received.html"data-val="3">已收款</a></li>
+</ul>

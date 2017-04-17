@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html>
+<#include "../include/resource.html">
+<style>
+		.firstpwdb span{display: inline;float: left; background:#fbb96c;height: 14px;width: 60px;font-size: 12px;text-align: center;line-height: 14px;color: #FFF;border-right: 1px solid #FFF; margin-top:8px;}
+		.firstpwdb span.hover{ background:#ff6600;}
+	</style>
+<body>
+    <#assign mid="m_info" >
+	<#assign nid="member3"> 
+	<#include "../include/header.html">
+	<!--header-end-->
+	<!--用户中心的主栏目 开始-->
+<div class="container-bg"> 	
+	<div id="main" class="clearfix" >
+		<div class="wrap950 " style="margin-top:0">
+			<!--左边的导航 开始-->
+			<div class="user_left">
+				<#include "user_menu.html">
+			</div>
+			<!--左边的导航 结束-->
+
+			<!--右边的内容 开始-->
+			<div id="sb_msg" class="user_right">
+				
+				<#if msg?exists>
+				<div id="msg24">
+					<p class="ok"> ${msg} </p>
+				</div>
+				<#else>
+					<#if errormsg?exists>
+						<div id="msg25">
+							<p class="error"> ${errormsg} </p>
+						</div>
+					</#if>
+				</#if>
+				<#if !query_type?exists>
+					<#assign query_type="">
+				</#if>
+				<div class="user_right_menu">
+					<ul id="tab" class="list-tab clearfix">
+						<li <#if query_type=="userpwd">class="active"</#if>><a href="${request.getContextPath()}/member/security/userpwd.html">登录密码</a></li>
+					</ul>
+				</div>
+				<div class="user_right_main">
+				<#if query_type=="userpwd">
+				<!--修改登录密码 开始-->
+				<form action="" name="form1" method="post" onsubmit="return check_setPwd();">
+				<div class="user_help alert">*密码必须包含英文字母和数字，并不能少于六位</div>
+				<div class="user_right_border">
+					<div class="e">原始密码：</div>
+					<div class="c">
+						<input type="password" name="oldpassword" id="oldpassword" style="float:left;"/> 
+					</div>
+				</div>
+				<div class="user_right_border">
+					<div class="e">新密码：</div>
+					<div class="c">
+						<input type="password" name="newpassword" id="password" style="float:left;" /><span class="firstpwdb"></span> 
+					</div>
+				</div>
+				<div class="user_right_border">
+					<div class="e">确认密码：</div>
+					<div class="c">
+						<input type="password" name="newpassword1" id="confirm_password"  style="float:left;"/><span class="checkpwdb"></span> 
+					</div>
+				</div>
+				<div class="user_right_border">
+					<div class="e"></div>
+					<div class="c">
+						<input type="hidden" name="actionType" value="chgpwd" size="30" />
+						<input type="submit" name="name"   class="btn-action"  value="确认提交" size="30" /> 
+					</div>
+				</div>
+				</form>
+				<div class="user_right_foot alert">
+				* 温馨提示：我们将严格对用户的所有资料进行保密
+				</div>
+				<script>
+					var status_pwd = "";
+					var status_ck = "";
+					function ckPwd(){
+						var oldpwd = $("#oldpassword")
+						var pwdBox = $("#password");
+						var firstMes = $(".firstpwdb");
+						var checkBox = $("#confirm_password");
+						var checkMes = $(".checkpwdb");
+						var status_pwd = 0;
+						var status_ck = 0;
+						var checkStr = "";
+						var value = "";
+						pwdBox.focus(function(){
+							firstMes.text("");
+							passwordTest();
+							
+						}).blur(function(){
+							value = pwdBox.val();
+							oldVal = oldpwd.val();
+							var pwdtestVal = getResult(value);
+							var str_len = value.length;
+							if((str_len>=6)&&(str_len<=18)){
+								if(pwdtestVal<2)
+								{
+									firstMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入6至18位，数字加字母的密码");
+									status_pwd = 0;
+								}
+								else{
+									if(value!=oldVal){
+										firstMes.html("<img src='${webroot}${theme_dir}/images/tipimg-g.png'>密码强度合适");
+										status_pwd = 1;
+									}else{
+										firstMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>新密码不能和原始密码一样");
+										status_pwd = 0;	
+									}
+								}
+							}else{
+								firstMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入6至18位，数字加字母的密码");
+								status_pwd = 0;
+							}
+							paswdStatus = status_pwd+status_ck;
+							return paswdStatus;
+						}).keyup(function(){
+							checkStr = checkBox.val();
+							value = pwdBox.val();
+							if(checkStr=="")
+							{
+								checkMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入和上面一致的密码");
+								status_ck = 0;	
+							}
+							else if(value!=checkStr)
+							{
+								checkMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>两次输入的密码不一致");
+								status_ck = 0;
+							}else{
+								checkMes.html("<img src='${webroot}${theme_dir}/images/tipimg-g.png'>上下密码一致");
+								status_ck = 1
+							}	
+						});
+						checkBox.focus(function(){
+							checkMes.text("");
+						}).blur(function(){
+							value = pwdBox.val();
+							checkStr = checkBox.val();
+							if(checkStr=="")
+							{
+								checkMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入和上面一致的密码");
+								status_ck = 0;
+							}
+							else if(checkStr!=value){
+								checkMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>两次输入的密码不一致");
+								status_ck = 0;
+							}
+							else{
+								checkMes.html("<img src='${webroot}${theme_dir}/images/tipimg-g.png'>上下密码一致");
+								status_ck = 1
+							}
+							paswdStatus = status_pwd+status_ck;
+							return paswdStatus;
+						});
+				
+						function passwordTest() {
+							var pwdBox = $("#password");
+							var firstMes = $(".firstpwdb");
+							pwdBox.keyup(function(){
+								var value = pwdBox.val();
+								var str_len = value.length;
+								if((str_len>=6)&&(str_len<=18)){
+									var result = getResult(value);
+									check(result);
+									pwdBox.attr("value",value);
+									//判断密码强弱程度
+								}
+								else{
+									firstMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入6至18位，数字加字母的密码");
+								}
+							})
+						}
+						function getResult(value){
+							var str_len = value.length;
+							var i = 0;
+							if(value.match(/[a-z]/ig)) {
+								i++;
+							}
+							if(value.match(/[0-9]/ig)) {
+								i++;
+							}
+							if(value.match(/(.[^a-z0-9])/ig)) {
+								i++;
+							}
+							if(value.length < 6 && i > 0) {
+								i--;
+							}
+							return i;
+						}
+						function check(num) {
+							if(num == 0) {
+								firstMes.html("<span style='color:#f00'>　密码太短了</span>");
+							} else if (num == 1) {
+								firstMes.html("<span class='hover'>弱</span><span>中</span><span>强</span>");
+							} else if (num == 2) {
+								firstMes.html("<span class='hover'>弱</span><span class='hover'>中</span><span>强</span>");
+							} else if (num == 3) {
+								firstMes.html("<span class='hover'>弱</span><span class='hover'>中</span><span class='hover'>强</span>");
+							} else {
+								firstMes.html("未知错误");
+							}
+						}
+						
+						
+					}
+					ckPwd();	
+					paswdStatus = ckPwd();
+					function check_setPwd(){
+						if(paswdStatus==2){
+							return true;	
+						}else{
+							return false;
+						}	
+						
+					}
+				</script>
+				<!--修改登录密码 结束-->
+				<#elseif query_type="serialStatusSet">
+			 	<!--修改动态口令状态 开始-->
+				<form action="" name="form1" method="post" onsubmit="">
+				<div class="user_help alert">动态口令可以确认用户的合法身份，从而在合法身份登录的基础上保障业务业务访问的安全性。</div>
+				将动态口令应用于：<br/>
+				<div class="user_right_border">
+					<div class="e">提现：</div>
+					<div class="c">
+						<input type="checkbox" name="carryout" /> 
+					</div>
+					<div class="e">登录：</div>
+					<div class="c">
+						<input type="checkbox" name="login" /> 
+					</div>
+				</div>
+				<div class="">
+					<div class="e"></div>
+					<div class="c">
+					请输入动态口令码: <input type="text" maxlength="6" name="uchoncode"  /> 
+					</div>
+				</div>
+		
+			
+				<div class="">
+					<div class="e"></div>
+					<div class="c">
+						<input type="submit" name="name"  value="确认提交" size="30" /> 
+					</div>
+				</div>
+				</form>
+				<div class="user_right_foot alert">
+				* 温馨提示：我们将严格对用户的所有资料进行保密
+				</div>
+				<!--修改动态口令状态 结束-->
+				<#elseif query_type="paypwd">
+				
+				<!--修改安全密码 开始-->
+				<form action="" name="form1" method="post" onsubmit="return check_form()">
+				<div class="user_help alert">*密码必须包含英文字母和数字，并不能少于六位</div>
+				<div class="user_right_border">
+					<div class="l">原始支付密码：</div>
+					<div class="c">
+						<input type="password" name="oldpassword" id="oldpassword" style="float:left;"> 请输入原支付密码。(初始支付密码与您注册时的登录密码一致)
+					</div>
+				</div>
+				<div class="user_right_border">
+					<div class="l">新支付密码：</div>
+					<div class="c">
+						<input type="password" name="newpassword" id="password" style="float:left;" /><span class="firstpwdb"></span> 
+					</div>
+				</div>
+				<div class="user_right_border">
+					<div class="l">确认支付密码：</div>
+					<div class="c">
+						<input type="password" name="newpassword1" id="confirm_password" style="float:left;" /><span class="checkpwdb"></span>
+					</div>
+				</div>
+				<div class="user_right_border">
+					<div class="l">验证码：</div>
+					<div class="c">
+						<input name="valicode" type="text" size="11" maxlength="5"  tabindex="3"/>&nbsp;<img src="${webroot}/validimg.html" alt="点击刷新" onclick="this.src='${webroot}/validimg.html?t=' + Math.random();" align="absmiddle" style="cursor:pointer;display:inline; float:none;" />
+					</div>
+				</div>
+				<div class="user_right_border">
+					<div class="l"></div>
+					<div class="c">
+						<input type="submit" name="name"    class="btn-action"  value="确认提交" size="30" /> <a href="${webroot}/user/getpaypwd.html">忘记支付密码？</a>
+					</div>
+				</div>
+				</form>
+				<div class="user_right_foot alert">
+				* 温馨提示：我们将严格对用户的所有资料进行保密
+				</div>
+				<script>
+					var status_pwd = "";
+					var status_ck = "";
+					function ckPwd(){
+						var oldpwd = $("#oldpassword")
+						var pwdBox = $("#password");
+						var firstMes = $(".firstpwdb");
+						var checkBox = $("#confirm_password");
+						var checkMes = $(".checkpwdb");
+						var status_pwd = 0;
+						var status_ck = 0;
+						var checkStr = "";
+						var value = "";
+						pwdBox.focus(function(){
+							firstMes.text("");
+							passwordTest();
+							
+						}).blur(function(){
+							value = pwdBox.val();
+							oldVal = oldpwd.val();
+							var pwdtestVal = getResult(value);
+							var str_len = value.length;
+							if((str_len>=6)&&(str_len<=18)){
+								if(pwdtestVal<2)
+								{
+									firstMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入6至18位，数字加字母的密码");
+									status_pwd = 0;
+								}
+								else{
+									if(value!=oldVal){
+										firstMes.html("<img src='${webroot}${theme_dir}/images/tipimg-g.png'>密码强度合适");
+										status_pwd = 1;
+									}else{
+										firstMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>新密码不能和原始密码一样");
+										status_pwd = 0;	
+									}
+								}
+							}else{
+								firstMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入6至18位，数字加字母的密码");
+								status_pwd = 0;
+							}
+							paswdStatus = status_pwd+status_ck;
+							return paswdStatus;
+						}).keyup(function(){
+							checkStr = checkBox.val();
+							value = pwdBox.val();
+							if(checkStr=="")
+							{
+								checkMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入和上面一致的密码");
+								status_ck = 0;	
+							}
+							else if(value!=checkStr)
+							{
+								checkMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>两次输入的密码不一致");
+								status_ck = 0;
+							}else{
+								checkMes.html("<img src='${webroot}${theme_dir}/images/tipimg-g.png'>上下密码一致");
+								status_ck = 1
+							}	
+						});
+						checkBox.focus(function(){
+							checkMes.text("");
+						}).blur(function(){
+							value = pwdBox.val();
+							checkStr = checkBox.val();
+							if(checkStr=="")
+							{
+								checkMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入和上面一致的密码");
+								status_ck = 0;
+							}
+							else if(checkStr!=value){
+								checkMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>两次输入的密码不一致");
+								status_ck = 0;
+							}
+							else{
+								checkMes.html("<img src='${webroot}${theme_dir}/images/tipimg-g.png'>上下密码一致");
+								status_ck = 1
+							}
+							paswdStatus = status_pwd+status_ck;
+							return paswdStatus;
+						});
+				
+						function passwordTest() {
+							var pwdBox = $("#password");
+							var firstMes = $(".firstpwdb");
+							pwdBox.keyup(function(){
+								var value = pwdBox.val();
+								var str_len = value.length;
+								if((str_len>=6)&&(str_len<=18)){
+									var result = getResult(value);
+									check(result);
+									pwdBox.attr("value",value);
+									//判断密码强弱程度
+								}
+								else{
+									firstMes.html("<img src='${webroot}${theme_dir}/images/tipimg-y.png'>请输入6至18位，数字加字母的密码");
+								}
+							})
+						}
+						function getResult(value){
+							var str_len = value.length;
+							var i = 0;
+							if(value.match(/[a-z]/ig)) {
+								i++;
+							}
+							if(value.match(/[0-9]/ig)) {
+								i++;
+							}
+							if(value.match(/(.[^a-z0-9])/ig)) {
+								i++;
+							}
+							if(value.length < 6 && i > 0) {
+								i--;
+							}
+							return i;
+						}
+						function check(num) {
+							if(num == 0) {
+								firstMes.html("<span style='color:#f00'>　密码太短了</span>");
+							} else if (num == 1) {
+								firstMes.html("<span class='hover'>弱</span><span>中</span><span>强</span>");
+							} else if (num == 2) {
+								firstMes.html("<span class='hover'>弱</span><span class='hover'>中</span><span>强</span>");
+							} else if (num == 3) {
+								firstMes.html("<span class='hover'>弱</span><span class='hover'>中</span><span class='hover'>强</span>");
+							} else {
+								firstMes.html("未知错误");
+							}
+						}
+						
+						
+					}
+					ckPwd();	
+					paswdStatus = ckPwd();
+					function check_setPwd(){
+						if(paswdStatus==2){
+							return true;	
+						}else{
+							return false;
+						}	
+						
+					}
+					
+					
+					//v1.8.0.4 TGPROJECT-61 lx 2014-04-15 start  -->
+					layer.closeAll();
+				//v1.8.0.4 TGPROJECT-61 lx 2014-04-15 end  -->
+				</script>
+				<!--修改安全密码 结束-->
+				<#elseif query_type="phone_change">
+					<!--申请修改绑定手机 开始-->
+				<form action="${request.getContextPath()}/member/identify/phoneChange.html" name="form_phone" method="post" autocomplete="off" onsubmit="return check_form_phone();">
+				<div class="user_help alert">注意：更换手机号码，必须正确填写身份证、原来绑定的手机号码、真实姓名，缺一不可</div>
+				<div class="user_right_border">
+					<div class="l">身份证号码：</div>
+					<div class="c">
+						<input type="cardId" name="cardId" size="25" style="font-size: 15px;"/><strong style="color: red;">*</strong>必填项
+					</div>
+				</div>
+				<div class="user_right_border">
+					<div class="l">真实姓名：</div>
+					<div class="c">
+						<input type="realName" name="realName" /> <strong style="color: red;">*</strong>必填项
+					</div>
+				</div>
+				<div class="user_right_border">
+					<div class="l">原始绑定的手机号码：</div>
+					<div class="c">
+						<input type="oldPhone" name="oldPhone" /> <strong style="color: red;">*</strong>必填项
+					</div>
+				</div>
+				<#-- <div class="user_right_border">
+					<div class="l">支付密码：</div>
+					<div class="c">
+						<input type="password" name="paypwd" /> <strong style="color: red;">*</strong>必填项
+					</div>
+				</div>-->
+				<div class="user_right_border">
+					<div class="l">验证码：</div>
+					<div class="c">
+						<input name="validCode" type="text" size="11" maxlength="5"  tabindex="3"/>&nbsp;<img src="${webroot}/validimg.html" alt="点击刷新" onclick="this.src='${webroot}/validimg.html?t=' + Math.random();" align="absmiddle" style="cursor:pointer;display:inline; float:none;" />
+					</div>
+				</div>
+				<div class="user_right_border">
+					<div class="l"></div>
+					<div class="c">
+						<input type="hidden" name="query_type" value="phone_change" >
+						<input type="submit" name="name"    class="btn-action"  value="下一步" size="30" />
+					</div>
+				</div>
+				</form>
+				<div class="user_right_foot alert">
+				* 温馨提示：我们将严格对用户的所有资料进行保密
+				</div>
+				<script>
+					function check_form_phone(){
+						 var frm = document.forms['form_phone'];
+						 var cardId = frm.elements['cardId'].value;
+						 var oldPhone = frm.elements['oldPhone'].value;
+						 var realName = frm.elements['realName'].value;
+						 var paypwd = frm.elements['paypwd'].value;
+						 var validCode = frm.elements['validCode'].value;
+
+						 var errorMsg = '';
+						 var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; 
+						  if (reg.test(cardId) ===false ) {
+							errorMsg += '* 身份证输入不合法,为15/18位，请重新输入！' + '\n';
+						  }
+						  if (oldPhone.length == 0 ) {
+							errorMsg += '* 手机必须填写！' + '\n';
+						  }
+						  reg=/^1[3|4|5|8][0-9]{9}$/; 
+						  if(!reg.test(oldPhone)){
+							errorMsg+="* 手机号码格式不正确！\n";
+						  }
+						  if(validCode.length === 0){
+							  errorMsg+="* 验证码必须填写！\n";
+						  }
+						  if (errorMsg.length > 0){
+							alert(errorMsg); return false;
+						  } else{  
+							return true;
+						}
+					}
+				</script>
+				<!--申请修改绑定手机 结束-->
+				<#elseif query_type="email_change">
+					<!--申请修改邮箱 开始-->
+				<form action="${request.getContextPath()}/member/identify/emailChange.html" name="form_phone" method="post" autocomplete="off" onsubmit="return check_form_email();">
+				<div class="user_help alert">注意：更换邮箱，必须正确填写身份证、原来激活的邮箱、真实姓名，缺一不可</div>
+				<div class="user_right_border">
+					<div class="l">身份证号码：</div>
+					<div class="c">
+						<input type="cardId" name="cardId" size="25" style="font-size: 15px;"/> <strong style="color: red;">*</strong>必填项
+					</div>
+				</div>
+				<div class="user_right_border">
+					<div class="l">真实姓名：</div>
+					<div class="c">
+						<input type="realName" name="realName" /> <strong style="color: red;">*</strong>必填项
+					</div>
+				</div>
+				<div class="user_right_border">
+					<div class="l">原始邮箱：</div>
+					<div class="c">
+						<input type="oldEmail" name="oldEmail" /> <strong style="color: red;">*</strong>必填项
+					</div>
+				</div>
+<#--				<div class="user_right_border">
+					<div class="l">支付密码：</div>
+					<div class="c">
+						<input type="password" name="paypwd" /> <strong style="color: red;">*</strong>必填项
+					</div>
+				</div>-->
+				<div class="user_right_border">
+					<div class="l">验证码：</div>
+					<div class="c">
+						<input name="validCode" type="text" size="11" maxlength="5"  tabindex="3"/>&nbsp;<img src="${webroot}/validimg.html" alt="点击刷新" onclick="this.src='${webroot}/validimg.html?t=' + Math.random();" align="absmiddle" style="cursor:pointer;display:inline; float:none;" />
+					</div>
+				</div>
+				<div class="user_right_border">
+					<div class="l"></div>
+					<div class="c">
+					    <input type="hidden" name="query_type" value="email_change" >
+						<input type="submit" name="name"    class="btn-action"  value="下一步" size="30" />
+					</div>
+				</div>
+				</form>
+				<div class="user_right_foot alert">
+				* 温馨提示：我们将严格对用户的所有资料进行保密
+				</div>
+				<script>
+					function check_form_email(){
+						 var frm = document.forms['form_phone'];
+						 var cardId = frm.elements['cardId'].value;
+						 var oldEmail = frm.elements['oldEmail'].value;
+						 var realName = frm.elements['realName'].value;
+						 var paypwd = frm.elements['paypwd'].value;
+						 var validCode = frm.elements['validCode'].value;
+
+						 var errorMsg = '';
+						 var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; 
+						  if (reg.test(cardId) ===false ) {
+							errorMsg += '* 身份证输入不合法,为15/18位，请重新输入！' + '\n';
+						  }
+						  if (oldEmail.length == 0 ) {
+							errorMsg += '* 原来邮箱必须填写！' + '\n';
+						  }
+						  if(paypwd.length == 0){
+							  errorMsg+="* 支付密码必须填写！\n"; 
+						  }
+						  
+						  if(validCode.length === 0){
+							  errorMsg+="* 验证码必须填写！\n";
+						  }
+						  if (errorMsg.length > 0){
+							alert(errorMsg); return false;
+						  } else{  
+							return true;
+						}
+					}
+				</script>
+				<!--申请修改邮箱 结束-->
+				
+				<#elseif query_type="protection">
+				<!--密码保护 开始-->
+				 <form action="" method="post">
+				<#if (mType?exists&&mType=="2") || !user.answer?exists>
+				<div class="user_help alert">请选择一个新的帐号保护问题,并输入答案。帐号保护可以为您以后在忘记密码、重要设置等操作的时候,提供安全保障。 </div>
+				<div class="user_right_border">
+					<div class="l">请选择问题：</div>
+					<div class="c">
+						<@linkage name="question" id="question" class="test" nid="pwd_protection" type="value"/>
+					</div>
+				</div>
+				<div class="user_right_border">
+					<div class="l">请输入答案：</div>
+					<div class="c">
+						<input type="text" name="answer" /><input type="hidden" name="type" value="2" /> 
+					</div>
+				</div>
+				<div class="user_right_border">
+					<div class="l">验证码：</div>
+					<div class="c">
+						<input name="valicode" type="text" size="11" maxlength="5"  tabindex="3"/>&nbsp;<img src="${webroot}/validimg.html" alt="点击刷新" onclick="this.src='/p2p/validimg.html?t=' + Math.random();" align="absmiddle" style="cursor:pointer" />
+					</div>
+				</div>
+				<#else>
+				<div class="user_help alert">您已经设置了密码保护功能，请先输入答案再进行修改。 </div>
+				<div class="user_right_border">
+					<div class="l">请选择问题：</div>
+					<div class="c">
+						<@linkage name="question" id="question" class="test" nid="pwd_protection" type="value"/>
+					</div>
+				</div>
+				<div class="user_right_border">
+					<div class="l">请输入答案：</div>
+					<div class="c">
+						<input type="text" name="answer" /> <input type="hidden" name="type" value="1" />
+					</div>
+				</div>
+				</#if>
+				<div class="user_right_border">
+					<div class="l"></div>
+					<div class="c">
+						<input type="submit" name="name"   class="btn-action"  value="确认提交" size="30" /> 
+					</div>
+				</div>
+				<div class="user_right_foot alert">
+				* 温馨提示：我们将严格对用户的所有资料进行保密
+				</div>
+				
+				</form>
+				<!--密码保护 结束-->
+				</#if>
+			</div>
+			<!--右边的内容 结束-->
+			</div>
+		</div>
+	</div>
+    </div>
+   </div>
+	<!--用户中心的主栏目 结束-->
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/modal.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/tab.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/alert.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/transition.js"></script>
+	<script type="text/javascript"
+		src="${request.getContextPath()}${theme_dir}/media/js/area.js"></script>
+	<#include "../include/footer.html">
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 ">
+<#assign webroot=request.getContextPath()>
+<#assign nid="member" >
+<#include "../../include/resource.html">
+<#include "../../common/function.html">
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+    <body>
+    <div id="main" class="clearfix container">
+        <div class="user_left">
+            <#include "../userLeftMenu.html">
+        </div>
+        <div class="user_right">
+            <div class="user-right-top clearfix">
+                <div class="subMenu">
+                    <a href="${webroot}/member/myAccount/myAccountPrize.html?status=0&prizeurl=kindPrize">我的奖励</a>
+                </div>
+                <div class="userRightMenu">
+                    <#include "prizeMenu.html">
+                </div>
+                <div class="rightDiv">
+                    <div class="kindPrize">
+                        <#if param?exists>
+                            <#assign isday=param.isday!"0">
+                            <#assign type=param.type!"0">
+                            <#assign apr=param.apr!"">
+                            <#assign naccount=param.naccount!0>
+                            <#assign naward=param.naward!0>
+                            <#assign timeLimit=param.timeLimit!"0">
+                            <#assign timeLimitDay=param.timeLimitDay!"0">
+                            <#assign status = param.status!>
+                        </#if>
+                        <ul>
+                            <#if list?exists>
+                                <#list list as prize>
+                                    <li>
+                                        <div><img src="${prize.imgUrl}" alt='图片加载失败'></div>
+                                        <div><h3> ${prize.prizeName} </h3>
+                                            <p>领取时间${prize.time!}</p>
+                                            <p>奖品详情请致电咨询400-900-5591</p>
+                                        </div>
+                                        <div><b>${prize.exchangeCode!}</b></div>
+                                    </li>
+                                </#list>
+                                <li>
+                                    <div id="page">
+                                        <#import "../../common/page.html" as pager>
+                                        <@pager.pagination page=page url="/member/myAccount/myAccountPrize.html?status=0&prizeurl=kindPrize" map=param style="style3"  />
+                                    </div>
+                                </li>
+                                <#else><li>没有数据</li>
+                            </#if>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<#include "../../include/footer.html">
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"> </script>
+</html>

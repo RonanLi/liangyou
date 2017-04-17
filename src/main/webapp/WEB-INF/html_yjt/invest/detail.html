@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<#include "../include/resource.html">
+<meta name="robots" content="nofollow"/>
+<style type="text/css" media="screen">
+    body{ margin:0; padding:0; width: 100%; font-family: Microsoft Yahei; }
+    .container{ width: 948px; margin:0 auto;}
+    .outer{ padding:0 40px; }
+    .card > div:after{ content:'\20'; display: table; clear:both; height: 0; }
+    .card{ margin-bottom: 20px; }
+    .card > h1{ position: relative; cursor: pointer; background: #f1f1f1; color: #797979; font-size: 24px; height: 44px; line-height: 44px; padding-left: 46px; border-radius: 10px; font-weight: normal; }
+    .card > h1:before{ content: '+'; display: inline-block; position: absolute; left: 10px; }
+    .card.show > h1:before{ content: '-'; left: 16px; }
+    .card.show > div{ display: block; }
+    .card p{ float: left; width: 576px; color: #909090; line-height: 28px; }
+    .card img{ float: right; }
+    .sq{ color:#1296fa; }
+    .card > div{ margin:20px 10px; display: none; }
+    .card.re img{ float: left; }
+    .card.re p{ float: right; }
+    .pad-r{ position: relative; font-size:16px;}
+    .justimg{ text-align: center; padding:26px 0; }
+    .card.re .justimg img{ float: none; }
+    .card.re .justimg.ep{ padding:0; }
+    .card.re .justimg.ep p{ float: none; width: 100%; text-align: left; }
+    .card.re .justimg.xrr h2{ text-align: left; margin: 4px 0; font-size: 20px; color: #656161; }
+    .card.re .justimg.xrr p{ float: none; width: 100%; text-align: left; }
+    .card.seven h3{ color: #656161;  }
+    .card.seven > div{ margin:0; padding:20px 10px; border-top:1px solid #e4e4e4; }
+    .card.seven > div h3{ margin-bottom: 16px;font-size: 19px; font-weight: bold;margin:0; margin-top: 34px;}
+    .card.seven > .rpox strong{ color: #656161; display: block; font-size: 19px; margin-bottom: 28px; }
+    .card.seven > div.topb{ border:none; margin-top: -26px; }
+    .card.seven > .rpox img{ float:left; margin:16px 0 0 0; width: 266px; }
+    .card.seven > .rpox p{ float: right; }
+    .card.re.none p{ color:#656161; }
+    .container ul.ulr{ list-style:none; text-align: left; }
+    .container ul.ulr li{ color:#656161; margin:20px 0; }
+    .container ul.ulr li div > div{ color:#909090; margin-top: 10px; font-size: 14px; margin-left: 18px; }
+    .pad-r:before{ content: '\20'; position: absolute; left: -16px; top: 8px; display: block; width: 8px; height: 8px; border-radius: 50%; background: #c17f05; opacity: .8;}
+	.tab_text,.tab_text>h1,.tab_text>p{padding:0 10px;line-height:3rem;}
+	.tab_text>h1{font-size:1.1rem;font-weight:bold;}
+	.tab_text>p{font-size:1rem;}
+	.tab_text>p>i{float:right;padding:10px 15px;margin-right:40%;;background:url('/themes/soonmes_yjt/liangyou/imgs/right.png')no-repeat center;}
+    .invest-form ul .experienceDetail{height:10px;margin:5px 0;line-height:10px;font-size:10px;color:#a67621;}
+</style>
+<body>
+<#assign nid="invest">
+<#include "../include/header.html">
+
+<#include "../common/function.html">
+<#assign user=borrow.user>
+<div id="container" style="margin-top: 25px;">
+    <#assign account=user.account >
+    <!-- 标的详细信息:begin -->
+    <div class="detail-wrap">
+        <div class="detail-title"><#if borrow.name?length lt 30>${borrow.name}<#else>${borrow.name[0..30]}...</#if><@showBorrowIcon item=borrow /></div>
+        <div class="invest-detail">
+            <input type="hidden" id="borrow-id" value="${borrow.id}">
+            <ul class="bid-info clearfix">
+                <li>
+                    <span class="title">年利率</span>
+                    <span class="number"> <!--${borrow.apr}%-->
+                        <!--加息活动修改-->
+                        <#if borrow.isday==1&&borrow.timeLimitDay==30&&("20161212"?date("yyyyMMdd") lt borrow.addtime?date) && (borrow.addtime?date lt "20170401"?date("yyyyMMdd"))>${borrow.apr-1}%<b style="color:#dfa151;">+1%</b>
+                        <#elseif borrow.isday==0&&borrow.timeLimit==1&&("20161212"?date("yyyyMMdd") lt borrow.addtime?date) && (borrow.addtime?date lt "20170401"?date("yyyyMMdd"))>${borrow.apr-1}%<b style="color:#dfa151;">+1%</b>
+                        <#elseif borrow.isday==0&&borrow.timeLimit==2&&("20161220"?date("yyyyMMdd") lt borrow.addtime?date) && (borrow.addtime?date lt "20170401"?date("yyyyMMdd"))>${borrow.apr-1}%<b style="color:#dfa151;">+1%</b>
+                        <#elseif borrow.isday==0&&borrow.timeLimit==3&&("20161212"?date("yyyyMMdd") lt borrow.addtime?date) && (borrow.addtime?date lt "20170401"?date("yyyyMMdd"))>${borrow.apr-1}%<b style="color:#dfa151;">+1%</b>
+                             <#else>${borrow.apr}%
+                        </#if>
+                        <!--加息活动修改结束-->
+                    </span>
+                </li>
+                <li>
+                    <span class="title">借款金额</span>
+                    <span class="number"><#if borrow.type ==110 || borrow.isAssignment == 1>${borrow.account?string(",###")}<#else>${borrow.viewMoney?string(",###")}</#if>元</span>
+                </li>
+                <li>
+                    <span class="title">借款期限</span>
+                    <span class="number"><#if borrow.isday??&&borrow.isday==1>${borrow.timeLimitDay!0}天<#elseif borrow.type==101>满标即还<#else>${(borrow.timeLimit)!0}个月</#if></span>
+                </li>
+                <#if borrow.award??&&borrow.award==1>
+                    <span class="award">${(borrow.partAccount)!0}% 投标奖励</span>
+                <#elseif borrow.award??&&borrow.award==2>
+                    <span class="award">${(borrow.funds)!0}元 投标奖励</span>
+                </#if>
+            </ul>
+            <div class="invest-state">
+                <span>已投金额：￥${borrow.accountYes?string(",###.##")}</span>
+                <span>还款方式：
+                    <#if borrow.isday??&&borrow.isday==1>到期全额还款
+                    <#elseif borrow.type==101>系统自动还款
+                    <#elseif borrow.type==110>一次性还款
+                    <#elseif borrow.style??&&borrow.style=="2">一次性还本付息
+                    <#elseif borrow.style??&&borrow.style=="3">每月还息到期还本
+                    <#else>按月分期还款</#if>
+                </span>
+                <div class="clearfix">
+                    <div class="progress-bar">
+                        <div style="width:
+                            <#if borrow.type==110 || borrow.isAssignment == 1>
+                                ${borrow.accountYes/borrow.account*100}%
+                            <#else>
+                                ${borrow.accountYes/borrow.viewMoney*100}%
+                            </#if>">
+                        </div>
+                    </div>
+                    <span class="fl">
+                        <#if borrow.type==110 || borrow.isAssignment == 1>
+                            ${borrow.accountYes/borrow.account*100}%
+                        <#else>
+                            ${(borrow.accountYes/borrow.viewMoney*100)}%
+                        </#if>
+                    </span>
+                </div>
+               <!-- <div>剩余时间：<#if borrow.status==1><span class="endtime" id="left_time" data-time="${dateformat(borrow.verifyTime?string("yyyy-MM-dd HH:mm:ss"), borrow.validTime )?c}"></span><#elseif borrow.status ==0> 等待初审中<#else>已经结束</#if></div>-->
+                <span style="font-size: 12px;display: block; width:100%;"><@showTenderMessage borrow=borrow /></span>
+            </div>
+        </div>
+    </div>
+    <!-- 标的详细信息:end -->
+
+    <!-- 投资表单:begin -->
+    <div class="invest-form">
+        <div class="form-title">投资金额</div>
+        <div class="remain-amount">
+            <#if borrow.type==110>
+                <span>当前可购买份数：<b>${((borrow.account?c!0)?number-(borrow.accountYes?c!0)?number)/borrow.flowMoney}份</b></span>
+                <span>每份流转金额：<b>${(borrow.flowMoney)?string("0.##")}元</b></span>
+                <input type="hidden" value="${(borrow.flowMoney)?string("0.##")}" id="single-flow-money">
+                <input type="hidden" value="${((borrow.account?c!0)?number-(borrow.accountYes?c!0)?number)/borrow.flowMoney}" id="remain-invest-amount">
+            <#else>
+                <span>剩余投资金额：<b>￥${(borrow.account-borrow.accountYes)?string(",###.##")}</b></span>
+                <span>最少投资金额：<b><#if borrow.lowestAccount??&&borrow.lowestAccount gt 0>￥${borrow.lowestAccount}<#else>无限制</#if></b>
+                <span>最多投资金额：<b><#if borrow.mostAccount?? && borrow.mostAccount gt 0>￥${borrow.mostAccount?c}
+                <input type="hidden" value="${borrow.mostAccount?c}" id="most-invest"><#else>无限制</#if></b></span>
+                <input type="hidden" value="${borrow.account-borrow.accountYes}" id="remain-invest-amount">
+            </#if>
+            <#if session_user??>
+                <span>账户余额：<b>￥${(session_user.account.useMoney)?string(",###")}</b></span>
+            <#else>
+                <span>账户余额：<a href="/user/login.html" style="color:#e7bb70;">[登录]</a>后可见</span>
+            </#if>
+        </div>
+            <#if borrow.status == 1>
+            <#assign nowTime=dateformat("now") >
+<#--            <#assign startTime=dateformat(borrow.startTenderTime) > -->
+<#--            <#if startTime - nowTime gt 0> -->
+            <#if 1!=1>
+                    <span class="bid-full">敬请期待</span>
+                <#elseif borrow.status==1&& ( borrow.accountYes gt borrow.account || borrow.accountYes==borrow.account )>
+                <span class="bid-full">已满标</span>
+                <#else>
+                <ul>
+                    <form action="${webroot}/borrow/tender.html" name="form1" method="post" autocomplete="off">
+                        <li class="cf" style="margin-bottom:0;">
+                            <#if borrow.type==110>
+                                <span class="fl mr15">购买份数:</span> 
+                            <#else>
+                                <input type="button" id="auto-input" value="自动填入" <#if session_user??>onclick="inputAll(
+                                    <#if borrow.lowestAccount??&&borrow.lowestAccount gt 0>${borrow.lowestAccount}<#else>50</#if>,
+                                    <#if borrow.mostAccount?? && borrow.mostAccount gt 0>${borrow.mostAccount?c}<#else>${borrow.account-borrow.accountYes}</#if>,
+                                    ${(session_user.account.useMoney)?c!0}, <#if em?? && em.interestIncomeStatus == 1 && em.interestUseStatus == 0>${em.experienceInterest}<#else>0</#if>)"<#else>disabled="disabled"</#if>>
+                            </#if>
+                            <div class="fl">
+                                <a href="javascript:" class="change-amount" id="decrease">-</a>
+                                <#if borrow.type==110>
+                                    <input type="text" id="money" name="tenderCount" value="1"  onkeyup="clearNoNum(this)">
+                                    <input type="hidden" id="flow_count" name="money">
+                                <#else>
+                                    <input type="text" id="money" onkeyup="clearNoNum(this)" name="money" value="<#if borrow.lowestAccount??&&borrow.lowestAccount gt 0>${borrow.lowestAccount}<#else>50</#if>"tabindex=1 >
+                                </#if>
+                                <a href="javascript:" class="change-amount" id="add">+</a>
+                            </div>
+                        </li>
+                        <#if borrow.pwd??&&borrow.pwd!="">
+                            <li style='height:10px;margin-top:-10px;'>定向密码: <input type="text" size="11" name="pwd" id="pwd" tabindex=3 style='padding:2px 0' ></li>
+                        </#if>
+                        
+                        <#if em?? && em.useStatus != 2 && em.interestIncomeStatus == 1 && em.interestUseStatus == 0>
+	                        <li class="experienceDetail">
+	                        	您有<b id="lixi"style="font-size:10px;color:red;">${em.experienceInterest}</b>元体验金收益，已抵扣本次投资本金，您只需支付<b id="money2"style="font-size:10px;color:red;"></b>元。
+	    					</li>
+    					<#else><li class="tip" style="height:10px;margin:5px 0;line-height:10px;font-size:10px;color:red"></li>
+    					</#if>
+                        <li>
+                            <#if session_user??>
+                                <a class="btn-invest" onClick="return check_form(${(borrow.lowestAccount?c)!0}, <#if borrow.mostAccount?? && borrow.mostAccount gt 0>${borrow.mostAccount?c}<#else>${borrow.account?c}</#if>, ${(session_user.account.useMoney)?c!0}, <#if em?? && em.interestIncomeStatus == 1 && em.interestUseStatus == 0>${em.experienceInterest}<#else>0</#if>,${borrow.account-borrow.accountYes})" style="cursor:pointer;">确认投标</a>
+                            <#else>
+                                <a href="/user/login.html" class="please-login">请先登录</a>
+                            </#if>
+                        </li>
+                        <p><input type="hidden" name="id" value="${((borrow.id)?default(0))?c}" /> </p>
+                    </form> 
+                </ul>
+                </#if>
+            <#elseif borrow.status == 8>
+                <span class="bid-full" style='margin-top:46px;'>已完成</span>
+            <#elseif borrow.status == -1>
+            <span class="bid-full">已撤回</span>
+            <#elseif borrow.status == 2>
+            <span class="bid-full">初审未通过</span>
+            <#elseif borrow.status == 4 ||  borrow.status == 49>
+            <span class="bid-full">初审未通过</span>
+            <#elseif borrow.status == 5>
+            <span class="bid-full">用户取消</span>
+            <#elseif borrow.status == 0>
+            <span class="bid-full">等待初审</span>
+            <#else>
+                <span class="bid-full"  style='margin-top:46px;'>已经满标</span>
+            </#if>  
+                
+            
+    </div> 
+    <!-- 投资表单:end -->
+    
+    <div class="clearfix"></div>
+    
+    <!-- 选项卡内容begin -->
+    <div id="detail-tab">
+    	<!-- 选项卡:begin -->
+        <ul id="tab" class="list-tab-invest clearfix">
+            <li class="active"><a href="###" data-toggle="tab">借款详细说明</a></li>
+            <li><a href="###" data-toggle="tab">安全保障措施</a></li>
+            <li ><a href="###" data-toggle="tab">风控意见</a></li>
+            <li ><a href="###" data-toggle="tab">审核状态</a></li>
+            <li><a href="###" data-toggle="tab">投标记录</a></li>
+        </ul>
+        <!-- 选项卡:end -->
+        <div id="myTabContent">
+        
+            <!-- 借款详情:begin -->
+            <div class="tab-pane" style="display: block;">
+                <div class="borrow-content">${borrow.content!}</div>
+            </div>
+            <!-- 借款详情:end -->
+
+            <!-- 安全保障:begin -->
+            <div class="tab-pane hide">
+	            <div class="container">
+				    <img src="/themes/soonmes_yjt/liangyou/imgs/xp1.jpg" alt="点击刷新" style="margin-bottom:10px;"/>
+				    <div class="outer">
+				        <div class="card f show">
+				          <h1>&nbsp;合规性多重资金担保</h1>
+				          <div>
+				              <div>
+                                  <p>京朋国际集团（香港）有限公司由董事局主席李柄江先生创办，于2001年成立福建永榕集团。李柄江先生不断依据国家大政方针，敏锐调整企业发展宏观战略，带领企业历时17载春秋，砥砺前行，如今集团业务已经辐射中国大陆、香港及东南亚等国际市场，企业成长为一家横跨电力、地产、国际贸易、金融、大农业等多领域的集团公司。 </p>
+                                  <p>2016年8月，集团公司正式进军北京，成立京朋（北京）贸易集团有限公司，隶属于京朋国际集团（香港）有限公司，负责中国大陆市场的整体运营，将严格遵循董事局战略方针，保证企业在中国大陆市场高效、有序运营，并取得快速、迅猛发展，力争把京朋打造成为国际一流企业及知名品牌。</p>
+                                  <p>宏京担保有限公司是经中华人民共和国国家工商行政总局批准登记注册的一家专业担保公司。注册资金10,100.00万人民币。经国家金融局工作核准颁发获得《中华人民共和国担保机构经营许可证》。 </p>
+                              </div>
+                              <img src="/themes/soonmes_yjt/liangyou/imgs/xpd6.png" alt="点击刷新" width="250"/>
+				          </div>
+				        </div>
+				        <div class="card f re">
+				          <h1>&nbsp;资金安全</h1>
+				          <div>
+                              <p class="lef">金和所用户的理财资金是与业内领先的第三方支付公司<span class="sq">双乾</span>进行合作，保证资金流转不经过金和所的银行账户，避免资金流入平台的银行账户形成资金池，导致资金池内资金被挪用而给交易双方带来的风险。</p>
+                              <img src="/themes/soonmes_yjt/liangyou/imgs/xpd3.jpg" alt="点击刷新"/>
+				          </div>
+				        </div>
+                        <div class="card f ">
+                            <h1>&nbsp;账户安全保障金</h1>
+                            <div>
+                                <p class="lef">据招商银行出具的最新报告显示，截至2017年02月21日，金和所的账户安全保障金更新增至为人民币<span class="sq">61052916.79</span>元，账户安全保障金从5000万、6000万再到6100万突破，是平台对用户的安全承诺。</p>
+                                <img src="/themes/soonmes_yjt/liangyou/imgs/xpd2.jpg" alt="点击刷新"/>
+                            </div>
+                        </div>
+				        <div class="card f re">
+				          <h1>&nbsp;全链条风控</h1>
+				          <div class="justimg">
+				            <img src="/themes/soonmes_yjt/liangyou/imgs/xpq5.jpg" alt="点击刷新"/>
+				          </div>
+				        </div>
+				        <div class="card f re">
+				          <h1>&nbsp;项目保障</h1>
+				          <div class="justimg ep">
+				            <p>所有项目均由金和所风控部和风审会进行严格审核。一个优质项目的诞生，要经过8道审核工序，37层严格筛选，层层剥离风险敞口。</p>
+				            <img src="/themes/soonmes_yjt/liangyou/imgs/xpq10.jpg" alt="点击刷新"/>
+				          </div>
+				        </div>
+				        <div class="card f re">
+				          <h1>&nbsp;机构保障</h1>
+				          <div class="justimg xrr">
+				            <img src="/themes/soonmes_yjt/liangyou/imgs/xpdq29.jpg" alt="点击刷新"/>
+				            <h2>合作保障机构</h2>
+				            <p>金和所有一套完善的保障机构评估体系，从区域地位、体量、历史、股东背景、风控水平、处置能力等多方面对机构进行考察。目前金和所已与全国80多家保障机构达成战略合作。保障机构不仅从贷前会对项目进行调研及风险评估，也会与金和所一起进行贷后管理。</p>
+				            <h2>本息保障制度</h2>
+				            <p>为了给投资人营造安全的投资环境，保证投资人的本息安全，保障机构会对投资人的本息提供保障，当投资项目出现企业无力偿还的情况，保障机构会进行全额赔付，保护投资人权益。</p>
+				          </div>
+				        </div>
+				        <div class="card f seven">
+				          <h1>&nbsp;合规保障</h1>
+				          <div class="topb">
+				            <h3>信息披露真实合规</h3>
+				            <p class="lef">金和所建立了专业的风控团队对项目进行全方位尽职调查，确保信息的真实性和合法性。并且将项目信息、借款企业情况公开透明，投资人可根据项目信息进行风险判断，进行自主投资。</p>
+				            <img src="/themes/soonmes_yjt/liangyou/imgs/qp8.jpg" alt="点击刷新" style="margin-top:-58px;"/>
+				          </div>
+				          <div class="rpox">
+				            <p class="lef"><strong>资金流转安全保障</strong>为最大程度的保障投资人的账户资金安全，资金的流转并不经过金和所平台，资金由第三方资产公司进行托管，实现了平台与资金的真正隔离，确保交易的真实性和投资人的资金安全。</p>
+				            <img src="/themes/soonmes_yjt/liangyou/imgs/qp9.jpg" alt="点击刷新"/>
+				          </div>
+				          <div>
+				            <h3>CFCA安全认证</h3>
+				            <p class="lef">中国金融认证中心简称CFCA，是经中国人民银行和国家信息安全管理机构批准成立的国家级权威的安全认证机构。金和所作为业内首家通过CFCA安全认证的互联网金融平台，您的每一次投资都由CFCA对网络交易及电子合同安全上锁。</p>
+				            <img src="/themes/soonmes_yjt/liangyou/imgs/qp10.jpg" alt="点击刷新"/>
+				          </div>
+				          <div class="rpox">
+				            <p class="lef"><strong>法律法规保障</strong>金和所与傲雪律师事务所进行合作，律所起草并审核金和所所有主营业务合同，制定充分保护投资人利益的条款；律所监督审核金和所对融资项目的尽职调查工作，确保尽调合规性、合法性、合理性。</p>
+				            <img src="/themes/soonmes_yjt/liangyou/imgs/qp11.jpg" alt="点击刷新"/>
+				          </div>
+				        </div>
+				        <div class="card f re">
+				          <h1>&nbsp;技术保障</h1>
+				          <div class="justimg ep">
+				            <p>技术层面，我们秉承用户的数据就是我们生命线的原则，通过多种防护手段保障用户数据安全，包括但不限于：</p>
+				            <img src="/themes/soonmes_yjt/liangyou/imgs/sjjj.jpg" alt="点击刷新"/>
+				          </div>
+				        </div>
+				        <div class="card f re none">
+				          <h1>&nbsp;自我保障</h1>
+				          <div class="justimg ep">
+				            <p>账户安全需要大家和金和所的共同努力。在此，我们倡导在网站使用过程中，注意以下几点：</p>
+				            <ul class="ulr" style="margin-left: 38px;">
+				              <li>
+				              	<div class="pad-r"> 牢记金和所官方网址：www.jinhefax.com<div>不要点击来历不明的链接访问金和所，谨防网站钓鱼和欺诈。我们建议您将金和所官方网址加入浏览器收藏夹，以方便您的下次登录。</div></div>
+				              </li>
+				              <li>
+				              	<div class="pad-r"> 设置高强度的密码<div>在设置登录密码和安全密码时，密码不要有一定的规律,密码长度要在6位以上，最好是数字和字母结合。定期修改密码并且不要将密码分享给他人。</div></div>
+				              </li>
+				              <li>
+				              	<div class="pad-r"> 设置紧急联系人<div>在“我的账户 – 安全设置”中设置紧急联系人信息。当出现紧急情况，如果我们无法与您联系，我们将与您设置的紧急联系人联系。</div></div>
+				              </li>
+				              <li>
+				              	<div class="pad-r"> 不要在公共场所登录<div>不要在网吧、公司等公共场所登录您的金和所账号，如果一定要登录请记得退出。</div></div>
+				              </li>
+				              <li>
+				              	<div class="pad-r"> 注重电脑运行环境的安全<div>及时为您的电脑进行系统更新、安装安全补丁，以防系统漏洞被黑客利用。为您的电脑安装杀毒软件或防火墙，并定期为电脑进行查毒、杀毒。</div> </div>
+				              </li>
+				            </ul>
+				          </div>
+				        </div>
+				     </div>
+				</div>
+            </div>
+            <!-- 安全保障:end -->
+            
+           	<!-- 风控意见:begin -->
+           	<div class="tab-pane hide">
+           		<div class="tab_text">
+	           		<h1>风控意见:</h1>
+	           		<p>(1)借款企业信用记录良好，已签署相关借款的交易协议。</p>
+				    <p>(2)其应收账款质押协议和担保公司的担保协议已经与本平台签署完毕。</p>
+				    <p>(3)本平台全程监管其资金使用和后续回款。</p>
+			    </div>  
+           	</div>
+           	<!-- 风控意见:end -->
+           	
+           	
+           	<!-- 审核状态:begin -->
+           	<div class="tab-pane hide ">
+           		<div class="tab_text">
+	           		<h1>审核状态:</h1>
+	           		<p>1、企业主体身份认证（股权结构、公司章程、五证）。<i></i></p>
+	           		<p>2、开展业务资质（政府各项批准文件等）审查。<i></i></p>
+	           		<p>3、现场勘察。<i></i></p>
+	           		<p>4、财务审计。<i></i></p>
+	           		<p>5、购销合同审核。<i></i></p>
+	           		<p>6、银行信用审核。<i></i></p>
+	           		<p>7、担保公司资质审查。<i></i></p>
+	           		<p>8、借款企业的其他尽调事项。<i></i></p>
+           		</div>
+           	</div>
+           	<!-- 审核状态:end -->
+            
+            <!-- 借款人资料:begin -->
+            <!--  <h1 class="tab-content-title">借款人资料</h1>
+                <#if borrow?? && borrow.openCredit=1>
+                    <ul class="person-info clearfix">
+                        <li>性别：<#if user.sex??><#if user.sex=="1">男<#else>女</#if><#else></#if></li>
+                        <li>婚姻状况：<#if user.userinfo??&&user.userinfo.marry??>${Type(user.userinfo.marry,"name")}</#if></li>
+                        <li>居住地：
+                        <#if user??>
+                            <#if user.province??>${user.province.name!}</#if>
+                            <#if user.city??>${user.city.name!}</#if>
+                            <#if user.area??>${user.area.name!}</#if>
+                        </#if></li>
+                        <li>出生年月：${user.birthday!}</li>
+                        <li>文化程度：<#if user.userinfo??&&user.userinfo.education??>${Type(user.userinfo.education,"name")}<#else></#if></li>
+                        <li>职业：<#if user.userinfo??&&user.userinfo.companyOffice??>${Type(user.userinfo.companyOffice,"name")}<#else></#if></li>
+                    </ul>
+                <#else>
+                    <ul class="person-info clearfix">
+                          <li>借款人未选择公开个人资料</li>
+                    </ul>
+                </#if>
+             -->
+            <!-- 借款人资料:end -->  
+            
+            
+            <!-- 投标记录:begin -->
+            <div class="tab-pane hide" id="tbinfo">
+                <ul class="clearfix" id="tbjlbox"></ul>
+                <div class="page">
+                    <div class="wp-page cf">
+                        <a href="javascript:" class="btn-prev">&lt;</a>
+                        <dl class="list-btn-page cf"></dl>
+                        <a href="javascript:" class="btn-next">&gt;</a>
+                    </div>
+                </div>
+            </div>
+			<div class="tab-pane hide" >
+			  <h1 class="tab-content-title">借还款记录</h1>
+                <#if borrow?? && borrow.openBorrow==1>
+                    <ul class="repay-detail clearfix">
+                        <li>借款总额：￥${(summary.borrowTotal)!0}元</li>
+                        <li>已还款总额：￥${(summary.yesRepayTotal)!0}元</li>
+                        <li>待还款总额：￥${(summary.repayTotal)!0}元</li>
+                        <li>逾期总额：￥${(summary.lateTotal)!0}元</li>
+                        <li>借款成功：${(summary.borrowTimes)!0} 次</li>
+                        <li>待还款期数： ${summary.waitRepayCount!0}期</li>
+                        <li>已成功还款： ${summary.hadRepayCount!0}期 </li>
+                    </ul>
+                <#else>
+                    <p style="line-height: 30px;color: #777;font-size: 14px;padding: 10px 0;">借款人未选择公开借款详情</p>
+                </#if>
+			</div>
+            <!-- 投标记录:end -->
+        </div>
+    </div>
+    <!-- 选项卡内容end -->
+</div>
+<#include "../include/footer.html">
+</body>
+<script type="text/javascript">
+ /*   function clearNoNum(obj){
+        obj.value = obj.value.replace(/[^\d.]/g,"");
+        obj.value  =obj.value.replace( /[1-9]\d{8}/,"");
+        obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3');
+        if(obj.value !=""){
+            obj.value= parseFloat(obj.value);
+        }
+        interest();
+    }*/
+    function clearNoNum(obj){
+        var obj_Value = obj.value.replace(/^\s+|\s+$/g, '');
+        if(isNaN(Number(obj_Value)) ||!(/^\d+(\.\d{1,2})?$/.test(obj_Value))){
+            obj.focus();
+            $(".tip").html('请输入合理的投资金额');
+            return false;
+        }
+        if(isNaN(Number(obj_Value)) ||!(/^\d+(\.\d{1,2})?$/.test(obj_Value))){
+            obj.focus();
+            $(".tip").html('请输入合理的提现金额');
+            return false;
+        }
+        if(isNaN(Number(obj_Value)) || Number(obj_Value) < 50){
+            obj.focus();
+            $(".tip").html('投资金额不得小于50元');
+            return false;
+        }
+        if(isNaN(Number(obj_Value)) ||Number(obj_Value)> 9999999999){
+                obj.focus();
+                $(".tip").html('投资金额已超过上限');
+                return false;
+            }
+        else{$(".tip").html('');}
+        interest();
+    }
+/* 动态利息计算  */
+var id = $('#borrow-id').val();
+console.log(id)
+var _XW = $('#Nu_w0457'), _mon = $('#money').val().trim();
+var lrn=$("#lixi").text().trim();
+_XW.text(_mon);
+$("#money2").text(_mon-lrn); 
+$('#shouyi').html(interest);
+$('#money').keyup(function(){
+	/*var c=$(this);
+    if(/[^\d\.]/.test(c.val())){//替换非数字字符  
+      var temp_amount=c.val().replace(/[^\d]/g,'');  
+      $(this).val(temp_amount);  
+    } */
+	interest();
+});
+function interest(){
+	var money= $('#money').val().trim();
+	console.log(money)
+	var id = $('#borrow-id').val();
+ 	var url ="/invest/interest.html?money="+money+"&borrowid="+id;
+ 	var lrn1=$("#lixi").text().trim();
+	$("#money2").text(money-lrn1); 
+	$('#Nu_w0457').text($('#money').val().trim());
+	$.ajax({
+ 		type : "POST",
+ 		url : url,
+ 		dataType : "json",
+ 		date:{},
+ 		async:false,
+ 		success : function(Obj) {
+ 			var interest=Obj.obj.interest;
+			$('#shouyi').html(interest);
+ 		}
+	});
+}
+/* 动态利息计算结束  */
+
+
+    $('.identify li div:not(":last")').css({'border-right':'2px solid #fff'});
+    $('.identify li:odd').css({background:'#eee'});
+
+    /* 增加/减少投资金额 */
+    var minAmount = parseInt($('#money').val());
+    var maxAmount = parseInt($('#remain-invest-amount').val());
+    var changeStep;
+    if(maxAmount >= 100){
+        changeStep = 100;
+    }else{
+        changeStep = 1;
+    }
+
+    $('#decrease').click(function() {
+        var v = parseInt($('#money').val());
+        if(v - changeStep <= minAmount) {
+            $('#money').val(minAmount);
+            $('#Nu_w0457').text($('#money').val().trim());
+            interest();
+        }else{
+            $('#money').val(v -= changeStep);
+            $('#Nu_w0457').text($('#money').val().trim());
+            interest();
+        }
+    });
+
+    $('#add').click(function() {
+        var v = parseInt($('#money').val());
+        if(v + changeStep  >= maxAmount) {
+            $('#money').val(maxAmount);
+            $('#Nu_w0457').text($('#money').val().trim());
+            interest();
+        }else{
+            $('#money').val(v += changeStep);
+            $('#Nu_w0457').text($('#money').val().trim());
+            interest();
+        }
+    });
+
+
+//         $('#money').bind('blur', function() {
+//             if($('#money').val() < minAmount) {
+//                 $('#money').val(minAmount);
+//             }
+//             if($('#money').val() > maxAmount) {
+//                 $('#money').val(maxAmount);
+//             }
+//         });
+
+</script>
+<script type="text/javascript">
+    Date.prototype.format = function(format){
+        var o = {
+            "M+" : this.getMonth()+1, //month
+            "d+" : this.getDate(), //day
+            "h+" : this.getHours(), //hour
+            "m+" : this.getMinutes(), //minute
+            "s+" : this.getSeconds(), //second
+            "q+" : Math.floor((this.getMonth()+3)/3), //quarter
+            "S" : this.getMilliseconds() //millisecond
+        };
+        if(/(y+)/.test(format))
+            format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+            if(new RegExp("("+ k +")").test(format))
+                format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] :("00"+ o[k]).substr((""+ o[k]).length));
+        return format;
+    };
+    function format(pnumber,decimals){
+        if (isNaN(pnumber)) {
+            return 0
+        }
+        if (pnumber == '') {
+            return 0
+        }
+        var snum = String(pnumber);
+        var sec = snum.split('.');
+        var whole = parseFloat(sec[0]);
+        var result = '';
+        if(sec.length > 1){
+            var dec = String(sec[1]);
+            dec = String(parseFloat(sec[1])/Math.pow(10,(dec.length - decimals)));
+            dec = String(whole + Math.round(parseFloat(dec))/Math.pow(10,decimals));
+            var dot = dec.indexOf('.');
+            if(dot == -1){
+                dec += '.';
+                dot = dec.indexOf('.');
+            }
+            while(dec.length <= dot + decimals) { dec += '0'; }
+            result = dec;
+        } else{
+            var dot;
+            var dec = String(whole);
+            dec += '.';
+            dot = dec.indexOf('.');
+            while(dec.length <= dot + decimals) { dec += '0'; }
+            result = dec;
+        }
+        return result;
+    }
+
+    var pageTotal=-1;
+    var pageCount = 0;
+    
+    showTenderList(1);
+    
+    function showTenderList(pagenum){
+   	 	jQuery.extend({
+   	        detailTenderPage:function(options) {
+   	            var defaults = {
+   	                param: {},
+   	                currentPage:1,
+   	                url:"",
+   	                callback:{}
+   	            };
+   	            var opts = $.extend(defaults, options);
+   	            opts.param.page=defaults.currentPage;
+   	            $.get(defaults.url,defaults.param,defaults.callback);
+   	        }
+   	    });
+        $.detailTenderPage({
+            param:{borrowid:${borrow.id}},
+            currentPage:pagenum,
+            url:'detailTenderForJson.html',
+            callback:function(result){
+                var databox = $("#tbjlbox");
+                var strs =  '<li class="title clearfix">' +
+                            '<div>投资人</div><div>年化收益</div><div>投资金额</div><div>有效金额</div><div>投资时间</div>' + 
+                            '</li>';
+                var strlenght = result.data.list.length;
+                if(pageTotal<0){
+                    pageTotal = result.data.page.pages;//分页数
+                    pageCount = pageTotal;
+                }
+                for(var i = 0; i<strlenght; i++){  
+                    strs += "<li class='clearfix'>"+
+                                "<div>"+result.data.list[i].user.username+"</div>"+
+                                "<div>"+"${borrow.apr}%"+"</div>"+
+                                "<div style='color:#ca9b5a'>￥"+result.data.list[i].money+"</div>"+
+                                "<div style='color:#ca9b5a'>￥"+result.data.list[i].account+"</div>"+
+                                "<div>"+new Date(result.data.list[i].addtime).format("yyyy-MM-dd hh:mm:ss")+"</div>"+
+                            "</li>";
+                }
+                databox.html(strs);
+                console.log('do');
+                showTenderPage(pagenum);
+            }
+        });
+    }
+
+    function showTenderPage(pagenum) {
+        var firstBtn    = '<dd><a href="javascript:void(0);" onclick = showTenderList(1);>1</a></dd>';
+        var lastBtn     = '<dd><a href="javascript:showTenderList(' + pageCount + ')">' + pageCount + '</a></dd>';
+        var minIndexBtn;
+        var maxIndexBtn;
+        var omitSymbol  = '<dd class="omit-symbol">...</dd>';
+        var currentIndex = pagenum;
+
+        $('.list-btn-page').empty();
+        if(pageCount <= 1) {
+            $('.wp-page').parent().remove();
+        }
+
+        if(pageCount <= 7) {
+            for(var i = 1;i <= pageCount;i++) {
+                var pageBtn = '<dd><a href="javascript:showTenderList(' + i + ')">' + i + '</a></dd>';
+                $('.list-btn-page').append(pageBtn);
+            }
+        }else{
+            if(currentIndex >= 5) {
+                if(currentIndex + 2 >= pageCount) {
+                    minIndexBtn = pageCount - 5;
+                    maxIndexBtn = pageCount - 1 
+                }else {
+                    minIndexBtn = currentIndex - 2;
+                    maxIndexBtn = currentIndex + 2;
+                }
+            }else {
+                minIndexBtn = 2;
+                maxIndexBtn = 6;
+            }
+            $('.list-btn-page').append(firstBtn);
+            // 如果minIndexBtn大于2，在首页按钮后面插入一个省略号
+            if(minIndexBtn > 2) {
+                $('.list-btn-page').append(omitSymbol);
+            }
+            for(var i = minIndexBtn;i <= maxIndexBtn;i++) {
+                var pageBtn = '<dd><a href="javascript:showTenderList(' + i + ')">' + i + '</a></dd>';
+                $('.list-btn-page').append(pageBtn);
+            }
+            if(maxIndexBtn < pageCount - 1) {
+                $('.list-btn-page').append(omitSymbol);
+            }
+            $('.list-btn-page').append(lastBtn);
+        }
+
+        $('.list-btn-page dd').children('[href="javascript:showTenderList(' + currentIndex + ')"]').addClass('current');
+    }
+
+    $('.btn-prev').bind('click', function() {
+        var currentIndex = parseInt($('.list-btn-page dd a.current').text());
+        currentIndex > 1 ? showTenderList(currentIndex - 1) : '';
+    });
+    $('.btn-next').click(function() {
+        var currentIndex = parseInt($('.list-btn-page dd a.current').text());
+        currentIndex < pageCount ? showTenderList(currentIndex + 1) : '';
+    });
+   
+</script>
+<script type="text/javascript">
+    function check_form(lowest,most,use_money,em_money,cantender){
+        console.log("可用体验金利息：" + em_money);
+         var frm = document.forms['form1'];
+         var account = $("#money").val();
+         var flowMoney = ${(borrow.flowMoney)?number};
+         if(flowMoney > 0){
+            account = account * flowMoney;
+            $("#flow_count").val(account);
+         }
+          // alert($("#flow_count").val());
+         if (account==""){
+            alert("投标金额不能为空");
+            return false;
+         }else if( isNaN(account) ){
+            alert('投标金额必须为数字');
+            return false;
+         }else if($('#pwd').length && !$('#pwd').val()) {
+            alert('请输入定向密码');
+            return false;
+         }else if (account>use_money + em_money){
+            alert("您的可用余额小于您的投标额，要投标请先充值。");
+           location.href='/member/account/newrecharge.html';
+            return false;
+        }else if (account>most && most>0 && $('#single-flow-money').length){
+            alert("投标金额不能大于最大限额"+most+"元");
+            return false;
+         }else if(account<lowest && lowest>0 && lowest < cantender){
+            alert("投标金额不能低于最小限额"+lowest+"元");
+            return false;
+         } 
+       if(confirm('确定要投标'+account+'元，确定了将不能取消')){
+            frm.submit();
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    function inputAll(lowest, most, useMoney, emMoney){
+        console.log("自动填入，+可用体验金利息：" + emMoney);
+        var remainMoney = parseFloat($('#remain-invest-amount').val());
+        var maxInvestVal = ($('#most-invest').length ? (remainMoney < parseFloat($('#most-invest').val()) ? remainMoney : parseFloat($('#most-invest').val())) : remainMoney);
+        if((useMoney+emMoney) >= maxInvestVal){
+            $("#money").val(maxInvestVal);
+            interest();
+        }else{
+            $("#money").val(useMoney+emMoney);
+            interest();
+        }
+    }
+
+    function changeNum(){
+        function  getNum(obj0){
+            var inputBox = $(".nums",obj0);
+            inputBox.blur(function(){
+                inputNum  = parseInt(inputBox.attr("value"));
+                var maxNum = parseInt($(".max",obj0).text());
+                if(!isNaN(inputNum))
+                {
+                    if(inputNum>maxNum)
+                    {
+                        inputBox.attr("value",maxNum);
+                    }
+                    else{
+                        inputBox.attr("value",inputNum);
+                    }
+                }else{
+                    inputBox.attr("value",1);
+                }
+            })
+
+        }
+        function add(obj1){//增加
+            var addObj = $(".add",obj1);
+            addObj.click(function(){
+                var num = $(".nums",obj1).attr("value");
+                var maxNum =($(".max",obj1).text());
+                maxNum = maxNum.split(",");
+                maxNum = parseInt(maxNum[0]+maxNum[1]);
+                num++;
+                if(num>maxNum)
+                    return false;//获取当前的对象的 最大分数  判断是否大于，大于剩下的分数 就不在增加
+                $(".nums",obj1).attr("value",num);
+            })
+        }
+        function less(obj2){ //减少
+            var lessObj = $(".less",obj2);
+            lessObj.click(function(){
+                var num = $(".nums",obj2).attr("value");
+                num--;
+                if(num<1)
+                {
+                    return false;
+                }//获取当前的对象的最小值  判断是否小于0，小于0 就不在减少
+                $(".nums",obj2).attr("value",num);
+            })
+
+        }
+        var flow_input=$("#flow_num");
+        add(flow_input); //对当前form下面的 增加分数 进行操作
+        less(flow_input);//对当前form下面的 减少分数 进行操作
+        getNum(flow_input);
+
+    }
+    changeNum();
+</script>
+<#if isBlackFriend??&&isBlackFriend==1 >
+<script>
+    alert('本标借款者已存在您的好友黑名单中，请谨慎投资!');
+</script>
+</#if>
+<script type="text/javascript" src="${request.getContextPath()}${theme_dir}/media/js/jquery.fancybox-1.3.1.pack.js"></script>
+<link rel="stylesheet" type="text/css" href="${request.getContextPath()}${theme_dir}/media/css/fancybox.css">   
+<script type="text/javascript">
+    $(function(){           
+        $("a[rel=group]").fancybox({
+            'titlePosition' : 'over',
+            'cyclic'        : true,
+            'titleFormat'   : function(title, currentArray, currentIndex, currentOpts) {
+                        return '<span id="fancybox-title-over">' + (currentIndex + 1) + ' / ' + currentArray.length + (title.length ? ' &nbsp; ' + title : '') + '</span>';
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function(){
+           var Imgbox=$("#jkxq");
+           var Oimg=$("img",Imgbox);
+           Oimg.each(function(){       
+               $(this).wrap("<a rel='group'></a>");
+               var Imgsrc=$(this).attr("src");
+               var Ahref=$(this).parent().attr("href",Imgsrc).addClass("obja");            
+               var ImgAtl = $(this).attr("alt");
+               //$(".obja").text(ImgAtl);
+               });
+            var oA = $(".obja");
+            oA.each(function(){
+                Imgbox.append($(this));
+            });
+        
+        $("a[rel=group]").fancybox({
+            'titlePosition' : 'over',
+            'cyclic'        : true,
+            'titleFormat'   : function(title, currentArray, currentIndex, currentOpts) {
+                        return '<span id="fancybox-title-over">' + (currentIndex + 1) + ' / ' + currentArray.length + (title.length ? ' &nbsp; ' + title : '') +    '</span>';
+            }
+        });
+    });
+    
+    var leftSeconds = parseInt($("#left_time").attr("data-time"));
+    function returnLeftTime(){
+        leftSeconds = leftSeconds - 1;
+        var day = parseInt(leftSeconds/(24*3600));
+        var hour = parseInt( (leftSeconds-day*24*3600)/3600);
+        var minute = parseInt( (leftSeconds-day*24*3600-hour*3600)/60);
+        var seconds = parseInt( (leftSeconds-day*24*3600-hour*3600-minute*60));
+        var dayStr  =  day>0? (day +"天"):("");
+        var hourStr =  hour>0? (hour +"小时"):("");
+        var minuteStr = minute>0? (minute +"分钟"):("");
+        var secondsStr =  seconds>0? (seconds +"秒"):("");
+        var leftStr = dayStr + hourStr + minuteStr+secondsStr;
+        $("#left_time").html(leftStr);
+    }
+    $(function(){
+        returnLeftTime();
+        setInterval("returnLeftTime()",1000);
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.bootcss.com/jquery/1.12.0/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('.card').on('click','h1',function(){
+          if( $(this).parent().hasClass('show') ){
+             $(this).parent().removeClass('show');
+          }else{
+             $(this).parent().addClass('show');
+          }
+          
+        });
+    });
+</script>
+
+</html>

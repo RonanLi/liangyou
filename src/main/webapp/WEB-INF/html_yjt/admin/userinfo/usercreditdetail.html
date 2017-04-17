@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+<body>
+	<table class="mc">
+		<tr>
+			<td class="mc-l">
+				<!--左侧导航---{-->
+				<div id="navPanelContainer">
+					<div class="system-logo cd"></div>
+					<!--管理员信息---{-->
+					<#include "../adminInfo.html">
+					<!--管理员信息---}-->
+					<div class="nav-wrap"><#include "left.html"></div>
+				</div> <!--左侧导航---}-->
+			</td>
+			<td class="mc-m">
+				<div class="navToggle"></div>
+			</td>
+			<td class="mc-r">
+				<!--顶部导航---{--> <#include "../topNav.html"> <!--顶部导航---}--> <!--面包屑导航---{-->
+				<#assign moduleName="查看积分明细"> <#include "banner.html"> <!--面包屑导航---}-->
+<!--工具栏--{-->
+                            <#assign  userId = param.userId!>
+                            <#assign  type_id = param.type_id!>
+
+                            <div id="toolbar" class="clearfix">
+                            <form action="${request.getContextPath()}/admin/userinfo/usercreditdetail.html" method="post">
+                                 <div class="toolbor-module search">    
+                                   <input type="hidden" value="${userId}" name="userId" >
+                                   <input type="submit" value="搜索"  class="input-button" >
+                                </div>
+                                <div class="toolbor-module search">   
+                                   <select name="type_id" id="type_id">
+									<option value="0">全部</option>
+									<#list userCreditType as item>
+									<option value="${item.id!}" <#if item.id?c==type_id>selected="selected"</#if>>${item.name!}</option>
+									</#list>
+									</select>
+                                </div>
+                               
+                                </form>
+                            </div>
+                            <!--工具栏--}-->
+				<div id="main" class="clearfix">
+					<#if list??>
+					<table class="data-list">
+						<tr class="header">
+							<td>ID</td>
+							<td>用户名称</td>
+							<td>积分类型</td>
+							<td>变动数值</td>
+							<td>变动类型</td>
+							<td>备注</td>
+							<td>记录时间</td>
+							<td>操作</td>
+						</tr>
+						<#list list as item>
+						<tr class="s">
+							<td><#if item.id??>${item.id!}<#else></#if></td>
+							<td><#if item.user.username??>${item.user.username!}<#else></#if></td>
+							<td><#if item.userCreditType.name??>${item.userCreditType.name!}<#else></#if></td>							
+							<td><#if item.operateValue??>${item.operateValue!}<#else></#if></td>
+							<#if item.op==1>
+							<td>增加</td>
+							<#else>
+							<td>减少</td>
+							</#if>
+							<td><#if item.remark??>${item.remark!}<#else></#if></td>
+							<td><#if item.addtime??>${item.addtime!}<#else></#if></td>
+							<td>
+                                -
+                            </td>
+						</tr>
+						</#list>
+					</table>
+
+					<#else>暂无</#if>
+`
+<!--翻页系统--{-->     
+						<div class="container"><#import "../../common/page.html" as
+							pager> <@pager.pagination page=page
+							url="/admin/userinfo/usercreditdetail.html" map=param style="style1"
+							/></div>
+					
+						<!--翻页系统--}-->
+					<!--底部工具栏--{-->
+					<div id="bottomToolbar" class="clearfix">
+						<div class="other-tool">
+							<dl class="refresh-data">
+								<dt class="refresh-data-icon"></dt>
+								<dd>
+									<a href="javascript:void(0);" class="refresh-page">刷新数据</a>
+								</dd>
+							</dl>
+						</div>
+
+					</div>
+					<!--底部工具栏--}-->
+				</div>
+
+			</td>
+		</tr>
+		<tr>
+			<!--尾部--{-->
+			<td colspan="3" class="mc-b"><#include "../foot.html"></td>
+			<!--尾部--}-->
+		</tr>
+	</table>
+
+</body>
+</html>
+<#include "../jsPage.html">

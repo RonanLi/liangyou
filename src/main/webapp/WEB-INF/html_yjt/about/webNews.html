@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<#assign nid="about" >
+<#include "../include/resource.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/about/css/abStyle.css" type="text/css" /> 
+<body class="index-body">
+<#include "../include/header.html"> 
+<!--header-end-->
+<div class="wrap">
+	<div class="contain">
+		<div class="webNews">
+			<div class="webNews_tab">
+				<span class="on">媒体报道</span><span>网站公告</span>
+				<#-- <#list siteList as item>
+					<span class="on">${item.name}</span>
+				</#list> -->
+				
+			</div>
+			<!-- 媒体报道  -->
+			<div class="webNews_line S"><#include "mtbd.html"></div>
+			<!-- 网站公告 -->
+			<div class="webNews_line"><#include "wzgg.html"></div>
+		</div>
+	</div>
+</div>
+<#include "../include/footer.html">
+</body>
+<script type="text/javascript" src="${webroot}${theme_dir}/about/js/abcommon.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		if( location.search.indexOf('notice') > 0 ){
+			$('.webNews_tab span:last-child').trigger('click');
+		}
+	});
+</script>
+</html>
+

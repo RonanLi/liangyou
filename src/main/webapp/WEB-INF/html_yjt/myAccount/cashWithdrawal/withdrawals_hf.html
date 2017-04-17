@@ -1,0 +1,102 @@
+<#if lateCount?? && lateCount gt 0 >
+    <div class="fromBox">
+        <div class="boxIpt" >
+            您有${lateCount}笔逾期的借款，请先还款！
+        </div>
+        <div class="boxIpt">
+            <a href="${webroot}/member/myAccount/repaymentBorrowing.html">>>点击进入还款</a>
+        </div>
+    </div>
+    <#else>
+        <div class="reminder">*温馨提示：
+            1、您的银行卡的开户名应与在${webname}网站注册的真实姓名一致；<br/>
+            2、请输入提现金额；<br/>
+            3、取现费用由“汇付天下”收取，具体收费标准详见“汇付天下”页面提示。<br/>
+            <span>建议使用IE8及以上浏览器</span>
+        </div>
+        <form action="doNewcash.html" method="post" onSubmit="return check_form()" name="form1" target="_black">
+
+            <div class="fromBox">
+                <div class="boxTxt">真实姓名：</div>
+                <div class="boxIpt">${user.realname[0..0]!}***</div>
+            </div>
+
+            <div class="fromBox">
+                <div class="boxTxt">账户余额：</div>
+                <div class="boxIpt"> ${account.total!0}元</div>
+            </div>
+
+            <div class="fromBox">
+                <div class="boxTxt">可用余额：</div>
+                <div class="boxIpt"> ${account.useMoney!0}元 <input type="hidden" value="${account.useMoney?c}" id="userUseMoney"></div>
+            </div>
+
+            <div class="fromBox">
+                <div class="boxTxt">冻结总额：</div>
+                <div class="boxIpt">${account.noUseMoney!0}元</div>
+            </div>
+
+            <div class="fromBox">
+                <div class="boxTxt">已绑定银行卡：</div>
+                <div class="boxIpt">
+                    <#if !banklist??><a href="${webroot}/member/myAccount/bindBank.html">点击添加银行卡</a>
+                        <#else>
+                            <#list banklist as item>
+                                ${item.bank.bankName!""}：
+                                <#if item.account?length lt 10>${item.account}
+                                    <#else>${item.account?substring(0,4)}****${item.account?substring((item.account?length)-4,(item.account?length))}
+                                </#if>
+                                <br/>
+                            </#list>
+                    </#if>
+                </div>
+            </div>
+
+
+            <div class="fromBox">
+                <div class="boxTxt">提现金额：</div>
+                <div class="boxIpt"><input type="text" name="money" id="cash_money" onkeyup="clearNoNum(this)"/>&nbsp;&nbsp; 元 <span class="tip"></span> </div>
+            </div>
+
+            <div class="fromBox">
+                <div class="boxTxt">验证码：</div>
+                <div class="boxIpt" ><input name="valicode" id="valicode" type="text" size="11" maxlength="5"  tabindex="3"/>&nbsp;<img src="${request.getContextPath()}/validimg.html" alt="点击刷新" onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();" align="absmiddle" style="cursor:pointer; display:inline-block;zoom:1;*display:inline; *float:none;" /> </div>
+            </div>
+
+            <div class="fromBox">
+                <div class="boxTxt"></div>
+                <div class="boxIpt"><input type="hidden" name="type" value="newcash" /> <input type="submit" class="btn-action"  name="name"  value="确认提交" size="30" /> </div>
+            </div>
+
+        </form>
+        <div class="notes">金和所禁止信用卡套现、虚假交易等行为，已经发现将给予处罚，包括但不限于:限制说款，冻结账户，永久停止服务，并可能影响信用等级。</div>
+</#if>
+
+
+<script type="text/javascript">
+    var use_money = parseFloat(${account.useMoney?c});
+    function check_form(){
+        clearNoNum(this)
+        var frm = document.forms['form1'];
+        var money = parseFloat(frm.elements['money'].value);
+        var valicode = frm.elements['valicode'].value;
+        var userUseMoney =jQuery("#userUseMoney").val();
+        var errorMsg = '';
+
+        if (money.length == 0 ) {
+            errorMsg += '请输入你的提现金额' + '\n';
+        }
+        if (money >use_money) {
+            errorMsg += '您的提现金额大于现有的可用余额' + '\n';
+        }
+        if(valicode.length ==0){
+            errorMsg += '请输入验证码！' + '\n';
+        }
+        if (errorMsg.length > 0){
+            alert(errorMsg);
+            return false;
+        } else{
+            return true;
+        }
+    }
+</script>

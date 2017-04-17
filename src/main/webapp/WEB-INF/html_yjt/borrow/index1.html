@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<#include "../include/resource.html">
+<body>
+<#assign nid="borrow" >
+<#include "../include/header.html">
+<div class="bg-stripe-borrow">
+    <div class="bg-borrow">
+        <div id="container">
+        	<ul class="wrapper-type">
+    			<li class="list-item1">
+    				<h1>生意贷</h1>
+    				<p>适用区域：全国</p>
+    				<p>借款期限：1-12个月</p>
+    				<p>借款速度：最快当日到账</p>
+    				<p>借款成本：小于2%/月</p>
+    				<a href="">立即申请</a>
+    			</li>
+    			<li class="list-item2 hover">
+    				<h1>房产抵押贷</h1>
+    				<p>适用区域：全国</p>
+    				<p>借款期限：1-12个月</p>
+    				<p>借款速度：最快当日到账</p>
+    				<p>借款成本：小于2%/月</p>
+    				<a href="">立即申请</a>
+    			</li>
+    			<li class="list-item3">
+    				<h1>企业经营贷</h1>
+    				<p>适用区域：全国</p>
+    				<p>借款期限：1-12个月</p>
+    				<p>借款速度：最快当日到账</p>
+    				<p>借款成本：小于2%/月</p>
+    				<a href="">立即申请</a>
+    			</li>
+        	</ul>
+        </div>
+    </div>
+</div>
+<#include "../include/footer.html"> 
+</body>
+<script type="text/javascript">
+	$('.wrapper-type li').hover(function() {
+		$(this).addClass('hover').siblings().removeClass('hover');
+	});
+</script>
+</html>

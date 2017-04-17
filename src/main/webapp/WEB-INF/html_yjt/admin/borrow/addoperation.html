@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="审核流程管理">
+                    <#include "banner.html">
+                    <div id="toolbar" class="clearfix">
+			                 <div class="toolbor-module search">
+			                      <input type="button" class="input-button return" value="返回" onclick="history.go(-1)">
+			                 </div>
+           			 </div>
+						    <div class="clearfix">
+						    <form name="info" action="addOperationFlow.html" onsubmit="return checkInfo()" method="post" > 
+						             <div class="valBox w750">
+						                 <div class="top">
+						                     <strong>新增流程</strong>
+						                 </div>
+						                 <div class="val clearfix">
+						                     <ul>
+							                     <li>
+							                             <div class="title">选择操作类型：</div>
+							                             <div class="v">
+							                                <select name="type" <#if oper??>disabled="disabled"</#if> >
+															<option value="001" <#if oper??&&oper.operateType=="001">selected="selected"</#if> >标初审</option>
+															<option value="002" <#if oper??&&oper.operateType=="002">selected="selected"</#if>>标复审</option>
+															<option value="003" <#if oper??&&oper.operateType=="003">selected="selected"</#if>>信用额度审核</option>
+															<option value="004" <#if oper??&&oper.operateType=="004">selected="selected"</#if>>网站垫付审核</option>
+															<option value="005" <#if oper??&&oper.operateType=="005">selected="selected"</#if>>撤回审核</option>
+															</select>&nbsp;&nbsp;&nbsp;为指定的操作添加流程
+															<#if  oper??&&oper.operateType!=''><input type="hidden" name="type" value="${oper.operateType}" /></#if>
+							                             </div>
+						                         </li>
+						                         <li> 
+						                             <div class="title">流程名称：</div>
+						                             <div class="v">
+						                                 <input type="text" name="flow_name" value="<#if oper??&&oper.name??>${oper.name}</#if>"/>&nbsp;&nbsp;&nbsp;为当前流程添加文字说明，比如：总经理【标初审审核】
+						                             </div>
+						                         </li>
+						                         <li>
+						                             <div class="title">流程顺序：</div>
+						                             <div class="v">
+						                                 <input type="text" name="sort"  value="<#if oper??&&oper.sort??>${oper.sort}</#if>" <#if oper??>readonly="true"</#if> />&nbsp;&nbsp;&nbsp;指定当前流程是第几个操作，必须是整数；比如标的初审流程一共有5个，总经理审核是最后一个，当前值应该输入5
+						                             </div>
+						                         </li>
+						                         <li>
+						                             <div class="title">是否启用：</div>
+						                              <select name="status">
+															<option value="1" <#if oper??&&oper.status==1>selected="selected"</#if> >启用</option>
+															<option value="2" <#if oper??&&oper.status==2>selected="selected"</#if>>停用</option>
+													</select>
+						                         </li>
+						                         <li>
+						                             <div class="title">选择用户类型：</div>
+						                             <div class="v">
+						                                 <select name="user_type_id">
+															<#list userTypeList as userType>
+																<option value="${userType.typeId!}" <#if oper??&&(oper.userType.typeId?number)==(userType.typeId?number)>selected="selected"</#if> >${userType.name}</option>
+															</#list>
+														</select>&nbsp;&nbsp;&nbsp;指定哪类用户可以进行此操作
+						                             </div>
+						                         </li>
+						                         <li>
+						                             <div class="title">验证码：</div>
+						                             <div class="v">
+						                                 <input type="text" name="validCode" id="" class="yzm"> <img src="${request.getContextPath()}/validimg.html" alt="点击刷新" 
+	   onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();" style="position:relative;top:13px;"  />
+						                             </div>
+						                         </li>
+						                     </ul>
+						                     <div class="other">
+						                     	<#if oper??>
+						                     	<input type="hidden" name="id" value="${oper.id}" />
+						                     	<input type="submit" value="确认修改" class="input-button confirm"/>
+						                     	<#else>
+						                         <input type="submit" value="添加" class="input-button confirm"/>
+						                         </#if>
+						                     </div>
+						                 </div>
+						             </div>
+						     </div>
+						    </form>
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+    <script type="text/javascript">
+    	function checkInfo(){
+    		
+    	    var msg = "";
+    		var type = document.info.type.value;
+    		var flow_name = document.info.flow_name.value;
+    		var sort = document.info.sort.value;
+    		var user_type_id = document.info.user_type_id.value;
+    		var validCode = document.info.validCode.value;
+    		if(/^\s*$/.test(type)){
+    			msg = "请您选择操作类型";
+    		}
+    		if(/^\s*$/.test(flow_name)){
+    			msg = "请您填写流程名称";
+    		}
+    		if(/^\s*$/.test(type)){
+    			msg = "请您选择操作类型";
+    		}
+    		if(/^\s*$/.test(sort)){
+    			msg = "请您填写流程顺序";
+    		}
+    		if(!/^[1-9][0-9]*$/.test(sort)){
+    			msg = "流程顺序必须为整数";
+    		}
+    		if(/^\s*$/.test(user_type_id)){
+    			msg = "请您选择用户类型";
+    		}
+    		if(/^\s*$/.test(validCode)){
+    			msg = "请您输入验证码";
+    		}
+    		if(!/^\s*$/.test(msg)){
+    		   alert(msg);
+    		   return false;
+    		}
+    		
+    	}
+    </script>
+   </body>
+</html>
+<#include "../jsPage.html">

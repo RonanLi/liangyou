@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html">
+<body>
+	<#assign nid="member"> 
+	<#include "../../include/header.html">
+	<!--header-end-->
+	<!--用户中心的主栏目 开始-->
+    <div class="container-bg"> 
+	<div id="main" class="clearfix" >
+		<div class="wrap950 " style="margin-top:0">
+			<!--左边的导航 开始-->
+			<div class="user_left">
+            	<#assign mid="m_security" >
+				<#include "../user_menu.html">
+			</div>
+			<div class="user_right">
+				<div class="user_right_main">
+				<#if user.apiId ??>
+				<div class="user_help alert">开通成功,您的账户名是：${webId}${user.username}</div>
+				<#if user.apiStatus !=1>
+				<div class="user_right_border">
+					<div class="e">您的账户未激活，现在去激活吧---></div>
+					<div class="c">
+						<a href="/member/index.html#locateAct">点我去激活哦</a> 
+					</div>
+				</div>
+				</#if>
+				</#if>
+				<div class="user_right_foot alert">
+				* 温馨提示：我们将严格对用户的所有资料进行保密
+				</div>
+			</div>
+			<!--右边的内容 结束-->
+			</div>
+		</div>
+	</div>
+    </div>
+	<!--用户中心的主栏目 结束-->
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/modal.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/tab.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/alert.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/transition.js"></script>
+	<script type="text/javascript"
+		src="${request.getContextPath()}${theme_dir}/media/js/area.js"></script>
+	<#include "../../include/footer.html">
+</body>
+</html>

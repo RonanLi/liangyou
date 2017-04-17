@@ -1,0 +1,50 @@
+<table  border="0"  cellspacing="1" class="table table-striped  table-condensed" >
+							<tr class="head">
+								<td class="color_f5">提现银行</td>
+								<td class="color_f5">提现账号</td>
+								<td class="color_f5">提现总额</td>
+								<!--
+								<td class="color_f5">到账金额</td>								  
+								<td class="color_f5">手续费</td>
+								-->
+								<td class="color_f5">提现时间</td>
+								<td class="color_f5">审核说明</td>
+								<td class="color_f5">状态</td>								
+								<td class="color_f5">操作</td>
+							</tr>
+							<#include "../../common/function.html"> 
+							<#list list as item>
+							<tr>
+								<td>${item.accountBank.bankMmm.bankName!}</td>
+								<td>
+									<#if item.accountBank.account?length lt 8>
+										${item.accountBank.account}
+									<#else>
+										${item.accountBank.account?substring(0,4)}****${item.accountBank.account?substring((item.accountBank.account?length)-4,(item.accountBank.account?length))}
+									</#if>
+								</td>
+								<td>￥${item.total!0}</td>
+								<!-- 
+								<td>￥${item.credited!0}</td>
+								<td>￥${item.fee!}</td>
+								 -->
+								<td>${item.addtime}</td>
+								<td>
+									<#if item.verifyRemark?exists&&item.verifyRemark!="">
+										${item.verifyRemark}
+									<#else>
+										-
+									</#if>
+								</td>
+								<td><#if item.status==0>审核中<#elseif item.status==1>提现成功<#elseif item.status==3>提现失败<#elseif item.status==2>用户取消</#if></td>
+								<td>
+								<#if item.status==0>
+											<a href="#" onclick="javascript:if(confirm('确定要取消此提现申请')) location.href='cancelCash.html?id=${item.id?c}'">取消提现</a>
+										<#else>
+											-
+										</#if>
+										</td>
+							</tr>
+							</#list>
+							
+						</table>

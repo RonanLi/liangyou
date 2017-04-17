@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html">
+<body>
+	<#assign nid="member"> 
+	<#include "../../include/header.html">
+	<!--header-end-->
+	<!--用户中心的主栏目 开始-->
+    <div class="container-bg"> 
+	<div id="main" class="clearfix">
+		<div class="wrap950 " >
+			<!--左边的导航 开始-->
+			<div class="user_left">
+				<#include "../user_menu.html"></div>
+			<!--左边的导航 结束-->
+
+			<!--右边的内容 开始-->
+			<div class="user_right">
+
+				<#if msg?exists>
+				<div id="msg24">
+					<p class="ok">${msg}</p>
+				</div>
+				<#else> <#if errormsg?exists>
+				<div id="msg25">
+					<p class="error">${errormsg}</p>
+				</div>
+				</#if> </#if>
+				<div class="user_right_menu">
+					<#assign auto_type="add" >
+					<#include "auto_menu.html">
+				</div>
+				<!--自动投标 开始-->
+				<div class="user_right_main">
+				<!-- Form start -->
+				<form  method="post" name="form1"  action="auto.html" >
+				
+				<div class="user_help alert">
+				自动投标时，只有满足下面您选择的条件时系统才会为您自动投标。
+				</div>
+		
+           <!--  <div class="user_right_border">
+	            <div class="l">状态：</div>
+	            <div class="c">
+	            	<input id="status" type="checkbox" name="status" value="1" />
+	            </div>
+	            <div class="c">
+	            	是否启用(如果不选中则当前规则不会生效) 
+	            </div>
+            </div>
+            
+            <div class="user_right_border">
+	            <div class="l">金额：</div>
+	            <div class="c">每次投标</div>
+	            <div class="c">
+	            	<input name="tender_account" type="text" maxlength="5" id="tender_account"  style="width:80px;" value="" />
+	            </div>
+	            <div class="c">元(最少50元)</div>
+            </div>
+            
+            <div class="user_right_border">
+	            <div class="l">还款方式：</div>
+	            <div class="c">
+	            	
+					<input id="borrow_style_status" type="checkbox" name="borrow_style_status" value="1"  /><label for="">启用  还款方式必须为</label> 
+					<select name="borrow_style" id="borrow_style" > 
+						<option value="0"   selected="selected">按月分期还款</option> 
+					</select>
+					
+	            </div>
+	            <div class="c">【不选中则没有此项限制】</div>
+            </div> -->
+            
+		 <div  style=" width: 780px; margin:0 auto; padding-bottom:20px;"> 
+        <div class="sideT" >
+            <div class="user_right_title"> 
+                <span class=""><strong style="color:red">生效状态</strong></span></div> 
+            <div class="set_table" style=" clear:both; float:left"> 
+			
+
+			
+			
+            <table border="0" style="text-align:left" class='auto_borrow_style'> 
+                    <tr> 
+                        <th> 
+                            状态：
+                        </th> 
+                        <td> 
+                           <input id="status" type="checkbox" name="status" value="1" /><label for="">是否启用</label><span>(如果不选中则当前规则不会生效)</span> 
+                        </td> 
+                    </tr> 
+                    <tr> 
+                        <th> 
+                            金额：
+                        </th> 
+                        <td style="width:550px"> 
+                            <span style='display:none;'>
+                            	<input  type="radio" name="tender_type" value="1"  checked="checked"  />
+                            </span> 
+                            <label for="tender_type">每次投标</label> 
+                            <input name="tender_account" type="text" maxlength="5" id="tender_account"  style="width:80px;" value="" />元
+                            <span>(最少50元)</span> 
+                        </td> 
+                    </tr> 
+                    <tr> 
+                        <th> 
+                        </th> 
+                        <td  style="width:600px;"> 
+                         <span style="color:Red;">如果超过标的的最大投标额度则以标的的最大额度为准，如果小于标的的最小投标额度则不投。
+                         </span>
+                      <br/> 
+                        <span>【当前规则满足时系统将为您自动投标的额度，投标金额和比例都只能为大于0的为整数。】</span>
+                       </td> 
+                        </tr> 
+                    </table> 
+            </div> 
+            <div class="user_right_title"> 
+                <span class=""><strong style="color:red">标的信息限制</strong></span></div> 
+            <div class="set_table" style=" clear:both;"> 
+                <table border="0" style="text-align:left; float:left" class='auto_borrow_style' > 
+                <tr> 
+                        <th> 
+                            还款方式：
+                        </th> 
+                        <td> 
+                            <input id="borrow_style_status" type="checkbox" name="borrow_style_status" value="1"  /><label for="">启用  还款方式必须为</label> 
+                            <select name="borrow_style" id="borrow_style" > 
+	<option value="0"   selected="selected">按月分期还款</option> 
+ 
+</select> 
+                        </td> 
+                        <td><span>【不选中则没有此项限制】</span></td> 
+                    </tr> 
+                    <tr> 
+                        <th> 
+                            借款期限：
+                        </th> 
+                        <td style="width:400px"> 
+                           <input id="timelimit_status"  name="timelimit_status" type="radio" value="0" checked="checked"  checked="checked"/><label for="">不限定期限</label> 
+                           <input id="timelimit_status" type="radio" name="timelimit_status" value="1"   name="timelimit_status" /><label for="">按照下面规则</label> 
+                        </td> 
+                        <td> 
+                            <span></span> 
+                        </td> 
+                    </tr> 
+                <tr> 
+                        <th> 
+                        </th> 
+                        <td style="width:400px"> 
+                         月标：
+          <@linkage name="timelimit_month_first" id="timelimit_month_first" nid="borrow_time_limit" type="value"  noselect="不投月标"/>               
+			~
+		  <@linkage name="timelimit_month_last" id="timelimit_month_last" nid="borrow_time_limit" type="value"  noselect="不投月标"/>
+		  <br/>天标：
+    	 <@linkage name="timelimit_day_first" id="timelimit_day_first" nid="borrow_time_limit_day" type="value"  noselect="不投天标"/>                
+		~
+		<@linkage name="timelimit_day_last" id="timelimit_day_last" nid="borrow_time_limit_day" type="value"  noselect="不投天标"/>       
+                        </td> 
+                        <td> 
+                            <span></span> 
+                        </td> 
+                    </tr> 
+                    
+                 <tr> 
+                        <th> 
+                            年利率：
+                        </th> 
+                        <td> 
+                           <input id="apr_status" type="checkbox" name="apr_status" value="1"  /><label for="">启用 利率范围：</label> 
+             <@linkage name="apr_first" id="apr_first"  type="value" nid="borrow_auto_apr_first"/>    
+                            ~
+			<@linkage name="apr_last" id="apr_last"  type="value" nid="borrow_auto_apr_last"/> 
+                        </td> 
+                        <td> 
+                            <span>【不启用则没有此项限制】</span> 
+                        </td> 
+                    </tr> 
+                <tr> 
+                        <th> 
+                            投标奖励：
+                        </th> 
+                        <td> 
+                           <input  type="checkbox" name="award_status"  value="1"  />启用 <label for="">奖励必须大于等于</label> 
+                           <@linkage name="award_first" id="award_first" nid="borrow_auto_award" type="value" noselect="0%"/> 
+                           <!-- ~
+                       	   <@linkage name="award_first" id="award_first" nid="borrow_auto_award"/>
+                       	   --> 
+                        </td> 
+                        <td> 
+                            <span>【不启用则没有此项限制】</span> 
+                        </td> 
+                    </tr> 
+                 <tr> 
+                        <th> 
+                            投资标种：
+                        </th> 
+                        <td> 
+                           <input id="fast_status" type="checkbox" name="fast_status" value="1"  /><label for="fast_status">给力标</label>
+                           <input id="xin_status" type="checkbox" name="xin_status" value="1"  /><label for="xin_status">信用标</label>
+                           <input id="jin_status" type="checkbox" name="jin_status" value="1"  /><label for="jin_status">净值标</label>
+                        </td>
+                        <td> 
+                            <span>【选择您的投资标种，可多选】</span> 
+                        </td> 
+                    </tr> 
+                </table> 
+                </div> 
+        </div> 
+        <div style="text-align:center; clear:both"> 
+		<input type="hidden" name="id" value="${((auto.id)?default(0))?c}" />
+		<input type="hidden" name="user_id" value="${((auto.user_id)?default(0))?c}" />
+		
+		<#assign _type="add">
+		<#if type?exists&&(type=="add")>
+			<#assign _type=type>
+		</#if>
+		<#if type?exists&&(type=="showAuto")>
+			<#assign _type="modify">
+		</#if>
+		<input type="hidden" name="type" value="${_type}" />
+        <input type="submit" class="btn-action" name="" value="保存" id=""  /> 
+        <input type="reset" class="btn-action" name="" value="取消" id=""  /> 
+        </div> 
+    </div> 
+		</form>
+				<!-- Form end -->
+				</div>
+			</div>
+			<!--右边的内容 结束-->
+		</div>
+	</div>
+    </div>
+	<!--用户中心的主栏目 结束-->
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/modal.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/tab.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/alert.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/transition.js"></script>
+	<#include "../../include/footer.html">
+</body>
+</html>

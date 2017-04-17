@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="审核借款标">
+                              
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+
+                                <div class="toolbor-module">
+                                                
+                                    <input type="button" class="input-button return" value="返回" onclick="javascript:location.href='showTrialBorrow.html'">
+                                </div>
+                            </div>
+                            <!--工具栏--}-->
+
+                            <div id="main" class="clearfix">
+                                <form name="form1" method="post" action="" onsubmit="return checkFormBorrow();" enctype="multipart/form-data">
+
+                                    <div class="valBox mb15">
+                                        <div class="top">
+                                            <strong>审核借款标</strong>
+                                        </div>
+                                        <div class="fp w349 clearfix">
+                                            <ul>
+                                                <li>
+                                                    <div class="title">借款人：</div>
+                                                    <div class="v"><a href="javascript:void(0)" onclick='alertPop("用户详细信息查看","url:get?${request.getContextPath()}/admin/attestation/viewUserInfo.html?userId=${b.user.userId?c}",500,230,"true","","true","text")'>${b.user.username!}</a></div>
+                                                </li>
+                                                 <li class="color">
+                  									  <div class="title">借款标题：</div>
+                    									<div class="v">
+                   									     ${b.name}
+                   										 </div>
+              										</li>
+							                
+							                <#include "../../common/function.html">
+                                                <li>
+                                                    <div class="title">状态：</div>
+                                                    <div class="v">
+                                                       <#import "../../common/function.html" as func>
+                                                                <@func.statusTypeName status=b.status item=1 />
+                                                    </div>
+                                                </li>
+                                                <li class="color">
+                                                    <div class="title">借款用途：</div>
+                                                    <div class="v">
+                                                        <@linkage plantext=true default=b.usetype!''></@linkage>
+                                                    </div>
+                                                </li>
+                                                <li class="color">
+                                                    <div class="title">借款期限：</div>
+                                                    <div class="v">
+                                                        <#if b.isday??&&b.isday==1>${b.timeLimitDay!0}天<#elseif b.type==101>满标即还<#else>${(b.timeLimit)!0}个月</#if>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">还款方式：</div>
+                                                    <div class="v">
+                                                        <#if b.isday??&&b.isday==1>到期全额还款<#elseif
+															b.type ==100>系统自动还款<#elseif b.type==110>一次性还款
+															<#elseif b.style??&&b.style=="2">一次性还款
+															<#elseif b.style??&&b.style=="3">每月还息到期还本
+															<#else>按月分期还款</#if>  
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">借贷总金额：</div>
+                                                    <div class="v">
+                                                        ${b.account!}
+                                                                <input type="hidden" name="account" value="50000" /> 元
+                                                    </div>
+                                                </li>
+                                                <li class="color">
+                                                    <div class="title">年利率：</div>
+                                                    <div class="v">
+                                                        ${b.apr!} %
+                                                    </div>
+                                                </li>
+                                                <li class="color">
+                                                    <div class="title">最低投标金额：</div>
+                                                    <div class="v">
+                                                    	<#if b.lowestAccount??&&b.lowestAccount gt 0>${b.lowestAccount}元<#else>无限制</#if>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">最多投标总额：</div>
+                                                    <div class="v">
+                                                        <#if b.mostAccount??&&b.mostAccount gt 0>${b.mostAccount}元<#else>无限制</#if>
+                                                    </div>
+                                                </li>
+                                                 <#-- <li>
+                                                    <div class="title">发布时间：</div>
+                                                    <div class="v">
+                                                        ${b.addtime?string("yyyy-MM-dd")}
+                                                    </div>
+                                                    
+                                                </li> -->
+                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="valBox mb15">
+                                            <div class="top">
+                                                <strong>借款描述</strong>
+                                            </div>
+                                            <div class="ri clearfix">
+                                                <ul>
+                                                   <li>
+                                                    <div class="v">
+                                                       ${b.content!}
+                                                    </div>
+                                                </li>
+                                                </ul>
+                                            </div>
+                                        </div>  
+
+                                        <div class="valBox mb15">
+                                            <div class="top">
+                                                <strong>账户信息公开</strong>
+                                            </div>
+                                            <div class="ri clearfix">
+                                                <ul>
+                                                    <#-- <li>
+                                                            <div class="title"><label><input type="checkbox" name="openAccount" value="1" <#if b.openAccount?exists&&b.openAccount==1 > checked="checked"</#if>  disabled="disabled">公开我的账户详情：</label></div>
+                                                            <div class="v">如果您勾上此选项，将会实时公开您账户的：账户总额、可用余额、冻结总额。</div>
+                                                        </li> -->
+                                                        <li class="color">
+                                                            <div class="title"><label><input type="checkbox" name="openBorrow" value="1" <#if b.openBorrow?exists&&b.openBorrow==1 > checked="checked"</#if> disabled="disabled">公开我的借款记录：</label></div>
+                                                            <div class="v">如果您勾上此选项，将会实时公开您账户的：借款总额、已还款总额、未还款总额、迟还总额、逾期总额。</div>
+                                                        </li>
+                                                        <#-- <li>
+                                                            <div class="title"><label><input type="checkbox" name="openTender" value="1" <#if b.openTender?exists&&b.openTender==1 > checked="checked"</#if> disabled="disabled"/>公开我的投资记录：</label></div>
+                                                            <div class="v">如果您勾上此选项，将会实时公开您账户的：投标总额、已收回总额、待收回总额。</div>
+                                                        </li> -->
+                                                        <li class="color">
+                                                            <div class="title"><label><input type="checkbox" name="openCredit" value="1" <#if b.openCredit?exists&&b.openCredit==1 > checked="checked" </#if>   disabled="disabled"/>公开我的个人资料：</label></div>
+                                                            <div class="v">如果您勾上此选项，将会实时公开您账户的：最低信用额度、最高信用额度。</div>
+                                                        </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+
+                                    <div class="add-time">
+                                        <span class="mr25"><strong>添加时间：</strong>${b.addtime?string('yyyy-MM-dd HH:mm:ss')}</span>
+                                        <span><strong>IP：</strong>${b.addip!}</span>
+                                    </div>
+
+                                    <div id="audit">
+                                        <div class="top">
+                                            <strong>审核此借款</strong>
+                                        </div>
+                                        <div class="v">
+                                            <div class="c">
+											<#if b.isAssignment ==0>
+											<label for="">借款管理费：</label> <input type="text" name="manage_fee" id="manage_fee" maxlength="10" value="${manage_fee!'0'}"/>%
+											<br/>
+										    <#-- <label for="">风险备用金：</label><input id="borrow_fee"  name="borrow_fee" value="${borrow_fee!'0'}" type="text" class="radio">%
+											<br/> -->
+											</#if>
+											<#-- <label for="">发布时间：</label>  <input class="_search-value" name="startTenderTime" id="startTenderTime" size="15" onclick="change_picktime()" /> -->
+                                                <div class="choose">
+                                                    <label class="mr15"><input name="status" value="1" type="radio" class="radio">审核通过</label>
+                                                    <label><input name="status" type="radio" value="2" class="radio" checked="checked">审核不通过</label>
+                                                </div>
+                                                <textarea  name="verify_remark" class="remark">输入审核备注...</textarea>
+                                            </div>
+                                            <div class="other clearfix">
+						                        	<label for="">验证码：</label><input type="text" name="validCode" id="yzm" class="yzm"> <img src="${request.getContextPath()}/validimg.html" alt="点击刷新" 
+	   onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();" style="position:relative;top:13px;"   />
+						                        </div>
+                                            <div class="other clearfix">
+                                                <input type="hidden" name="id" value="${(b.id!0)?c}" />
+                                                <input type="hidden" name="user_id" value="${(b.user_id!0)?c}" />
+                                                <input type="hidden" name="actionType" value="verify" />
+                                                <input type="submit"  name="reset" value="审核此借款标" class="input-button confirm"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                           <script type="text/javascript">
+                                function checkFormBorrow(){
+                                    var frm = document.forms['form1'];
+                                    var verify_remark = frm.elements['verify_remark'].value;
+                                    var yzm = frm.elements['validCode'].value;
+                                    var borrow_fee = frm.elements['borrow_fee'].value;
+                                    var errorMsg = '';
+                                    if (verify_remark.length == 0 || verify_remark=='输入审核备注...') {
+                                        errorMsg += '备注必须填写' + '\n';
+                                    }
+                                    if(yzm==''){
+                                    	errorMsg += '验证码必须填写' + '\n';
+                                    }
+                                    
+                                   
+                                    if (errorMsg.length > 0){
+                                        alert(errorMsg); return false;
+                                    } else{
+                                        return true;
+                                    }
+                                }
+                                
+                                
+                            </script>
+                            </div>
+
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+<div class="msgClass">
+                                                              ${rsmsg!""}
+                                                          </div>
+    </body>
+</html>
+<#include "../jsPage.html">

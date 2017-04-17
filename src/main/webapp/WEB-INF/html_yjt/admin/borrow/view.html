@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+<body>
+<table class="mc">
+<tr>
+<td class="mc-l">
+    <!--左侧导航---{-->
+    <div id="navPanelContainer">
+        <div class="system-logo cd"></div>
+        <!--管理员信息---{-->
+        <#include "../adminInfo.html">
+            <!--管理员信息---}-->
+            <div class="nav-wrap">
+                <#include "left.html">
+            </div>
+    </div>
+    <!--左侧导航---}-->
+</td>
+<td class="mc-m">
+    <div class="navToggle"></div>
+</td>
+<td class="mc-r">
+<!--顶部导航---{-->
+<#include "../topNav.html">
+<!--顶部导航---}-->
+
+<!--面包屑导航---{-->
+<#assign moduleName="查看借款标">
+<#include "banner.html">
+<!--面包屑导航---}-->
+
+<!--工具栏--{-->
+<div id="toolbar" class="clearfix">
+    <div class="toolbor-module">
+        <input type="button" class="input-button return" value="返回" onclick="history.go(-1)">
+    </div>
+</div>
+<!--工具栏--}-->
+
+<div id="main" class="clearfix">
+    <div class="valBox mb15">
+        <div class="top">
+            <strong>审核借款标</strong>
+        </div>
+        <div class="fp w349 clearfix">
+            <ul>
+                <li class="color">
+                    <div class="title">借款人：</div>
+<!--                     <div class="v"><a class="un" href="javascript:void(0)" onclick='alertPop("用户详细信息查看","url:get?index.php?wzd888&q=module/user/view&user_id=2694&type=scene",500,230,"true","","true","text");'>${b.user.username!}</a></div>
+ -->                	<div class="v">${b.user.username!}</div>
+                </li>
+                 <li class="color">
+                    <div class="title">借款标题：</div>
+                    <div class="v">
+                        ${b.name}
+                    </div>
+                </li>
+                
+                <#include "../../common/function.html">
+                 <li class="color">
+                    <div class="title">借款到期日：</div>
+                    <div class="v">
+                        <#if b.status==3 || b.status==6 || b.status ==8>${getRepaytime(b)}<#else>暂无</#if>
+                    </div>
+                </li>
+                
+                <li class="color">
+                    <div class="title">状态：</div>
+                    <div class="v">
+                        <#import "../../common/function.html" as func>
+                            <@func.statusTypeName status=b.status item=b/>
+                    </div>
+                </li>
+                <li class="color">
+                    <div class="title">借款用途：</div>
+                    <div class="v">
+                        <@linkage plantext=true default=b.usetype></@linkage>
+                    </div>
+                </li>
+                <li>
+                    <div class="title">借款期限：</div>
+                    <div class="v">
+                        <#if b.isday??&&b.isday==1>${b.timeLimitDay!0}天<#elseif b.type==101>满标即还<#else>${(b.timeLimit)!0}个月</#if>
+                    </div>
+                </li>
+                <li>
+                    <div class="title">还款方式：</div>
+                    <div class="v">
+                        <!--<#if b.isday??&&b.isday==1>到期全额还款<#elseif
+                                b.type==101>系统自动还款<#elseif b.type==110>一次性还款
+                            <#elseif b.style??&&b.style=="2">一次性还款<#else>按月分期还款</#if>-->
+                            <#if b.isday??&&b.isday==1>到期全额还款<#elseif b.type==101>系统自动还款<#elseif b.type==110>一次性还本付息
+                            <#elseif b.style??&&b.style=="2">一次性还本付息<#elseif b.style??&&b.style=="3">每月还息到期还本<#else>等额本息还款</#if>
+                            
+                    </div>
+                </li>
+                <li>
+                    <div class="title">借贷总金额：</div>
+                    <div class="v">
+                        ${b.account!}
+                        <input type="hidden" name="account" value="50000" /> 元
+                    </div>
+                </li>
+                <li class="color">
+                    <div class="title">年利率：</div>
+                    <div class="v">
+                        ${b.apr!} %
+                    </div>
+                </li>
+                <li class="color">
+                    <div class="title">最低投标金额：</div>
+                    <div class="v">
+                        <#if b.lowestAccount??&&b.lowestAccount gt 0>${b.lowestAccount}元<#else>无限制</#if>
+                    </div>
+                </li>
+                <li class="color">
+                    <div class="title">最多投标总额：</div>
+                    <div class="v">
+                        <#if b.mostAccount??&&b.mostAccount gt 0>${b.mostAccount}元<#else>无限制</#if>
+                    </div>
+                </li>
+                 <li>
+                    <div class="title">发布时间：</div>
+                    <div class="v">
+                       ${b.addtime?string("yyyy-MM-dd HH:mm:ss")}
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="valBox mb15">
+        <div class="top">
+            <strong>借款描述</strong>
+        </div>
+        <div class="ro clearfix">
+            <ul>
+                 <li>
+                    <div class="v">
+                           ${b.content!}
+                     </div>
+                 </li>
+            </ul>
+        </div>
+    </div>
+    <div class="valBox mb15">
+        <div class="top">
+            <strong>账户信息公开</strong>
+        </div>
+        <div class="re clearfix">
+            <ul>
+                <li>
+                    <label><input type="checkbox" name="openAccount" value="1" <#if b.openAccount?exists&&b.openAccount==1 > checked="checked"</#if>  disabled="disabled"/>公开我的账户详情</label>
+                </li>
+                <li>
+                    <label><input type="checkbox" name="openBorrow" value="1" <#if b.openBorrow?exists&&b.openBorrow==1 > checked="checked"</#if> disabled="disabled"/>公开我的借款记录</label>
+                </li>
+                <li>
+                    <label><input type="checkbox" name="openTender" value="1" <#if b.openTender?exists&&b.openTender==1 > checked="checked"</#if>  disabled="disabled"/>公开我的投资记录</label>
+                </li>
+                <li>
+                    <label><input type="checkbox" name="openCredit" value="1" <#if b.openCredit?exists&&b.openCredit==1 > checked="checked" </#if>   disabled="disabled"/>公开我的个人资料</label>
+                </li>
+            </ul>
+        </div>
+    </div>
+ <table class="data-list" style="margin-bottom:20px;">
+          <tr class="header">
+            <b style="font-weight: bold;font-size: 15px;">投标记录</b>
+       	 </tr>
+              <tr class="header">
+              	  <#--<td>投资申请号</td>-->
+                 <td>投标人</td>
+                 <td>投标金额</td>
+                 <td>有效金额</td>
+                 <td>投标时间</td>
+                 <td>协议</td>
+             </tr>
+           <#if b.borrowTenders.size() gt 0> 
+              <#list b.borrowTenders as tender>
+				<tr class="s">
+					<#--<td>${tender.tenderProperty.tenderNo}</td>-->
+					<td>${tender.user.username}</td>
+					<td>${tender.money}</td>
+					<td>${tender.account}</td>
+					<td>${tender.addtime?string("yyyy-MM-dd HH:mm:ss")!}</td>
+					<td><a href="/borrow/protocol.html?id=${tender.id}&borrowId=${b.id}">下载</a></td>
+				</tr>
+              </#list>
+            <#else>
+                <tr class="s"><td align="center" colspan="6">暂无进度</td></tr>
+             </#if>
+           </table>
+		<table class="data-list" style="margin-bottom:20px;">
+          <tr class="header">
+            <b style="font-weight: bold;font-size: 15px;">审核进度</b>
+       	 </tr>
+              <tr class="header">
+                 <td>ID</td>
+                 <td>审核人</td>
+                 <td>职位</td>
+                 <!-- <td>操作描述</td> -->
+                 <td>实时进度</td>
+                 <td>备注</td>
+                 <td>时间${operateLoglist.size()}</td>
+             </tr>
+           <#if operateLoglist.size() gt 0> 
+              <#list operateLoglist as operate>
+				<tr class="s">
+					<td>${operate.id!}</td>
+					<td>${operate.operateUser.username}</td>
+					<td>${operate.operateUser.userType.name}</td>
+					<!-- <td><#if operate.type == "001">
+                                             		标的初审
+                                             	<#elseif operate.type  == "002">
+                                             		标的复审
+                                             	<#elseif operate.type  == "003">
+                                             		信用额度审核
+                                             	<#elseif operate.type  == "004">
+                                             		网站垫付
+                                             	<#elseif operate.type  == "005">
+                                             		撤回
+                                             	</#if>/<#if operate.status==1>审核通过<#elseif operate.status==2>审核不通过<#elseif operate.status==0>退回上一个流程</#if></td> -->
+					<!-- <td>${operate.operateProgress.nowOperateFlow.name}/<#if operate.status==1>审核通过<#elseif operate.status==2>审核不通过<#elseif operate.status==0>退回上一个流程</#if></td> -->
+					<td>${operate.operateDetail}</td>
+					<td id="${operate.id}" style="display: none;">${operate.memo}</td>
+					<td><a href="javascript:void(0);" onclick='alert(document.getElementById("${operate.id}").innerHTML)'>点我查看</a></td>
+					<td>${operate.addtime}</td>
+				</tr>
+              </#list>
+            <#else>
+                <tr class="s"><td align="center" colspan="6">暂无进度</td></tr>
+             </#if>
+           </table>
+
+    <div class="add-time">
+        <span class="mr25"><strong>添加时间：</strong>${b.addtime?string("yyyy-MM-dd HH:mm:ss")}</span>
+        <span><strong>IP：</strong>${b.addip!}</span>
+    </div>
+</div>
+
+</div>
+
+</td>
+</tr>
+<tr>
+    <!--尾部--{-->
+    <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+    <!--尾部--}-->
+</tr>
+</table>
+
+</body>
+</html>
+<#include "../jsPage.html">

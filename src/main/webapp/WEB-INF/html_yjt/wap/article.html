@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh_Hans_CN" class="staticPage fT article">
+<head><#include "_head.html"></head>
+<body class="paused">
+<!-- common module -->
+<section class="mob-con" id="MobileR">
+    <div class="mob-cen"><i></i><div>请使用手机竖屏查看</div></div>
+</section>
+<section class="tooltips" id="tooltips"><div></div></section>
+<div class="loadDataCircles d-n"><div class="bg"><div class="circLe"></div><br/>努力加载中</div> </div>
+<section id="backtotop" class="O backtotop T"></section>
+<!-- common module end-->
+<article class="hey">
+    <header class="fixheader">
+        <div class="R">
+            <a href="javascript:void(0);" class="goback O" id="goBack">返回</a>
+            <span class="logo"><#if site??>${site.name!}</#if></span>
+        </div>
+    </header>
+    <main class="listBids details T" role="main">
+    	WAP端文章ID:${article.id}被点击次数：${hits}
+        <h1 class="articleT"><#if article??>${article.name!}</#if></h1>
+        <div class="articleC">
+            <#if article??>${article.content!}</#if>
+        </div>
+    </main>
+</article>
+<footer class="f-Copyright ftb T">
+    <div class="footer-linkHelp">
+        <a href="newguidance.html">新手指导</a><span class="divideLine"></span><a href="protocols.html">用户协议</a><span class="divideLine"></span><a href="security.html">安全保障</a>
+    </div>
+    <div class="footer-smword">©2017 金和所. 版权所有.</div>
+</footer>
+<#include "_foot.html" />
+</body>
+<script>
+    $('img').removeAttr("style width height");
+    $('p').removeAttr("font-size").css({'margin':'0.2rem 0','line-height':'0.6rem','padding':'0','text-indent':'0'});
+    $('span').removeAttr("font-size margin padding text-indent");
+    $('strong').removeAttr("style").css({'font-size':'0.4rem'});
+</script>
+</html>

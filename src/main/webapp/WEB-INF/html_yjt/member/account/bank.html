@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html">
+<body>
+	<#assign nid="member"> 
+	<#include "../../include/header.html"> 
+	<#include "../../common/function.html">
+	<link href="${request.getContextPath()}/media/css/modal.css" rel="stylesheet" type="text/css" />
+	<!-- #main start-->
+	<div id="main" class="clearfix">
+		<!-- .wrap950 开始-->
+		<div class="wrap950 ">
+			<!--左边的导航user_left 开始-->
+			<div class="user_left">
+				<#assign mid="m_account" > 
+				<#include "../user_menu.html">
+			</div>
+			<!--左边的导航user_left 结束-->
+
+			<!--右边的内容user_right 开始-->
+			<div class="user_right">
+				<div class="user_right_menu">
+					<#assign account_type="bank"> 
+					<#include "account_menu.html">
+				</div>
+				<!--右边的内容user_right_main 开始-->
+				<#if api_code='1'>
+					<!-- 汇付页面 -->
+					<#include "bank_huifu.html"> 
+				<#elseif api_code='2'>
+					<!-- 易极付页面 -->
+					<#include "bank_yjf.html"> 
+				<#elseif api_code='3'>
+					<!-- 双乾页面 -->
+					<#include "bank_mmm.html"> 
+				</#if>
+				<!--右边的内容user_right_main 结束-->
+			</div>
+			<!--右边的内容user_right 结束-->
+		</div>
+		<!-- .wrap950 结束-->
+	</div>
+	</div>
+	<#include "../../include/footer.html">

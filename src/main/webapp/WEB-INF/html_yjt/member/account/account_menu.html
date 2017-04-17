@@ -1,0 +1,10 @@
+<ul id="tab" class="list-tab clearfix">
+	<li <#if account_type?exists&&account_type=="bank">class="cur"</#if>><a href="${request.getContextPath()}/member/account/bank.html">绑定银行卡</a></li>
+	<li <#if account_type?exists&&account_type=="bankcancel">class="cur"</#if>><a href="${request.getContextPath()}/member/account/bankcancel.html">已绑定银行卡</a></li>
+	<li <#if account_type?exists&&account_type=="newrecharge">class="cur"</#if>><a href="${request.getContextPath()}/member/account/newrecharge.html">账户充值</a></li>
+	<li <#if account_type?exists&&account_type=="recharge">class="cur"</#if>><a href="${request.getContextPath()}/member/account/recharge.html">充值记录</a></li>
+	<li <#if account_type?exists&&account_type=="newcash">class="cur"</#if>><a href="${request.getContextPath()}/member/account/newcash.html">账户提现</a></li>
+	<li <#if account_type?exists&&account_type=="cash">class="cur"</#if>><a href="${request.getContextPath()}/member/account/cash.html">提现记录</a></li>
+	<li <#if account_type?exists&&account_type=="log">class="cur"</#if>><a href="${request.getContextPath()}/member/account/log.html">资金记录</a></li>
+	<!--<li <#if account_type?exists&&account_type=="starScore">class="cur"</#if>><a href="${request.getContextPath()}/member/account/starScore.html">积分记录</a></li>-->
+</ul>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>viewUserDetailInfo.html</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  </head>
+  <body style="overflow:hidden;">
+	<div  class="sfz_img" >
+	<#if viewcard=="cardC">
+		<img src="${webroot}/${user.cardPic1!}" alt="身份证照片地址错误..." style="max-height: 600px;max-width: 600px;">
+		<#else>
+		<img src="${webroot}/${user.cardPic2!}" alt="身份证照片地址错误..." style="max-height: 600px;max-width: 600px;">
+	</#if>
+	</div>
+  </body>
+</html>

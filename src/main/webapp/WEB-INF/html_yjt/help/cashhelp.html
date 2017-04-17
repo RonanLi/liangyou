@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<#include "../include/resource.html"> 
+<body>
+<#include "../include/header.html">
+<link href="${request.getContextPath()}/themes/soonmes/media/css/modal.css" rel="stylesheet" type="text/css" /> 
+<link href="${request.getContextPath()}/themes/soonmes/media/css/about.css" rel="stylesheet" type="text/css" />
+
+<div class="container zx clearfix">
+    <img src="${webroot}${theme_dir}/images/zx-banner.jpg" alt="" class="mb15"> 
+    <div class="zx-left float_left">
+        <div class="zx-lt"></div>
+         <#include "left_menu.html">
+        <div class="zx-bt"></div>
+        <img src="${webroot}${theme_dir}/images/zx-left-kf.jpg" alt="" class="zx-kefuimg">
+    </div>
+
+    <div class="zx-righthelp float_right">
+        <div class="zx-righttitle clearfix">
+            <img src="${webroot}${theme_dir}/images/zx-rightli.jpg" alt="" class="ml10 float_left"><span class="float_left">当前位置：
+			<a id="ctl00_content_NavigationLink1_main" href="${webroot}/index.html" style=" color:#333; text-decoration:none;">义务贷（浙江得龙进出口有限公司）</a>	&gt;帮助&gt;
+			<a href="${request.getContextPath()}/help/cashhelp.html?code=help" style="color:#333; text-decoration:none;">用户充值提现</a></span>
+		</div>
+		
+        <div class="zx-righttxt">
+		<div class="info" id="lxjs">
+         <h6>第一步：</h6><h7>用户在用户管理中心点击充值提现——账户充值，输入充值金额。</h7><br/>
+         <h3> &nbsp; </h3>
+         <div class="zx-righttitle clearfix">
+              <img src="${webroot}${theme_dir}/images/help/chongzhi01.jpg" alt="" class="ml10 float_left" height=300/><br/>
+         </div><br>
+      
+         <h6>第二步：</h6><h7>线下充值须联系客服。</h7><br/>
+            <h3> &nbsp; </h3>
+         <div class="zx-righttitle clearfix">
+             <img src="${webroot}${theme_dir}/images/help/chongzhi02.jpg" alt="" class="ml10 float_left"  height=150/>
+         </div><br/>
+      
+         <h6>第三步：</h6><h7>用户在用户管理中心点击充值提现——账户提现，输入要提现的金额（提现金额小于账户可用余额），选定提现银行账户。</h7><br/>
+         <h3> &nbsp; </h3>
+         <div class="zx-righttitle clearfix">
+              <img src="${webroot}${theme_dir}/images/help/tixian01.jpg" alt="" class="ml10 float_left" height=600/><br/>
+         </div><br>
+      
+         <h6>第四步：</h6><h7>提交申请后等待网站审核，一般24小时内将提现金额打入用户银行账户。</h7><br/>
+            <h3> &nbsp; </h3>
+         <div class="zx-righttitle clearfix">
+             <img src="${webroot}${theme_dir}/images/help/tixian02.jpg" alt="" class="ml10 float_left"  height=200/>
+         </div><br/>
+		
+			</div><!--info-->
+		</div><!--myTabContent-->
+	</div><!--right-->
+</div><!--cor_divtop-->
+
+
+<script src="${request.getContextPath()}/themes/soonmes/media/js/modal.js"></script>
+<script src="${request.getContextPath()}/themes/soonmes/media/js/tab.js"></script>
+<script src="${request.getContextPath()}/themes/soonmes/media/js/alert.js"></script>
+<#include "../include/footer.html"> 

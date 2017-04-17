@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 ">
+<#assign webroot=request.getContextPath()>
+<#assign nid="member" >
+<#include "../../include/resource.html">
+<#include "../../common/function.html">
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+<body>
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="userRightMenu">
+                <#include "messageMenu.html">
+            </div>
+            <div class="rightDiv">
+                <div class="hasSend">
+                    <ul>
+                        <li>
+                            <div>操作</div>
+                            <div>发件人 </div>
+                            <div>标题</div>
+                            <div>内容</div>
+                            <div>发送时间 </div>
+                        </li>
+                        <#list list as item>
+                            <li>
+                                <div><input type="checkbox" name="ids" value="${item.id?c}"/></div>
+                                <div>${item.sentUser.username}</div>
+                                <div ><a href="${request.getContextPath()}/member/myAccount/viewMail.html?id=${item.id?c}&type=sents"><#if item?exists&&item.status?exists&&item.status==0><strong>${item.name!}</strong><#else>${item.name!}</#if></a></div>
+                                <div><#if item.content?? && item.content?length gt 30>${item.content[0..29]}...<#elseif item.content??>${item.content!''}<#else>-</#if></div>
+                                <div>${item.addtime!''}</div>
+                            </li>
+                        </#list>
+                        <li>
+                            <div id="page">
+                                <#import "../../common/page.html" as pager> <@pager.pagination page=page url="/member/myAccount/hasSend.html" map=param style="style3"  />
+                            </div>
+                        </li>
+                        <li>
+                            <div class="messageBtn"><input type="button" class="btn-action" value="删除" onclick="setMsg(3);"/> </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<#include "../../include/footer.html">
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"> </script>
+<script type="text/javascript">
+    function setMsg(type){
+        var str='';
+        $(":checkbox[name=ids][checked]").each(function () {
+            str = str+$(this).val()+","
+        });
+        if(str!=""){
+            location.href='${webroot}/member/myAccount/setMail.html?type='+type+'&ids='+str;
+        }
+
+    }
+</script>
+</html>

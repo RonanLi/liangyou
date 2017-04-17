@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 ">
+<#assign webroot=request.getContextPath()>
+<#assign nid="member" >
+<#include "../../include/resource.html">
+<#include "../../common/function.html">
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+
+<body>
+
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="userRightMenu">
+                <#include "personalCenterMenu.html">
+            </div>
+            <div class="rightDiv">
+                <div class="contact">
+                    <div class="reminder">请填写您联系方式</div>
+                    <form action="" name="form1" method="post" >
+                        <div class="fromBox">
+                            <div class="boxTxt">居住地电话：</div>
+                            <div class="boxIpt"><input type="text" size="25" maxlength="20" name="tel" value="<#if info?exists&&info.tel?exists>${info.tel}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">手机号码：</div>
+                            <div class="boxIpt"><input type="text" size="25" maxlength="20" name="phone" value="<#if info?exists&&info.phone?exists>${info.phone}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">居住所在省市：</div>
+                            <div class="boxIpt">
+                                <#if info?exists&&info.province?exists>
+                                    <@region name="province" id="province" value=info.province pid="0"></@region>&nbsp;
+                                <#else>
+                                    <@region name="province" id="province" pid="0"></@region>&nbsp;
+                                </#if>
+
+                                <#if info?exists&&info.province?exists>
+                                    <#if info.city?exists>
+                                        <@region name="city" id="city" value=info.city pid=info.province></@region>&nbsp;
+                                    <#else>
+                                        <@region name="city" id="city" pid=info.province></@region>&nbsp;
+                                </#if>
+                                <#else>
+                                    <@region name="city" id="city" pid="-1"></@region>&nbsp;
+                                </#if>
+
+                                <#if info?exists&&info.city?exists>
+                                    <#if info.area?exists>
+                                        <@region name="area" id="area" value=info.area pid=info.city></@region>&nbsp;
+                                    <#else>
+                                        <@region name="area" id="area" pid=info.city></@region>&nbsp;
+                                </#if>
+                                <#else>
+                                    <@region name="area" id="area" pid="-1"></@region>&nbsp;
+                                </#if>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">居住地邮编：</div>
+                            <div class="boxIpt"><input type="text" size="25" maxlength="20" name="post" value="<#if info?exists&&info.post?exists>${info.post}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">现居住地址：</div>
+                            <div class="boxIpt"><input type="text" size="25" maxlength="20" name="address" value="<#if info?exists&&info.address?exists>${info.address}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">第二联系人姓名：</div>
+                            <div class="boxIpt"><input type="text" size="25" maxlength="20" name="linkman1" value="<#if info?exists&&info.linkman1?exists>${info.linkman1}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">第二联系人关系：</div>
+                            <div class="boxIpt">
+                                <#if info?exists&&info.relation1?exists>
+                                    <@linkage name="relation1" id="relation1" nid="user_relation" default=info.relation1></@linkage>
+                                <#else>
+                                    <@linkage name="relation1" id="relation1" nid="user_relation"></@linkage>
+                                </#if>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">第二联系人电话：</div>
+                            <div class="boxIpt"><input type="text" size="25" maxlength="20" name="tel1" value="<#if info?exists&&info.tel1?exists>${info.tel1}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">第二联系人手机：</div>
+                            <div class="boxIpt"><input type="text" size="25" maxlength="20" name="phone1" value="<#if info?exists&&info.phone1?exists>${info.phone1}</#if>" /> </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">&nbsp;</div>
+                            <div class="boxIpt"><input type="submit" class="btn-action"  value="确认提交" size="30" /></div>
+                        </div>
+                        <input type="hidden" name="type" value="contact" />
+                    </form>
+                    <div class="notes"> * 温馨提示：我们将对所有的信息进行保密</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<#include "../../include/footer.html">
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"> </script>
+</html>

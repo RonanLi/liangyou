@@ -1,0 +1,9 @@
+<div>资料类型：</div>
+<ul class="listTab clearfix">
+	<li <#if borrow_type?exists&&borrow_type=="unpublish"> class="cur" </#if> ><a href="${webroot}/member/myAccount/noBorrowing.html"data-val="1-2">尚未发布的借款</a></li>
+	<li <#if borrow_type?exists&&borrow_type=="showCancelBorrows"> class="cur" </#if> ><a class="listTabN" href="${webroot}/member/myAccount/recallBorrowing.html"data-val="1-2">撤回的借款</a></li>
+	<li <#if borrow_type?exists&&borrow_type=="borrowing"> class="cur" </#if> ><a href="${webroot}/member/myAccount/tenderBorrowing.html"data-val="1-2">正在招标的借款</a></li>
+	<li <#if borrow_type?exists&&borrow_type=="repaying"&&(!repay_status??)> class="cur" </#if> ><a href="${webroot}/member/myAccount/repaymentBorrowing.html"data-val="1-2">正在还款的借款</a></li>
+	<li <#if borrow_type?exists&& (borrow_type=="repaid" || borrow_type=="repaydetail") ||( borrow_type =='repaying'&&repay_status??)> class="cur" </#if> ><a href="${webroot}/member/myAccount/alreadyRepaid.html"data-val="1-2">已经还款的借款</a></li>
+	<li <#if borrow_type?exists&&borrow_type=="allrepay"> class="cur" </#if> ><a href="${webroot}/member/myAccount/repaymentDetail.html"data-val="1-2">还款明细总汇</a></li>
+</ul>

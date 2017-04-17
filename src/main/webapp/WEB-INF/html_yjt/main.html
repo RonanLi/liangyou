@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html>
+<#assign webroot=request.getContextPath()>
+<#assign nid="member" >
+<#include "../include/resource.html"> 
+<#include "../common/function.html"> 
+<body>
+<#include "../include/header.html">
+<!--header-end-->
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+<div class="wrap950">
+	<!--左边的导航 开始-->
+	<div class="user_left">
+		<#include "user_menu.html">
+	</div>
+	<!--左边的导航 结束-->
+
+	<!--右边的内容 开始-->
+	<div class="user_right ">
+
+		<div class="user_right_l clearfix bor">
+            <div class="userinfo-tit"><b>信息总览</b></div>
+            <div class="userdenglu-info clearfix">
+                <b class="float_left dlbg">当前IP：${ip!}（${city!}）</b>
+                <b class="float_left dlbg2">上次登录时间：<#if session_user?? && session_user.lasttime??>${session_user.lasttime?string("yyyy年MM月dd日 HH:mm:ss")}<#else>第一次登录</#if></b>
+            </div>
+        	<div class="zh-user-right clearfix">
+                <div class="user_right_lmain clearfix">
+                    <div class="touxiang_left">
+                    <div class="user_right_img">
+                        <img src="${webroot}/imgurl.html?userid=${user.userId?c}&size=middle" height="98" width="98" class="picborder" style="border:1px solid #999;padding:2px;"/>
+                        <a href="${webroot}/member/identify/avatar.html"><font color="#FF0000">[更换头像]</font></a>
+                    </div>
+                    <div class="user_right_txt">
+                        <ul style="overflow:hidden; *float:left; ">
+                           <li>用户名:${user.username}</li>
+                            <li style="overflow:hidden;">
+                                <div class="floatl"><span> 认证信息： </span></div> 
+									<#include "../common/macro.html">
+									<@identifyShow detailuser=user cache=cache/>
+                            </li>
+                            <li class="clearfix">
+                            	<div class="float_left mr10">
+                            	VIP 期限： <a href="${webroot}/member/vip.html">
+                                <#if cache.vipStatus==1>
+                                    <#if ( dateformat(cache.vipVerifyTime?string('yyyy-MM-dd HH:mm:ss')) + 365*24*3600 - dateformat("now") ) lt 0>
+                                        已经过期
+                                    <#else>
+                                       <span class="endtime" data-time="${( dateformat(cache.vipVerifyTime?string('yyyy-MM-dd HH:mm:ss')) + 365*24*3600 - dateformat("now") )?c}"></span>
+                                    </#if>
+                                <#elseif cache.vipStatus==2>
+                                    VIP审核中
+                                <#else>
+                                    <font color="#999999">不是VIP</font>
+                                </#if>
+                            </a>
+                            </div>
+                            <div class="floatl"><span><#if !credit.pic?exists><#else><img style="float:left" class="rank" src="${request.getContextPath()}/data/images/credit/${credit.pic}" title="${credit.value!}"  /></#if></span></div>
+                            </li>
+                            <li>
+                            系统通知： <a href="${webroot}/member/message/box.html"><font color="red">${unRead?default(0)}</font> 封未读信息</a>&nbsp; &nbsp; 　
+                            </li>
+                        </ul>
+                    </div>
+                    </div>
+                    <div class="ziliao_right">
+                        <div class="ziliao-tit">易极付账户详情：</div>
+                        <ul class="clearfix">
+                            <li class="width2">账户状态:<#if user.apiStatus==0>未激活<#else>已激活</#if></li>
+                            <li><#if user.apiStatus??&& user.apiStatus==0><a target="_blank" href="${webroot}/member/yjfActivate.html" title="点击到易极付页面去激活" style="color: #CD0202;font-weight: bold;">【激活账户】</a><#else><a  href="${load_url!}" target="_blank" >【登陆易极付】</a></#if></li>
+                            <li class="width2">易极付实名认证：<#if user.realStatus==3>通过<#else>未通过</#if></li>
+                            <li title="不清楚易极付实名认证，请点击查看"><a target="_blank" href="${webroot}/article/list.html?code=smyt">【易极付实名认证用途？】</a></li>
+                            <li class="width2">用户名:${webid}${user.username!"xxx"}</li>
+                            <li title=""><a target="_blank" href="${webroot}/article/list.html?code=khgz">【查看开户规则】</a></li>
+                            <#assign starRank=user.credit.findStarRank()>
+                         <li title="">客户星级：<img  src="${request.getContextPath()}/data/images/credit/${starRank.pic}" title="${user.credit.starScore}"  /></li>
+                         <#assign creditRank=user.credit.findCreditRank()> 
+                          <li title="">信用等级：<#if creditRank??><img src="${request.getContextPath()}/data/images/credit/${creditRank.pic}"  /><#else>未申请</#if></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="zhanghu-info1 clearfix">
+                    <h3>账户可用余额:</h3>
+                    <div class="float_left"><#if summary??><#if (summary.accountUseMoney!0) lt 0.01>0<#else>${ceil(summary.accountUseMoney!0)}</#if></#if><i>元</i></div>
+                    <div class="float_right">
+                        <a href="${webroot}/member/account/newrecharge.html" class="chongzhi-btn">充 值</a>
+                        <a href="${webroot}/member/account/newcash.html" class="tixian-btn">提 现</a>
+                    </div>
+                </div>
+                 <div class="zhanghu-info2 clearfix">
+                    <ul class="clearfix">
+                        <li>账户总额：<i><#if summary??>${(summary.accountTotal!0)?string("##.##")}</#if></i>元</li>
+                        <li>冻结总额：<i><#if summary??>${(summary.accountNoUseMoney!0)?string("##.##")}</#if></i>元</li>
+                        <li>净&nbsp;资&nbsp;产：<i><#if summary??>${(summary.accountOwnMoney!0)?string("##.##")}</#if></i>元</li>
+                        <li><a href="${webroot}/member/account/log.html">资金记录查询>></a></li>
+                    </ul>
+                </div>
+
+                <div class="zhanghu-info3 clearfix" style="border-bottom: none;">
+                    <ul class="clearfix">
+                        <li>待收总额：<font>￥<#if summary??>${((summary.collectTotal)!0)?string("##.##")}</#if></font></li>
+                        <li>待收利息：<font><#if summary??>￥${(summary.collectInterestTotal!0)?string("##.##")}</#if></font></li>
+                        <li>最近待收金额：<font>￥<#if summary??>${((summary.newestCollectMoney)!0)?string("##.##")}</#if></font></li>
+                        <li>最近待收时间：<#if summary??&&summary.newestCollectDate??><font>${summary.newestCollectDate}</font><#else>暂无收款</#if>&nbsp;<a href="${webroot}/member/invest/notCollect.html"><strong><font color="red">我要收款</font></strong></a></li>
+                        <li>借款总额：<font><#if summary??>￥${(summary.borrowTotal!0)?string("##.##")}</#if></font></li>
+                        <li>待还总额：<font><#if summary??>￥${((summary.repayTotal)!0)?string("##.##")}</#if></font></li>
+                        <li>最近待还金额：<font><#if summary??>￥${((summary.recentlyRepaymentTotal)!0)?string("##.##")}</#if></font></li>
+                        <li>最近待还时间：<#if summary??&&summary.newestRepayDate??&&summary.newestRepayDate!='0'><font>${summary.newestRepayDate}</font><#else>暂无还款</#if>&nbsp;<a href="${webroot}/member/borrow/repaying.html"><strong><font color="red">我要还款</font></strong></a></li>
+                    </ul>
+                </div>
+         
+    
+       
+        <!-- id="myTabContent" tab切换 -->
+        
+        </div>
+    </div>
+    </div>
+ </div>
+</div>
+<script type="text/javascript">
+$(".sucbox").slideFn({isTop:true,slideTimer:"3000"});	
+	jQuery(function(){
+		//jQuery("[rel='tooltip']").tooltip();
+	});
+	function showRemainTime(){
+	var endtimes=$(".endtime");
+	endtimes.each(function(){
+		RemainTime($(this));
+	});
+}
+showRemainTime();
+setInterval("showRemainTime()",1000);
+
+function RemainTime(t){
+	var iDay,iHour,iMinute,iSecond,account;
+	var sDay="",sTime="";
+	var at="data-time"
+	var iTime=t.attr(at);
+    if (iTime >= 0){
+    	iDay = parseInt(iTime/24/3600);
+        iHour = parseInt((iTime/3600)%24);
+        iMinute = parseInt((iTime/60)%60);
+        iSecond = parseInt(iTime%60);
+    	if (iDay > 0){ 
+   			sDay = iDay + "天"; 
+    	}
+	    sTime =sDay + iHour + "时" + iMinute + "分" + iSecond + "秒";
+	    if(iTime==0){
+        	sTime="<span style='color:green'>时间到了！</span>";
+        }
+			t.attr(at,iTime-1);
+      }else{
+	     sTime="<span style='color:red'>VIP已过期！</span>";
+	 }
+	t.html(sTime);
+	}
+</script>
+<script src="${webroot}${theme_dir}/media/js/modal.js"></script>
+<script src="${webroot}${theme_dir}/media/js/tab.js"></script>
+<script src="${webroot}${theme_dir}/media/js/alert.js"></script>
+<script src="${webroot}${theme_dir}/media/js/transition.js"></script>
+<#include "../include/footer.html"> 
+</body>
+</html>

@@ -1,0 +1,122 @@
+<div class="user_right_main">
+	<div class="user_help alert" style="text-align: left; text-indent: 2em;">
+		<#if lateCount?? && lateCount gt 0 >
+			<div class="user_right_border" style="position: relative; left: 200px">
+				<div class="c">您有${lateCount}笔逾期的借款，请先还款！</div>
+				<div class="c">
+					<a href="/member/borrow/repaying.html">>>点击进入还款</a>
+				</div>
+			</div>
+		<#else> 
+			<strong style="color: #a67621; font-size: 12px;">温馨提示：</strong><br /> &nbsp;&nbsp;&nbsp; 
+			1、确保您的银行帐号的姓名和您的网站上的真实姓名一致;<br /> &nbsp;&nbsp;&nbsp; 
+			2、请输入您要取出金额，<br /> &nbsp;&nbsp;&nbsp; 
+			3、同一账户每天取现总额无限制。<br />
+			<form action="doNewcash.html" method="post" onSubmit="return check_form()" name="form1" style="padding: 20px 0">
+				<div class="user_right_border">
+					<div class="l">真实姓名：</div>
+					<div class="c">${user.realname[0..0]!}***</div>
+				</div>
+	
+				<div class="user_right_border">
+					<div class="l">账户余额：</div>
+					<div class="c">${account.total!0}元</div>
+				</div>
+	
+				<div class="user_right_border">
+					<div class="l">可用余额：</div>
+					<div class="c">
+						${account.useMoney!0}元 
+						<input type="hidden" value="${account.useMoney?c}" id="userUseMoney">
+					</div>
+				</div>
+	
+				<div class="user_right_border">
+					<div class="l">冻结总额：</div>
+					<div class="c">${account.noUseMoney!0}元</div>
+				</div>
+				<div class="user_right_border">
+					<div class="l">已绑卡号：</div>
+					<div class="c">
+						<#if !banklist??> 
+							<a href="/member/account/bank.html">点击添加银行卡</a> 
+						<#else> 
+							<select name="accountBank"> 
+								<#list banklist as item>
+									<option name="accountBank" value="${item.id}">
+										${item.bankMmm.bankName!""}： 
+										<#if item.account?length lt 10> 
+											${item.account} 
+										<#else> 
+											${item.account?substring(0,4)}****${item.account?substring((item.account?length)-4,(item.account?length))} 
+										</#if>
+									</option> 
+								</#list>
+							</select> 
+						</#if>
+					</div>
+				</div>
+	
+				<div class="user_right_border" style="float: left;">
+					<div class="l">提现金额：</div>
+					<div class="c">
+						<input type="text" name="money" id="cash_money" onblur="clearNoNum(this)"style="width: 180px;" />
+						<!--  <span id="realacc">实际到账：<font color="#FF0000" id="real_money">0</font> 元</span>-->
+					</div>
+				</div>
+	
+				<div class="user_right_border">
+					<div class="l" style="float: left;">验证码：</div>
+					<div class="c">
+						<input name="valicode" id="valicode" type="text" size="11" maxlength="5" tabindex="3" style="float: left; width: 180px;" />&nbsp; 
+						<img src="${request.getContextPath()}/validimg.html" alt="点击刷新" onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();" align="absmiddle" style="cursor: pointer; display: inline-block; zoom: 1; *display: inline; *float: none; margin-left: 10px; height: 30px;" />
+					</div>
+				</div>
+				<div class="user_right_border">
+					<div class="c">
+						<input type="hidden" name="type" value="newcash" /> 
+						<input type="submit" class="btn-action" name="name" value="确认提交" size="30" style="height: 40px;" />
+					</div>
+				</div>
+			</form>
+			<div class="user_right_foot alert">* 用卡套现是一种违规行为，金和所禁止信用卡套现行为</div>
+		</#if>
+	</div>
+	<script type="text/javascript">
+		function clearNoNum(obj){
+			obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3');
+			obj.value  =obj.value.replace( /[1-9]\d{8}/,"");
+			obj.value = obj.value.replace(/[^\d.]/g,"");
+			if(obj.value !=""){
+				obj.value= parseFloat(obj.value);
+			}
+		}
+						
+		var use_money = parseFloat(${account.useMoney?c});
+		
+		function check_form(){
+			 var frm = document.forms['form1'];
+			 var money = parseFloat(frm.elements['money'].value);
+			 var valicode = frm.elements['valicode'].value;
+			 var userUseMoney =jQuery("#userUseMoney").val();
+			 var errorMsg = '';
+			 if( $('#cash_money').val().trim() == '' ){ alert('提现金额不能为空！'); return false;}
+			 if( $('#cash_money').val().trim() != '' && isNaN($('#cash_money').val().trim()) ){ alert('提现金额必须为数字！'); return false;}
+			  if (money >use_money) {
+				errorMsg += '您的提现金额大于现有的可用余额' + '\n';
+			  }
+			 if(valicode.length ==0){
+				  errorMsg += '请输入验证码！' + '\n';
+			 }
+			 if (money.length == 0 ) {
+				errorMsg += '请输入你的提现金额' + '\n';
+			  }
+			  if (errorMsg.length > 0){
+				alert(errorMsg);
+				return false;
+			  } else{  
+				return true;
+			  }
+		}
+	</script>
+</div>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="收件箱">
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+                                <div class="toolbor-module search">
+                                   <!--   <a href="addTemplate.html" class="input-button" style="line-height:24px;">+新增模板</a>-->
+                                </div>
+                            </div>
+                            <!--工具栏--}-->
+
+                            <div id="main" class="clearfix">
+                                <form action="" method="post">
+                                    <table class="data-list">
+                                        <tr class="header">
+                                            <td>操作</td>					
+											<td>发件人 </td>
+											<td>标题</td>
+											<td>内容</td>
+											<td>发送时间 </td>                                       
+                                        </tr>
+										<#list msgList as item>
+										<tr>	
+											<td><input type="checkbox" name="ids" value="${item.id?c}"/></td>		
+											<td><#if item.sentUser?? && item.sentUser.userId==1>国控小微<#else>${item.sentUser.username}</#if></td>
+							                <td ><a href="${request.getContextPath()}/admin/msg/view.html?id=${item.id?c}&type=boxs"><#if item?exists&&item.status?exists&&item.status==0><strong>${item.name!}</strong><#else>${item.name!}</#if></a></td>
+											<td><#if item.content?? && item.content?length gt 30>${item.content[0..29]}...<#elseif item.content??>${item.content!''}<#else>-</#if></td>
+											<td>${item.addtime!''}</td>
+										</tr>
+										</#list>
+										<tr>
+											<td  colspan="5">
+												<div class="user_main_title1" >
+													<input type="button"  class="btn-action"   value="删除" onclick="setMsg(3);"/> 
+													<input type="button"  class="btn-action"  value="标记已读" onclick="setMsg(1);"  /> 
+													<input type="button"   class="btn-action"  value="标记未读" onclick="setMsg(2);"/>
+												</div>
+											</td>
+										</tr>										
+                                    </table>
+                                </form>
+
+                                <!--底部工具栏--{-->
+                                <div id="bottomToolbar" class="clearfix">
+                                    <div class="other-tool">
+                                        <dl class="refresh-data">
+                                            <dt class="refresh-data-icon"></dt>
+                                            <dd><a href="javascript:void(0);" class="refresh-page">刷新数据</a></dd>
+                                        </dl>
+                                    </div>
+                                    
+                                    <!--翻页系统--{-->
+				                    <div class="container">
+				                        <#import "../../common/page.html" as pager>
+				                            <@pager.pagination page=page url="/admin/msg/box.html" map=param style="style1" />
+				                    </div>
+				                    <!--翻页系统--}-->
+                                </div>
+                                <!--底部工具栏--}-->
+                            </div>
+
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+<script type="text/javascript">
+function setMsg(type){
+	var str='';
+	$(":checkbox[name=ids][checked]").each(function () {		
+		str = str+$(this).val()+","
+	});
+	if(str!=""){
+		location.href='${webroot}/admin/msg/set.html?type='+type+'&ids='+str;
+	}
+	
+}
+</script>
+    </body>
+</html>
+<#include "../jsPage.html">

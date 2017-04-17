@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+    <body>
+    <table class="mc">
+        <tr>
+            <td class="mc-l">
+                <!--左侧导航---{-->
+                <div id="navPanelContainer">
+                    <div class="system-logo cd"></div>
+                    <!--管理员信息---{-->
+                    <#include "../adminInfo.html">
+                        <!--管理员信息---}-->
+                        <div class="nav-wrap">
+                            <#include "left.html">
+                        </div>
+                </div>
+                <!--左侧导航---}-->
+            </td>
+            <td class="mc-m">
+                <div class="navToggle"></div>
+            </td>
+            <td class="mc-r">
+                <!--顶部导航---{-->
+                <#include "../topNav.html">
+                    <!--顶部导航---}-->
+
+                    <!--面包屑导航---{-->
+                    <#assign moduleName="用户管理">
+                        <#include "banner.html">
+                            <!--面包屑导航---}-->
+
+                            <!--工具栏--{-->
+                            <div id="toolbar" class="clearfix">
+                                <div class="toolbor-module search">
+                                    <input type="button" class="input-button return" value="返回" onclick="history.go(-1)">
+                                </div>
+                            </div>
+                            <!--工具栏--}-->
+
+                            <div id="main" class="clearfix">
+                                <form onsubmit="return check_user();" action="<#if user??>${request.getContextPath()}/admin/modifyuser.html<#else>${request.getContextPath()}/user/register.html</#if>"
+                                      method="post" name="form_user">
+                                    <div class="valBox w750">
+                                        <div class="top">
+                                            <strong>修改用户</strong>
+                                        </div>
+                                        <div class="val clearfix">
+                                            <ul class="editUserInfoX">
+                                                <li>
+                                                    <div class="title">用户名：</div>
+                                                    <div class="v">
+                                                        <#if user??> ${user.username!}<input type="hidden"
+                                                                                             name="username" value="${user.username!}" />
+                                                            <input type="hidden" name="userId" value="${user.userId?c}"/>
+                                                            <#else> <input
+                                                                    type="text" class="input_border" name="username"> <font
+                                                                    color="#FF0000">*</font> </#if>
+                                                    </div>
+                                                </li>
+<!--                                            <li>
+                                                    <div class="title">登录密码：</div>
+                                                    <div class="v">
+                                                        <input type="password" class="input_border" name="password">
+                                                        <font color="#FF0000">*</font>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">确认密码：</div>
+                                                    <div class="v">
+                                                        <input type="password" class="input_border" name="password1">
+                                                        <font color="#FF0000">*</font>
+                                                    </div>
+                                                </li>
+ -->                                                 
+                                                <li>
+                                                    <div class="title">真实姓名：</div>
+                                                    <div class="v">
+                                                        <input type="text" class="input_border"
+                                                               value="<#if user??>${user.realname!}</#if>" name="realname">
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">性&#12288;别：</div>
+                                                    <div class="v">
+                                                        <#assign sex=true> <#if
+                                                                (user?exists&&user.sex?exists&&user.sex=="2") > <#assign
+                                                                sex=false> </#if> <input type="radio" name="sex" value="1"<#if
+                                                                sex==true> checked="checked"</#if> />男 <input type="radio"
+                                                                                                              name="sex" value="2"<#if sex==false>
+                                                            checked="checked"</#if> />女
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">生日：</div>
+                                                    <div class="v">
+                                                        <input type="text" onclick="change_picktime()" size="20"
+                                                               value="<#if user??>${user.birthday!}</#if>"
+                                                               class="input_border" name="birthday">
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">所属客服：</div>
+                                                    <div class="v">
+                                                        <select name="kefu_userid">
+                                                            <option value="0">无</option> <#if allkefu ??> <#list allkefu as obj>
+                                                            <option  value="${obj.userId!}" <#if obj.userId==user.userCache.kefuUserid >selected="selected"</#if>>${obj.username!}</option>
+                                                        </#list> </#if>
+                                                        </select>
+                                                    </div>
+                                                </li>
+                                                <!--
+                                                <li>
+                                                    <div class="title">是否可以发担保标：</div>
+                                                    <div class="v">
+                                                        <#assign status=true> <#if
+                                                                (user?exists&&user.borrowVouch?exists&&user.borrowVouch==0) >
+                                                            <#assign status=false> </#if> <input type="radio" name="status"
+                                                                                                 value="0"<#if status==true> checked="checked"</#if>
+                                                            />可以 <input type="radio" name="borrowVouch" value="1"<#if
+                                                                    status==false> checked="checked"</#if> />否
+
+                                                    </div>
+                                                </li>
+                                                  -->
+                                                <li>
+                                                    <div class="title">是否锁定：</div>
+                                                    <div class="v">
+                                                        <input type="radio"  name="islock" value="0" <#if user??&&user.islock==0>checked="checked"</#if>  />开通 
+                                                        <input type="radio"  name="islock" value="1" <#if user??&&user.islock==1>checked="checked"</#if>  />锁定
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">介绍人ID：</div>
+                                                    <div class="v">
+                                                        <input type="text"
+                                                               value="<#if user??&&user.inviteUser??>${user.inviteUser.userId!}</#if>"
+                                                               id="invite_userid" name="invite_userid">
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">推广提成费用：</div>
+                                                    <div class="v">
+                                                        <input type="text"
+                                                               value="<#if user??>${user.inviteMoney!}</#if>"
+                                                               id="invite_money" name="inviteMoney">
+                                                    </div>
+                                                </li><#--
+                                                <li>
+                                                    <div class="title">状态：</div>
+                                                    <div class="v">
+                                                        <#assign status=true> <#if
+                                                                (user?exists&&user.status?exists&&user.status==0) > <#assign
+                                                                status=false> </#if> <input type="radio" name="status" value="1"<#if
+                                                                status==true> checked="checked"</#if> />开通 <input type="radio"
+                                                                                                                  name="status" value="0"<#if status==false>
+                                                            checked="checked"</#if> />关闭
+                                                    </div>
+                                                </li>-->
+                                                <li>
+                                                    <div class="title">所在地：</div>
+                                                    <div class="v">
+                                                        <#if user.userinfo?exists&&user.userinfo.province?exists>
+                		<@region name="province" id="province" value=user.userinfo.province pid="0"></@region>&nbsp;
+                	<#else>
+                		<@region name="province" id="province" pid="0"></@region>&nbsp;
+                	</#if>
+					
+					<#if user.userinfo?exists&&user.userinfo.province?exists>
+						<#if user.userinfo.city?exists>
+							<@region name="city" id="city" value=user.userinfo.city pid=user.userinfo.province></@region>&nbsp;
+						<#else>
+							<@region name="city" id="city" pid=user.userinfo.province></@region>&nbsp;
+						</#if>
+                	<#else>
+                		<@region name="city" id="city" pid="-1"></@region>&nbsp;
+                	</#if>
+					
+					<#if user.userinfo?exists&&user.userinfo.city?exists>
+						<#if user.userinfo.area?exists>
+							<@region name="area" id="area" value=user.userinfo.area pid=user.userinfo.city></@region>&nbsp;
+						<#else>
+							<@region name="area" id="area" pid=user.userinfo.city></@region>&nbsp;
+						</#if>
+                	<#else>
+                		<@region name="area" id="area" pid="-1"></@region>&nbsp;
+                	</#if>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">证件类型：</div>
+                                                    <div class="v">
+                                                        <#if user??&&user.cardType??> <@linkage name="cardType" id="card_type" typeid=32
+                                                            default=user.cardType ></@linkage> <#else> <@linkage
+                                                        name="card_type" id="card_type" typeid=32 ></@linkage></#if> <input
+                                                            type="text" class="input_border"
+                                                            value="<#if user??>${user.cardId!}</#if>" name="cardId">
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">电子邮件地址：</div>
+                                                    <div class="v">
+                                                        <input type="text" class="input_border"
+                                                               value="<#if user??>${user.email!}</#if>" name="email">
+                                                        <font color="#FF0000">*</font>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">QQ：</div>
+                                                    <div class="v">
+                                                        <input type="text" class="input_border"
+                                                               value="<#if user??>${user.qq!}</#if>" name="qq">
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">旺旺：</div>
+                                                    <div class="v">
+                                                        <input type="text" class="input_border"
+                                                               value="<#if user??>${user.wangwang!}</#if>" name="wangwang">
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">家庭电话：</div>
+                                                    <div class="v">
+                                                        <input type="text" class="input_border"
+                                                               value="<#if user??>${user.tel!}</#if>" name="tel">
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">手机：</div>
+                                                    <div class="v">
+                                                        <input type="text" class="input_border"
+                                                               value="<#if user??>${user.phone!}</#if>" name="phone">
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">详细地址：</div>
+                                                    <div class="v">
+                                                        <input type="text" class="input_border"
+                                                               value="<#if user??>${user.address!}</#if>" name="address">
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">令牌序列号SN：</div>
+                                                    <div class="v">
+                                                        <input type="text" class="input_border"
+                                                               value="<#if user??>${user.serialId!}</#if>" name="serialId">
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+                                            <div class="other">
+                                                <input type="hidden" name="actionType" value="adminadduser" />
+                                                <input type="submit" value="提交" class="input-button post">
+                                                <input type="reset" value="重置" class="input-button reset" name="reset" >
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                            </div>
+            </td>
+        </tr>
+        <tr>
+            <!--尾部--{-->
+            <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+            <!--尾部--}-->
+        </tr>
+    </table>
+    <script>
+        function joincity(id){
+            alert($("#"+id+"city option").text());
+
+        }
+
+        function check_user(){
+            var frm = document.forms['form_user'];
+            var username = frm.elements['username'].value;
+            var password = frm.elements['password'].value;
+            var password1 = frm.elements['password1'].value;
+            var email = frm.elements['email'].value;
+            var errorMsg = '';
+            if (username.length == 0 ) {
+                errorMsg += '用户名不能为空' + '\n';
+            }
+            if (username.length&lt;4) {
+                errorMsg += '用户名长度不能少于4位' + '\n';
+            }
+            if (password.length==0) {
+                errorMsg += '密码不能为空' + '\n';
+            }
+            if (password.length&lt;6) {
+                errorMsg += '密码长度不能小于6位' + '\n';
+            }
+            if (password.length!=password1.length) {
+                errorMsg += '两次密码不一样' + '\n';
+            }
+            if (email.length==0) {
+                errorMsg += '邮箱不能为空' + '\n';
+            }
+            if (errorMsg.length &gt; 0){
+                alert(errorMsg); return false;
+            } else{
+                return true;
+            }
+        }
+    </script>
+    </body>
+</html>
+<#include "../jsPage.html">

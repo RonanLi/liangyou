@@ -1,0 +1,143 @@
+
+	<form action="${request.getContextPath()}/admin/system/update.html" method="post">
+        <div id="parametersTab">
+            <ul class="clearfix tab">
+                <li><div class="t active">基本参数</div></li>
+                <li><div class="t">第三方支付</div></li>
+                
+                <li><div class="t">邮件系统业务</div></li>
+                <li><div class="t">网站登录业务</li>
+            </ul>
+            <div class="customer-info ii">
+                <table class="data-list">
+                    <tr class="header">
+                        <td width="33%">参数名称</td>
+                        <td width="*">参数值</td>
+                        <td width="33%">变量</td>
+                    </tr>
+
+                    <#if sysInfo??>
+                        <#list sysInfo as obj>
+                            <#if obj.style==1>
+
+                            <tr class="s">
+                                <td class="r">${obj.name!"-"}</td>
+                                <td class="m">
+                                    <input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].id" value="${obj.id!}"/>
+                                    <input class="parameters-val" type="text" name="sysInfo[${obj_index}].value" value="${obj.value!}" />
+                                    <input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].nid" value="${obj.nid!}" />
+                                    <input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].type" value="${obj.type!}" />
+                                    <input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].style" value="${obj.style!}" />
+                                    <input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].status" value="${obj.status!}" />
+                                	<input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].name" value="${obj.name!}" />
+                                </td>
+                                <td class="l">${obj.nid!"-"}</td>
+                            </tr>
+
+                            </#if>
+                        </#list>
+                    </#if>
+
+                </table>
+            </div>
+            <div class="customer-info ii hidden">
+                <table class="data-list">
+                    <tr class="header">
+                        <td width="33%">参数名称</td>
+                        <td width="*">参数值</td>
+                        <td width="33%">变量</td>
+                    </tr>
+                    <#if sysInfo??>
+                        <#list sysInfo as obj>
+                            <#if obj.style==2>
+
+                                <tr class="s">
+                                    <td class="r">${obj.name!"-"}</td>
+                                    <td class="m">
+									<input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].id" value="${obj.id!}"/>
+                                    <input class="parameters-val" type="text" name="sysInfo[${obj_index}].value" value="${obj.value!}" />
+                                    <input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].nid" value="${obj.nid!}" />
+                                    <input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].type" value="${obj.type!}" />
+                                    <input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].style" value="${obj.style!}" />
+                                    <input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].status" value="${obj.status!}" />                                    </td>
+                                    <input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].name" value="${obj.name!}" />
+                                    <td class="l">${obj.nid!"-"}</td>
+                                </tr>
+
+                            </#if>
+                        </#list>
+                    </#if>
+                </table>
+            </div>
+           
+            <div class="customer-info ii hidden">
+                <table class="data-list">
+                    <tr class="header">
+                        <td>参数名称</td>
+                        <td>参数值</td>
+                        <td>变量</td>
+                    </tr>
+                    <#if sysInfo??>
+                        <#list sysInfo as obj>
+                            <#if obj.style==4>
+
+                                <tr class="s">
+                                    <td class="r">${obj.name!"-"}</td>
+                                    <td class="m">
+                                       <input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].id" value="${obj.id!}"/>
+                                    <input class="parameters-val" type="text" name="sysInfo[${obj_index}].value" value="${obj.value!}" />
+                                    <input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].nid" value="${obj.nid!}" />
+                                    <input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].type" value="${obj.type!}" />
+                                    <input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].style" value="${obj.style!}" />
+                                    <input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].status" value="${obj.status!}" />
+                                    <input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].name" value="${obj.name!}" />
+                                    </td>
+                                    <td class="l">${obj.nid!"-"}</td>
+                                </tr>
+
+                            </#if>
+                        </#list>
+                    </#if>
+                </table>
+            </div>
+            
+            <#-- 用于显示value是时间格式的  -->
+             <div class="customer-info ii hidden">
+                <table class="data-list">
+                    <tr class="header">
+                        <td>参数名称</td>
+                        <td>参数值</td>
+                        <td>变量</td>
+                    </tr>
+                    <#if sysInfo??>
+                        <#list sysInfo as obj>
+                            <#if obj.style==5>
+
+                                <tr class="s">
+                                    <td class="r">${obj.name!"-"}</td>
+                                    <td class="m">
+                                       <input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].id" value="${obj.id!}"/>
+                                      <input class="parameters-val" name="sysInfo[${obj_index}].value" value="${obj.value!}" size="24" onclick="change_picktime()"/>
+                                 <#--     <input class="parameters-val" type="text" name="sysInfo[${obj_index}].value" value="${obj.value!}" />     -->
+                                    <input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].nid" value="${obj.nid!}" />
+                                    <input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].type" value="${obj.type!}" />
+                                    <input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].style" value="${obj.style!}" />
+                                    <input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].status" value="${obj.status!}" />
+                                    <input class="parameters-val" type="hidden" name="sysInfo[${obj_index}].name" value="${obj.name!}" />
+                                    </td>
+                                    <td class="l">${obj.nid!"-"}</td>
+                                </tr>
+
+                            </#if>
+                        </#list>
+                    </#if>
+                </table>
+            </div>
+            
+        </div>
+
+
+        <div id="bottomToolbar" class="clearfix">
+            <input type="submit" class="input-button post" value="提交">
+        </div>
+	</form>

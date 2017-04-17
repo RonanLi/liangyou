@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<#include "../head.html">
+<body>
+<table class="mc">
+    <tr>
+        <td class="mc-l">
+            <!--左侧导航---{-->
+            <div id="navPanelContainer">
+                <div class="system-logo cd"></div>
+                <!--管理员信息---{-->
+                <#include "../adminInfo.html">
+                    <!--管理员信息---}-->
+                    <div class="nav-wrap">
+                        <#include "left.html">
+                    </div>
+            </div>
+            <!--左侧导航---}-->
+        </td>
+        <td class="mc-m">
+            <div class="navToggle"></div>
+        </td>
+        <td class="mc-r">
+            <!--顶部导航---{-->
+            <#include "../topNav.html">
+                <!--顶部导航---}-->
+
+                <!--面包屑导航---{-->
+                <#assign moduleName="图片管理">
+                    <#include "banner.html">
+                        <!--面包屑导航---}-->
+						  <div id="toolbar" class="clearfix">
+                                <div class="toolbor-module">
+                                    <a href="addScrollPic.html" class="input-button" style="line-height:24px;">+添加图片</a>
+                                </div>
+                            </div>
+                     
+
+                        <div id="main" class="clearfix">
+                            <form action="" method="post">
+                                <table class="data-list">
+                                    <tr class="header">
+                                        <td>ID</td>
+                                        <td>顺序</td>
+                                        <td>链接地址</td>
+                                        <td>图片详情（点击查看）</td>
+                                        <td>类型</td>
+                                        <td>操作</td>
+                                    </tr>
+                                    <#list list as item>
+                                        <tr class="s">
+                                            <td>${item.id!"-"}</td>
+                                            <td>${item.sort!}</td>
+                                           	<td>${item.url!}</td>
+                                            <td><a href="${webroot}/${item.pic!}" target="_blank">${item.pic!}</a></td>
+                                            <td>
+                                                <#if item.typeId==1>
+                                                                                                                                 首页滚动图片
+                                                <#elseif item.typeId==4>
+                                                    WAP端首页滚动图片
+                                                <#elseif item.typeId==5>
+                                                                                                                                 发展历程
+                                                <#elseif item.typeId==6>
+                                                                                                                                 荣誉资质
+                                                <#elseif item.typeId==7>
+                                                                                                                                 金和风采
+                                                <#elseif item.typeId==2>
+                                                                                                                                 合作伙伴
+                                                <#elseif item.typeId==3>
+                                                                                                                                 友情链接
+                                              
+                                                <#else>
+                                                    --
+                                                </#if>
+                                            </td>
+                                            <td>
+                                            <a href="modifyScrollPic.html?id=${item.id?c}">修改图片</a>  
+                                            <a href="#" onClick="javascript:if(confirm('确定要删除吗?删除后将不可恢复')) location.href='deleteScrollPic.html?id=${item.id?c}'">删除图片</a>
+                                            </td>
+                                        </tr>
+                                    </#list>
+
+                                </table>
+                            </form>
+
+                            <!--底部工具栏--{-->
+                            <div id="bottomToolbar" class="clearfix">
+                                <div class="other-tool">
+                                    <dl class="refresh-data">
+                                        <dt class="refresh-data-icon"></dt>
+                                        <dd><a href="javascript:void(0);" class="refresh-page">刷新数据</a></dd>
+                                    </dl>
+                                </div>
+
+                              
+                            </div>
+                            <!--底部工具栏--}-->
+
+                            <script>
+                            var url = 'showAllComment.html?search=true';
+
+                                function sousuo(){
+                                    var sou = "";
+                                    var username = $("#username").val();
+                                    if (username!=""&&username!="请输入用户名"){
+                                        sou += "&username="+username;
+                                    }
+                                    if (sou!=""){
+                                        location.href=url+sou;
+                                    }
+                                }
+                            </script>
+                        </div>
+
+        </td>
+    </tr>
+    <tr>
+        <!--尾部--{-->
+        <td colspan="3" class="mc-b"><#include "../foot.html"></td>
+        <!--尾部--}-->
+    </tr>
+</table>
+
+</body>
+</html>
+<#include "../jsPage.html">

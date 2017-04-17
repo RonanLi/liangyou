@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html"> 
+<body>
+<#assign mid="m_info" >
+<#assign nid="member3">
+<#include "../../include/header.html">
+<!--header-end-->
+<!--用户中心的主栏目 开始-->
+<div class="container-bg">
+<div id="main" class="clearfix">
+<div class="wrap950 " style="margin-top:0">
+	<!--左边的导航 开始-->
+	<div class="user_left">
+	<#assign userinfo_type="userinfo" >
+		<#include "../user_menu.html">
+	</div>
+	<!--左边的导航 结束-->
+	
+	<!--右边的内容 开始-->	
+	<div class="user_right">
+
+		<#if msg?exists>
+		<div id="msg24">
+			<p class="ok"> ${msg} </p>
+		</div>
+		<#else>
+			<#if errormsg?exists>
+				<div id="msg25">
+					<p class="error"> ${errormsg} </p>
+				</div>
+			</#if>
+		</#if>
+		<div class="user_right_menu">
+			<#include "userinfo_menu.html"> 
+		</div>
+		
+		<div class="user_right_main">
+		
+		<form action="" name="form1" method="post"  onsubmit="return ckeck_form();">
+				<!--个人资料 开始-->
+			<!-- <div class="user_right_border">
+				<div class="l">账户：</div>
+				<div class="c">
+				<#if (session_user?exists) >
+					${session_user.username!""}
+				</#if>
+				</div>
+			</div> -->
+			
+			<div class="user_right_border">
+				<div class="l">昵 称：</div>
+				<div class="c">
+					<#if (session_user?exists) >
+						${session_user.username}
+					</#if>
+				</div>
+			</div>
+                
+            <!-- <div class="user_right_border">
+	            <div class="l">真实姓名：</div>
+	            <div class="c">
+	            	<#if (session_user?? && session_user.realname??) ><input disabled="true"  name="realname" value="${session_user.realname[0..0]!}***" /><#else><a href="${webroot}/member/apiRealname.html" style="color: red">点击实名认证</a></#if>
+	            </div>
+            </div> -->
+			<!-- <div class="user_right_border">
+				<div class="l">籍贯：</div>
+				<div class="c">
+				<#if session_user??&&session_user.province??&session_user.province.name??>${(session_user.province.name)!} </#if>
+				<#if session_user??&&session_user.city??&session_user.city.name??>${(session_user.city.name)!} </#if>
+				<#if session_user??&&session_user.area??&session_user.area.name??>${(session_user.area.name)!}</#if>
+				
+				</div>
+			</div>  -->
+			<div class="user_right_border">
+				<div class="l">户籍所在地：</div>
+					<div class="c">
+			             <#if session_user?exists&&session_user.province?exists>
+			                		<@region name="identifyUser.province.id" id="province" value=session_user.province.id! pid="0"></@region>&nbsp;
+			                	<#else>
+			                		<@region name="identifyUser.province.id" id="province" pid="0"></@region>&nbsp;
+			                	</#if>
+								
+								<#if session_user?exists&&session_user.province?exists>
+									<#if session_user.city?exists>
+										<@region name="identifyUser.city.id" id="city" value=session_user.city.id! pid=session_user.province.id!></@region>&nbsp;
+									<#else>
+										<@region name="identifyUser.city.id" id="city" pid="0"></@region>&nbsp;
+									</#if>
+			                	<#else>
+			                		<@region name="identifyUser.city.id" id="city" pid="-1"></@region>&nbsp;
+			                	</#if>
+								
+								<#if session_user?exists&&session_user.city?exists>
+									<#if session_user.area?exists>
+										<@region name="identifyUser.area.id" id="area" value=session_user.area.id! pid=session_user.city.id!></@region>&nbsp;
+									<#else>
+										<@region name="identifyUser.area.id" id="area" pid=session_user.city></@region>&nbsp;
+									</#if>
+			                	<#else>
+			                		<@region name="identifyUser.area.id" id="area" pid="-1"></@region>&nbsp;
+			                	</#if>
+						</div>
+			</div>
+			<div class="user_right_border">
+				<div class="l">出生日期：</div>
+				<div class="c">
+<!-- 					<input type="text" name="identifyUser.birthday" id="birthday" onClick="change_picktime()" value="<#if session_user?exists&&session_user.birthday?exists>${session_user.birthday}</#if>">
+ -->					 <input type="text" id="birthday" name="identifyUser.birthday" style="cursor:pointer;" value="<#if session_user?exists&&session_user.birthday?exists>${session_user.birthday}</#if>"  readonly= "true " onclick="" />
+					
+				</div>
+				<div class="daoqiDate"></div>
+			</div>
+			<script type="text/javascript">
+					$(function(){
+						$("#birthday").datepicker({ buttonText: "Choose" , changeMonth: true,  
+							changeYear: true, dateFormat: "yy-mm-dd",currentText: 'Now', showOtherMonths: true,gotoCurrent: true,yearRange:"1900:2020",
+								onSelect:function(dateText){
+									var valDay1 = dateText.replace(/-/g, '/');
+									var valDay = Date.parse(valDay1);
+									var nowDate = (new Date).getTime();
+									if(valDay > nowDate)
+									{
+										$(".daoqiDate").html("<span style='color:#f00'>所选日期不能大于当前日期</span>");
+										return false;
+									}
+									$("#birthday").click(function(){
+									   	$(".daoqiDate").html("");
+									   	$("#birthday").val("");
+									})
+								}
+							});
+					})	
+			 </script>
+			 <script type="text/javascript">
+			 function ckeck_form(){
+					var dateText = $("#birthday").val();
+					var valDay1 = dateText.replace(/-/g, '/');
+					var valDay = Date.parse(valDay1);
+					var nowDate = (new Date).getTime();
+					if(valDay > nowDate)
+					{
+						$(".daoqiDate").html("<span style='color:#f00'>所选日期不能大于当前日期</span>");
+						return false;
+					}
+					$("#birthday").click(function(){
+					   	$(".daoqiDate").html("");
+					   	$("#birthday").val("");
+					})
+					
+			 }
+			 </script>
+			<div class="user_right_border">
+				<div class="l">性 别：</div>
+				<div class="c">
+					<#assign sex=true>
+					<#if (session_user?exists&&session_user.sex?exists&&session_user.sex=="2") >
+						<#assign sex=false>
+					</#if>
+				
+					<input type="radio" name="identifyUser.sex" value="1" <#if session_user.sex?exists > </#if> <#if sex==true> checked="checked"</#if>   />男
+                    <input type="radio" name="identifyUser.sex" value="2" <#if session_user.sex?exists> </#if>  <#if sex==false> checked="checked"</#if>  />女
+				</div>
+			</div>
+			
+			<!-- <div class="user_right_border">
+				<div class="l">手机号码：</div>
+				<div class="c">
+                	<input type="text" name="phone" disabled="disabled" value="<#if (session_user?exists&&session_user.phone?exists) >${session_user.phone}<#else>未填写</#if>" />  
+				</div>
+			</div> -->
+			
+			<div class="user_right_border">
+				<div class="l">婚姻状况：</div>
+				<div class="c">
+					<#if info?exists&&info.marry?exists>
+						<@linkage name="marry" id="marry" typeid=1 default=info.marry></@linkage>
+					<#else>
+						<@linkage name="marry" id="marry" typeid=1></@linkage>
+					</#if>
+				</div>
+			</div>
+			
+			<div class="user_right_border">
+				<div class="l">子 女：</div>
+				<div class="c">
+					<#if info?exists&&info.child?exists>
+						<@linkage name="child" id="child"  typeid=2 default=info.child></@linkage>
+					<#else>
+						<@linkage name="child" id="child"  typeid=2></@linkage>
+					</#if>
+				</div>
+			</div>
+			
+			<div class="user_right_border">
+				<div class="l">学 历：</div>
+				<div class="c">
+					<#if info?exists&&info.education?exists>
+						<@linkage name="education" id="education" typeid=3 default=info.education></@linkage>
+					<#else>
+						<@linkage name="education" id="education" typeid=3></@linkage>
+					</#if>
+				</div>
+			</div>
+			
+			<div class="user_right_border">
+				<div class="l">月收入：</div>
+				<div class="c">
+					<#if info?exists&&info.income?exists>
+						<@linkage name="income" id="income" typeid=4 default=info.income></@linkage>
+					<#else>
+						<@linkage name="income" id="income" typeid=4></@linkage>
+					</#if>
+				</div>
+			</div>
+			
+			<div class="user_right_border">
+				<div class="l">社 保：</div>
+				<div class="c">
+					<#if info?exists&&info.income?exists>
+						<@linkage name="shebao" id="shebao" typeid=5 default=info.shebao></@linkage>
+					<#else>
+						<@linkage name="shebao" id="shebao" typeid=5></@linkage>
+					</#if>
+				</div>
+			</div>
+			
+			<div class="user_right_border">
+				<div class="l">社保电脑号：</div>
+				<div class="c">
+					<input type="text" size="30" <#if info?exists&&info.shebao?exists&&info.shebao == 32>disabled="disabled"</#if> name="shebaoid" id="shebaoid" maxlength="20" value="<#if info?exists&&info.shebaoid?exists>${info.shebaoid}</#if>" /> 
+				</div>
+			</div>
+			
+			<div class="user_right_border">
+				<div class="l">住房条件：</div>
+				<div class="c">
+					<#if info?exists&&info.housing?exists>
+						<@linkage name="housing" id="housing" typeid=6 default=info.housing></@linkage>
+					<#else>
+						<@linkage name="housing" id="housing" typeid=6></@linkage>
+					</#if>
+				</div>
+			</div>
+			
+			<div class="user_right_border">
+				<div class="l">是否购车：</div>
+				<div class="c">
+					<#if info?exists&&info.car?exists>
+						<@linkage name="car" id="car" typeid=7 default=info.car></@linkage>
+					<#else>
+						<@linkage name="car" id="car" typeid=7></@linkage>
+					</#if>
+				</div>
+			</div>
+			
+			<div class="user_right_border">
+				<div class="l">逾期记录：</div>
+				<div class="c">
+					<#if info?exists&&info.late?exists>
+						<@linkage name="late" id="late" typeid=8 default=info.late></@linkage>
+					<#else>
+						<@linkage name="late" id="late" typeid=8></@linkage>
+					</#if>
+				</div>
+			</div>
+			
+			<div class="user_right_border">
+			<div class="l"></div>
+			<div class="c">
+				<input type="submit" class="btn-action"  name="name"  value="确认提交" size="30" /> 
+			</div>
+                        </div>
+		<!--个人资料 结束-->
+		<!--账号充值 开始-->
+				<input type="hidden" name="type" value="1" />
+		</form>
+	</div>
+  </div>
+	<!--右边的内容 结束-->
+</div>
+</div>
+</div>
+<!--用户中心的主栏目 结束-->
+<script src="${request.getContextPath()}${theme_dir}/media/js/modal.js"></script>
+<script src="${request.getContextPath()}${theme_dir}/media/js/tab.js"></script>
+<script src="${request.getContextPath()}${theme_dir}/media/js/alert.js"></script>
+<script src="${request.getContextPath()}${theme_dir}/media/js/transition.js"></script>
+<script type="text/javascript" src="${request.getContextPath()}${theme_dir}/media/js/area.js"></script>
+<#include "../../include/footer.html"> 
+<script type="text/javascript">
+	
+	$(document).ready(function(){
+		$('#shebao').change(function(){
+			var p1=$(this).children('option:selected').val();//这就是selected的值
+			if(p1 == 32){
+				$("#shebaoid").attr("disabled", true);
+			}else if(p1 == 31){
+				$("#shebaoid").attr("disabled", false);
+			}
+		})
+	})
+</script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 ">
+<#assign webroot=request.getContextPath()>
+<#assign nid="member" >
+<#include "../../include/resource.html">
+<#include "../../common/function.html">
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+
+<body>
+
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="subMenu">
+                <a href="${webroot}/member/myAccount/myBank.html">我的银行卡</a>
+            </div>
+            <div class="rightDiv">
+                <div class="myBank">
+                    <ul>
+                        <li>
+                            <div>序列号</div>
+                            <div>开户银行</div>
+                            <div>类型</div>
+                            <div>卡号</div>
+                            <div>办卡地点</div>
+                            <div>添加时间</div>
+                            <div>操作</div>
+                        </li>
+                        <#if bankList?? && bankList?size gt 0>
+                            <#list bankList as item>
+                                <li>
+                                    <div>${item_index+1}</div>
+                                    <div>${item.bankMmm.bankName}</div>
+                                    <div>借记卡</div>
+                                    <div>
+                                        <#if item.account?length lt 10>
+                                            ${item.account}
+                                            <#else> ${item.account?substring(0,4)}****${item.account?substring((item.account?length)-4,(item.account?length))}
+                                        </#if>
+                                    </div>
+                                    <div>${item.mmmprovince.name}</div>
+                                    <div>${item.addtime?string("yyyy-MM-dd HH:mm:ss")}</div>
+                                    <div><a href="#" onclick="javascript:opDialog(this)" bankid="${item.id}" bankname="${item.bankMmm.bankName}" bankno="${item.account}" bankadr="${item.mmmprovince.name}" banktype="借记卡" url="" borrowId="">取消绑定</a> </div>
+                                </li>
+                            </#list>
+                            <#else><li>您尚未绑定银行卡！<a href="/member/myAccount/bindBank.html">&gt;&gt;去绑定银行卡</a> </li>
+                        </#if>
+                    </ul>
+
+                    <div id="modal_dialog" title="账户中心/解绑银行卡">
+                        <div class="pop-tb-con clearfix">
+                            <div id="div_errorbox"> <div class="reg_error" id="dvErrorDesc"></div></div>
+
+                            <form id="form1_pay" action="/member/myAccount/myBank.html" method="post">
+                                <div id="flow_num">
+                                    <p id="bankname"></p>
+                                    <p id="banktype"></p>
+                                    <p id="bankno"></p>
+                                </div>
+
+                                <div class="fromBox">
+                                    <div class="boxTxt">图形验证码：</div>
+                                    <div class="boxIpt">
+                                        <input style="" name="valicode" id="imgCode" type="text" maxlength="4"/>
+                                        <img id="imVcode" src="${request.getContextPath()}/validimg.html" onClick="this.src='${request.getContextPath()}/validimg.html?t=' + Math.random();" alt="点击换一个校验码"/>
+                                    </div>
+                                </div>
+
+                                <div class="fromBox">
+                                    <div class="boxTxt">手机验证码：</div>
+                                    <div class="boxIpt">
+                                        <input name="validCodeee" id="messCode" type="text" maxlength="6">
+                                        <a id="btnSendMsg">获取验证码</a>
+                                    </div>
+                                </div>
+
+                                <div class="fromBox">
+                                    <input type="hidden" id="codeUniqueId" name="codeUniqueId"/>
+                                    <input type="hidden" id="bankid" name="bankid" value=""/>
+                                    <input type="hidden" id="type" name="type" value="myBank"/>
+                                </div>
+
+                                <p>注意：点击按钮表示您将确认解绑银行卡.</p>
+                                <a class="btn" onClick="check_form()">确认解绑</a>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<#include "../../include/footer.html">
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"> </script>
+<script type="text/javascript">
+        function opDialog(obj) {
+            var $obj = $(obj);
+            var bankid = $obj.attr("bankid");
+            var bankname = $obj.attr("bankname");
+            var bankno = $obj.attr("bankno");
+            var banktype = $obj.attr("banktype");
+            var bankadr = $obj.attr("bankadr");
+            var url = $obj.attr("url");
+            $("#bankname").html("开户银行：" + bankname);
+            $("#banktype").html(
+                    "开户类型：" + banktype);
+            $("#bankno").html(
+                    "银行卡号：" + bankno);
+            $("#bankadr").html("所在地：" + bankadr);
+            $("#bankid").val(bankid);
+            jQuery("#modal_dialog").dialog({
+                autoOpen : false,
+                modal : true,
+                height : 250,
+                width : 450
+            });
+            jQuery("#modal_dialog").dialog("open");
+        }
+
+        // 解绑银行卡验证码获取
+        $("#btnSendMsg").click(function(){
+            if ($('#imgCode').val().trim() == '') {
+                $("#dvErrorDesc").html("<i></i>图形验证码不能为空");
+                $("#dvErrorDesc").show();
+                return false;
+            } else if (!$(this).hasClass('ok')) {
+                sendPhoneCode($('#messCode').val().trim(), $('#imgCode').val().trim());
+            }
+
+        });
+
+        function sendPhoneCode(phone, valicode) {
+            $("#dvErrorDesc").hide();
+            var tim = 60, xt;
+            $.ajax({
+                "url" : "/member/account/getPhoneCode.html",
+                "type" : "post",
+                "cache" : "false",
+                "data" : {
+                    'phone' : phone,
+                    'valicode' : valicode
+                },
+                "dataType" : "json",
+                success : function(data) {
+
+                    if (data.data != "") {
+                        $("#dvErrorDesc").html("<i></i>" + data.data);
+                        $("#dvErrorDesc").show();
+                        $('#imVcode').trigger('click');
+                        return false;
+                    } else {
+                        $("#btnSendMsg").addClass('ok')
+                                .css('cursor', 'no-drop');
+                        xt = window.setInterval(function() {
+                            if (tim < 1) {
+                                window.clearInterval(xt);
+                                $('#btnSendMsg').text('获取验证码')
+                                        .removeClass('ok').css('cursor',
+                                        'pointer');
+                                $("#dvErrorDesc").hide();
+                            } else {
+                                $('#btnSendMsg').text(tim + '秒后重发');
+                                tim--;
+                            }
+                        }, 1000);
+                        $("#dvErrorDesc").html("<i></i>验证码发送成功，请注意查收");
+                        $("#dvErrorDesc").show();
+                        return false;
+                    }
+                }
+
+            })
+        }
+
+        function check_form() {
+            if (/^\s*$/.test($("#code").val())) {
+                alert("请您填写校验码");
+                return;
+            }
+            $("#form1_pay").submit();
+        }
+</script>
+</html>

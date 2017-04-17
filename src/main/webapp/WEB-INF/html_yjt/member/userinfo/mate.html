@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html">
+<body>
+	<#assign mid="m_info" >
+	<#assign nid="member3"> 
+	<#include "../../include/header.html">
+	<!--header-end-->
+	<!--用户中心的主栏目 开始-->
+    <div class="container-bg">
+	<div id="main" class="clearfix" >
+		<div class="wrap950 " style="margin-top:0">
+			<!--左边的导航 开始-->
+			<div class="user_left"><#include "../user_menu.html"></div>
+			<!--左边的导航 结束-->
+
+			<!--右边的内容 开始-->
+			<div class="user_right">
+
+				<#if msg?exists>
+				<div id="msg24">
+					<p class="ok">${msg}</p>
+				</div>
+				<#else> <#if errormsg?exists>
+				<div id="msg25">
+					<p class="error">${errormsg}</p>
+				</div>
+				</#if> </#if>
+				<div class="user_right_menu"><#assign userinfo_type="mate">
+					<#include "userinfo_menu.html"></div>
+
+				<div class="user_right_main">
+				<form action="" name="form1" method="post" >
+						<div class="user_help alert">请填写您联系方式</div>
+		
+				<div class="user_right_border">
+					<div class="l">配偶姓名：</div>
+					<div class="c">
+						<input type="text" size="25"  maxlength="20" name="mateName" value="<#if info?exists&&info.mateName?exists>${info.mateName}</#if>" />
+					</div>
+				</div>
+				
+				<div class="user_right_border">
+					<div class="l">每月薪金：</div>
+					<div class="c">
+						<input type="text" size="25"  maxlength="20" name="mateSalary" value="<#if info?exists&&info.mateSalary?exists>${info.mateSalary?c}</#if>" />
+					</div>
+				</div>
+				
+				<div class="user_right_border">
+					<div class="l">移动电话：</div>
+					<div class="c">
+						<input type="text" size="25"  maxlength="20" name="matePhone" value="<#if info?exists&&info.matePhone?exists>${info.matePhone}</#if>" />
+					</div>
+				</div>
+				
+				<div class="user_right_border">
+					<div class="l">单位电话：</div>
+					<div class="c">
+						<input type="text" size="25"  maxlength="20" name="mateTel" value="<#if info?exists&&info.mateTel?exists>${info.mateTel}</#if>" />
+					</div>
+				</div>
+				
+				<div class="user_right_border">
+					<div class="l">工作单位：</div>
+					<div class="c">
+						<#if info?exists&&info.mate_office?exists>
+							<@linkage name="mateType" id="mateType" nid="user_company_industry" default=info.mateType></@linkage>
+						<#else>
+							<@linkage name="mateType" id="mateType" nid="user_company_industry"></@linkage>
+						</#if>
+					</div>
+				</div>
+				
+				
+				<div class="user_right_border">
+					<div class="l">职位：</div>
+					<div class="c">
+						<#if info?exists&&info.mateOffice?exists>
+							<@linkage name="mateOffice" id="mateOffice" nid="user_company_office" default=info.mateOffice></@linkage>
+						<#else>
+							<@linkage name="mateOffice" id="mateOffice" nid="user_company_office"></@linkage>
+						</#if>
+					</div>
+				</div>
+				
+				<div class="user_right_border">
+					<div class="l">单位地址：</div>
+					<div class="c">
+						<input type="text" size="25"  maxlength="20" name="mateAddress" value="<#if info?exists&&info.mateAddress?exists>${info.mateAddress}</#if>" />
+					</div>
+				</div>
+				
+				<div class="user_right_border">
+					<div class="l">年收入：</div>
+					<div class="c">
+						<input type="text" size="25"  maxlength="20" name="mateIncome" value="<#if info?exists&&info.mateIncome?exists>${info.mateIncome?c}</#if>" />
+					</div>
+				</div>
+					
+				<div class="user_right_border">
+					<div class="l"></div>
+					<div class="c">
+						<input type="submit" class="btn-action"  value="确认提交" size="30" /> 
+					</div>
+				</div>
+				
+				<div class="user_right_foot alert">
+				 * 温馨提示：我们将对所有的信息进行保密
+				</div>
+				<input type="hidden" name="type" value="mate" />
+				</form>
+				</div>
+			</div>
+			<!--右边的内容 结束-->
+		</div>
+	</div>
+    </div>
+	<!--用户中心的主栏目 结束-->
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/modal.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/tab.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/alert.js"></script>
+	<script
+		src="${request.getContextPath()}${theme_dir}/media/js/transition.js"></script>
+	<#include "../../include/footer.html">
+</body>
+</html>

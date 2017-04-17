@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<#include "../../include/resource.html">
+<#assign mid="m_borrow" >
+<#assign nid="member">
+<#import "../../common/function.html" as func>
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+
+<body>
+
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+
+        <div class="user-right-top clearfix">
+            <div class="userRightMenu">
+                <#include "loanAccountMenu.html">
+            </div>
+            <div class="noBorrowing">
+                <#if param?exists>
+                    <#if param.get("dotime1")?exists><#assign dotime1=param.get("dotime1")></#if>
+                    <#if param.get("dotime2")?exists><#assign dotime2=param.get("dotime2")></#if>
+                    <#if param.get("searchkeywords")?exists><#assign searchkeywords=param.get("searchkeywords")></#if>
+                </#if>
+
+                <ul>
+                    <li>
+                        <div class="title">标题</div>
+                        <div class="amount ">金额(元)</div>
+                        <div class="interest">年利率</div>
+                        <div class="term">期限</div>
+                        <div class="remarks">审核备注</div >
+                        <div class="releaseTime">发布时间</div>
+                        <div class="operation">操作</div>
+                    </li>
+                    <#if list?? && list?size gt 0>
+                        <#list list as item>
+                            <li>
+                                <div><a href="${webroot}/invest/detail.html?borrowid=${item.id?c}" target="_blank"><#if item.name?length lt 9>${item.name}<#else>${item.name[0..8]}..</#if></a></div>
+                                <div>${item.account}元</div>
+                                <div>${item.apr} %</div>
+                                <div><#if item.isday??&&item.isday==1>${item.timeLimitDay!1}天 <#else>${(item.timeLimit)!}个月 </#if> </div>
+
+                                <#if item.verifyRemark??><div><p style="cursor: default;">${func.subString(item.verifyRemark!,8)}</p></div>
+                                <#else><div></div>
+                                </#if>
+
+                                <div>${item.addtime}</div>
+                                <div><#if item.status?? && item.status=0><a href="${webroot}/member/borrow/cancelBorrow.html?id=${item.id?c}">撤回</a><#else>--</#if></div>
+                            </li>
+                        </#list>
+                        <li>
+                            <div id="page">
+                                <#import "../../common/page.html" as pager>
+                                    <@pager.pagination page=page url="/member/myAccount/noBorrowing.html" map=param style="style3"  />
+                            </div>
+                        </li>
+                        <#else><li> 无数据</li>
+                    </#if>
+                </ul>
+            </div>
+        </div>
+            <!--正在招标 结束-->
+    </div>
+
+</div>
+
+</body>
+</html>
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"></script>
+<#include "../../include/footer.html">

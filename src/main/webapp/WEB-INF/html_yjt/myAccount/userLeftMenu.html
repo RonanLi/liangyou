@@ -1,0 +1,67 @@
+<div class="menuTop">
+    <img src="${webroot}/imgurl.html?userid=${session_user.userId?c}&size=middle" alt="点击刷新" class="picborder" />
+    <a href="${webroot}/member/myAccount/avatar.html">[修改头像]</a>
+</div>
+<div class="menuCenter">
+    <p>${session_user.username}</p>
+    <div class="authentication">
+        <a href="${webroot}/member/myAccount/phoneActive.html"><img src="${webroot}/themes/soonmes_yjt/myAccount/imgs/phoneL.png" alt="已通过手机认证"></a>
+        <#if session_user.realStatus??&&(session_user.realStatus==1||session_user.realStatus==3)>
+            <a href="${webroot}/member/myAccount/realNameActive.html"><img src="${webroot}/themes/soonmes_yjt/myAccount/imgs/nameL.png" alt="已通过实名认证"></a>
+            <#else>
+            <a href="${webroot}/member/myAccount/realName.html"><img src="${webroot}/themes/soonmes_yjt/myAccount/imgs/name.png" alt="未通过实名认证"></a>
+        </#if>
+        <!--<a href="${webroot}/member/myAccount/realNameActive.html"><img src="${webroot}/themes/soonmes_yjt/myAccount/imgs/nameL.png" alt="已通过实名认证"></a>-->
+    </div>
+    <div class="div">
+        <span>银行卡<a href="${webroot}/member/myAccount/myBank.html">查看</a></span>
+        <span>乾多多<a href="http://test.moneymoremore.com:88/main/" target="_blank">查看</a></span>
+        <span>积分等级<a href="#">暂未开放</a></span>
+        <span>我的奖品<a class="prize" href="${webroot}/member/myAccount/myAccountPrize.html?status=0&prizeurl=kindPrize"></a></span>
+    </div>
+</div>
+<div class="menuBottom">
+    <div class="toggle">
+        <b>账户概览<i></i></b>
+        <ul>
+            <li><a href="${webroot}/member/myAccount/index.html">出借账户</a></li>
+            <li><a href="${webroot}/member/myAccount/noBorrowing.html" data-val="1-2">借款账户</a></li>
+        </ul>
+    </div>
+    <a href="${webroot}/member/myAccount/cashWithdrawal.html">资金提现</a>
+    <a href="${webroot}/member/myAccount/tender.html" data-val="3">项目记录</a>
+    <div class="toggle">
+        <b>个人中心 <i></i></b>
+        <ul>
+            <li><a href="${webroot}/member/myAccount/personalCenter.html">资料概览</a></li>
+            <li><a href="${webroot}/member/myAccount/basicData.html" data-val="4-2">详细资料</a></li>
+        </ul>
+    </div>
+    <a class="msg" href="${webroot}/member/myAccount/inbox.html" data-val="5">系统消息</a>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $.ajax({
+            type: "POST",
+            url: "getUnRead.html",
+            dataType: "json",
+            success: function (Obj) {
+                if(Obj.obj.unRead>0){
+                    $('.msg').append("<b>"+Obj.obj.unRead+"</b>")
+                }
+            }
+        })
+    })
+    $(function(){
+        $.ajax({
+            type: "POST",
+            url: "getUnUsedPrize.html",
+            dataType: "json",
+            success: function (Obj) {
+                if(Obj.obj.unUsedPrize==0){
+                    $('.prize').text("0")
+                }else{$('.prize').text(Obj.obj.unUsedPrize)}
+            }
+        })
+    })
+</script>

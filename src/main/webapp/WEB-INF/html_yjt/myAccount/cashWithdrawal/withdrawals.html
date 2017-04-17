@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 ">
+<#assign webroot=request.getContextPath()>
+<#assign nid="member" >
+<#include "../../include/resource.html">
+<#include "../../common/function.html">
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+
+<body>
+
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="subMenu">
+                <a href="${webroot}/member/myAccount/withdrawals.html">现金提现</a>
+            </div>
+
+            <div class="rightDiv">
+                <div class="withdrawals">
+
+                    <#if api_code='1'>
+                        <!-- 汇付页面 -->
+                    <#include "withdrawals_hf.html">
+                    <#elseif api_code='3'>
+                        <!-- 双乾页面 -->
+                    <#include "withdrawals_sq.html">
+                    </#if>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<#include "../../include/footer.html">
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"></script>
+<script type="text/javascript">
+    var use_money = parseFloat(${account.useMoney?c});
+    function check_form(){
+        var frm = document.forms['form1'];
+        var money = parseFloat(frm.elements['money'].value);
+        var valicode = frm.elements['valicode'].value;
+        var userUseMoney =jQuery("#userUseMoney").val();
+        var errorMsg = '';
+        clearNoNum();
+        if( $('#cash_money').val().trim() == '' ){ alert('提现金额不能为空！'); return false;}
+        if( $('#cash_money').val().trim() != '' && isNaN($('#cash_money').val().trim()) ){ alert('提现金额必须为数字！'); return false;}
+        if (money >use_money) {
+            errorMsg += '您的提现金额大于现有的可用余额' + '\n';
+        }
+        if(valicode.length ==0){
+            errorMsg += '请输入验证码！' + '\n';
+        }
+        if (money.length == 0 ) {
+            errorMsg += '请输入你的提现金额' + '\n';
+        }
+        if (errorMsg.length > 0){
+            alert(errorMsg);
+            return false;
+        } else{
+            return true;
+        }
+    }
+</script>
+</html>

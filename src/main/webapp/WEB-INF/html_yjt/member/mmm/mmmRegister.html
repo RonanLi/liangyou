@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>双乾开户跳转中...</title>
+    <meta http-equiv="content-Type" content="text/html; charset=utf-8" />
+  </head>
+  <body>
+    <div>双乾页面跳转中......,请您不要关闭页面</div>
+    <form action="${mmm.submitUrl}" method="post" id="frm1"   style="display: none">
+     	<input type="hidden" id="RegisterType" name="RegisterType" value="${mmm.registerType}"  />
+		<input type="hidden" id="Mobile" name="Mobile" value="${mmm.mobile}"  />
+		
+		<input type="hidden" id="RealName" name="RealName" value="${mmm.realName}"  />
+		<input id="AccountType" name="AccountType" value="${mmm.accountType!}" />
+		<input type="hidden" id="IdentificationNo" name="IdentificationNo" value="${mmm.identificationNo}"  />
+		<input type="hidden" id="LoanPlatformAccount" name="LoanPlatformAccount" value="${mmm.loanPlatformAccount}"  />
+		<input type="hidden" id="PlatformMoneymoremore" name="PlatformMoneymoremore" value="${mmm.platformMoneymoremore}"  />
+		<input type="hidden" id="ReturnURL" name="ReturnURL" value="${mmm.returnURL}"  />
+		<input type="hidden" id="NotifyURL" name="NotifyURL" value="${mmm.notifyURL}"  />
+		<input type="hidden" id="SignInfo" name="SignInfo" value="${mmm.signInfo}"  />
+		<input type="submit" value="提交" />
+    </form>
+    <script type="text/javascript">
+    	document.getElementById("frm1").submit();  
+    </script>
+   
+  </body>
+</html>

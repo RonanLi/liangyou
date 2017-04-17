@@ -1,0 +1,82 @@
+<div class="top">
+    <div class="topBox">
+        <p>400-900-5591（9:00—20:00）<a class="topWeixin">
+			<img src="/themes/soonmes_yjt/media/bg/weixin-icon.jpg" alt="金和所微信二维码"></a>
+			<a href="http://weibo.com/5617191103/manage" target="_blank"></a>
+        	<span>
+        		<#if session_user?exists > 
+					<a href='${webroot}/member/index.html'>我的账户</a>&nbsp;|&nbsp;
+					<a href="${webroot}/user/logout.html" class="fr-a">退出</a> 
+        		<#else>
+        			<a href="${webroot}/user/login.html">登录</a>&nbsp;|&nbsp;
+        			<a href="${webroot}/user/register.html">注册</a>
+        		</#if>
+        	</span>
+			<span>
+					<a href='/activity/activityCenter.html'>活动专区&nbsp;&nbsp;</a>
+        	</span>
+        </p>
+    </div>
+</div>
+<div class="lheader">
+	<div class="head">
+	    <a href="${webroot}/" class="logo">
+	        <img src="${webroot}${theme_dir}/media/imgs/logo.jpg" alt="金和所logo">
+			<div class="logoTxt">
+				<img src="${webroot}${theme_dir}/media/imgs/logo_jp.jpg" alt="京朋集团">
+			</div>
+	    </a>
+	    <ul class="book">
+	        <li><a href="${webroot}/" class="current">首页</a></li>
+	        <li><a href="${request.getContextPath()}/invest/index.html?status=11">我要出借</a>
+	            <ul>
+	            	<li>
+	               <a href="${request.getContextPath()}/invest/index.html?status=1">招标中</a>
+	               </LI>
+	               <LI>
+				   <a href="${request.getContextPath()}/invest/index.html?status=10">还款中</a>
+				   </LI>
+				   <LI>
+					<a href="${request.getContextPath()}/invest/index.html?status=8">已还款</a>
+					</li>
+	            </ul>
+	        </li>
+	        <li><a href="/Safety.html">安全保障</a></li>
+	        <li>
+	            <a href = "${request.getContextPath()}/about/xszd.html?code=newGuide">新手指导 </a>
+	             <ul>
+	            	<li><a href="${request.getContextPath()}/about/xszd.html?code=newGuide">新手必看</a></li>
+	                <li><a href="${request.getContextPath()}/about/xszd.html?code=guide">投资指导</a></li>
+	                <li><a href="${request.getContextPath()}/about/xszd.html?code=flow">充值流程</a></li>
+	            </ul> 
+	        </li>
+	        <li><a href="${request.getContextPath()}/about/gywm.html?code=introduce">关于我们</a>
+	            <ul>
+	                <li><a href="${request.getContextPath()}/about/gywm.html?code=introduce">公司简介</a></li>
+	                <li><a href="${request.getContextPath()}/about/gywm.html?code=webNews">媒体报道</a></li>
+	                <li><a href="${request.getContextPath()}/about/gywm.html?code=serviceAgreement">服务协议</a></li>
+                    <li><a href="${request.getContextPath()}/about/gywm.html?code=joinus">加入我们</a></li>
+                    <li><a href="${request.getContextPath()}/about/jhsDevHistory.html">金和历程</a></li>
+	            </ul>
+	        </li>
+	        <!--<li><a href="${webroot}/member/index.html" class="left"><i></i>我的账户</a></li>-->
+	        <li><a href="${webroot}/member/myAccount/index.html" class="left"><i></i>我的账户</a></li>
+	    </ul>
+	</div>
+</div>
+<script>
+var DEFAULT_VERSION = "8.0";
+var ua = navigator.userAgent.toLowerCase();
+var isIE = ua.indexOf("msie")>-1;
+var safariVersion;
+if(isIE){
+    safariVersion =  ua.match(/msie ([\d.]+)/)[1];
+    if(safariVersion <= DEFAULT_VERSION ){
+        $("body").css("display","none");
+        alert("请使用IE8及以上浏览器或者将浏览器改为极速模式");
+    }
+}
+$('.topWeixin').click(function(){
+	$('.topWeixin img').toggle()
+})
+</script>

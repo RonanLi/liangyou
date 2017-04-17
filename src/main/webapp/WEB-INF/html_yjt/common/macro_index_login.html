@@ -1,0 +1,35 @@
+<#macro userLogin session_user>
+	<div id="userlogin">
+           
+                <div class="userlogin-box-content loginulbg" style="padding-top:5px;">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:-20px;">
+                        <tr>
+                            <td colspan="2" style="padding-left:15px; padding-bottom:5px">账户名：<b style="font-size:14px;">${session_user.username!}</b></td>
+                        </tr>
+                        <tr>
+                            <td width="100" >
+                            <a href="${webroot}/member/index.html"><img src="${request.getContextPath()}/imgurl.html?userid=${session_user.userId?c}&size=middle" height="78" width="78" style="padding:2px; border:1px dashed #999; margin-left:15px;" class="pic"/></a></td>
+                            <td style="padding-left:30px">
+                                <a href="${webroot}/member/index.html">账户中心</a><br>
+                                <a href="${webroot}/member/userinfo/userinfo.html">个人资料</a><br>
+                                <a href="${webroot}/member/account/log.html">资金记录</a><br>
+                                <a href="${webroot}/member/message/box.html">站内信息</a><br>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><div style="border-bottom:1px dashed #ccc;"></div></td>
+                        </tr>
+                        <tr>    
+                            <td style="padding-left:15px; line-height:25px; padding-top:3px;" colspan="2">
+                                <a href="${request.getContextPath()}/member/borrow/borrowing.html">招标中的项目</a>　
+<!--                                 <a href="${request.getContextPath()}/member/invest/tendering.html">投标中的项目</a> --><br>
+                                <a href="${request.getContextPath()}/member/account/newrecharge.html">[充值]</a>　
+                                <a href="${request.getContextPath()}/member/account/newcash.html">[提现]</a>　
+                                <a href="${request.getContextPath()}/user/logout.html" style="color:#f00">[退出]</a>
+                           </td>　
+                        </tr>
+                    </table>
+                </div>
+            
+    </div>
+</#macro>

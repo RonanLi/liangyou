@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<#include "../include/resource.html"> 
+<body>
+<#include "../include/header.html">
+<link href="${request.getContextPath()}/themes/soonmes/media/css/modal.css" rel="stylesheet" type="text/css" /> 
+<link href="${request.getContextPath()}/themes/soonmes/media/css/about.css" rel="stylesheet" type="text/css" />
+
+<div class="container zx clearfix">
+	<img src="${webroot}${theme_dir}/images/zx-banner.jpg" alt="" class="mb15"> 
+	<div class="zx-left float_left">
+		<div class="zx-lt"></div>
+		 <#include "left_menu.html">
+		<div class="zx-bt"></div>
+		<img src="${webroot}${theme_dir}/images/zx-left-kf.jpg" alt="" class="zx-kefuimg">
+	</div>
+
+	<div class="zx-righthelp float_right">
+		<div class="zx-righttitle clearfix">
+			<img src="${webroot}${theme_dir}/images/zx-rightli.jpg" alt="" class="ml10 float_left"><span class="float_left">当前位置：
+			<a id="ctl00_content_NavigationLink1_main" href="${webroot}/index.html" style=" color:#333; text-decoration:none;">义务贷（浙江得龙进出口有限公司）</a>	&gt;帮助&gt;
+			<a href="${request.getContextPath()}/help/loginhelp.html?code=help" style="color:#333; text-decoration:none;">登录</a></span>
+		</div>
+
+		<div class="">
+			<div class="info" id="lxjs">
+				<h6>第一步：</h6><h7>用户直接在首页登入或点击登入的链接进入登入页面。</h7><br>  
+				 <h3> &nbsp; </h3>
+				<div class="zx-righttitle clearfix">
+					<img src="${webroot}${theme_dir}/images/help/denglu01.jpg" alt="" height=260/><br/>
+					<img src="${webroot}${theme_dir}/images/help/denglu02.jpg" alt="" height=260/>
+				</div><br/>
+			
+				<h6>第二步：</h6><h7>用户忘记密码可以点击“忘记密码”链接取回，输入正确的用户名和验证码，通过邮箱取回密码。</h7>
+				   <h3> &nbsp; </h3>
+				<div class="zx-righttitle clearfix">
+					<img src="${webroot}${theme_dir}/images/help/denglu03.jpg" alt="" height=260/><br/>
+					<img src="${webroot}${theme_dir}/images/help/denglu04.jpg" alt="" height=150/>
+				</div><br/>
+			
+				<h6>第三步：</h6><h7>点击邮箱中链接进入用户密码设置页面，用户可设置新密码。</h7><br/>
+				   <h3> &nbsp; </h3>
+				<div class="zx-righttitle clearfix">
+					<img src="${webroot}${theme_dir}/images/help/denglu05.jpg" alt="" height=260/><br/>
+				</div><br/>
+			
+				<h6>第四步：</h6><h7>登录成功进入用户管理中心，有更多惊喜等着你。</h7><br/>
+				   <h3> &nbsp; </h3>
+				<div class="zx-righttitle clearfix">
+					<img src="${webroot}${theme_dir}/images/help/denglu06.jpg" alt="" height=550/><br/>
+				</div><br/>
+
+			</div><!--info-->
+		</div><!--myTabContent-->
+	</div><!--right-->
+</div><!--cor_divtop-->
+
+
+<script src="${request.getContextPath()}/themes/soonmes/media/js/modal.js"></script>
+<script src="${request.getContextPath()}/themes/soonmes/media/js/tab.js"></script>
+<script src="${request.getContextPath()}/themes/soonmes/media/js/alert.js"></script>
+<#include "../include/footer.html"> 

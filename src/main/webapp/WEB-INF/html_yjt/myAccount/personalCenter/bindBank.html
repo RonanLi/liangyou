@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<#assign meta_keywords="金和所，P2P平台，网贷平台，P2P理财 ">
+<#assign webroot=request.getContextPath()>
+<#assign nid="member" >
+<#include "../../include/resource.html">
+<#include "../../common/function.html">
+<#include "../../include/header.html">
+<link rel="stylesheet" href="${webroot}${theme_dir}/myAccount/css/myAccount.css" type="text/css"/>
+
+<body>
+
+<!--用户中心的主栏目 开始-->
+<div id="main" class="clearfix container">
+    <div class="user_left">
+        <#include "../userLeftMenu.html">
+    </div>
+
+    <div class="user_right">
+        <div class="user-right-top clearfix">
+            <div class="subMenu">
+                <a href="${webroot}/member/myAccount/bindBank.html">绑定银行卡</a>
+            </div>
+            <div class="rightDiv">
+                <div class="bindBank">
+
+                    <#assign account_type="bank">
+
+                    <div class="reminder">
+                        ${webname}温馨提示：银行卡是您提现的唯一依据，为了您能够顺利提现，请您仔细并如实填写如下银行卡内容.
+                        由于我们一直和工商银行有合作，为了方便您的充值和提现，我们推荐您使用<b style="font-weight: bold; font-size: 15px; color: red;">【工商银行借记卡】</b><br>
+                    </div>
+                    <form action="" method="post" id="formps">
+
+                        <div class="fromBox">
+                            <div class="boxTxt" >开户银行：</div>
+                            <div class="boxIpt">
+                                <#if drawBankList??>
+                                    <select name="drawBank">
+                                        <#list drawBankList as obj>
+                                            <option name="drawBank" value="${obj.id}">${obj.bankName}
+                                        </#list>
+                                    </select>
+                                </#if>
+
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt" >银行账号：</div>
+                            <div class="boxIpt"><input type="text" size="30" class="wer1" name="account" onselectstart="return false" oncopy="return false" onpaste="return false" value="" id="infoyhzh" /> </div>
+                            <div class="boxTxt" ></div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt" >再次输入银行账号：</div>
+                            <div class="boxIpt"><input type="text" size="30" class="wer2" name="accountSec" value="" id="infoyhzh" /> </div>
+                            <div class="boxTxt" ></div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt" >银行办卡地：</div>
+                            <div class="boxIpt">
+                                <@mmmRegionBank name="province" id="province-bank" pid="0"></@mmmRegionBank>
+                                <@mmmRegionBank name="city" id="city" pid=''></@mmmRegionBank>
+                            </div>
+                        </div>
+
+                        <div class="fromBox">
+                            <div class="boxTxt">&nbsp;</div>
+                            <div class="boxIpt">
+                                <input type="hidden" name="type" value="add" />
+                                <input type="hidden" name="codeUniqueId" id="codeUniqueId" value="" />
+                                <input type="submit"  id="BGht" class="btn-action" name="name" value="确认提交" size="30" />
+                            </div>
+                        </div>
+
+                    </form>
+                    <div class="notes">* 温馨提示：禁止信用卡套现</div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<#include "../../include/footer.html">
+<script type="text/javascript" src="${webroot}${theme_dir}/myAccount/js/myAccount.js"> </script>
+<script type="text/javascript">
+    function getMobileCode() {
+        $(function() {
+            $.ajax({
+                "url" : "/member/account/getMobileCode.html",
+                "type" : "post",
+                "cache" : "false",
+                "dataType" : "json",
+                "error" : function() {
+                },
+                "success" : function(data) {
+                    if (data != null) {
+                        if (data != null) {
+                            alert(data.data);
+                            if (data.codeUniqueId == undefined || data.codeUniqueId == '') {
+                            } else {
+                                $("#codeUniqueId").val(data.codeUniqueId);
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    }
+    $(function() {
+        jQuery("#province-bank").change(function() {
+            var province = jQuery(this).val();
+            var count = 0;
+            console.log(province);
+            jQuery.ajax({
+                url : "provinceBank.html",
+                dataType : 'json',
+                data : "pid=" + province,
+                success : function(json) {
+                    jQuery("#city option").each(function() {
+                        jQuery(this).remove();
+                    });
+                    jQuery("<option value='0'>请选择</option>").appendTo("#city");
+                    jQuery(json).each(function() {
+                        jQuery("<option value='"+json[count].id+"'>" + json[count].name + "</option>").appendTo("#city");
+                        count++;
+                    });
+                }
+            });
+        });
+    });
+
+    $(function(){
+        $('#BGht').click(function(){
+            event.preventDefault();
+            event.stopPropagation();
+            if( $('.wer1').val().trim() == ''  ){
+                alert('请输入银行账号');
+                return false;
+            }else if( $('.wer2').val().trim() == '' ){
+                alert('请重复输入银行账号');
+                return false;
+            }else if( $('#province-bank').val() == 0 || $('#city').val() == 0 || $('#area1').val() == 0 ){
+                alert('请输入银行办卡地的完整地址');
+                return false;
+            }else if( $('.wer1').val().trim() != $('.wer2').val().trim()  ){
+                alert('银行账号输入不一致');
+                return false;
+            }else{
+                $.post("/member/account/bank.html", $('#formps').serialize(), function(dd){ window.location.href = '/member/myAccount/myBank.html' });
+            }
+        });
+
+    })
+</script>
+</html>

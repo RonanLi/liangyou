@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<#include "../../head.html">
+<body>
+<table class="mc">
+    <tr>
+        <td class="mc-l">
+            <!--左侧导航---{-->
+            <div id="navPanelContainer">
+                <div class="system-logo cd"></div>
+                <!--管理员信息---{-->
+                    <#include "../../adminInfo.html">
+                <!--管理员信息---}-->
+                <div class="nav-wrap">
+                    <#include "../left.html">
+                </div>
+            </div>
+            <!--左侧导航---}-->
+        </td>
+        <td class="mc-m">
+            <div class="navToggle"></div>
+        </td>
+        <td class="mc-r">
+            <!--顶部导航---{-->
+            <#include "../../topNav.html">
+            <!--顶部导航---}-->
+
+            <!--面包屑导航---{-->
+            <#assign moduleName="系统日志">
+            <#include "../banner.html">
+            <!--面包屑导航---}-->
+
+            <!--工具栏--{-->
+            <div id="toolbar" class="clearfix">
+                <div class="toolbor-module search">
+                    <input type="button" value="搜索"  class="input-button" onclick="search();">
+                </div>
+                <div class="toolbor-module search">
+                <div style="height:22px;line-height:22px;float:left;">用户名：</div>
+					<input type="text" class="search-value" value="${param.userName!'请输入用户名'}" id="userName" name="userName" style="color: rgb(159, 159, 159);">
+                </div>
+                <div class="toolbor-module search">
+                <div style="height:22px;line-height:22px;float:left;">操作类型：</div>
+	                <select id="operationId" name="operationId">
+	                <option value="" <#if param??><#else>selected="selected"</#if> >全部</option>
+	                <#if soList0?exists && soList0?size gt 0>
+	                    <#list soList0 as obj0>
+						<option value="${obj0.id}"  <#if param??&&obj0.id?c== param.operationId! >selected="selected"</#if>>${obj0.name?if_exists}</option>
+	                    </#list>
+	                </#if>
+	                </select>
+                </div>
+                
+                <div class="toolbor-module search">
+                    <div style="height:22px;line-height:22px;float:left;">日志记录时间：</div>
+                    <input class="_search-value" name="dotime1" id="dotime1" value="${param.dotime1!}" onclick="change_pickdate()"/>
+                    到
+                    <input class="_search-value" name="dotime2" id="dotime2" value="${param.dotime2!}" onclick="change_pickdate()"/>
+                </div>
+            </div>
+            <!--工具栏--}-->
+
+            <div id="main" class="clearfix">
+                <form action="" method="post">
+                    <table class="data-list">
+                        <tr class="header">
+                            <td>ID</td>
+                            <td>用户（ID | 用户名）</td>
+                            <td>操作对象</td>
+                            <td>时间</td>
+                            <td>IP</td>
+                            <td>访问参数</td>
+                            <td>备注</td>
+                        </tr>
+                        <#import "../../../common/function.html" as func>
+                        <#list list as item>
+                            <tr class="s">
+                                <td>${item.id!if_exists}</td>
+                                <td>${item.user?if_exists.userId?if_exists} | ${item.user?if_exists.username?if_exists}</td>
+                                <td>${item.systemOperation?if_exists.name?if_exists}</td>
+                                <td>${item.addTime?string("yyyy-MM-dd HH:ss:mm")}</td>
+                                <td>${item.ip?if_exists}</td>
+                                <td><a href="javascript:alert('${item.params?if_exists}');"><#if item.params?exists && item.params?length gt 50>${item.params[0..50]}..<#else>${item.params?if_exists}</#if></a></td>
+                                <td>${item.remark?if_exists}</td>
+                            </tr>
+                        </#list>
+                    </table>
+                </form>
+
+                <!--底部工具栏--{-->
+                <div id="bottomToolbar" class="clearfix">
+                    <div class="other-tool">
+                        <dl class="refresh-data">
+                            <dt class="refresh-data-icon"></dt>
+                            <dd><a href="javascript:void(0);" class="refresh-page">刷新数据</a></dd>
+                        </dl>
+                    </div>
+
+                    <!--翻页系统--{-->
+                    <div class="container">
+                        <#import "../../../common/page.html" as pager>
+                            <@pager.pagination page=page url="${pageUrl}" map=param style="style1" />
+                    </div>
+                    <!--翻页系统--}-->
+                </div>
+                <!--底部工具栏--}-->
+
+                <script>
+                    var urls = '?search=true';
+                    function search(){
+                        var userName = $("#userName").val();
+                        var dotime1 = $("#dotime1").val();
+                        var dotime2 = $("#dotime2").val();
+                        if (userName!=null && userName!="请输入用户名"){
+                        	urls += "&userName="+userName;
+                        }
+                        var operationId = $("#operationId").val();
+                        if(operationId!=null&&operationId!=""&&operationId!="undefine"){
+                        	urls += "&operationId="+operationId;
+                        }
+                        if(dotime1!=null&&dotime1!=""){
+                        	urls += "&dotime1="+dotime1;
+                        }
+                        if(dotime2!=null&&dotime2!=""){
+                        	urls += "&dotime2="+dotime2;
+                        }
+                        location.href=urls;
+                    }
+                </script>
+            </div>
+
+        </td>
+    </tr>
+    <tr>
+        <!--尾部--{-->
+        <td colspan="3" class="mc-b"><#include "../../foot.html"></td>
+        <!--尾部--}-->
+    </tr>
+</table>
+</body>
+</html>
+<#include "../../jsPage.html">
